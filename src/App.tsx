@@ -1,7 +1,6 @@
 import Header from "./components/Header";
 import "./App.css";
 import { AppSidebar } from "./components/app-sidebar";
-import { SidebarProvider } from "./components/ui/sidebar";
 
 
 
@@ -11,6 +10,7 @@ function App() {
     <>
       <Header/>
       <AppSidebar />
+
     </>
   )
 
