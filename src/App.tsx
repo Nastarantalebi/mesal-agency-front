@@ -1,8 +1,7 @@
-import { Header } from "@radix-ui/react-accordion";
+import Header from "./components/Header";
 import "./App.css";
 import { AppSidebar } from "./components/app-sidebar";
 import { SidebarProvider } from "./components/ui/sidebar";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 
 
 
@@ -11,9 +10,7 @@ function App() {
   return(
     <>
       <Header/>
-      <SidebarProvider>
-        <AppSidebar />
-      </SidebarProvider>
+      <AppSidebar />
     </>
   )
 
