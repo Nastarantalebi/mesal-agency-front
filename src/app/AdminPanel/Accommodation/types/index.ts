@@ -1,0 +1,22 @@
+export type TCreateAccomodation = {
+    type: string,
+    name: string,
+    description: string,
+    address: string,
+    city: string,
+    manufacture_date: string,
+    latitude: string,
+    longitude: string,
+    max_guests: string,
+    floors: string,
+    area_sqm: string,
+    stars: string,
+    total_rooms: string,
+    has_reception_24h: boolean,
+    has_elevator: boolean,
+    check_in_time: string,
+    check_out_time: string,
+    built_with_local_materials: boolean,
+    allows_local_food_experience: boolean,
+    is_active: boolean
+}

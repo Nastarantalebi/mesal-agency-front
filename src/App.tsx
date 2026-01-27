@@ -1,19 +1,14 @@
-import Header from "./components/Header";
+import Header from "./app/AdminPanel/Accommodation/components/AdminHeader";
 import "./App.css";
-import { AppSidebar } from "./components/app-sidebar";
-
-
-
+import { AppSidebar } from "./app/AdminPanel/Accommodation/components/AdminSidebar";
 
 function App() {
-  return(
+  return (
     <>
-      <Header/>
+      <Header />
       <AppSidebar />
-
     </>
-  )
-
+  );
 }
 
 export default App;
