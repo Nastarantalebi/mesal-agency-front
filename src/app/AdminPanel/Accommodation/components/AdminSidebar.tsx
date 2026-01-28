@@ -5,11 +5,10 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarProvider,
-  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { Link } from "@tanstack/react-router";
 
@@ -31,9 +30,12 @@ export function AppSidebar() {
   return (
     <Sidebar className="w-52">
       <SidebarContent>
+        <SidebarHeader>
+          <SidebarGroupLabel className="bg-red">
+            فهرست اقامتگاه ها
+          </SidebarGroupLabel>
+        </SidebarHeader>
         <SidebarGroup>
-          <SidebarGroupLabel>فهرست اقامتگاه ها</SidebarGroupLabel>
-          <SidebarSeparator className="my-2" />
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
