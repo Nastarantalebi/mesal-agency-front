@@ -1,21 +1,29 @@
 import type { Items } from "@/components/form/formInputTypes";
 import useGetData from "@/services/useGetData";
-import type { Item } from "@/components/form/CustomCombobox";
+import type { Item, TCreateAccomodation } from "@/app/AdminPanel/Accommodation/types/index";
+import { accommodation_cities_key, accommodation_cities_url, accommodation_key, accommodation_proviences_key, accommodation_proviences_url, accommodation_types_url } from "@/data/querykeys";
 
-function useAccomodationFields() {
+function useAccomodationFields(province_id?: number) {
   const { data: accommodationTypes} = useGetData<Item[]>({
-    key: ["accommodation-types"],
-    url: "admin/accommodation_types",
+    key: [accommodation_key],
+    url: accommodation_types_url,
   });
 
   const { data: provinces} = useGetData<Item[]>({
-    key: ["provinces"],
-    url: "admin/proviences",
+    key: [accommodation_proviences_key],
+    url: accommodation_proviences_url,
+  });
+
+
+  const { data: cities } = useGetData<Item[]>({
+    key: [accommodation_cities_key, String(province_id) ?? ""],
+    url: `${accommodation_cities_url}?province_id=${province_id}`,
+    enabled: !!province_id,
   });
 
 
 
-  const accommodationFields: Items[] = [
+  const accommodationFields: Items<TCreateAccomodation>[] = [
     {
       name: "type",
       label: "نوع اقامتگاه",
@@ -31,19 +39,27 @@ function useAccomodationFields() {
       inputType:"text"
     },
     {
-      name: "province",
+      name: "provience",
       label: "استان",
       isRequired: true,
       fieldType: "dropdown",
       options: provinces,
     },
     {
-      name: "phone number",
-      label: "شماره تلفن",
+      name:"city",
+      label: "شهر",
+      isRequired: true,
+      fieldType: "dropdown",
+      options: cities,
+    },
+    {
+      name: "description",
+      label: "توضیحات",
       isRequired: true,
       fieldType: "input",
-      inputType: "number"
+      inputType: "text"
     },
+
   ];
   return accommodationFields;
 }

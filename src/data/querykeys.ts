@@ -1,0 +1,11 @@
+export const accommodation_key = "accommodations"
+export const accommodation_url = "admin/accommodations/"
+
+export const accommodation_types_key = "accommodationType"
+export const accommodation_types_url = "admin/accommodation_types/"
+
+export const accommodation_proviences_key = "provience"
+export const accommodation_proviences_url = "admin/proviences/"
+
+export const accommodation_cities_key = "cities"
+export const accommodation_cities_url = "admin/cities/"

@@ -1,25 +1,41 @@
-import CustomCombobox, { type Item } from "./CustomCombobox";
+import { type Item } from "@/app/AdminPanel/Accommodation/types/index";
 import CustomInput, { type InputType } from "./CustomInput";
+import CustomCombobox from "./CustomCombobox";
+import type { Control, FieldValues, Path } from "react-hook-form";
 
-export interface Items {
-  name: string;
+export interface Items<T> {
+  name: Path<T>;
   label: string;
   fieldType?: string;
   isRequired: boolean;
   options?: Item[];
-  inputType?: InputType 
+  inputType?: InputType;
+  onValueChange?: (value: string | number) => void;
 }
 
-const formTypes = ({ name, label, fieldType, isRequired, options, inputType }: Items) => {
+function formTypes<T extends FieldValues>(
+  {
+    name,
+    label,
+    fieldType,
+    isRequired,
+    options,
+    inputType,
+    onValueChange,
+  }: Items<T>,
+  control: Control<T>,
+) {
   switch (fieldType) {
     case "dropdown":
       return (
-        <CustomCombobox
+        <CustomCombobox<T>
           name={name}
           placeholder={label}
           label={label}
           items={options}
           isRequired={isRequired}
+          onValueChange={onValueChange}
+          control={control}
         />
       );
 
@@ -31,12 +47,22 @@ const formTypes = ({ name, label, fieldType, isRequired, options, inputType }: I
           label={label}
           isRequired={isRequired}
           inputType={inputType}
+          control={control}
         />
       );
 
     default:
-      return <input type="text" />;
+      return (
+        <CustomInput
+          name={name}
+          placeholder={label}
+          label={label}
+          isRequired={isRequired}
+          inputType={inputType}
+          control={control}
+        />
+      );
   }
-};
+}
 
 export default formTypes;

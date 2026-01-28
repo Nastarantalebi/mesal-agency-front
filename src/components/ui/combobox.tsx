@@ -145,7 +145,6 @@ function ComboboxItem({
   ...props
 }: ComboboxPrimitive.Item.Props) {
 
-  console.log(children)
   return (
     <ComboboxPrimitive.Item
       data-slot="combobox-item"

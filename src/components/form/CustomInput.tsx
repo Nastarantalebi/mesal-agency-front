@@ -1,20 +1,42 @@
+import { FormField } from "../ui/form";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import type { Control, FieldValues, Path } from "react-hook-form";
 
-interface Props {
-  name: string;
+export type InputType = "text" | "number" | "email" | "password" | "tel";
+
+interface Props<T extends FieldValues> {
+  name: Path<T>;
   placeholder: string;
   label: string;
   isRequired: boolean;
   inputType?: InputType;
+  onValueChange?: (value: string | number) => void;
+  control: Control<T>; 
 }
 
-export type InputType = "text" | "number" | "email" | "password" | "tel";
-
-const CustomInput = ({name, placeholder, label, isRequired, inputType}: Props) => {
+const CustomInput = <T extends FieldValues,>({
+  name,
+  placeholder,
+  label,
+  isRequired,
+  inputType = "text",
+  control,
+}: Props<T>) => {
   return (
-    <div className="w-56  mr-10">
-        <label className="block mb-1 mr-3">{label}{isRequired && <span className="text-red-600">*</span>}</label>
-        <Input type={inputType} name={name} placeholder={placeholder}/>
+    <div className="w-56 mr-10">
+      <Label className="block mb-3 mr-3">
+        {label}
+        {isRequired && <span className="text-red-600">*</span>}
+      </Label>
+
+      <FormField
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <Input {...field} type={inputType} placeholder={placeholder} />
+        )}
+      />
     </div>
   );
 };
