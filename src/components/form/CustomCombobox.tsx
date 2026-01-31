@@ -31,7 +31,7 @@ function CustomCombobox<T extends FieldValues>({
   control,
 }: Props<T>) {
   return (
-    <div className="w-56  mr-10">
+    <div className="w-full  mr-10">
       <Label className="block mb-3 mr-3">
         {label}
         {isRequired && <span className="text-red-600">*</span>}

@@ -16,7 +16,7 @@ import { Link } from "@tanstack/react-router";
 const items = [
   {
     title: "لیست اقامتگاه ها",
-    url: "/admin-panel",
+    url: "/admin-panel/accommodation-lists",
     icon: Home,
   },
   {

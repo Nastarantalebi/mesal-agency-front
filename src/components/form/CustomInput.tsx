@@ -24,7 +24,7 @@ const CustomInput = <T extends FieldValues,>({
   control,
 }: Props<T>) => {
   return (
-    <div className="w-56 mr-10">
+    <div className="mr-10 w-full">
       <Label className="block mb-3 mr-3">
         {label}
         {isRequired && <span className="text-red-600">*</span>}

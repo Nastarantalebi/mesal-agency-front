@@ -11,6 +11,8 @@ export interface Items<T> {
   options?: Item[];
   inputType?: InputType;
   onValueChange?: (value: string | number) => void;
+  className?: string;
+  page:number;
 }
 
 function formTypes<T extends FieldValues>(

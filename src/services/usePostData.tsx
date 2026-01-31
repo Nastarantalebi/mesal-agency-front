@@ -1,23 +1,18 @@
-import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
-interface Props{
-    key: string[];
-    url: string;
-}
+type Props = { key: unknown[]; url: string };
 
 function usePostData<TRequest, TResponse>({ key, url }: Props) {
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const BASE_URL = import.meta.env.VITE_BASE_URL as string;
 
   return useMutation({
     mutationKey: key,
-    mutationFn: async (body:TRequest) => {
-      const {res}: {res:TResponse} = await axios.post(BASE_URL + url, body);
-      return res;
+    mutationFn: async (body: TRequest) => {
+      const { data } = await axios.post<TResponse>(BASE_URL + url, body);
+      return data;
     },
   });
 }
 
-
 export default usePostData;
-

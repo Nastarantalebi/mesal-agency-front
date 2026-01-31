@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminPanelRouteImport } from './routes/admin-panel'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminPanelAddAccommodationRouteImport } from './routes/admin-panel.add-accommodation'
+import { Route as AdminPanelAccommodationListsRouteImport } from './routes/admin-panel.accommodation-lists'
 
 const AdminPanelRoute = AdminPanelRouteImport.update({
   id: '/admin-panel',
@@ -29,29 +30,51 @@ const AdminPanelAddAccommodationRoute =
     path: '/add-accommodation',
     getParentRoute: () => AdminPanelRoute,
   } as any)
+const AdminPanelAccommodationListsRoute =
+  AdminPanelAccommodationListsRouteImport.update({
+    id: '/accommodation-lists',
+    path: '/accommodation-lists',
+    getParentRoute: () => AdminPanelRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin-panel': typeof AdminPanelRouteWithChildren
+  '/admin-panel/accommodation-lists': typeof AdminPanelAccommodationListsRoute
   '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin-panel': typeof AdminPanelRouteWithChildren
+  '/admin-panel/accommodation-lists': typeof AdminPanelAccommodationListsRoute
   '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin-panel': typeof AdminPanelRouteWithChildren
+  '/admin-panel/accommodation-lists': typeof AdminPanelAccommodationListsRoute
   '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin-panel' | '/admin-panel/add-accommodation'
+  fullPaths:
+    | '/'
+    | '/admin-panel'
+    | '/admin-panel/accommodation-lists'
+    | '/admin-panel/add-accommodation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin-panel' | '/admin-panel/add-accommodation'
-  id: '__root__' | '/' | '/admin-panel' | '/admin-panel/add-accommodation'
+  to:
+    | '/'
+    | '/admin-panel'
+    | '/admin-panel/accommodation-lists'
+    | '/admin-panel/add-accommodation'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin-panel'
+    | '/admin-panel/accommodation-lists'
+    | '/admin-panel/add-accommodation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -82,14 +105,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPanelAddAccommodationRouteImport
       parentRoute: typeof AdminPanelRoute
     }
+    '/admin-panel/accommodation-lists': {
+      id: '/admin-panel/accommodation-lists'
+      path: '/accommodation-lists'
+      fullPath: '/admin-panel/accommodation-lists'
+      preLoaderRoute: typeof AdminPanelAccommodationListsRouteImport
+      parentRoute: typeof AdminPanelRoute
+    }
   }
 }
 
 interface AdminPanelRouteChildren {
+  AdminPanelAccommodationListsRoute: typeof AdminPanelAccommodationListsRoute
   AdminPanelAddAccommodationRoute: typeof AdminPanelAddAccommodationRoute
 }
 
 const AdminPanelRouteChildren: AdminPanelRouteChildren = {
+  AdminPanelAccommodationListsRoute: AdminPanelAccommodationListsRoute,
   AdminPanelAddAccommodationRoute: AdminPanelAddAccommodationRoute,
 }
 
