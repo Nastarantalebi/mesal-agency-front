@@ -7,9 +7,9 @@ export const Route = createFileRoute('/admin-panel/accommodation-lists')({
 
 function Accommodationlist() {
   return (
-    <div>
+    <main className="flex-1 min-w-0 overflow-x-hidden p-20">
         <AccommodationList/>
-    </div>
+    </main>
   );
 }
 

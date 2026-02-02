@@ -1,7 +1,7 @@
 import { AppSidebar } from "@/app/AdminPanel/Accommodation/components/AdminSidebar";
 import Header from "@/app/AdminPanel/Accommodation/components/AdminHeader";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export const Route = createFileRoute("/admin-panel")({
   component: AdminPanel,
@@ -9,17 +9,19 @@ export const Route = createFileRoute("/admin-panel")({
 
 function AdminPanel() {
   return (
-    <SidebarProvider>
-      <div className="min-h-screen w-full">
-        <Header />
-        <div className="flex w-full">
+    <div className="min-h-screen w-screen! overflow-x-hidden">
+      <Header />
+      <SidebarProvider>
+        <div className="flex">
           <AppSidebar />
-          <main className="flex-1 pt-14 pl-60">
-            <Outlet />
-          </main>
+          <SidebarInset>
+            <main className="pt-30">
+              <Outlet />
+            </main>
+          </SidebarInset>
         </div>
-      </div>
-    </SidebarProvider>
+      </SidebarProvider>
+    </div>
   );
 }
 

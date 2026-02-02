@@ -1,5 +1,5 @@
-import AccommodationForm from '@/app/AdminPanel/Accommodation/components/AccommodationForm';
-import { createFileRoute } from '@tanstack/react-router';
+import AccommodationForm from "@/app/AdminPanel/Accommodation/components/AccommodationForm";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin-panel/add-accommodation")({
   component: AddAccommodation,
@@ -7,10 +7,10 @@ export const Route = createFileRoute("/admin-panel/add-accommodation")({
 
 function AddAccommodation() {
   return (
-    <div>
-      <AccommodationForm/>
-    </div>
-  )
+    <main className="flex-1 min-w-0 overflow-x-hidden p-6">
+      <AccommodationForm />
+    </main>
+  );
 }
 
-export default AddAccommodation
+export default AddAccommodation;

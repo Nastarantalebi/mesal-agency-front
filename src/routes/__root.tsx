@@ -6,9 +6,9 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <>
+    <div className="font-display">
       <Outlet />
 
-    </>
+    </div>
   );
 }
