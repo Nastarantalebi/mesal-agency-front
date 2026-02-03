@@ -2,6 +2,8 @@ import { type Item } from "@/app/AdminPanel/Accommodation/types/index";
 import CustomInput, { type InputType } from "./CustomInput";
 import CustomCombobox from "./CustomCombobox";
 import type { Control, FieldValues, Path } from "react-hook-form";
+import YesNoInput from "./YesNoInput";
+import DateInput from "./DateInput";
 
 export interface Items<T> {
   name: Path<T>;
@@ -12,7 +14,7 @@ export interface Items<T> {
   inputType?: InputType;
   onValueChange?: (value: string | number) => void;
   className?: string;
-  page:number;
+  page: number;
 }
 
 function formTypes<T extends FieldValues>(
@@ -49,6 +51,26 @@ function formTypes<T extends FieldValues>(
           label={label}
           isRequired={isRequired}
           inputType={inputType}
+          control={control}
+        />
+      );
+
+    case "yesNoInput":
+      return (
+        <YesNoInput
+          name={name}
+          label={label}
+          isRequired={isRequired}
+          control={control}
+        />
+      );
+
+    case "DatePicker":
+      return (
+        <DateInput
+          name={name}
+          label={label}
+          isRequired={isRequired}
           control={control}
         />
       );

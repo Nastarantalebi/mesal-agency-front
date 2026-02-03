@@ -1,5 +1,3 @@
-import type { Item } from "@/app/AdminPanel/Accommodation/types";
-
 import {
   Combobox,
   ComboboxContent,
@@ -8,30 +6,21 @@ import {
   ComboboxList,
 } from "@/components/ui/combobox";
 import { Label } from "../ui/label";
-import { FormField } from "../ui/form";
-import type { Control, FieldValues, Path } from "react-hook-form";
+import { FormField, FormMessage } from "../ui/form";
+import type { FieldValues } from "react-hook-form";
+import type { Props } from "./PropsType";
 
-interface Props<T extends FieldValues> {
-  name: Path<T>;
-  placeholder: string;
-  label: string;
-  isRequired: boolean;
-  items?: Item[];
-  onValueChange?: (value: string | number) => void;
-  control: Control<T>;
-}
 
-function CustomCombobox<T extends FieldValues>({
+const CustomCombobox = <T extends FieldValues>({
   name,
-  placeholder,
   label,
   items,
   isRequired,
   onValueChange,
   control,
-}: Props<T>) {
+}: Props<T>) => {
   return (
-    <div className="w-full  mr-10">
+    <div className="w-full min-w-0">
       <Label className="block mb-3 mr-3">
         {label}
         {isRequired && <span className="text-red-600">*</span>}
@@ -40,7 +29,7 @@ function CustomCombobox<T extends FieldValues>({
       <FormField
         name={name}
         control={control}
-        render={({ field }) => {
+        render={({ field, fieldState }) => {
           const selectedText =
             items?.find(
               (it) => String(it.value ?? it.id) === String(field.value ?? ""),
@@ -53,9 +42,9 @@ function CustomCombobox<T extends FieldValues>({
           return (
             <Combobox value={String(field.value ?? "")}>
               <ComboboxInput
-                placeholder={placeholder}
                 value={selectedText}
                 readOnly
+                className={`${fieldState.error ? "border-red-950" : ""}`}
               />
 
               <ComboboxContent>
@@ -77,6 +66,7 @@ function CustomCombobox<T extends FieldValues>({
                   })}
                 </ComboboxList>
               </ComboboxContent>
+              <FormMessage/>
             </Combobox>
           );
         }}

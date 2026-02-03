@@ -15,54 +15,13 @@ import { toast } from "sonner";
 import FormErrorModal from "./FormErrorModal";
 import { useEffect, useState } from "react";
 import useGetData from "@/services/useGetData";
+import usePutData from "@/services/usePutData";
 
 interface Props {
   id?: string;
 }
 
-function toFormValues(
-  detailData: TAccommodationResponse,
-  initial: TCreateAccomodation,
-): TCreateAccomodation {
-  return {
-    ...initial,
-
-    name: detailData.name ?? "",
-    description: detailData.description ?? "",
-    address: detailData.address ?? "",
-
-    type: detailData.type?.id != null ? String(detailData.type.id) : "",
-    city: detailData.city?.id != null ? String(detailData.city.id) : "",
-
-    manufacture_date: detailData.manufacture_date ?? "",
-
-    floors: detailData.floors != null ? String(detailData.floors) : "",
-    stars: detailData.stars != null ? String(detailData.stars) : "",
-    total_rooms:
-      detailData.total_rooms != null ? String(detailData.total_rooms) : "",
-
-    check_in_time: detailData.check_in_time ?? "",
-    check_out_time: detailData.check_out_time ?? "",
-
-    latitude: detailData.latitude != null ? String(detailData.latitude) : "",
-    longitude: detailData.longitude != null ? String(detailData.longitude) : "",
-
-    max_guests:
-      detailData.max_guests != null ? String(detailData.max_guests) : "",
-    area_sqm: detailData.area_sqm != null ? String(detailData.area_sqm) : "",
-
-    has_reception_24h: Boolean(detailData.has_reception_24h),
-    has_elevator: Boolean(detailData.has_elevator),
-    built_with_local_materials: Boolean(detailData.built_with_local_materials),
-    allows_local_food_experience: Boolean(
-      detailData.allows_local_food_experience,
-    ),
-    is_active: Boolean(detailData.is_active),
-  };
-}
-
 const AccommodationForm = ({ id }: Props) => {
-  console.log(`id= ${id}`)
   const [step, setStep] = useState(1);
   const TOTAL_STEPS = 2;
 
@@ -70,17 +29,23 @@ const AccommodationForm = ({ id }: Props) => {
     resolver: zodResolver(accommodationValidation),
     defaultValues: accommodationInitialValues,
   });
-  const idRequired = id!;
 
-  const { data: detailData, isLoading } = useGetData<TAccommodationResponse>({
-    key: [accommodation_key, idRequired],
-    url: `${accommodation_url}${idRequired}/`,
+  const { data, isFetching } = useGetData<TAccommodationResponse>({
+    key: [accommodation_key, String(id)],
+    url: `${accommodation_url}${id}/`,
+    enabled: !!id,
   });
 
+  console.log(data);
+
   useEffect(() => {
-    if (!detailData) return;
-    form.reset(toFormValues(detailData, accommodationInitialValues));
-  }, [detailData, form]);
+    if (!data) return;
+    form.reset({
+      ...data,
+      type: data.type?.id != null ? String(data.type.id) : "",
+      city: data.city?.name,
+    });
+  }, [data]);
 
   const stepFields: Record<number, (keyof TCreateAccomodation)[]> = {
     1: ["type", "name", "provience", "city", "description", "address"],
@@ -122,28 +87,49 @@ const AccommodationForm = ({ id }: Props) => {
     stepFields[step].includes(item.name),
   );
 
-  const { mutateAsync, isPending } = usePostData<
+  const createMutation = usePostData<
     TCreateAccomodation,
     TAccommodationResponse
-  >({ key: [accommodation_key], url: accommodation_url });
+  >({
+    key: [accommodation_key],
+    url: accommodation_url,
+  });
+
+  const updateMutation = usePutData<
+    TCreateAccomodation,
+    TAccommodationResponse
+  >({
+    key: [accommodation_key, String(id)],
+    url: `${accommodation_url}${id}`,
+  });
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handleSubmit = (value: TCreateAccomodation) => {
-    mutateAsync(value, {
-      onSuccess: () => {
-        toast.success("اقامتگاه با موفقیت ثبت شد ✅");
-        form.reset(accommodationInitialValues);
-        setStep(1);
-      },
-      onError: () => {
-        setErrorOpen(true);
-      },
-    });
+    const isEdit = !!id;
+
+    if (isEdit) {
+      updateMutation.mutateAsync(value, {
+        onSuccess: () => {
+          toast.success("ویرایش با موفقیت انجام شد ✅");
+          setStep(1);
+        },
+        onError: () => setErrorOpen(true),
+      });
+    } else {
+      createMutation.mutateAsync(value, {
+        onSuccess: () => {
+          toast.success("اقامتگاه با موفقیت ثبت شد ✅");
+          form.reset(accommodationInitialValues);
+          setStep(1);
+        },
+        onError: () => setErrorOpen(true),
+      });
+    }
   };
 
-  if (isLoading) return <div className="p-4">Loading...</div>;
+  if (isFetching) return <div className="p-4">Loading...</div>;
 
   return (
     <Form {...form}>
@@ -162,19 +148,17 @@ const AccommodationForm = ({ id }: Props) => {
 
         <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-end gap-3">
           {step > 1 && (
-            <CustomButton onClick={handleBack} ispending={false} type="button">
+            <CustomButton onClick={handleBack} type="button">
               قبلی
             </CustomButton>
           )}
 
           {step < TOTAL_STEPS ? (
-            <CustomButton onClick={handleNext} ispending={false} type="button">
+            <CustomButton onClick={handleNext} type="button">
               بعدی
             </CustomButton>
           ) : (
-            <CustomButton ispending={isPending} type="submit">
-              ثبت
-            </CustomButton>
+            <CustomButton type="submit">ثبت</CustomButton>
           )}
         </div>
       </form>

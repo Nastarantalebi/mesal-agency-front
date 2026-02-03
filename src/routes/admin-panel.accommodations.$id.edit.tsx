@@ -7,6 +7,7 @@ export const Route = createFileRoute(`/admin-panel/accommodations/$id/edit`)({
 
 function EditAccommodation() {
     const { id } = Route.useParams();
+    console.log(id)
   return <div className="p-4">
     <AccommodationForm id={id}/>
   </div>;

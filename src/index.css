@@ -5,6 +5,8 @@
 
 @theme{
 
+    --color-white: var(--white);
+
     --color-secondary:var(--secondary);
 
     --color-secondary-90:var(--secondary-90);
@@ -81,6 +83,7 @@
   
   :root {
 
+    --white: #ffffff;
     
     --primary: #5d84a2;
     --primary-foreground:oklch(1 0 0);

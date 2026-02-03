@@ -35,7 +35,6 @@ export default function FormErrorModal({
         <DialogFooter className="mt-4 flex justify-center">
           <DialogClose asChild>
             <CustomButton
-              ispending={false}
               type="button"
               onClick={onAcknowledge}
             >

@@ -17,6 +17,7 @@ function useGetData<T>({ key, url, enabled = true }: Props) {
       const res = await axios.get(BASE_URL + url);
       return res.data;
     },
+    staleTime:5*60*1000
   });
 }
 
