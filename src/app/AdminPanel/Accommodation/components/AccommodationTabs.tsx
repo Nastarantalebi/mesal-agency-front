@@ -27,9 +27,8 @@ const AccommodationTabs = ({
     },
   ];
   return (
-    <Tabs className="w-full pr-20">
+    <Tabs className="w-full pr-20 ">
       <TabsList className="">
-        {" "}
         {/* Change TabsList background */}
         {items.map((item) => (
           <TabsTrigger
@@ -40,11 +39,13 @@ const AccommodationTabs = ({
           </TabsTrigger>
         ))}
       </TabsList>
-      {items.map((item) => (
-        <TabsContent key={item.title} value={item.title}>
-          {item.component}
-        </TabsContent>
-      ))}
+      <div className="py-10">
+        {items.map((item) => (
+          <TabsContent key={item.title} value={item.title}>
+            {item.component}
+          </TabsContent>
+        ))}
+      </div>
     </Tabs>
   );
 };

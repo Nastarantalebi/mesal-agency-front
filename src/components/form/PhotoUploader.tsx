@@ -22,12 +22,12 @@ export default function PhotoUploader({
   };
 
   return (
-    <div>
+    <>
       <input
         ref={inputRef}
         type="file"
         accept={accept}
-        multiple={false} // ✅ single file
+        multiple={false} 
         disabled={disabled}
         className="hidden"
         onChange={(e) => {
@@ -39,8 +39,8 @@ export default function PhotoUploader({
             if (old) URL.revokeObjectURL(old);
             return url;
           });
-          onPick(file); // ✅ call parent with File
-          e.target.value = ""; // allow picking same file again
+          onPick(file); 
+          e.target.value = ""; 
         }}
       />
 
@@ -74,6 +74,6 @@ export default function PhotoUploader({
           </>
         )}
       </div>
-    </div>
+    </>
   );
 }
