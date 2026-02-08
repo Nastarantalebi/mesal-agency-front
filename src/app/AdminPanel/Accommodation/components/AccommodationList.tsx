@@ -5,6 +5,8 @@ import {
   accommodation_lists_url,
 } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
+import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 type City = {
   id: number;
@@ -30,24 +32,16 @@ type Paginated<T> = {
 };
 
 export const columns: ColumnDef<AccommodationItem>[] = [
-  { accessorKey: "name", header: "نام اقامتگاه", size: 20 },
+  { accessorKey: "name", header: "نام اقامتگاه" },
   {
     id: "type",
     header: "نوع اقامتگاه",
     accessorFn: (row) => row.type?.name ?? "",
-    size: 20,
   },
   {
     id: "city",
     header: "شهر",
     accessorFn: (row) => row.city?.name ?? "",
-    size: 20,
-  },
-  {
-    id: "actions",
-    header: "عملیات",
-    size: 20,
-    
   },
 ];
 
@@ -56,11 +50,24 @@ const AccommodationList = () => {
     key: [accommodation_lists_key],
     url: accommodation_lists_url,
   });
+  const navigate = useNavigate();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div className="text-red-600">{String(error)}</div>;
 
-  return <CustomDataTable columns={columns} data={data?.results ?? []} />;
+  return (
+    <CustomDataTable
+      onRowClick={(id) => {
+        navigate({
+          to: "/admin-panel/$id",
+          params: { id },
+        });
+      }}
+      columns={columns}
+      data={data?.results ?? []}
+      placeholder="جست و جوی نام اقامتگاه"
+    />
+  );
 };
 
 export default AccommodationList;

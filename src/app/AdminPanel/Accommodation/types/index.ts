@@ -22,19 +22,11 @@ export type TCreateAccomodation = {
     provience?: number
 }
 
-export interface Item {
-  id?: number;
-  name?: string;
-  value?: string;
-  label?: string;
-}
-
-
 export type TAccommodationResponse = {
   id: number;
 
   type: { id: number; name: string } | null;
-  city: { id: number; name: string } | null;
+  city: { id: number; name: string; provience: {id: number, name:string}} | null;
 
   name: string;
   description: string | null;
@@ -64,13 +56,22 @@ export type TAccommodationResponse = {
   created_at: string; 
   updated_at: string; 
 
-  // isSuccess: boolean;
 };
-  
 
 
+export interface Item {
+  id?: number;
+  name?: string;
+  value?: string;
+  label?: string;
+}
 
 export const YES_NO_OPTIONS: Item[] = [
   { label: "بله", value: "true" },
   { label: "خیر", value: "false" },
 ];
+
+  
+
+
+

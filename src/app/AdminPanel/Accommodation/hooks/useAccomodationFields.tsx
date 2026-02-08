@@ -15,6 +15,7 @@ import {
 } from "@/data/querykeys";
 
 function useAccomodationFields(province_id?: number) {
+  
   const { data: accommodationTypes } = useGetData<Item[]>({
     key: [accommodation_key],
     url: accommodation_types_url,

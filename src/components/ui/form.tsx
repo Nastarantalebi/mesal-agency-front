@@ -13,6 +13,8 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
+import type { TCreateRoomType } from "@/app/AdminPanel/Accommodation/types"
+import type { Items } from "../form/formInputTypes"
 
 const Form = FormProvider
 
@@ -30,7 +32,7 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
+>(item: Items<TCreateRoomType>, control: unknown, {
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
   return (

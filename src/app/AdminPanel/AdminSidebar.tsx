@@ -10,24 +10,24 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Link } from "@tanstack/react-router";
-import { FilePen, HomeIcon, MenuIcon } from "lucide-react";
-
-// Menu items.
-const items = [
-  {
-    title: "لیست اقامتگاه ها",
-    url: "/admin-panel/accommodation-lists",
-    icon: <HomeIcon />,
-  },
-  {
-    title: "ثبت اقامتگاه",
-    url: "/admin-panel/add-accommodation",
-    icon: <FilePen />,
-  },
-];
+import { MenuIcon } from "lucide-react";
 
 
-export function AppSidebar() {
+interface items{
+  title: string;
+  url: string;
+  icon: React.ReactNode;
+  params?: { id: string }
+}
+
+
+
+interface Props{
+  sidebaritems: items[]
+}
+
+
+export function AppSidebar({sidebaritems} : Props) {
   const { toggleSidebar, open } = useSidebar();
   return (
     <Sidebar collapsible="icon" className="border-primary-60 shadow-2xl transition-[width] duration-100">
@@ -39,7 +39,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="pt-5">
-              {items.map((item) => (
+              {sidebaritems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild

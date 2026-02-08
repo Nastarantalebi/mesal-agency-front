@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/combobox";
 import { Label } from "../ui/label";
 import { FormField, FormMessage } from "../ui/form";
-import type { FieldValues } from "react-hook-form";
+import { Controller, type FieldValues } from "react-hook-form";
 import type { Props } from "./PropsType";
 
 
@@ -26,7 +26,7 @@ const CustomCombobox = <T extends FieldValues>({
         {isRequired && <span className="text-red-600">*</span>}
       </Label>
 
-      <FormField
+      <Controller
         name={name}
         control={control}
         render={({ field, fieldState }) => {
@@ -44,7 +44,7 @@ const CustomCombobox = <T extends FieldValues>({
               <ComboboxInput
                 value={selectedText}
                 readOnly
-                className={`${fieldState.error ? "border-red-950" : ""}`}
+                className={`${fieldState.error ? "border-red-600" : ""}`}
               />
 
               <ComboboxContent>

@@ -5,6 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 function Tabs({
+  dir,
   className,
   orientation = "horizontal",
   ...props
@@ -14,6 +15,7 @@ function Tabs({
       data-slot="tabs"
       data-orientation={orientation}
       orientation={orientation}
+      dir="rtl"
       className={cn(
         "group/tabs flex gap-2 data-[orientation=horizontal]:flex-col",
         className

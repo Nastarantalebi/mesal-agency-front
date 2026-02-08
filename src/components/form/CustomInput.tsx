@@ -1,13 +1,12 @@
-import { FormField } from "../ui/form";
+import { FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import type { FieldValues } from "react-hook-form";
+import { Controller, type FieldValues } from "react-hook-form";
 import type { Props } from "./PropsType";
 
 export type InputType = "text" | "number" | "email" | "password" | "tel";
 
-
-const CustomInput = <T extends FieldValues,>({
+const CustomInput = <T extends FieldValues>({
   name,
   label,
   isRequired,
@@ -21,11 +20,18 @@ const CustomInput = <T extends FieldValues,>({
         {isRequired && <span className="text-red-600">*</span>}
       </Label>
 
-      <FormField
+      <Controller
         name={name}
         control={control}
-        render={({ field }) => (
-          <Input {...field} type={inputType} />
+        render={({ field, fieldState }) => (
+          <>
+            <Input
+              {...field}
+              type={inputType}
+              className={`${fieldState.error ? "border-red-600" : ""}`}
+            />
+            <FormMessage />
+          </>
         )}
       />
     </div>

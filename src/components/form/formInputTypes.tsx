@@ -4,6 +4,7 @@ import CustomCombobox from "./CustomCombobox";
 import type { Control, FieldValues, Path } from "react-hook-form";
 import YesNoInput from "./YesNoInput";
 import DateInput from "./DateInput";
+import CustomCheckbox from "./CustomCheckbox";
 
 export interface Items<T> {
   name: Path<T>;
@@ -14,7 +15,7 @@ export interface Items<T> {
   inputType?: InputType;
   onValueChange?: (value: string | number) => void;
   className?: string;
-  page: number;
+  page?: number;
 }
 
 function formTypes<T extends FieldValues>(
@@ -68,6 +69,16 @@ function formTypes<T extends FieldValues>(
     case "DatePicker":
       return (
         <DateInput
+          name={name}
+          label={label}
+          isRequired={isRequired}
+          control={control}
+        />
+      );
+
+    case "checkBox":
+      return (
+        <CustomCheckbox
           name={name}
           label={label}
           isRequired={isRequired}

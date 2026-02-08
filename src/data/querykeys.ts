@@ -12,3 +12,7 @@ export const accommodation_cities_url = "admin/cities/"
 
 export const accommodation_lists_key = "admin-accommodations"
 export const accommodation_lists_url = "admin/accommodations/"
+
+
+
+

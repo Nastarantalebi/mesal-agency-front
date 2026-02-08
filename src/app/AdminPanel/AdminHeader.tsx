@@ -1,6 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useSidebar } from "@/components/ui/sidebar";
-import { MenuIcon } from "lucide-react";
 
 const Header = () => {
 

@@ -47,3 +47,5 @@ export const accommodationInitialValues: TCreateAccomodation = {
     allows_local_food_experience: false,
     is_active: false
 }
+
+

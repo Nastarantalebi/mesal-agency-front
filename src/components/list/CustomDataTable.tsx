@@ -15,14 +15,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
-import ListDetails from "./ListDetails";
+import ListEdit from "./ListEdit";
+import ListImage from "./ListImage";
 
 interface Props<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  placeholder: string;
+  onEdit?: (id: string) => void;
+  onImg?: (id: string) => void;
+  onRowClick?: (id: string) => void;
 }
 
 type RowWithId = { id: string | number };
@@ -30,6 +35,10 @@ type RowWithId = { id: string | number };
 export function CustomDataTable<TData extends RowWithId, TValue>({
   columns,
   data,
+  placeholder,
+  onEdit,
+  onImg,
+  onRowClick,
 }: Props<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -48,7 +57,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
     <div>
       <div className="relative py-4 max-w-3xs">
         <Input
-          placeholder="جستجوی نام اقامتگاه"
+          placeholder={placeholder}
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
@@ -57,7 +66,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
         />
         <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <div className=" mx-auto overflow-x-auto rounded-md border">
         <Table className="w-full table-fixed">
           <colgroup>
             {table.getAllLeafColumns().map((col) => (
@@ -65,7 +74,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
             ))}
           </colgroup>
 
-          <TableHeader className="bg-primary/30">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -78,6 +87,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                         )}
                   </TableHead>
                 ))}
+                <TableHead className="w-10">عملیات</TableHead>
               </TableRow>
             ))}
           </TableHeader>
@@ -88,19 +98,32 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={
+                    onRowClick
+                      ? () => onRowClick(String(row.original.id))
+                      : undefined
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {cell.column.id === "actions" ? (
-                        <ListDetails id={String(row.original.id)}/>
-                      ) : (
-                        flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
+                  <div>
+                    {onEdit && (
+                      <TableCell>
+                        <ListEdit id={String(row.original.id)} onClick={onEdit} />
+                      </TableCell>
+                    )}
+                    {onImg && (
+                      <TableCell>
+                        <ListImage id={String(row.original.id)} onClick={onImg} />
+                      </TableCell>
+                    )}
+                  </div>
                 </TableRow>
               ))
             ) : (

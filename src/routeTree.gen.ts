@@ -11,9 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminPanelRouteImport } from './routes/admin-panel'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminPanelIndexRouteImport } from './routes/admin-panel.index'
+import { Route as AdminPanelAddFeaturesRouteImport } from './routes/admin-panel.add-features'
 import { Route as AdminPanelAddAccommodationRouteImport } from './routes/admin-panel.add-accommodation'
-import { Route as AdminPanelAccommodationListsRouteImport } from './routes/admin-panel.accommodation-lists'
-import { Route as AdminPanelAccommodationsIdEditRouteImport } from './routes/admin-panel.accommodations.$id.edit'
+import { Route as AdminPanelIdRouteImport } from './routes/admin-panel.$id'
+import { Route as AdminPanelIdRoomTypesRouteImport } from './routes/admin-panel.$id.roomTypes'
+import { Route as AdminPanelIdPrimaryInfoRouteImport } from './routes/admin-panel.$id.primaryInfo'
+import { Route as AdminPanelIdPhotosRouteImport } from './routes/admin-panel.$id.photos'
 
 const AdminPanelRoute = AdminPanelRouteImport.update({
   id: '/admin-panel',
@@ -25,69 +29,109 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPanelIndexRoute = AdminPanelIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminPanelRoute,
+} as any)
+const AdminPanelAddFeaturesRoute = AdminPanelAddFeaturesRouteImport.update({
+  id: '/add-features',
+  path: '/add-features',
+  getParentRoute: () => AdminPanelRoute,
+} as any)
 const AdminPanelAddAccommodationRoute =
   AdminPanelAddAccommodationRouteImport.update({
     id: '/add-accommodation',
     path: '/add-accommodation',
     getParentRoute: () => AdminPanelRoute,
   } as any)
-const AdminPanelAccommodationListsRoute =
-  AdminPanelAccommodationListsRouteImport.update({
-    id: '/accommodation-lists',
-    path: '/accommodation-lists',
-    getParentRoute: () => AdminPanelRoute,
-  } as any)
-const AdminPanelAccommodationsIdEditRoute =
-  AdminPanelAccommodationsIdEditRouteImport.update({
-    id: '/accommodations/$id/edit',
-    path: '/accommodations/$id/edit',
-    getParentRoute: () => AdminPanelRoute,
-  } as any)
+const AdminPanelIdRoute = AdminPanelIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminPanelRoute,
+} as any)
+const AdminPanelIdRoomTypesRoute = AdminPanelIdRoomTypesRouteImport.update({
+  id: '/roomTypes',
+  path: '/roomTypes',
+  getParentRoute: () => AdminPanelIdRoute,
+} as any)
+const AdminPanelIdPrimaryInfoRoute = AdminPanelIdPrimaryInfoRouteImport.update({
+  id: '/primaryInfo',
+  path: '/primaryInfo',
+  getParentRoute: () => AdminPanelIdRoute,
+} as any)
+const AdminPanelIdPhotosRoute = AdminPanelIdPhotosRouteImport.update({
+  id: '/photos',
+  path: '/photos',
+  getParentRoute: () => AdminPanelIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin-panel': typeof AdminPanelRouteWithChildren
-  '/admin-panel/accommodation-lists': typeof AdminPanelAccommodationListsRoute
+  '/admin-panel/$id': typeof AdminPanelIdRouteWithChildren
   '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
-  '/admin-panel/accommodations/$id/edit': typeof AdminPanelAccommodationsIdEditRoute
+  '/admin-panel/add-features': typeof AdminPanelAddFeaturesRoute
+  '/admin-panel/': typeof AdminPanelIndexRoute
+  '/admin-panel/$id/photos': typeof AdminPanelIdPhotosRoute
+  '/admin-panel/$id/primaryInfo': typeof AdminPanelIdPrimaryInfoRoute
+  '/admin-panel/$id/roomTypes': typeof AdminPanelIdRoomTypesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin-panel': typeof AdminPanelRouteWithChildren
-  '/admin-panel/accommodation-lists': typeof AdminPanelAccommodationListsRoute
+  '/admin-panel/$id': typeof AdminPanelIdRouteWithChildren
   '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
-  '/admin-panel/accommodations/$id/edit': typeof AdminPanelAccommodationsIdEditRoute
+  '/admin-panel/add-features': typeof AdminPanelAddFeaturesRoute
+  '/admin-panel': typeof AdminPanelIndexRoute
+  '/admin-panel/$id/photos': typeof AdminPanelIdPhotosRoute
+  '/admin-panel/$id/primaryInfo': typeof AdminPanelIdPrimaryInfoRoute
+  '/admin-panel/$id/roomTypes': typeof AdminPanelIdRoomTypesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin-panel': typeof AdminPanelRouteWithChildren
-  '/admin-panel/accommodation-lists': typeof AdminPanelAccommodationListsRoute
+  '/admin-panel/$id': typeof AdminPanelIdRouteWithChildren
   '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
-  '/admin-panel/accommodations/$id/edit': typeof AdminPanelAccommodationsIdEditRoute
+  '/admin-panel/add-features': typeof AdminPanelAddFeaturesRoute
+  '/admin-panel/': typeof AdminPanelIndexRoute
+  '/admin-panel/$id/photos': typeof AdminPanelIdPhotosRoute
+  '/admin-panel/$id/primaryInfo': typeof AdminPanelIdPrimaryInfoRoute
+  '/admin-panel/$id/roomTypes': typeof AdminPanelIdRoomTypesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/admin-panel'
-    | '/admin-panel/accommodation-lists'
+    | '/admin-panel/$id'
     | '/admin-panel/add-accommodation'
-    | '/admin-panel/accommodations/$id/edit'
+    | '/admin-panel/add-features'
+    | '/admin-panel/'
+    | '/admin-panel/$id/photos'
+    | '/admin-panel/$id/primaryInfo'
+    | '/admin-panel/$id/roomTypes'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin-panel'
-    | '/admin-panel/accommodation-lists'
+    | '/admin-panel/$id'
     | '/admin-panel/add-accommodation'
-    | '/admin-panel/accommodations/$id/edit'
+    | '/admin-panel/add-features'
+    | '/admin-panel'
+    | '/admin-panel/$id/photos'
+    | '/admin-panel/$id/primaryInfo'
+    | '/admin-panel/$id/roomTypes'
   id:
     | '__root__'
     | '/'
     | '/admin-panel'
-    | '/admin-panel/accommodation-lists'
+    | '/admin-panel/$id'
     | '/admin-panel/add-accommodation'
-    | '/admin-panel/accommodations/$id/edit'
+    | '/admin-panel/add-features'
+    | '/admin-panel/'
+    | '/admin-panel/$id/photos'
+    | '/admin-panel/$id/primaryInfo'
+    | '/admin-panel/$id/roomTypes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -111,6 +155,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-panel/': {
+      id: '/admin-panel/'
+      path: '/'
+      fullPath: '/admin-panel/'
+      preLoaderRoute: typeof AdminPanelIndexRouteImport
+      parentRoute: typeof AdminPanelRoute
+    }
+    '/admin-panel/add-features': {
+      id: '/admin-panel/add-features'
+      path: '/add-features'
+      fullPath: '/admin-panel/add-features'
+      preLoaderRoute: typeof AdminPanelAddFeaturesRouteImport
+      parentRoute: typeof AdminPanelRoute
+    }
     '/admin-panel/add-accommodation': {
       id: '/admin-panel/add-accommodation'
       path: '/add-accommodation'
@@ -118,33 +176,65 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPanelAddAccommodationRouteImport
       parentRoute: typeof AdminPanelRoute
     }
-    '/admin-panel/accommodation-lists': {
-      id: '/admin-panel/accommodation-lists'
-      path: '/accommodation-lists'
-      fullPath: '/admin-panel/accommodation-lists'
-      preLoaderRoute: typeof AdminPanelAccommodationListsRouteImport
+    '/admin-panel/$id': {
+      id: '/admin-panel/$id'
+      path: '/$id'
+      fullPath: '/admin-panel/$id'
+      preLoaderRoute: typeof AdminPanelIdRouteImport
       parentRoute: typeof AdminPanelRoute
     }
-    '/admin-panel/accommodations/$id/edit': {
-      id: '/admin-panel/accommodations/$id/edit'
-      path: '/accommodations/$id/edit'
-      fullPath: '/admin-panel/accommodations/$id/edit'
-      preLoaderRoute: typeof AdminPanelAccommodationsIdEditRouteImport
-      parentRoute: typeof AdminPanelRoute
+    '/admin-panel/$id/roomTypes': {
+      id: '/admin-panel/$id/roomTypes'
+      path: '/roomTypes'
+      fullPath: '/admin-panel/$id/roomTypes'
+      preLoaderRoute: typeof AdminPanelIdRoomTypesRouteImport
+      parentRoute: typeof AdminPanelIdRoute
+    }
+    '/admin-panel/$id/primaryInfo': {
+      id: '/admin-panel/$id/primaryInfo'
+      path: '/primaryInfo'
+      fullPath: '/admin-panel/$id/primaryInfo'
+      preLoaderRoute: typeof AdminPanelIdPrimaryInfoRouteImport
+      parentRoute: typeof AdminPanelIdRoute
+    }
+    '/admin-panel/$id/photos': {
+      id: '/admin-panel/$id/photos'
+      path: '/photos'
+      fullPath: '/admin-panel/$id/photos'
+      preLoaderRoute: typeof AdminPanelIdPhotosRouteImport
+      parentRoute: typeof AdminPanelIdRoute
     }
   }
 }
 
+interface AdminPanelIdRouteChildren {
+  AdminPanelIdPhotosRoute: typeof AdminPanelIdPhotosRoute
+  AdminPanelIdPrimaryInfoRoute: typeof AdminPanelIdPrimaryInfoRoute
+  AdminPanelIdRoomTypesRoute: typeof AdminPanelIdRoomTypesRoute
+}
+
+const AdminPanelIdRouteChildren: AdminPanelIdRouteChildren = {
+  AdminPanelIdPhotosRoute: AdminPanelIdPhotosRoute,
+  AdminPanelIdPrimaryInfoRoute: AdminPanelIdPrimaryInfoRoute,
+  AdminPanelIdRoomTypesRoute: AdminPanelIdRoomTypesRoute,
+}
+
+const AdminPanelIdRouteWithChildren = AdminPanelIdRoute._addFileChildren(
+  AdminPanelIdRouteChildren,
+)
+
 interface AdminPanelRouteChildren {
-  AdminPanelAccommodationListsRoute: typeof AdminPanelAccommodationListsRoute
+  AdminPanelIdRoute: typeof AdminPanelIdRouteWithChildren
   AdminPanelAddAccommodationRoute: typeof AdminPanelAddAccommodationRoute
-  AdminPanelAccommodationsIdEditRoute: typeof AdminPanelAccommodationsIdEditRoute
+  AdminPanelAddFeaturesRoute: typeof AdminPanelAddFeaturesRoute
+  AdminPanelIndexRoute: typeof AdminPanelIndexRoute
 }
 
 const AdminPanelRouteChildren: AdminPanelRouteChildren = {
-  AdminPanelAccommodationListsRoute: AdminPanelAccommodationListsRoute,
+  AdminPanelIdRoute: AdminPanelIdRouteWithChildren,
   AdminPanelAddAccommodationRoute: AdminPanelAddAccommodationRoute,
-  AdminPanelAccommodationsIdEditRoute: AdminPanelAccommodationsIdEditRoute,
+  AdminPanelAddFeaturesRoute: AdminPanelAddFeaturesRoute,
+  AdminPanelIndexRoute: AdminPanelIndexRoute,
 }
 
 const AdminPanelRouteWithChildren = AdminPanelRoute._addFileChildren(

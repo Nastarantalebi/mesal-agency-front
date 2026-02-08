@@ -34,7 +34,7 @@
     --color-accent-20: var(--primary-20);
     --color-accent-10: var(--primary-10);
   
-    --color-background: var(--lightground);
+    --color-lightground: var(--lightground);
     
     --font-display: "Vazirmatn FD",  sans-serif;
   }

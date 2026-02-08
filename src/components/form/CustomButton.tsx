@@ -1,27 +1,26 @@
+import * as React from "react";
 import { Button } from "../ui/button";
 
-interface Props {
-  children: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  type?: "button" | "submit";
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: React.ReactNode;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
+  variant?: React.ComponentProps<typeof Button>["variant"];
+  size?: React.ComponentProps<typeof Button>["size"];
 }
 
 const CustomButton = ({
   children,
-  onClick,
-  type = "button",
   icon,
   iconPosition = "right",
+  variant,
+  size,
+  className,
+  type,
+  ...props
 }: Props) => {
   return (
-    <Button
-      // className="cursor-pointer px-4 py-2.5 rounded-xl text-white hover:bg-slate-800 disabled:opacity-60 disabled:cursor-not-allowed"
-      className=""
-      type={type}
-      onClick={onClick}
-    >
+    <Button variant={variant} type={type} size={size} className={className} {...props}>
       {icon && iconPosition === "left" ? icon : null}
       <span>{children}</span>
       {icon && iconPosition === "right" ? icon : null}
