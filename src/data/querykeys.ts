@@ -13,6 +13,13 @@ export const accommodation_cities_url = "admin/cities/"
 export const accommodation_lists_key = "admin-accommodations"
 export const accommodation_lists_url = "admin/accommodations/"
 
+export const features_key = "features"
+export const features_url = "admin/features/"
+
+export const beds_key = "beds"
+export const beds_url = "admin/beds/"
+
+
 
 
 

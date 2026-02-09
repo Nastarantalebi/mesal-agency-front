@@ -1,0 +1,77 @@
+import CustomButton from "@/components/form/CustomButton";
+import { Form } from "@/components/ui/form";
+import type { TBedResponse, TCreateBed } from "../types";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import useGetData from "@/services/useGetData";
+import { beds_key, beds_url, features_key, features_url } from "@/data/querykeys";
+import { useEffect, useState } from "react";
+import usePostData from "@/services/usePostData";
+import { toast } from "sonner";
+import formTypes from "@/components/form/formInputTypes";
+import FormErrorModal from "@/components/FormErrorModal";
+import { bedInitialValues, bedValidation } from "../fixtures/validation";
+import { BedFields } from "../fixtures/BedsField";
+
+const AddFeaturesForm = () => {
+  const form = useForm<TCreateBed>({
+    resolver: zodResolver(bedValidation),
+    defaultValues: bedInitialValues,
+  });
+
+  // const { data: features, isFetching } = useGetData<TFeatureResponse>({
+  //   key: [features_url],
+  //   url: `${features_key}`,
+  // });
+
+  // useEffect(() => {
+  //   if (!features) return;
+  //   form.reset({
+  //     ...features,
+  //   });
+  // }, [features]);
+
+  const createMutation = usePostData<TCreateBed, TBedResponse>({
+    key: [beds_key],
+    url: beds_url,
+  });
+
+  const [errorOpen, setErrorOpen] = useState(false);
+  const errmessage = "ثبت تخت با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
+
+  const handleSubmit = (value: TCreateBed) => {
+    createMutation.mutateAsync(value, {
+      onSuccess: () => {
+        toast.success("نوع تخت با موفقیت افزوده شد");
+      },
+      onError: () => setErrorOpen(true),
+    });
+  };
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {BedFields.map((item) => (
+          <div
+            key={String(item.name)}
+            className={item.className || "col-span-1"}
+          >
+            {formTypes<TCreateBed>(item, form.control)}
+          </div>
+        ))}
+        <div className="col-span-1 md:col-span-2 lg:grid-cols-4 flex justify-start gap-3 mt-6">
+          <CustomButton type="submit">افزودن</CustomButton>
+        </div>
+      </form>
+      <FormErrorModal
+        open={errorOpen}
+        message={errmessage}
+        onOpenChange={setErrorOpen}
+        onAcknowledge={() => setErrorOpen(false)}
+      />
+    </Form>
+  );
+};
+
+export default AddFeaturesForm;
+

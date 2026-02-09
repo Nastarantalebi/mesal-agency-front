@@ -1,9 +1,10 @@
 export type TCFeature = {
     title: string;
+    type: string;
 }
 
 export type TFeatureResponse = {
     id: number;
-    feature: { id: number; title: string } | null;
+    title: string;
+    type: string;
 }
-

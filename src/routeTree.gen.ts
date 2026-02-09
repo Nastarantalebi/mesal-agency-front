@@ -10,8 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminPanelRouteImport } from './routes/admin-panel'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminPanelIndexRouteImport } from './routes/admin-panel.index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminAccommodationListRouteImport } from './routes/admin/accommodation-list'
+import { Route as AdminAccommodationFeaturesRouteImport } from './routes/admin/accommodation-features'
+import { Route as AdminAccommodationBedsRouteImport } from './routes/admin/accommodation-beds'
 import { Route as AdminPanelAddFeaturesRouteImport } from './routes/admin-panel.add-features'
 import { Route as AdminPanelAddAccommodationRouteImport } from './routes/admin-panel.add-accommodation'
 import { Route as AdminPanelIdRouteImport } from './routes/admin-panel.$id'
@@ -24,15 +28,36 @@ const AdminPanelRoute = AdminPanelRouteImport.update({
   path: '/admin-panel',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminPanelIndexRoute = AdminPanelIndexRouteImport.update({
+const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AdminPanelRoute,
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAccommodationListRoute = AdminAccommodationListRouteImport.update({
+  id: '/accommodation-list',
+  path: '/accommodation-list',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAccommodationFeaturesRoute =
+  AdminAccommodationFeaturesRouteImport.update({
+    id: '/accommodation-features',
+    path: '/accommodation-features',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminAccommodationBedsRoute = AdminAccommodationBedsRouteImport.update({
+  id: '/accommodation-beds',
+  path: '/accommodation-beds',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminPanelAddFeaturesRoute = AdminPanelAddFeaturesRouteImport.update({
   id: '/add-features',
@@ -68,21 +93,29 @@ const AdminPanelIdPhotosRoute = AdminPanelIdPhotosRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/admin-panel': typeof AdminPanelRouteWithChildren
   '/admin-panel/$id': typeof AdminPanelIdRouteWithChildren
   '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
   '/admin-panel/add-features': typeof AdminPanelAddFeaturesRoute
-  '/admin-panel/': typeof AdminPanelIndexRoute
+  '/admin/accommodation-beds': typeof AdminAccommodationBedsRoute
+  '/admin/accommodation-features': typeof AdminAccommodationFeaturesRoute
+  '/admin/accommodation-list': typeof AdminAccommodationListRoute
+  '/admin/': typeof AdminIndexRoute
   '/admin-panel/$id/photos': typeof AdminPanelIdPhotosRoute
   '/admin-panel/$id/primaryInfo': typeof AdminPanelIdPrimaryInfoRoute
   '/admin-panel/$id/roomTypes': typeof AdminPanelIdRoomTypesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-panel': typeof AdminPanelRouteWithChildren
   '/admin-panel/$id': typeof AdminPanelIdRouteWithChildren
   '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
   '/admin-panel/add-features': typeof AdminPanelAddFeaturesRoute
-  '/admin-panel': typeof AdminPanelIndexRoute
+  '/admin/accommodation-beds': typeof AdminAccommodationBedsRoute
+  '/admin/accommodation-features': typeof AdminAccommodationFeaturesRoute
+  '/admin/accommodation-list': typeof AdminAccommodationListRoute
+  '/admin': typeof AdminIndexRoute
   '/admin-panel/$id/photos': typeof AdminPanelIdPhotosRoute
   '/admin-panel/$id/primaryInfo': typeof AdminPanelIdPrimaryInfoRoute
   '/admin-panel/$id/roomTypes': typeof AdminPanelIdRoomTypesRoute
@@ -90,11 +123,15 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/admin-panel': typeof AdminPanelRouteWithChildren
   '/admin-panel/$id': typeof AdminPanelIdRouteWithChildren
   '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
   '/admin-panel/add-features': typeof AdminPanelAddFeaturesRoute
-  '/admin-panel/': typeof AdminPanelIndexRoute
+  '/admin/accommodation-beds': typeof AdminAccommodationBedsRoute
+  '/admin/accommodation-features': typeof AdminAccommodationFeaturesRoute
+  '/admin/accommodation-list': typeof AdminAccommodationListRoute
+  '/admin/': typeof AdminIndexRoute
   '/admin-panel/$id/photos': typeof AdminPanelIdPhotosRoute
   '/admin-panel/$id/primaryInfo': typeof AdminPanelIdPrimaryInfoRoute
   '/admin-panel/$id/roomTypes': typeof AdminPanelIdRoomTypesRoute
@@ -103,32 +140,44 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/admin-panel'
     | '/admin-panel/$id'
     | '/admin-panel/add-accommodation'
     | '/admin-panel/add-features'
-    | '/admin-panel/'
+    | '/admin/accommodation-beds'
+    | '/admin/accommodation-features'
+    | '/admin/accommodation-list'
+    | '/admin/'
     | '/admin-panel/$id/photos'
     | '/admin-panel/$id/primaryInfo'
     | '/admin-panel/$id/roomTypes'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin-panel'
     | '/admin-panel/$id'
     | '/admin-panel/add-accommodation'
     | '/admin-panel/add-features'
-    | '/admin-panel'
+    | '/admin/accommodation-beds'
+    | '/admin/accommodation-features'
+    | '/admin/accommodation-list'
+    | '/admin'
     | '/admin-panel/$id/photos'
     | '/admin-panel/$id/primaryInfo'
     | '/admin-panel/$id/roomTypes'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/admin-panel'
     | '/admin-panel/$id'
     | '/admin-panel/add-accommodation'
     | '/admin-panel/add-features'
-    | '/admin-panel/'
+    | '/admin/accommodation-beds'
+    | '/admin/accommodation-features'
+    | '/admin/accommodation-list'
+    | '/admin/'
     | '/admin-panel/$id/photos'
     | '/admin-panel/$id/primaryInfo'
     | '/admin-panel/$id/roomTypes'
@@ -136,6 +185,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AdminPanelRoute: typeof AdminPanelRouteWithChildren
 }
 
@@ -148,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPanelRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -155,12 +212,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin-panel/': {
-      id: '/admin-panel/'
+    '/admin/': {
+      id: '/admin/'
       path: '/'
-      fullPath: '/admin-panel/'
-      preLoaderRoute: typeof AdminPanelIndexRouteImport
-      parentRoute: typeof AdminPanelRoute
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/accommodation-list': {
+      id: '/admin/accommodation-list'
+      path: '/accommodation-list'
+      fullPath: '/admin/accommodation-list'
+      preLoaderRoute: typeof AdminAccommodationListRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/accommodation-features': {
+      id: '/admin/accommodation-features'
+      path: '/accommodation-features'
+      fullPath: '/admin/accommodation-features'
+      preLoaderRoute: typeof AdminAccommodationFeaturesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/accommodation-beds': {
+      id: '/admin/accommodation-beds'
+      path: '/accommodation-beds'
+      fullPath: '/admin/accommodation-beds'
+      preLoaderRoute: typeof AdminAccommodationBedsRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin-panel/add-features': {
       id: '/admin-panel/add-features'
@@ -207,6 +285,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminAccommodationBedsRoute: typeof AdminAccommodationBedsRoute
+  AdminAccommodationFeaturesRoute: typeof AdminAccommodationFeaturesRoute
+  AdminAccommodationListRoute: typeof AdminAccommodationListRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAccommodationBedsRoute: AdminAccommodationBedsRoute,
+  AdminAccommodationFeaturesRoute: AdminAccommodationFeaturesRoute,
+  AdminAccommodationListRoute: AdminAccommodationListRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface AdminPanelIdRouteChildren {
   AdminPanelIdPhotosRoute: typeof AdminPanelIdPhotosRoute
   AdminPanelIdPrimaryInfoRoute: typeof AdminPanelIdPrimaryInfoRoute
@@ -227,14 +321,12 @@ interface AdminPanelRouteChildren {
   AdminPanelIdRoute: typeof AdminPanelIdRouteWithChildren
   AdminPanelAddAccommodationRoute: typeof AdminPanelAddAccommodationRoute
   AdminPanelAddFeaturesRoute: typeof AdminPanelAddFeaturesRoute
-  AdminPanelIndexRoute: typeof AdminPanelIndexRoute
 }
 
 const AdminPanelRouteChildren: AdminPanelRouteChildren = {
   AdminPanelIdRoute: AdminPanelIdRouteWithChildren,
   AdminPanelAddAccommodationRoute: AdminPanelAddAccommodationRoute,
   AdminPanelAddFeaturesRoute: AdminPanelAddFeaturesRoute,
-  AdminPanelIndexRoute: AdminPanelIndexRoute,
 }
 
 const AdminPanelRouteWithChildren = AdminPanelRoute._addFileChildren(
@@ -243,6 +335,7 @@ const AdminPanelRouteWithChildren = AdminPanelRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   AdminPanelRoute: AdminPanelRouteWithChildren,
 }
 export const routeTree = rootRouteImport

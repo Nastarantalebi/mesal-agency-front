@@ -85,14 +85,14 @@ const RoomTypeForm = ({
     if (isEdit) {
       updateMutation.mutateAsync(value, {
         onSuccess: () => {
-          toast.success("ویرایش با موفقیت انجام شد ✅");
+          toast.success("ویرایش با موفقیت انجام شد ");
         },
         onError: () => setErrorOpen(true),
       });
     } else {
       createMutation.mutateAsync(value, {
         onSuccess: () => {
-          toast.success("اقامتگاه با موفقیت ثبت شد ✅");
+          toast.success("اقامتگاه با موفقیت ثبت شد ");
           form.reset(roomTypeInitialValues);
         },
         onError: () => setErrorOpen(true),

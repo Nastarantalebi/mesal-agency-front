@@ -7,7 +7,7 @@ export interface Props<T extends FieldValues> {
   placeholder?: string;
   label?: string;
   isRequired?: boolean;
-  items?: Item[];
+  items?: Item[] | string[];
   inputType?: InputType;
   onValueChange?: (value: string | number) => void;
   control?: Control<T>;
