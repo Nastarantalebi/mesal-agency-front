@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+// import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/admin-panel/add-features')({
-  component: AddFeatures,
-})
+// export const Route = createFileRoute("/admin-panel/add-features")({
+//   component: AddFeatures,
+// });
 
-function AddFeatures() {
-  return <div>Hello "/admin-panel/features"!</div>
-}
+// function AddFeatures() {
+//   return <div>Hello "/dashboard/features"!</div>;
+// }

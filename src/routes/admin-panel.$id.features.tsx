@@ -1,7 +1,7 @@
 // import AddFeatures from "@/app/AdminPanel/AccommodationFeatures/components/AddFeatures";
 // import { createFileRoute } from "@tanstack/react-router";
 
-// export const Route = createFileRoute("/admin-panel/$id/features")({
+// export const Route = createFileRoute("/dashboard/$id/features")({
 //   component: AccommodationFeatures,
 // });
 

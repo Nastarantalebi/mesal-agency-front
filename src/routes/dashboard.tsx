@@ -12,17 +12,17 @@ function RouteComponent() {
   const items = [
     {
       title: "لیست اقامتگاه‌ها",
-      url: "/admin/accommodation-list" as const,
+      url: "/dashboard/accommodation-list" as const,
       icon: <Home />,
     },
     {
       title: "ثبت ویژگی",
-      url: "/admin/accommodation-features" as const,
+      url: "/dashboard/accommodation-features" as const,
       icon: <Star />,
     },
     {
       title: "ثبت نوع تخت",
-      url: "/admin/accommodation-beds" as const,
+      url: "/dashboard/accommodation-beds" as const,
       icon: <BedSingle />,
     },
   ];
