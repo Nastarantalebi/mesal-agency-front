@@ -3,7 +3,7 @@ import CustomButton from "@/components/form/CustomButton";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 
-export const Route = createFileRoute("/admin/accommodation-list")({
+export const Route = createFileRoute("/admin_panell/accommodation-list")({
   component: RouteComponent,
 });
 
