@@ -164,7 +164,7 @@ const RoomTypeBeds = ({
                           variant="primary"
                           className="px-6 py-2 bg-accent/70 text-black"
                         >
-                          {roomType.beds.name}
+                          {roomType.beds?.name}
                         </Badge>
                       );
                     })}
