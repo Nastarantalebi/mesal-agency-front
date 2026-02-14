@@ -19,6 +19,8 @@ export const features_url = "admin/features/"
 export const beds_key = "beds"
 export const beds_url = "admin/beds/"
 
+export const peakDate_key = "peakDate"
+export const peakDate_url = "admin/peak_dates/"
 
 
 

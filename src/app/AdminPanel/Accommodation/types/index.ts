@@ -71,6 +71,15 @@ export const YES_NO_OPTIONS: Item[] = [
   { label: "خیر", value: "false" },
 ];
 
+
+export type TCAccommodationFeature = {
+    feature: number[] ;
+}
+export type TAccommodationFeatureResponse = {
+    id: string;
+    feature: {id: string; title: string};
+}[]
+
   
 
 

@@ -12,6 +12,7 @@ import RoomTypeFeatures from "./RoomTypeFeatures";
 import ListBeds from "./ListBeds";
 import ListImage from "./ListImage";
 import ListFeatures from "./ListFeatures";
+import RoomTypeBeds from "./RoomTypeBeds";
 
 type Type = {
   id: number;
@@ -85,11 +86,13 @@ const RoomList = ({ AccommodationId }: Props) => {
                 setOpenF(true);
               }}
             />
-            <ListBeds id={id}
+            <ListBeds
+              id={id}
               onClick={(id) => {
                 setSelectedId4(id);
                 setOpenB(true);
-              }}/>
+              }}
+            />
           </>
         )}
         // onBed={(id) => {
@@ -121,7 +124,14 @@ const RoomList = ({ AccommodationId }: Props) => {
         onOpenChange={() => setOpenF(false)}
         title="افزودن ویژگی"
       />
-      
+      <RoomTypeBeds
+        RoomId={selectedId4}
+        AccommodationId={AccommodationId}
+        open={openB}
+        onOpenChange={() => setOpenB(false)}
+        title="افزودن تخت"
+      />
+
     </>
   );
 };

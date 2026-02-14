@@ -8,7 +8,6 @@ export const Route = createFileRoute("/dashboard/accommodation-list")({
 });
 
 function RouteComponent() {
-  // const navigate = useNavigate();
   return (
     <div className="max-w-5xl mt-20">
       <CustomButton

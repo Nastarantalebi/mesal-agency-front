@@ -1,8 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import AccommodationForm from "./AccommodationForm";
-import AccommodationPhotoes from "../../AcoommodationPhotoes/components/AccommodationPhotoes";
-import RoomType from "../../RoomTypes/components/RoomType";
+import AccommodationPhotoes from "./AccommodationPhotoes";
+import RoomType from "./AccommodationRoomType";
+import AccommodationFeatures from "./AccommodationFeatures";
 
 const AccommodationTabs = ({
   accommodationId,
@@ -16,6 +17,7 @@ const AccommodationTabs = ({
     },
     {
       title: "ویژگی ها",
+      component: <AccommodationFeatures accommodationId={accommodationId}/>
     },
     {
       title: "تصاویر اقامتگاه",
@@ -29,7 +31,6 @@ const AccommodationTabs = ({
   return (
     <Tabs className="w-full pr-20 ">
       <TabsList className="">
-        {/* Change TabsList background */}
         {items.map((item) => (
           <TabsTrigger
             key={item.title}

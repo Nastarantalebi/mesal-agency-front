@@ -17,3 +17,21 @@ export type TRoomTypeResponse = {
   dinner: boolean | null,
 }
 
+export type TCRoomTypeFeature = {
+    feature: number[] ;
+}
+export type TRoomTypeFeatureResponse = {
+    id: string;
+    feature: {id: string; title: string};
+}[]
+
+export type TCRoomTypeBed = {
+    beds: number[] ;
+}
+
+export type TRoomTypeBedResponse = {
+    id: string;
+    beds: {id: string; name: string}
+}[]
+
+

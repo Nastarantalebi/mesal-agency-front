@@ -7,9 +7,8 @@ import type { TPaginatedResponse } from "@/types";
 import React, { useEffect, useState } from "react";
 import type {
   TCFeature,
-  TCRoomTypeFeature,
+
   TFeatureResponse,
-  TRoomTypeFeatureResponse,
 } from "../../AccommodationFeatures/types";
 import useGetData from "@/services/useGetData";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
@@ -28,6 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Form } from "@/components/ui/form";
 import FormErrorModal from "@/components/FormErrorModal";
+import type { TCRoomTypeFeature, TRoomTypeFeatureResponse } from "../types";
 
 interface Props {
   AccommodationId?: string;
@@ -62,7 +62,7 @@ const RoomTypeFeatures = ({
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
-  const { data: roomFeaturesData } = useGetData<
+  const { data: roomTypeFeaturesData } = useGetData<
     TPaginatedResponse<TFeatureResponse>
   >({
     key: [features_key, String(AccommodationId), String(RoomId)],
@@ -70,29 +70,11 @@ const RoomTypeFeatures = ({
   });
 
 
-  const { data: roomTypeFeatureList } = useGetData<
-    TPaginatedResponse<TRoomTypeFeatureResponse>
-  >({
+  const { data: roomTypeFeatureList } = useGetData<TRoomTypeFeatureResponse>({
     key: ["roomType-features", String(AccommodationId), String(RoomId)],
     url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`,
+    enabled: !!RoomId,
   });
-
-//   const availableFeatures = React.useMemo(() => {
-//   // Safety check: return empty or all features if data is missing
-//   if (!roomFeaturesData?.results || !roomTypeFeatureList?.results) {
-//     return roomFeaturesData?.results || [];
-//   }
-
-//   // Step 1: Get all feature IDs that are already added (from right side)
-//   const addedFeatureIds = new Set(
-//     roomTypeFeatureList.results.map((f) => f.feature.id)
-//   );
-
-//   // Step 2: Filter to keep only features NOT in the addedFeatureIds Set
-//   return roomFeaturesData.results.filter(
-//     (feature) => !addedFeatureIds.has(Number(feature.id))
-//   );
-// }, [roomFeaturesData, roomTypeFeatureList]);
 
   const submitFeatures = usePostData<
     TCRoomTypeFeature,
@@ -147,16 +129,16 @@ const RoomTypeFeatures = ({
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-10">
               <div className="flex flex-col gap-5 items-start justify-start">
                 <Card className="shadow-lg shadow-primary/50">
                   <CardTitle className="text-center text-sm font-light">
                     ویژگی های مربوط به اتاق
                   </CardTitle>
-                  {roomFeaturesData ? (
+                  {roomTypeFeaturesData ? (
                     <CardContent>
                       <div className="flex flex-wrap gap-2">
-                        {roomFeaturesData.results?.map((f) => {
+                        {roomTypeFeaturesData.results?.map((f) => {
                           const selected = selectedIds.includes(f.id);
                           return (
                             <Badge
@@ -179,7 +161,7 @@ const RoomTypeFeatures = ({
                   ) : (
                     <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
                   )}
-                </Card >
+                </Card>
                 <CustomButton type="submit">ثبت</CustomButton>
               </div>
               <div className="flex flex-col gap-5 items-start justify-start">
@@ -189,7 +171,7 @@ const RoomTypeFeatures = ({
                   </CardTitle>
                   <div>
                     <CardContent className="flex flex-wrap gap-2">
-                      {roomTypeFeatureList?.results.map((f) => {
+                      {roomTypeFeatureList?.map((f) => {
                         return (
                           <Badge
                             key={f.id}

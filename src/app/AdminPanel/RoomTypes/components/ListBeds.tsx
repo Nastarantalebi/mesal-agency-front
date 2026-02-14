@@ -13,8 +13,8 @@ const ListBeds = ({id, onClick} : Props) => {
 
   return (
     <div onClick={stopRowClick}>
-      <CustomButton className="bg-primary/20 hover:bg-primary/40" type="button" >
-        <BedSingle className="h-5 w-5 cursor-pointer" strokeWidth={1.5} onClick={() => onClick(id)} />
+      <CustomButton className="bg-primary/20 hover:bg-primary/40" type="button" onClick={() => onClick(id)}>
+        <BedSingle className="h-5 w-5 cursor-pointer" strokeWidth={1.5}  />
       </CustomButton>
     </div>
   );

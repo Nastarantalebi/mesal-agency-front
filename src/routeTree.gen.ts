@@ -14,6 +14,7 @@ import { Route as AccommodationRouteImport } from './routes/accommodation'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as AccommodationIndexRouteImport } from './routes/accommodation/index'
+import { Route as DashboardPeakDateRouteImport } from './routes/dashboard/peakDate'
 import { Route as DashboardAccommodationListRouteImport } from './routes/dashboard/accommodation-list'
 import { Route as DashboardAccommodationFeaturesRouteImport } from './routes/dashboard/accommodation-features'
 import { Route as DashboardAccommodationBedsRouteImport } from './routes/dashboard/accommodation-beds'
@@ -46,6 +47,11 @@ const AccommodationIndexRoute = AccommodationIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AccommodationRoute,
+} as any)
+const DashboardPeakDateRoute = DashboardPeakDateRouteImport.update({
+  id: '/peakDate',
+  path: '/peakDate',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardAccommodationListRoute =
   DashboardAccommodationListRouteImport.update({
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/accommodation-beds': typeof DashboardAccommodationBedsRoute
   '/dashboard/accommodation-features': typeof DashboardAccommodationFeaturesRoute
   '/dashboard/accommodation-list': typeof DashboardAccommodationListRoute
+  '/dashboard/peakDate': typeof DashboardPeakDateRoute
   '/accommodation/': typeof AccommodationIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
@@ -111,6 +118,7 @@ export interface FileRoutesByTo {
   '/dashboard/accommodation-beds': typeof DashboardAccommodationBedsRoute
   '/dashboard/accommodation-features': typeof DashboardAccommodationFeaturesRoute
   '/dashboard/accommodation-list': typeof DashboardAccommodationListRoute
+  '/dashboard/peakDate': typeof DashboardPeakDateRoute
   '/accommodation': typeof AccommodationIndexRoute
   '/dashboard': typeof DashboardIndexRoute
 }
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/dashboard/accommodation-beds': typeof DashboardAccommodationBedsRoute
   '/dashboard/accommodation-features': typeof DashboardAccommodationFeaturesRoute
   '/dashboard/accommodation-list': typeof DashboardAccommodationListRoute
+  '/dashboard/peakDate': typeof DashboardPeakDateRoute
   '/accommodation/': typeof AccommodationIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/dashboard/accommodation-beds'
     | '/dashboard/accommodation-features'
     | '/dashboard/accommodation-list'
+    | '/dashboard/peakDate'
     | '/accommodation/'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/dashboard/accommodation-beds'
     | '/dashboard/accommodation-features'
     | '/dashboard/accommodation-list'
+    | '/dashboard/peakDate'
     | '/accommodation'
     | '/dashboard'
   id:
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/dashboard/accommodation-beds'
     | '/dashboard/accommodation-features'
     | '/dashboard/accommodation-list'
+    | '/dashboard/peakDate'
     | '/accommodation/'
     | '/dashboard/'
   fileRoutesById: FileRoutesById
@@ -214,6 +226,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/accommodation/'
       preLoaderRoute: typeof AccommodationIndexRouteImport
       parentRoute: typeof AccommodationRoute
+    }
+    '/dashboard/peakDate': {
+      id: '/dashboard/peakDate'
+      path: '/peakDate'
+      fullPath: '/dashboard/peakDate'
+      preLoaderRoute: typeof DashboardPeakDateRouteImport
+      parentRoute: typeof DashboardRoute
     }
     '/dashboard/accommodation-list': {
       id: '/dashboard/accommodation-list'
@@ -292,6 +311,7 @@ interface DashboardRouteChildren {
   DashboardAccommodationBedsRoute: typeof DashboardAccommodationBedsRoute
   DashboardAccommodationFeaturesRoute: typeof DashboardAccommodationFeaturesRoute
   DashboardAccommodationListRoute: typeof DashboardAccommodationListRoute
+  DashboardPeakDateRoute: typeof DashboardPeakDateRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
@@ -299,6 +319,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAccommodationBedsRoute: DashboardAccommodationBedsRoute,
   DashboardAccommodationFeaturesRoute: DashboardAccommodationFeaturesRoute,
   DashboardAccommodationListRoute: DashboardAccommodationListRoute,
+  DashboardPeakDateRoute: DashboardPeakDateRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
 
