@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import AccommodationForm from "./AccommodationForm";
 import AccommodationPhotoes from "../../AcoommodationPhotoes/components/AccommodationPhotoes";
-import RoomType from "../../RoomTypes/components/roomType";
+import RoomType from "../../RoomTypes/components/RoomType";
 
 const AccommodationTabs = ({
   accommodationId,
@@ -32,6 +32,7 @@ const AccommodationTabs = ({
         {/* Change TabsList background */}
         {items.map((item) => (
           <TabsTrigger
+            key={item.title}
             value={item.title}
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 text-base"
           >

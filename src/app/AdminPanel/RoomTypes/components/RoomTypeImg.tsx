@@ -15,7 +15,7 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   title: string;
   accommodationPk: string;
-  room_Type_pk: string | null;
+  RoomId: string | null;
 }
 
 const roomTypeImg = ({
@@ -23,11 +23,11 @@ const roomTypeImg = ({
   onOpenChange,
   title,
   accommodationPk,
-  room_Type_pk,
+  RoomId,
 }: Props) => {
   const { mutate: uploadImage } = usePostData<FormData, any>({
-    key: ["RoomType-image-upload", room_Type_pk],
-    url: `admin/accommodations/${accommodationPk}/room_types/${room_Type_pk}/images/`,
+    key: ["RoomType-image-upload", RoomId],
+    url: `admin/accommodations/${accommodationPk}/room_types/${RoomId}/images/`,
   });
 
   const onPick = (file: File) => {

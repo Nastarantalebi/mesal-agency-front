@@ -8,6 +8,10 @@ import useGetData from "@/services/useGetData";
 import { useState } from "react";
 import RoomTypeForm from "./RoomTypeForm";
 import RoomTypeImg from "./RoomTypeImg";
+import RoomTypeFeatures from "./RoomTypeFeatures";
+import ListBeds from "./ListBeds";
+import ListImage from "./ListImage";
+import ListFeatures from "./ListFeatures";
 
 type Type = {
   id: number;
@@ -45,6 +49,10 @@ const RoomList = ({ AccommodationId }: Props) => {
   const [selectedId1, setSelectedId1] = useState<string | null>(null);
   const [openImg, setOpenImg] = useState(false);
   const [selectedId2, setSelectedId2] = useState<string | null>(null);
+  const [openF, setOpenF] = useState(false);
+  const [selectedId3, setSelectedId3] = useState<string | null>(null);
+  const [openB, setOpenB] = useState(false);
+  const [selectedId4, setSelectedId4] = useState<string | null>(null);
 
   const { data, isLoading, error } = useGetData<Paginated<RoomItem>>({
     key: [accommodation_lists_key, AccommodationId],
@@ -61,27 +69,59 @@ const RoomList = ({ AccommodationId }: Props) => {
           setSelectedId1(id);
           setOpenEdit(true);
         }}
-        onImg={(id) => {
-          setSelectedId2(id);
-          setOpenImg(true);
-        }}
+        extraAction={(id) => (
+          <>
+            <ListImage
+              id={id}
+              onClick={(id) => {
+                setSelectedId2(id);
+                setOpenImg(true);
+              }}
+            />
+            <ListFeatures
+              id={id}
+              onClick={(id) => {
+                setSelectedId3(id);
+                setOpenF(true);
+              }}
+            />
+            <ListBeds id={id}
+              onClick={(id) => {
+                setSelectedId4(id);
+                setOpenB(true);
+              }}/>
+          </>
+        )}
+        // onBed={(id) => {
+        //   setSelectedId3(id);
+        //   setOpenB(true);
+        // }}
         columns={columns}
         data={data?.results ?? []}
         placeholder="جست و جوی نوع اتاق"
       />
       <RoomTypeForm
+        AccommodationId={AccommodationId}
         RoomId={selectedId1}
         open={openEdit}
         onOpenChange={() => setOpenEdit(false)}
         title="اطلاعات نوع اتاق"
       />
       <RoomTypeImg
-        room_Type_pk={selectedId2}
+        RoomId={selectedId2}
         accommodationPk={AccommodationId}
         open={openImg}
         onOpenChange={() => setOpenImg(false)}
         title="افزودن عکس"
       />
+      <RoomTypeFeatures
+        RoomId={selectedId3}
+        AccommodationId={AccommodationId}
+        open={openF}
+        onOpenChange={() => setOpenF(false)}
+        title="افزودن ویژگی"
+      />
+      
     </>
   );
 };

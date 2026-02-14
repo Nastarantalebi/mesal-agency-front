@@ -16,7 +16,7 @@ const AccommodationPhotoes = ({ accommodationId }: { accommodationId: string }) 
   return (
     <main className="w-full flex flex-row items-start gap-4 px-30 py-20">
       <PhotoUploader size={530} onPick={onPick} />
-      <div className="grid grid-cols-2 gap-4 flex-1">
+      <div className="grid grid-cols-2 gap-4 ">
         <PhotoUploader size={260} onPick={onPick}/>
         <PhotoUploader size={260} onPick={onPick}/>
         <PhotoUploader size={260} onPick={onPick}/>

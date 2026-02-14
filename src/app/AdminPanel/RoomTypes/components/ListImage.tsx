@@ -1,5 +1,6 @@
+import CustomButton from "@/components/form/CustomButton";
 import { ImagePlus } from "lucide-react";
-import CustomButton from "../form/CustomButton";
+
 
 interface Props {
   id: string;

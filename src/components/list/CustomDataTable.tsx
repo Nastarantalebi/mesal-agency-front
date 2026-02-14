@@ -15,11 +15,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { useState } from "react";
+import React, { type ReactNode } from "react";
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
 import ListEdit from "./ListEdit";
-import ListImage from "./ListImage";
+import { Button } from "../ui/button";
+
 
 interface Props<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -27,7 +28,10 @@ interface Props<TData, TValue> {
   placeholder: string;
   onEdit?: (id: string) => void;
   onImg?: (id: string) => void;
+  onFeature?: (id: string) => void;
+  onBed?: (id: string) => void;
   onRowClick?: (id: string) => void;
+  extraAction?: (id: string) => ReactNode;
 }
 
 type RowWithId = { id: string | number };
@@ -37,8 +41,8 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
   data,
   placeholder,
   onEdit,
-  onImg,
   onRowClick,
+  extraAction,
 }: Props<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -66,7 +70,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
         />
         <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
       </div>
-      <div className=" mx-auto overflow-x-auto rounded-md border">
+      <div className="mx-auto overflow-x-auto rounded-md border">
         <Table className="w-full table-fixed">
           <colgroup>
             {table.getAllLeafColumns().map((col) => (
@@ -87,7 +91,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                         )}
                   </TableHead>
                 ))}
-                <TableHead className="w-10">عملیات</TableHead>
+                <TableHead className="w-32">عملیات</TableHead>
               </TableRow>
             ))}
           </TableHeader>
@@ -98,11 +102,6 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={
-                    onRowClick
-                      ? () => onRowClick(String(row.original.id))
-                      : undefined
-                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -112,24 +111,33 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                       )}
                     </TableCell>
                   ))}
-                  <div>
-                    {onEdit && (
-                      <TableCell>
-                        <ListEdit id={String(row.original.id)} onClick={onEdit} />
-                      </TableCell>
-                    )}
-                    {onImg && (
-                      <TableCell>
-                        <ListImage id={String(row.original.id)} onClick={onImg} />
-                      </TableCell>
-                    )}
-                  </div>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      {onRowClick && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => onRowClick(String(row.original.id))}
+                        >
+                          جزییات
+                        </Button>
+                      )}
+                      {onEdit && (
+                        <ListEdit
+                          id={String(row.original.id)}
+                          onClick={onEdit}
+                        />
+                      )}
+
+                      {extraAction?.(String(row.original.id))}
+                    </div>
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columns.length + 1}
                   className="h-24 text-center"
                 >
                   داده ای برای نمایش وجود ندارد!

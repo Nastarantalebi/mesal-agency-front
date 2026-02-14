@@ -5,7 +5,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import useGetData from "@/services/useGetData";
-import { beds_key, beds_url, features_key, features_url } from "@/data/querykeys";
+import {
+  beds_key,
+  beds_url,
+  features_key,
+  features_url,
+} from "@/data/querykeys";
 import { useEffect, useState } from "react";
 import usePostData from "@/services/usePostData";
 import { toast } from "sonner";
@@ -19,18 +24,6 @@ const AddFeaturesForm = () => {
     resolver: zodResolver(bedValidation),
     defaultValues: bedInitialValues,
   });
-
-  // const { data: features, isFetching } = useGetData<TFeatureResponse>({
-  //   key: [features_url],
-  //   url: `${features_key}`,
-  // });
-
-  // useEffect(() => {
-  //   if (!features) return;
-  //   form.reset({
-  //     ...features,
-  //   });
-  // }, [features]);
 
   const createMutation = usePostData<TCreateBed, TBedResponse>({
     key: [beds_key],
@@ -50,7 +43,10 @@ const AddFeaturesForm = () => {
   };
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+      >
         {BedFields.map((item) => (
           <div
             key={String(item.name)}
@@ -74,4 +70,3 @@ const AddFeaturesForm = () => {
 };
 
 export default AddFeaturesForm;
-

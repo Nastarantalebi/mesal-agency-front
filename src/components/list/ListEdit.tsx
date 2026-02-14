@@ -7,7 +7,6 @@ interface Props {
 }
 
 const ListEdit = ({ id, onClick }: Props) => {
-  // جلوگیری از کلیک روی ردیف جدول
   const stopRowClick = (e: React.MouseEvent) => e.stopPropagation();
 
   return (

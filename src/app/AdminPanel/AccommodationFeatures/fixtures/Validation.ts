@@ -1,5 +1,5 @@
 import z, { string } from "zod";
-import type { TCFeature } from "../types";
+import type { TCFeature, TCRoomTypeFeature } from "../types";
 
 export const FeaturesValidation = z.object({
   title: z.string().min(1, "نام ویژگی الزامی است"),

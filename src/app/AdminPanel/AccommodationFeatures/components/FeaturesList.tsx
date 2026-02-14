@@ -4,9 +4,10 @@ import useGetData from "@/services/useGetData";
 import type { TFeatureResponse } from "../types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { TPaginatedResponse } from "@/types";
+import { X } from "lucide-react";
+import useDeleteData from "@/services/useDeleteData";
 
 const FeaturesList = () => {
-
   const { data: roomFeaturesData } = useGetData<
     TPaginatedResponse<TFeatureResponse>
   >({
@@ -14,10 +15,18 @@ const FeaturesList = () => {
     url: `${features_url}?type=roomtype`,
   });
 
-  const { data: accommodationFeaturesData } = useGetData<TPaginatedResponse<TFeatureResponse>>({
+  const { data: accommodationFeaturesData } = useGetData<
+    TPaginatedResponse<TFeatureResponse>
+  >({
     key: [features_key, "accommodation"],
     url: `${features_url}?type=accommodation`,
   });
+
+  const {mutateAsync} = useDeleteData({
+    key: [features_key],
+   url: `${features_url}`,
+  });
+
 
 
   return (
@@ -25,7 +34,7 @@ const FeaturesList = () => {
       <Card className="shadow-lg shadow-primary/50">
         <CardHeader>
           <CardTitle className="text-primary">
-             ویژگی های مربوط به اقامتگاه
+            ویژگی های مربوط به اقامتگاه
           </CardTitle>
         </CardHeader>
         {accommodationFeaturesData ? (
@@ -35,9 +44,15 @@ const FeaturesList = () => {
                 <Badge
                   key={feature.id}
                   variant="outline"
-                  className="px-6 py-2 border-primary"
+                  className="px-6 py-2 border-primary relative pr-10"
                 >
                   {feature.title}
+                  <button
+                    onClick={() => mutateAsync({id:feature.id})}
+                    className="absolute right-1 top-1/2 -translate-y-1/2 hover:bg-destructive/10 rounded-full p-1.5 cursor-pointer"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
                 </Badge>
               ))}
             </div>
@@ -49,7 +64,7 @@ const FeaturesList = () => {
       <Card className="shadow-lg shadow-primary/50">
         <CardHeader>
           <CardTitle className="text-primary">
-             ویژگی های مربوط به اتاق ها
+            ویژگی های مربوط به اتاق ها
           </CardTitle>
         </CardHeader>
         {roomFeaturesData ? (
@@ -59,9 +74,15 @@ const FeaturesList = () => {
                 <Badge
                   key={feature.id}
                   variant="outline"
-                  className="px-6 py-2 border-primary"
+                  className="px-6 py-2 border-primary relative pr-10"
                 >
                   {feature.title}
+                  <button
+                    onClick={() => mutateAsync({id:feature.id})}
+                    className="absolute right-1 top-1/2 -translate-y-1/2 hover:bg-destructive/10 rounded-full p-1.5 cursor-pointer"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
                 </Badge>
               ))}
             </div>

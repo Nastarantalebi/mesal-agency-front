@@ -12,7 +12,7 @@ import type {
   TRoomTypeFeatureResponse,
 } from "../../AccommodationFeatures/types";
 import useGetData from "@/services/useGetData";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -62,14 +62,39 @@ const RoomTypeFeatures = ({
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
-  const { data: roomFeaturesData } = useGetData
+  const { data: roomFeaturesData } = useGetData<
     TPaginatedResponse<TFeatureResponse>
   >({
     key: [features_key, String(AccommodationId), String(RoomId)],
     url: `${features_url}?type=roomtype`,
   });
 
-  const submitFeatures = usePostData
+
+  const { data: roomTypeFeatureList } = useGetData<
+    TPaginatedResponse<TRoomTypeFeatureResponse>
+  >({
+    key: ["roomType-features", String(AccommodationId), String(RoomId)],
+    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`,
+  });
+
+//   const availableFeatures = React.useMemo(() => {
+//   // Safety check: return empty or all features if data is missing
+//   if (!roomFeaturesData?.results || !roomTypeFeatureList?.results) {
+//     return roomFeaturesData?.results || [];
+//   }
+
+//   // Step 1: Get all feature IDs that are already added (from right side)
+//   const addedFeatureIds = new Set(
+//     roomTypeFeatureList.results.map((f) => f.feature.id)
+//   );
+
+//   // Step 2: Filter to keep only features NOT in the addedFeatureIds Set
+//   return roomFeaturesData.results.filter(
+//     (feature) => !addedFeatureIds.has(Number(feature.id))
+//   );
+// }, [roomFeaturesData, roomTypeFeatureList]);
+
+  const submitFeatures = usePostData<
     TCRoomTypeFeature,
     TRoomTypeFeatureResponse
   >({
@@ -84,14 +109,14 @@ const RoomTypeFeatures = ({
       const newSelection = prev.includes(id)
         ? prev.filter((x) => x !== id)
         : [...prev, id];
-      
+
       form.setValue("feature", newSelection, { shouldValidate: true });
-      
+
       return newSelection;
     });
   };
 
-  const handleSubmit = (values: TFeatureListForm) => {
+  const handleSubmit = (values: TCRoomTypeFeature) => {
     submitFeatures.mutateAsync(
       { feature: values.feature },
       {
@@ -122,36 +147,63 @@ const RoomTypeFeatures = ({
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <div className="flex flex-col gap-5 items-center justify-start">
-              <Card className="shadow-lg shadow-primary/50">
-                {roomFeaturesData ? (
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {roomFeaturesData.results?.map((f) => {
-                        const selected = selectedIds.includes(f.id);
+            <div className="grid grid-cols-2">
+              <div className="flex flex-col gap-5 items-start justify-start">
+                <Card className="shadow-lg shadow-primary/50">
+                  <CardTitle className="text-center text-sm font-light">
+                    ویژگی های مربوط به اتاق
+                  </CardTitle>
+                  {roomFeaturesData ? (
+                    <CardContent>
+                      <div className="flex flex-wrap gap-2">
+                        {roomFeaturesData.results?.map((f) => {
+                          const selected = selectedIds.includes(f.id);
+                          return (
+                            <Badge
+                              key={f.id}
+                              variant="outline"
+                              onClick={() => toggle(f.id)}
+                              className={
+                                "cursor-pointer px-6 py-2 " +
+                                (selected
+                                  ? "bg-green-400/10 text-black border-green-400"
+                                  : "")
+                              }
+                            >
+                              {f.title}
+                            </Badge>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  ) : (
+                    <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
+                  )}
+                </Card >
+                <CustomButton type="submit">ثبت</CustomButton>
+              </div>
+              <div className="flex flex-col gap-5 items-start justify-start">
+                <Card className="shadow-lg shadow-primary/50">
+                  <CardTitle className="text-center text-sm font-light">
+                    ویژگی های اضافه شده
+                  </CardTitle>
+                  <div>
+                    <CardContent className="flex flex-wrap gap-2">
+                      {roomTypeFeatureList?.results.map((f) => {
                         return (
                           <Badge
                             key={f.id}
-                            variant="outline"
-                            onClick={() => toggle(f.id)}
-                            className={
-                              "cursor-pointer px-6 py-2 " +
-                              (selected
-                                ? "bg-green-400/10 text-black border-green-400"
-                                : "")
-                            }
+                            variant="primary"
+                            className="px-6 py-2 bg-accent/70 text-black"
                           >
-                            {f.title}
+                            {f.feature.title}
                           </Badge>
                         );
                       })}
-                    </div>
-                  </CardContent>
-                ) : (
-                  <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
-                )}
-              </Card>
-              <CustomButton type="submit">ثبت</CustomButton>
+                    </CardContent>
+                  </div>
+                </Card>
+              </div>
             </div>
           </form>
           <FormErrorModal

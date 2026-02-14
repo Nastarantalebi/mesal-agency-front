@@ -5,7 +5,6 @@ import {
   accommodation_lists_url,
 } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
-import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
 type City = {
@@ -59,7 +58,7 @@ const AccommodationList = () => {
     <CustomDataTable
       onRowClick={(id) => {
         navigate({
-          to: "/admin-panel/$id",
+          to: "/accommodation/$id",
           params: { id },
         });
       }}

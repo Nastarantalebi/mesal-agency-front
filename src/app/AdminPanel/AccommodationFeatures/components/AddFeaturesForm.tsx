@@ -21,18 +21,6 @@ const AddFeaturesForm = () => {
     defaultValues: FeaturesInitialValues,
   });
 
-  // const { data: features, isFetching } = useGetData<TFeatureResponse>({
-  //   key: [features_url],
-  //   url: `${features_key}`,
-  // });
-
-  // useEffect(() => {
-  //   if (!features) return;
-  //   form.reset({
-  //     ...features,
-  //   });
-  // }, [features]);
-
   const createMutation = usePostData<TCFeature, TFeatureResponse>({
     key: [features_key],
     url: features_url,
