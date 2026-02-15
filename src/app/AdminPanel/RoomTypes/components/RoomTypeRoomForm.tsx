@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   roomTypeRoomsInitialValues,
   roomTypeRoomValidation,
@@ -15,6 +15,7 @@ import usePostData from "@/services/usePostData";
 import useGetData from "@/services/useGetData";
 import type { TPaginatedResponse } from "@/types";
 import FormErrorModal from "@/components/FormErrorModal";
+import { Form } from "@/components/ui/form";
 
 interface Props {
   AccommodationId: string;
@@ -53,7 +54,7 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت تخت با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
-  const handleSubmit = (value: TCRoomTypesRoom) => {
+  const handle = (value: TCRoomTypesRoom) => {
     createRoom.mutateAsync(value, {
       onSuccess: () => {
         toast.success("نوع تخت با موفقیت افزوده شد");
@@ -64,10 +65,7 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
   return (
     <div>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-        >
+        <form onSubmit={form.handleSubmit(handle)}>
           {RoomFields.map((item) => (
             <div
               key={String(item.name)}
@@ -80,6 +78,7 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
             <CustomButton type="submit">افزودن</CustomButton>
           </div>
         </form>
+
         <FormErrorModal
           open={errorOpen}
           message={errmessage}
