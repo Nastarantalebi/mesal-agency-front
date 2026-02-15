@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "preview": "vite preview",
     "routes:gen": "tsr generate",
     "routes:watch": "tsr watch"
   },
