@@ -1,9 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import AccommodationForm from "./AccommodationForm";
-import AccommodationPhotoes from "./AccommodationPhotoes";
 import RoomType from "./AccommodationRoomType";
 import AccommodationFeatures from "./AccommodationFeatures";
+import AccommodationPhotoes from "./AccommodationPhotoes";
 
 const AccommodationTabs = ({
   accommodationId,
@@ -17,7 +16,7 @@ const AccommodationTabs = ({
     },
     {
       title: "ویژگی ها",
-      component: <AccommodationFeatures accommodationId={accommodationId}/>
+      component: <AccommodationFeatures accommodationId={accommodationId} />,
     },
     {
       title: "تصاویر اقامتگاه",
@@ -29,8 +28,8 @@ const AccommodationTabs = ({
     },
   ];
   return (
-    <Tabs className="w-full pr-20 ">
-      <TabsList className="">
+    <Tabs className="w-full">
+      <TabsList className="w-full">
         {items.map((item) => (
           <TabsTrigger
             key={item.title}

@@ -24,7 +24,7 @@ const FeaturesList = () => {
 
   const {mutateAsync} = useDeleteData({
     key: [features_key],
-   url: `${features_url}`,
+   url: features_url,
   });
 
 

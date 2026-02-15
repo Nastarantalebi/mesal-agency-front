@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import z from "zod";
 import type { TFeatureResponse } from "../../AccommodationFeatures/types";
 import type { TPaginatedResponse } from "@/types";
@@ -21,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import CustomButton from "@/components/form/CustomButton";
 import { Form } from "@/components/ui/form";
 import FormErrorModal from "@/components/FormErrorModal";
+import { toast } from "sonner";
 
 const featureListValidation = z.object({
   feature: z.array(z.number()).min(1, "لطفاً حداقل یک ویژگی را انتخاب کنید"),
@@ -129,28 +129,6 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
           </Card>
           <CustomButton type="submit">ثبت</CustomButton>
         </div>
-        {/* <div className="flex flex-col gap-5 items-start justify-start">
-          <Card className="shadow-lg shadow-primary/50">
-            <CardTitle className="text-center text-sm font-light">
-              ویژگی های اضافه شده
-            </CardTitle>
-            <div>
-              <CardContent className="flex flex-wrap gap-2">
-                {accommodationFeatureList?.map((f) => {
-                  return (
-                    <Badge
-                      key={f.id}
-                      variant="primary"
-                      className="px-6 py-2 bg-accent/70 text-black"
-                    >
-                      {f.feature.title}
-                    </Badge>
-                  );
-                })}
-              </CardContent>
-            </div>
-          </Card>
-        </div> */}
       </form>
       <FormErrorModal
         open={errorOpen}

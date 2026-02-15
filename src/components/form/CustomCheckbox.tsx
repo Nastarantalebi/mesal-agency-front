@@ -17,20 +17,29 @@ const CustomCheckbox = <T extends FieldValues>({
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
-          <FieldGroup className="mx-auto w-full">
-            <Field orientation="horizontal">
-              <Checkbox
-                id={id}
-                checked={!!field.value}
-                onCheckedChange={(checked) => field.onChange(checked === true)}
-              />
-              <FieldLabel htmlFor={id}>
-                {label}
-                {isRequired && <span className="text-red-600">*</span>}
-              </FieldLabel>
-            </Field>
-          </FieldGroup>
+        render={({ field, fieldState }) => (
+          <>
+            <FieldGroup className="mx-auto w-full">
+              <Field orientation="horizontal">
+                <Checkbox
+                  id={id}
+                  checked={!!field.value}
+                  onCheckedChange={(checked) =>
+                    field.onChange(checked === true)
+                  }
+                />
+                <FieldLabel htmlFor={id}>
+                  {label}
+                  {isRequired && <span className="text-red-600">*</span>}
+                </FieldLabel>
+              </Field>
+            </FieldGroup>
+            {fieldState.error?.message && (
+              <p className="text-[0.8rem] font-medium text-destructive">
+                {fieldState.error.message}
+              </p>
+            )}
+          </>
         )}
       />
     </div>

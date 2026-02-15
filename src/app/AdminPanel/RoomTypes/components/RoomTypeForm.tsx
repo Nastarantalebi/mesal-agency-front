@@ -48,15 +48,28 @@ const RoomTypeForm = ({
   onOpenChange: onOpenchange,
   title,
 }: Props) => {
+  
   const form = useForm<TCreateRoomType>({
     resolver: zodResolver(roomTypeValidation),
     defaultValues: roomTypeInitialValues,
   });
 
+  const key =  ["RoomTypes", AccommodationId || "", RoomId || ""]
+
   const { data, isFetching } = useGetData<TRoomTypeResponse>({
-    key: ["RoomTypes", String(AccommodationId), String(RoomId)],
+    key,
     url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}`,
     enabled: !!RoomId,
+  });
+
+  const createMutation = usePostData<TCreateRoomType, TRoomTypeResponse>({
+    key,
+    url: `${accommodation_url}${AccommodationId}/room_types/`,
+  });
+
+  const updateMutation = usePutData<TCreateRoomType, TRoomTypeResponse>({
+    key,
+    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}`,
   });
 
   useEffect(() => {
@@ -66,15 +79,6 @@ const RoomTypeForm = ({
     });
   }, [data]);
 
-  const createMutation = usePostData<TCreateRoomType, TRoomTypeResponse>({
-    key: ["RoomTypes"],
-    url: `${accommodation_url}${AccommodationId}/room_types/`,
-  });
-
-  const updateMutation = usePutData<TCreateRoomType, TRoomTypeResponse>({
-    key: ["RoomTypes", AccommodationId, String(RoomId)],
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}`,
-  });
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
@@ -99,7 +103,8 @@ const RoomTypeForm = ({
       });
     }
   };
-  console.log(form.watch());
+
+  console.log(form.watch())
 
   if (isFetching) return <div className="p-4">Loading...</div>;
 

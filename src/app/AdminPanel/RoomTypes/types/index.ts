@@ -8,6 +8,7 @@ export type TCreateRoomType = {
   dinner: boolean | null,
 }
 export type TRoomTypeResponse = {
+  id: number,
   name: string,
   capacity : number | null,
   extraPerson: number | null,
@@ -31,7 +32,29 @@ export type TCRoomTypeBed = {
 
 export type TRoomTypeBedResponse = {
     id: string;
-    beds: {id: string; name: string}
+    bed: {id: string; name: string}
 }[]
 
+export type TCRoomTypeImage = {
+  image: string;
+  main: boolean
+}
 
+export type TRoomTypeImageResponse = {
+  id: number;
+  image: string;
+  main: boolean;
+}
+
+export type TCRoomTypesRoom = {
+  name: string;
+  floor: number | null;
+  description: string| null;
+}
+
+export type TRoomTypeRoomResponse = {
+  id: number;
+  name: string;
+  floor: number | null;
+  description: string | null;
+}

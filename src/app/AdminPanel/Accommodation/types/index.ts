@@ -80,7 +80,19 @@ export type TAccommodationFeatureResponse = {
     feature: {id: string; title: string};
 }[]
 
-  
+
+export type TAccommodationImage = {
+  image: string;
+  main: boolean
+}
+
+export type TAccommodationImageResponse = {
+  id: number;
+  image: string;
+  main: boolean;
+}
+
+
 
 
 

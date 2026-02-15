@@ -5,6 +5,8 @@ interface Props{
     key: string[];
     url: string;
     enabled?: boolean;
+    onSuccess?: () => void;
+    onError?: () => void;
 }
 
 function useGetData<T>({ key, url, enabled = true }: Props) {
@@ -19,6 +21,7 @@ function useGetData<T>({ key, url, enabled = true }: Props) {
     },
     staleTime:5*60*1000,
   });
+  
 }
 
 

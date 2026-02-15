@@ -1,8 +1,8 @@
 import { z } from "zod";
-import type { TCreateRoomType } from "../types";
+import type { TCreateRoomType, TCRoomTypesRoom } from "../types";
 
 export const roomTypeValidation = z.object({
-  name: z.string().min(1, "نام اتاق الزامی است"),
+  name: z.string().min(1, "نام نوع اتاق الزامی است"),
   capacity: z.number().nullable(),
   extraPerson: z.number().min(0).nullable(),
   description: z.string().nullable(),
@@ -20,3 +20,15 @@ export const roomTypeInitialValues: TCreateRoomType = {
   lunch: false,
   dinner: false,
 };
+
+export const roomTypeRoomValidation = z.object({
+  name: z.string().min(1, "نام اتاق الزامی است"),
+  floor: z.number().nullable(),
+  description: z.string().nullable(),
+});
+
+export const roomTypeRoomsInitialValues: TCRoomTypesRoom = {
+  name: "",
+  floor: 0,
+  description: "",
+}

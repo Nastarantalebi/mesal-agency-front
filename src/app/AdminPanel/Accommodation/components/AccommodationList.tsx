@@ -1,11 +1,10 @@
 import { CustomDataTable } from "@/components/list/CustomDataTable";
 import type { ColumnDef } from "@tanstack/react-table";
-import {
-  accommodation_lists_key,
-  accommodation_lists_url,
-} from "@/data/querykeys";
+
 import useGetData from "@/services/useGetData";
 import { useNavigate } from "@tanstack/react-router";
+import type { TPaginatedResponse } from "@/types";
+import { accommodation_key, accommodation_url } from "@/data/querykeys";
 
 type City = {
   id: number;
@@ -23,12 +22,6 @@ type AccommodationItem = {
   city: City | null;
 };
 
-type Paginated<T> = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: T[];
-};
 
 export const columns: ColumnDef<AccommodationItem>[] = [
   { accessorKey: "name", header: "نام اقامتگاه" },
@@ -45,9 +38,9 @@ export const columns: ColumnDef<AccommodationItem>[] = [
 ];
 
 const AccommodationList = () => {
-  const { data, isLoading, error } = useGetData<Paginated<AccommodationItem>>({
-    key: [accommodation_lists_key],
-    url: accommodation_lists_url,
+  const { data, isLoading, error } = useGetData<TPaginatedResponse<AccommodationItem>>({
+    key: [accommodation_key],
+    url: accommodation_url,
   });
   const navigate = useNavigate();
 
@@ -62,6 +55,7 @@ const AccommodationList = () => {
           params: { id },
         });
       }}
+      showAction={true}
       columns={columns}
       data={data?.results ?? []}
       placeholder="جست و جوی نام اقامتگاه"

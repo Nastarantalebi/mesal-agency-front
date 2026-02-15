@@ -36,7 +36,11 @@ function YesNoInput<T extends FieldValues>({
                 <Label htmlFor="r2">خیر</Label>
               </div>
             </RadioGroup>
-            <FormMessage/>
+            {fieldState.error?.message && (
+              <p className="text-[0.8rem] font-medium text-destructive">
+                {fieldState.error.message}
+              </p>
+            )}
           </>
         )}
       />

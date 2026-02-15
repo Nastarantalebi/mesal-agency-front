@@ -15,7 +15,7 @@ const BedsList = () => {
 
   const { mutateAsync } = useDeleteData({
     key: [beds_key],
-    url: `${beds_url}`,
+    url: beds_url,
   });
 
   return (
@@ -31,7 +31,7 @@ const BedsList = () => {
                 <Badge
                   key={bed.id}
                   variant="outline"
-                  className="px-6 py-2 border-primary"
+                  className="px-6 py-2 border-primary relative pr-10"
                 >
                   {bed.name}
                   <button

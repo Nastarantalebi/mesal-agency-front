@@ -6,7 +6,7 @@ import {
 import type { TPaginatedResponse } from "@/types";
 import React, { useEffect, useState } from "react";
 import type {
-  TCFeature,
+
 
   TFeatureResponse,
 } from "../../AccommodationFeatures/types";
@@ -62,26 +62,30 @@ const RoomTypeFeatures = ({
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
+  const key = [features_key, String(AccommodationId), String(RoomId)];
+  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`
+
   const { data: roomTypeFeaturesData } = useGetData<
     TPaginatedResponse<TFeatureResponse>
   >({
-    key: [features_key, String(AccommodationId), String(RoomId)],
+    key: [features_key],
     url: `${features_url}?type=roomtype`,
   });
 
-
   const { data: roomTypeFeatureList } = useGetData<TRoomTypeFeatureResponse>({
-    key: ["roomType-features", String(AccommodationId), String(RoomId)],
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`,
+    key,
+    url,
     enabled: !!RoomId,
   });
+
+  console.log((roomTypeFeatureList))
 
   const submitFeatures = usePostData<
     TCRoomTypeFeature,
     TRoomTypeFeatureResponse
   >({
-    key: ["roomType-features"],
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`,
+    key,
+    url,
   });
 
   const [selectedIds, setSelectedIds] = useState<number[]>([]);

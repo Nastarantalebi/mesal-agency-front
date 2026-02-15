@@ -32,6 +32,7 @@ interface Props<TData, TValue> {
   onBed?: (id: string) => void;
   onRowClick?: (id: string) => void;
   extraAction?: (id: string) => ReactNode;
+  showAction: boolean;
 }
 
 type RowWithId = { id: string | number };
@@ -43,6 +44,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
   onEdit,
   onRowClick,
   extraAction,
+  showAction = true
 }: Props<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -91,7 +93,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                         )}
                   </TableHead>
                 ))}
-                <TableHead className="w-32">عملیات</TableHead>
+                {showAction && <TableHead className="w-32">عملیات</TableHead>}
               </TableRow>
             ))}
           </TableHeader>

@@ -55,22 +55,25 @@ const RoomTypeBeds = ({
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
+  const key = [beds_key, String(AccommodationId), String(RoomId)];
+  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/beds/` 
+
   const { data: roomBedsData } = useGetData<TPaginatedResponse<TBedResponse>>({
-    key: [beds_key, String(AccommodationId), String(RoomId)],
+    key: [beds_key],
     url: `${beds_url}`,
   });
 
   const { data: roomTypeBedList } = useGetData<TRoomTypeBedResponse>({
-    key: ["roomType-beds", String(AccommodationId), String(RoomId)],
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/beds/`,
+    key,
+    url,
     enabled: !!RoomId
   });
 
 
 
   const submitBeds = usePostData<TCRoomTypeBed, TRoomTypeBedResponse>({
-    key: ["roomType-beds"],
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/beds/`,
+    key,
+    url,
   });
 
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -164,7 +167,7 @@ const RoomTypeBeds = ({
                           variant="primary"
                           className="px-6 py-2 bg-accent/70 text-black"
                         >
-                          {roomType.beds?.name}
+                          {roomType.bed.name}
                         </Badge>
                       );
                     })}

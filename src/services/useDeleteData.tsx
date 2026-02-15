@@ -1,12 +1,25 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 
 interface Props {
   key: unknown[];
   url: string;
+  onSuccess?: () => void;
+  onError?: (error: AxiosError) => void;
 }
 
-function useDeleteData<TResponse = void>({ key, url }: Props) {
+interface DeleteResponse {
+  message?: string;
+}
+
+function useDeleteData<TResponse = DeleteResponse>({
+  key,
+  url,
+  onSuccess,
+  onError,
+}: Props) {
+  const queryClient = useQueryClient();
   const BASE_URL = import.meta.env.VITE_BASE_URL as string;
 
   return useMutation<TResponse, AxiosError, { id: number | string }>({
@@ -15,6 +28,29 @@ function useDeleteData<TResponse = void>({ key, url }: Props) {
       const fullUrl = `${BASE_URL}${url}${id}/`;
       const { data } = await axios.delete<TResponse>(fullUrl);
       return data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: key });
+      
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        const message = (data as DeleteResponse)?.message || "آیتم با موفقیت حذف شد";
+        toast.success(message);
+      }
+    },
+    onError: (error) => {
+      const errorData = error.response?.data as any;
+      const message =
+        errorData?.message || 
+        errorData?.detail || 
+        error.message || 
+        "خطا در حذف آیتم";
+      toast.error(message);
+
+      if (onError) {
+        onError(error);
+      }
     },
   });
 }

@@ -1,7 +1,7 @@
 import { FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Controller, type FieldValues } from "react-hook-form";
+import { Controller, type FieldValues, useFormContext } from "react-hook-form";
 import type { Props } from "./PropsType";
 
 export type InputType = "text" | "number" | "email" | "password" | "tel";
@@ -14,8 +14,8 @@ const CustomInput = <T extends FieldValues>({
   control,
 }: Props<T>) => {
   return (
-    <div className="min-w-0 w-full">
-      <Label className="block mb-3 mr-3">
+    <div className="min-w-0 w-full space-y-2">
+      <Label className="block">
         {label}
         {isRequired && <span className="text-red-600">*</span>}
       </Label>
@@ -30,7 +30,11 @@ const CustomInput = <T extends FieldValues>({
               type={inputType}
               className={`${fieldState.error ? "border-red-600" : ""}`}
             />
-            <FormMessage />
+            {fieldState.error?.message && (
+              <p className="text-[0.8rem] font-medium text-destructive">
+                {fieldState.error.message}
+              </p>
+            )}
           </>
         )}
       />

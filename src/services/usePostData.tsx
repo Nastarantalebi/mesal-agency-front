@@ -1,10 +1,12 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { toast } from "sonner";
 
-type Props = { key: unknown[]; url: string };
+type Props = { key: string[]; url: string; onSuccess?: () => void; onError?: () => void; };
 
 function usePostData<TRequest, TResponse>({ key, url }: Props) {
   const BASE_URL = import.meta.env.VITE_BASE_URL as string;
+    const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: key,
@@ -12,6 +14,11 @@ function usePostData<TRequest, TResponse>({ key, url }: Props) {
       const { data } = await axios.post<TResponse>(BASE_URL + url, body);
       return data;
     },
+    onSuccess: (data) => {
+          queryClient.invalidateQueries({ queryKey: key });
+          
+        },
+
   });
 }
 
