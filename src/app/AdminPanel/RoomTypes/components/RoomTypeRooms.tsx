@@ -57,7 +57,7 @@ const RoomTypeRooms = ({ open, onOpenChange, title, AccommodationId, RoomId }: P
 
         <div className="m-5">
           <Card className="shadow-lg shadow-primary/50 ">
-            <CardTitle className="text-start text-sm font-light pr-7">
+            <CardTitle className="text-start pr-7 text-primary">
              لیست اتاق های تعریف شده
             </CardTitle>
             <CardContent className="flex flex-wrap gap-2">

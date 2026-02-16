@@ -14,6 +14,8 @@ type Props = {
   message: string;
   onAcknowledge: () => void;
   onOpenChange: (open: boolean) => void;
+  buttonTitle?: string;
+  dialogTitle?:string;
 };
 
 export default function FormErrorModal({
@@ -21,12 +23,14 @@ export default function FormErrorModal({
   message,
   onAcknowledge,
   onOpenChange,
+  buttonTitle= "متوجه شدم",
+  dialogTitle= "خطا",
 }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle className="text-red-600 text-center">خطا</DialogTitle>
+          <DialogTitle className="text-red-600 text-center">{dialogTitle}</DialogTitle>
           <DialogDescription className="text-center leading-7">
             {message}
           </DialogDescription>
@@ -38,7 +42,7 @@ export default function FormErrorModal({
               type="button"
               onClick={onAcknowledge}
             >
-              متوجه شدم
+              {buttonTitle}
             </CustomButton>
           </DialogClose>
         </DialogFooter>

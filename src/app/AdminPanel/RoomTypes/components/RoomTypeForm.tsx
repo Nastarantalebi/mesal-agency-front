@@ -104,7 +104,6 @@ const RoomTypeForm = ({
     }
   };
 
-  console.log(form.watch())
 
   if (isFetching) return <div className="p-4">Loading...</div>;
 

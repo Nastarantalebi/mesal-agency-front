@@ -78,8 +78,6 @@ const RoomTypeFeatures = ({
     enabled: !!RoomId,
   });
 
-  console.log((roomTypeFeatureList))
-
   const submitFeatures = usePostData<
     TCRoomTypeFeature,
     TRoomTypeFeatureResponse

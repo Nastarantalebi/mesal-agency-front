@@ -51,10 +51,6 @@ const AccommodationPhotoes = ({
   const mainImage = images.find((img) => img.main);
   const sideImages = images.filter((img) => !img.main).slice(0, 4);
 
-  // console.log(images)
-  // console.log(mainImage)
-  // console.log(sideImages)
-
   return (
     <main className="w-full flex flex-row gap-4 justify-center">
       <div className="relative">
