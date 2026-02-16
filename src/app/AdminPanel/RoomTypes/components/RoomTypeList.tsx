@@ -13,6 +13,12 @@ import type { TPaginatedResponse } from "@/types";
 import { accommodation_key, accommodation_url } from "@/data/querykeys";
 import ListRooms from "./ListRooms";
 import RoomTypeRooms from "./RoomTypeRooms";
+import ListDelete from "./ListDelete";
+import FormErrorModal from "@/components/FormErrorModal";
+import useDeleteData from "@/services/useDeleteData";
+import { toast } from "sonner";
+import ListPrice from "./ListPrice";
+import RoomTypePriceForm from "./RoomTypePriceForm";
 
 type Type = {
   id: number;
@@ -45,14 +51,35 @@ const RoomList = ({ AccommodationId }: Props) => {
   const [openF, setOpenF] = useState(false);
   const [openB, setOpenB] = useState(false);
   const [openR, setopenR] = useState(false);
+  const [openD, setopenD] = useState(false);
+  const [openP, setopenP] = useState(false);
+
+  const key = [accommodation_key, AccommodationId];
+  const url = `${accommodation_url}${AccommodationId}/room_types/`;
 
   const { data, isLoading, error } = useGetData<TPaginatedResponse<RoomItem>>({
-    key: [accommodation_key, AccommodationId],
-    url: `${accommodation_url}${AccommodationId}/room_types/`,
+    key,
+    url,
   });
+
+  const { mutateAsync: deleteRoomType } = useDeleteData({
+    key,
+    url,
+  });
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteRoomType({ id });
+      toast.success("آیتم با موفقیت حذف شد");
+    } catch (error) {
+      toast.error("خطا در حذف آیتم");
+    }
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div className="text-red-600">{String(error)}</div>;
+
+  const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
   return (
     <>
@@ -91,13 +118,28 @@ const RoomList = ({ AccommodationId }: Props) => {
                 setopenR(true);
               }}
             />
+            <ListPrice
+              id={id}
+              onClick={(id) => {
+                setSelectedId(id);
+                setopenP(true);
+              }}
+            />
+            <ListDelete
+              id={id}
+              onClick={(id) => {
+                setSelectedId(id);
+                setopenD(true);
+              }}
+            />
           </>
         )}
-        showAction = {true}
+        showAction={true}
         columns={columns}
         data={data?.results ?? []}
         placeholder="جست و جوی نوع اتاق"
       />
+
       <RoomTypeForm
         AccommodationId={AccommodationId}
         RoomId={selectedId}
@@ -132,6 +174,21 @@ const RoomList = ({ AccommodationId }: Props) => {
         open={openR}
         onOpenChange={() => setopenR(false)}
         title="افزودن اتاق"
+      />
+      <RoomTypePriceForm
+        RoomId={selectedId}
+        AccommodationId={AccommodationId}
+        open={openP}
+        onOpenChange={() => setopenP(false)}
+        title="تعیین قیمت"
+      />
+      <FormErrorModal
+        open={openD}
+        onOpenChange={() => setopenD(false)}
+        message={deleteMessage}
+        onAcknowledge={() => handleDelete(Number(selectedId))}
+        buttonTitle="بله"
+        dialogTitle="حذف"
       />
     </>
   );

@@ -5,6 +5,8 @@ import type { Props } from "./PropsType";
 import { Label } from "../ui/label";
 import { FormField, FormMessage } from "../ui/form";
 import { Controller, type FieldValues } from "react-hook-form";
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
 
 const DateInput = <T extends FieldValues>({
   name,
@@ -25,8 +27,8 @@ const DateInput = <T extends FieldValues>({
           <>
             <DatePicker
               value={field.value}
-              calendar={gregorian}
-              locale={gregorian_en}
+              calendar={persian}
+              locale={persian_fa}
               calendarPosition="bottom-right"
               containerClassName="w-full"
               inputClass={

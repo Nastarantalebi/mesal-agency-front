@@ -2,7 +2,7 @@ import Header from "@/app/AdminPanel/AdminHeader";
 import { AppSidebar } from "@/app/AdminPanel/AdminSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { BedSingle, CalendarDays, Home, Star } from "lucide-react";
+import { BedSingle, CalendarDays, Home, List, Star } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
   component: RouteComponent,
@@ -13,6 +13,11 @@ function RouteComponent() {
     {
       title: "لیست اقامتگاه‌ها",
       url: "/dashboard/accommodation-list" as const,
+      icon: <List />,
+    },
+    {
+      title: "ثبت اقامتگاه",
+      url: "/dashboard/accommodation-add" as const,
       icon: <Home />,
     },
     {

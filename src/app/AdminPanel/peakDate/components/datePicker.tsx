@@ -85,7 +85,7 @@ function PeakDate() {
       multiple
       value={selectedDates.map((d) => d.date)}
       onChange={handleChange}
-      // plugins={[<DatePanel position="right" />]}
+      plugins={[<DatePanel position="right" />]}
       calendar={persian}
       locale={persian_fa}
     />

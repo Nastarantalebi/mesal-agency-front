@@ -5,11 +5,7 @@ import {
 } from "@/data/querykeys";
 import type { TPaginatedResponse } from "@/types";
 import React, { useEffect, useState } from "react";
-import type {
-
-
-  TFeatureResponse,
-} from "../../AccommodationFeatures/types";
+import type { TFeatureResponse } from "../../AccommodationFeatures/types";
 import useGetData from "@/services/useGetData";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -63,7 +59,7 @@ const RoomTypeFeatures = ({
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const key = [features_key, String(AccommodationId), String(RoomId)];
-  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`
+  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`;
 
   const { data: roomTypeFeaturesData } = useGetData<
     TPaginatedResponse<TFeatureResponse>
@@ -171,21 +167,25 @@ const RoomTypeFeatures = ({
                   <CardTitle className="text-center text-sm font-light">
                     ویژگی های اضافه شده
                   </CardTitle>
-                  <div>
-                    <CardContent className="flex flex-wrap gap-2">
-                      {roomTypeFeatureList?.map((f) => {
-                        return (
-                          <Badge
-                            key={f.id}
-                            variant="primary"
-                            className="px-6 py-2 bg-accent/70 text-black"
-                          >
-                            {f.feature.title}
-                          </Badge>
-                        );
-                      })}
+                  {roomTypeFeatureList ? (
+                    <CardContent>
+                      <div className="flex flex-wrap gap-2">
+                        {roomTypeFeatureList?.map((f) => {
+                          return (
+                            <Badge
+                              key={f.id}
+                              variant="primary"
+                              className="px-6 py-2 bg-accent/70 text-black"
+                            >
+                              {f.feature.title}
+                            </Badge>
+                          );
+                        })}
+                      </div>
                     </CardContent>
-                  </div>
+                  ) : (
+                    <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
+                  )}
                 </Card>
               </div>
             </div>

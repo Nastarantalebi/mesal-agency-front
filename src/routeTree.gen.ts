@@ -18,6 +18,8 @@ import { Route as DashboardPeakDateRouteImport } from './routes/dashboard/peakDa
 import { Route as DashboardAccommodationListRouteImport } from './routes/dashboard/accommodation-list'
 import { Route as DashboardAccommodationFeaturesRouteImport } from './routes/dashboard/accommodation-features'
 import { Route as DashboardAccommodationBedsRouteImport } from './routes/dashboard/accommodation-beds'
+import { Route as DashboardAccommodationAddRouteImport } from './routes/dashboard/accommodation-add'
+import { Route as AdminPanelAddAccommodationRouteImport } from './routes/admin-panel.add-accommodation'
 import { Route as AccommodationAddAccommodationRouteImport } from './routes/accommodation/add-accommodation'
 import { Route as AccommodationAccommodationDetailsRouteImport } from './routes/accommodation/accommodation-details'
 import { Route as AccommodationRoomidRouteImport } from './routes/accommodation/$roomid'
@@ -71,6 +73,18 @@ const DashboardAccommodationBedsRoute =
     path: '/accommodation-beds',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardAccommodationAddRoute =
+  DashboardAccommodationAddRouteImport.update({
+    id: '/accommodation-add',
+    path: '/accommodation-add',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const AdminPanelAddAccommodationRoute =
+  AdminPanelAddAccommodationRouteImport.update({
+    id: '/admin-panel/add-accommodation',
+    path: '/admin-panel/add-accommodation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AccommodationAddAccommodationRoute =
   AccommodationAddAccommodationRouteImport.update({
     id: '/add-accommodation',
@@ -102,6 +116,8 @@ export interface FileRoutesByFullPath {
   '/accommodation/$roomid': typeof AccommodationRoomidRoute
   '/accommodation/accommodation-details': typeof AccommodationAccommodationDetailsRoute
   '/accommodation/add-accommodation': typeof AccommodationAddAccommodationRoute
+  '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
+  '/dashboard/accommodation-add': typeof DashboardAccommodationAddRoute
   '/dashboard/accommodation-beds': typeof DashboardAccommodationBedsRoute
   '/dashboard/accommodation-features': typeof DashboardAccommodationFeaturesRoute
   '/dashboard/accommodation-list': typeof DashboardAccommodationListRoute
@@ -115,6 +131,8 @@ export interface FileRoutesByTo {
   '/accommodation/$roomid': typeof AccommodationRoomidRoute
   '/accommodation/accommodation-details': typeof AccommodationAccommodationDetailsRoute
   '/accommodation/add-accommodation': typeof AccommodationAddAccommodationRoute
+  '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
+  '/dashboard/accommodation-add': typeof DashboardAccommodationAddRoute
   '/dashboard/accommodation-beds': typeof DashboardAccommodationBedsRoute
   '/dashboard/accommodation-features': typeof DashboardAccommodationFeaturesRoute
   '/dashboard/accommodation-list': typeof DashboardAccommodationListRoute
@@ -131,6 +149,8 @@ export interface FileRoutesById {
   '/accommodation/$roomid': typeof AccommodationRoomidRoute
   '/accommodation/accommodation-details': typeof AccommodationAccommodationDetailsRoute
   '/accommodation/add-accommodation': typeof AccommodationAddAccommodationRoute
+  '/admin-panel/add-accommodation': typeof AdminPanelAddAccommodationRoute
+  '/dashboard/accommodation-add': typeof DashboardAccommodationAddRoute
   '/dashboard/accommodation-beds': typeof DashboardAccommodationBedsRoute
   '/dashboard/accommodation-features': typeof DashboardAccommodationFeaturesRoute
   '/dashboard/accommodation-list': typeof DashboardAccommodationListRoute
@@ -148,6 +168,8 @@ export interface FileRouteTypes {
     | '/accommodation/$roomid'
     | '/accommodation/accommodation-details'
     | '/accommodation/add-accommodation'
+    | '/admin-panel/add-accommodation'
+    | '/dashboard/accommodation-add'
     | '/dashboard/accommodation-beds'
     | '/dashboard/accommodation-features'
     | '/dashboard/accommodation-list'
@@ -161,6 +183,8 @@ export interface FileRouteTypes {
     | '/accommodation/$roomid'
     | '/accommodation/accommodation-details'
     | '/accommodation/add-accommodation'
+    | '/admin-panel/add-accommodation'
+    | '/dashboard/accommodation-add'
     | '/dashboard/accommodation-beds'
     | '/dashboard/accommodation-features'
     | '/dashboard/accommodation-list'
@@ -176,6 +200,8 @@ export interface FileRouteTypes {
     | '/accommodation/$roomid'
     | '/accommodation/accommodation-details'
     | '/accommodation/add-accommodation'
+    | '/admin-panel/add-accommodation'
+    | '/dashboard/accommodation-add'
     | '/dashboard/accommodation-beds'
     | '/dashboard/accommodation-features'
     | '/dashboard/accommodation-list'
@@ -188,6 +214,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccommodationRoute: typeof AccommodationRouteWithChildren
   DashboardRoute: typeof DashboardRouteWithChildren
+  AdminPanelAddAccommodationRoute: typeof AdminPanelAddAccommodationRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -255,6 +282,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAccommodationBedsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/accommodation-add': {
+      id: '/dashboard/accommodation-add'
+      path: '/accommodation-add'
+      fullPath: '/dashboard/accommodation-add'
+      preLoaderRoute: typeof DashboardAccommodationAddRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/admin-panel/add-accommodation': {
+      id: '/admin-panel/add-accommodation'
+      path: '/admin-panel/add-accommodation'
+      fullPath: '/admin-panel/add-accommodation'
+      preLoaderRoute: typeof AdminPanelAddAccommodationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accommodation/add-accommodation': {
       id: '/accommodation/add-accommodation'
       path: '/add-accommodation'
@@ -308,6 +349,7 @@ const AccommodationRouteWithChildren = AccommodationRoute._addFileChildren(
 )
 
 interface DashboardRouteChildren {
+  DashboardAccommodationAddRoute: typeof DashboardAccommodationAddRoute
   DashboardAccommodationBedsRoute: typeof DashboardAccommodationBedsRoute
   DashboardAccommodationFeaturesRoute: typeof DashboardAccommodationFeaturesRoute
   DashboardAccommodationListRoute: typeof DashboardAccommodationListRoute
@@ -316,6 +358,7 @@ interface DashboardRouteChildren {
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAccommodationAddRoute: DashboardAccommodationAddRoute,
   DashboardAccommodationBedsRoute: DashboardAccommodationBedsRoute,
   DashboardAccommodationFeaturesRoute: DashboardAccommodationFeaturesRoute,
   DashboardAccommodationListRoute: DashboardAccommodationListRoute,
@@ -331,6 +374,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccommodationRoute: AccommodationRouteWithChildren,
   DashboardRoute: DashboardRouteWithChildren,
+  AdminPanelAddAccommodationRoute: AdminPanelAddAccommodationRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

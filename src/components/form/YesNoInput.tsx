@@ -2,7 +2,7 @@ import { Controller, type FieldValues } from "react-hook-form";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import type { Props } from "./PropsType";
-import { FormField, FormMessage } from "../ui/form";
+import { FormMessage } from "../ui/form";
 
 function YesNoInput<T extends FieldValues>({
   name,
@@ -23,8 +23,11 @@ function YesNoInput<T extends FieldValues>({
         render={({ field, fieldState }) => (
           <>
             <RadioGroup
-              value={field.value}
-              onValueChange={field.onChange}
+              value={String(field.value)}
+              onValueChange={(value) => {
+                // Convert string to boolean before updating field
+                field.onChange(value === "true");
+              }}
               className={`w-fit flex flex-wrap justify-around items-center gap-4 rounded-md border p-2 min-h-5 ${
                 fieldState.error ? "border-red-600" : "border-input"
               }`}
@@ -36,11 +39,7 @@ function YesNoInput<T extends FieldValues>({
                 <Label htmlFor="r2">خیر</Label>
               </div>
             </RadioGroup>
-            {fieldState.error?.message && (
-              <p className="text-[0.8rem] font-medium text-destructive">
-                {fieldState.error.message}
-              </p>
-            )}
+            <FormMessage />
           </>
         )}
       />

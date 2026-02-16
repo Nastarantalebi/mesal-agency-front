@@ -16,9 +16,13 @@ import useGetData from "@/services/useGetData";
 import usePutData from "@/services/usePutData";
 import FormErrorModal from "@/components/FormErrorModal";
 import formTypes from "@/components/form/formInputTypes";
+import { miladiToShamsi, shamsiToMiladi } from "@/components/form/DateConverter";
 
-const AccommodationForm = ({ accommodationId }: { accommodationId?: string }) => {
-
+const AccommodationForm = ({
+  accommodationId,
+}: {
+  accommodationId?: string;
+}) => {
   const form = useForm<TCreateAccomodation>({
     resolver: zodResolver(accommodationValidation),
     defaultValues: accommodationInitialValues,
@@ -32,10 +36,16 @@ const AccommodationForm = ({ accommodationId }: { accommodationId?: string }) =>
 
   useEffect(() => {
     if (!data) return;
-    form.reset({
+    const transformedData = {
+      
       ...data,
-      type: data.type?.id != null ? String(data.type.id) : "",
-      city: data.city?.name,
+      manufacture_date: data.manufacture_date ? miladiToShamsi(data.manufacture_date) : undefined,
+    };
+    form.reset({
+      ...transformedData,
+      type: transformedData.type?.id != null ? String(transformedData.type.id) : "",
+      city: transformedData.city?.name,
+      provience: transformedData.city?.provience?.id,
     });
   }, [data]);
 
@@ -78,7 +88,7 @@ const AccommodationForm = ({ accommodationId }: { accommodationId?: string }) =>
   // const handleBack = () => setStep((s) => Math.max(s - 1, 1));
 
   const province_id = form.watch("provience");
-  const accommodationFields = useAccomodationFields(province_id);
+  const accommodationFields = useAccomodationFields(Number(province_id));
 
   // const currentFields = accommodationFields.filter((item) =>
   //   stepFields[step].includes(item.name),
@@ -103,18 +113,26 @@ const AccommodationForm = ({ accommodationId }: { accommodationId?: string }) =>
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
+
   const handleSubmit = (value: TCreateAccomodation) => {
     const isEdit = !!accommodationId;
 
+
+    const transformedData = {
+      
+      ...value,
+      manufacture_date: value.manufacture_date ? shamsiToMiladi(value.manufacture_date): null,
+    };
+
     if (isEdit) {
-      updateMutation.mutateAsync(value, {
+      updateMutation.mutateAsync(transformedData, {
         onSuccess: () => {
           toast.success("ویرایش با موفقیت انجام شد ");
         },
         onError: () => setErrorOpen(true),
       });
     } else {
-      createMutation.mutateAsync(value, {
+      createMutation.mutateAsync(transformedData, {
         onSuccess: () => {
           toast.success("اقامتگاه با موفقیت ثبت شد ");
           form.reset(accommodationInitialValues);
@@ -142,9 +160,7 @@ const AccommodationForm = ({ accommodationId }: { accommodationId?: string }) =>
         ))}
 
         <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-end gap-3">
-
-        <CustomButton type="submit">ثبت</CustomButton>
-
+          <CustomButton type="submit">ثبت</CustomButton>
         </div>
       </form>
       <FormErrorModal

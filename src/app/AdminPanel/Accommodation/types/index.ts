@@ -19,7 +19,7 @@ export type TCreateAccomodation = {
     built_with_local_materials: boolean,
     allows_local_food_experience: boolean,
     is_active: boolean
-    provience?: number
+    provience?: number | string
 }
 
 export type TAccommodationResponse = {

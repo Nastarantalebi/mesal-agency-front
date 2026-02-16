@@ -6,35 +6,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import PhotoUploader from "@/components/form/PhotoUploader";
-import usePostData from "@/services/usePostData";
-import useGetData from "@/services/useGetData";
-import type {
-  TCRoomTypeImage,
-  TCRoomTypesRoom,
-  TRoomTypeImageResponse,
-  TRoomTypeRoomResponse,
-} from "../types";
-import { accommodation_url } from "@/data/querykeys";
-import useDeleteData from "@/services/useDeleteData";
-import { X } from "lucide-react";
-import type { TPaginatedResponse } from "@/types";
-import { Form } from "@/components/ui/form";
-import FormErrorModal from "@/components/FormErrorModal";
-import CustomButton from "@/components/form/CustomButton";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  roomTypeRoomsInitialValues,
-  roomTypeRoomValidation,
-} from "../fixtures/Validation";
-import formTypes from "@/components/form/formInputTypes";
-import { RoomFields } from "../fixtures/RoomFields";
-import type { TCreateBed } from "../../Beds/types";
-import { toast } from "sonner";
-import { useState } from "react";
+
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+
 import RoomTypeRoomForm from "./RoomTypeRoomForm";
 import RoomTypeRoomList from "./RoomTypeRoomList";
 
@@ -49,7 +23,7 @@ interface Props {
 const RoomTypeRooms = ({ open, onOpenChange, title, AccommodationId, RoomId }: Props) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl">
+      <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl  h-screen overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="mb-6">{title}</DialogTitle>
         </DialogHeader>
