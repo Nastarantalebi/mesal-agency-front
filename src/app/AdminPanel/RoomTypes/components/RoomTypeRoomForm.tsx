@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   roomTypeRoomsInitialValues,
@@ -39,12 +39,8 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
     enabled: !!RoomId,
   });
 
-  console.log(RoomList);
 
-  //   const { mutateAsync: deleteRoom } = useDeleteData({
-  //     key,
-  //     url,
-  //   });
+
 
   const form = useForm<TCRoomTypesRoom>({
     resolver: zodResolver(roomTypeRoomValidation),
