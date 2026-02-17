@@ -58,3 +58,21 @@ export type TRoomTypeRoomResponse = {
   floor: number | null;
   description: string | null;
 }
+
+export type TCPriceRange = {
+  normalPrice: number;
+  peakPrice: number;
+}
+
+export type TCRoomTypePrices = {
+  prices: {
+    date: string;
+    normal_price: number;
+    peak_price: number;
+  }[];
+};
+export type TRoomTypePricesResponse = {
+    date: string ;
+    normal_price: number;
+    peak_price: number;
+}[]

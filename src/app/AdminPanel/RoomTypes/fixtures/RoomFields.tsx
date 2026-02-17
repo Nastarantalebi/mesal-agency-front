@@ -1,5 +1,5 @@
 import type { Items } from "@/components/form/formInputTypes";
-import type { TCRoomTypesRoom } from "../types";
+import type { TCPriceRange, TCRoomTypesRoom } from "../types";
 import { fa } from "zod/v4/locales";
 
 export const RoomFields: Items<TCRoomTypesRoom>[] = [
@@ -26,3 +26,19 @@ export const RoomFields: Items<TCRoomTypesRoom>[] = [
     className: "col-span-full",
   },
 ];
+// export const PriceFields: Items<TCPriceRange>[] = [
+//   {
+//     name: "normalPrice",
+//     label: "قیمت نرمال",
+//     isRequired: true,
+//     fieldType: "input",
+//     inputType: "number",
+//   },
+//   {
+//     name:"peakPrice",
+//     label: "قیمت پیک",
+//     isRequired: false,
+//     fieldType: "input",
+//     inputType: "number"
+//   },
+// ];
