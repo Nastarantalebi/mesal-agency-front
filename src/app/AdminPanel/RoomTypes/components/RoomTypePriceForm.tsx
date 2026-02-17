@@ -125,22 +125,7 @@ const RoomTypePriceForm = ({
     enabled: !!RoomId && !!startDate && !!endDate,
   });
 
-  // useEffect(() => {
-  //   if (!roomTypePricesData || roomTypePricesData.length === 0) return;
 
-  //   const updated = Object.fromEntries(
-  //     roomTypePricesData.map((price) => [
-  //       miladiToShamsi(price.date), // → "1404/1/1" لاتین
-  //       {
-  //         miladiDate: price.date,
-  //         normalPrice: String(price.normal_price),
-  //         peakPrice: String(price.peak_price),
-  //       },
-  //     ]),
-  //   );
-
-  //   setRowPrices(updated);
-  // }, [roomTypePricesData]);
 
   const normalizeKey = (persianDate: string): string => {
     return persianDate
