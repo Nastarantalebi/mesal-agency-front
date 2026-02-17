@@ -1,0 +1,39 @@
+variables:
+  IMAGE_BASE: "artifacts.repo.mesal.ir/docker-hosted/agency"
+
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: always
+    - if: '$CI_COMMIT_MESSAGE =~ /\[deploy\]/i'
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: always
+    - when: never
+
+stages:
+  - build   
+  - deploy  
+
+include:
+  # Production Build
+  - project: 'devops/ci-templates'
+    file: '/docker/build-and-push.yml'
+    inputs:
+      environment: "production"
+      target_image: "${IMAGE_BASE}/agency-front:latest"
+      stage_name: "build"
+
+  # Production Deploy
+  - project: 'devops/ci-templates'
+    file: '/deploy/ssh-deploy.yml'
+    inputs:
+      environment: "production"
+      ssh_port: 2223
+      deploy_command: "/home/production/server_deploy/repos/agency/deploy-front.sh"
+      image_to_deploy: "${IMAGE_BASE}/agency-front:latest"
+      stage_name: "deploy"
+      needs_job: "build-for-production"
+
+
+
