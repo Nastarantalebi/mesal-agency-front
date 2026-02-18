@@ -24,16 +24,18 @@ include:
       target_image: "${IMAGE_BASE}/agency-front:latest"
       stage_name: "build"
 
-  # Production Deploy
+  # Production Deploy 
   - project: 'devops/ci-templates'
     file: '/deploy/ssh-deploy.yml'
     inputs:
       environment: "production"
-      ssh_port: 2223
-      deploy_command: "/home/production/server_deploy/repos/agency/deploy-front.sh"
+      deploy_script: "deploy/production.sh"  
       image_to_deploy: "${IMAGE_BASE}/agency-front:latest"
       stage_name: "deploy"
-      needs_job: "build-for-production"
+      needs_jobs: ["build-for-production"]
 
+
+
+  
 
 
