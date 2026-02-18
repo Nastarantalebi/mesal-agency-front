@@ -44,7 +44,7 @@ interface Props {
   AccommodationId: string;
 }
 
-const RoomList = ({ AccommodationId }: Props) => {
+const RoomTypeList = ({ AccommodationId }: Props) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // const [selectedName, setSelectedName] = useState<string| null>(null);
@@ -55,13 +55,15 @@ const RoomList = ({ AccommodationId }: Props) => {
   const [openD, setopenD] = useState(false);
   const [openP, setopenP] = useState(false);
 
-  const key = [accommodation_key, AccommodationId];
+  const key = [accommodation_key, AccommodationId, "roomType"];
   const url = `${accommodation_url}${AccommodationId}/room_types/`;
 
   const { data, isLoading, error } = useGetData<TPaginatedResponse<RoomItem>>({
     key,
     url,
   });
+
+  console.log(`roomType:${JSON.stringify(data)}`);
 
   const { mutateAsync: deleteRoomType } = useDeleteData({
     key,
@@ -195,4 +197,4 @@ const RoomList = ({ AccommodationId }: Props) => {
   );
 };
 
-export default RoomList;
+export default RoomTypeList;

@@ -49,7 +49,7 @@ const AccommodationForm = ({
           ? miladiToShamsi(data.manufacture_date)
           : undefined,
       };
-      console.log(transformedData);
+      // console.log(transformedData);
       form.reset({
         ...transformedData,
         type:
@@ -57,11 +57,11 @@ const AccommodationForm = ({
         city: transformedData.city?.name,
         provience: transformedData.city?.provience?.id,
       });
-      console.log("Reset values:", form.getValues());
+      // console.log("Reset values:", form.getValues());
     }, [data]);
 
   const province_id = form.watch("provience");
-  console.log(province_id);
+
   const accommodationFields = useAccomodationFields(Number(province_id));
 
   const createMutation = usePostData<
@@ -109,7 +109,7 @@ const AccommodationForm = ({
         onError: () => setErrorOpen(true),
       });
     }
-    console.log(transformedData);
+    // console.log(transformedData);
   };
 
   if (isFetching) return <div className="p-4">Loading...</div>;

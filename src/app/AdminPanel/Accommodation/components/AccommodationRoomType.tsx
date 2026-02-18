@@ -2,7 +2,7 @@ import CustomButton from "@/components/form/CustomButton";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import RoomTypeForm from "../../RoomTypes/components/RoomTypeForm";
-import RoomList from "../../RoomTypes/components/RoomTypeList";
+import RoomTypeList from "../../RoomTypes/components/RoomTypeList";
 
 const roomType = ({ accommodationId }: { accommodationId: string }) => {
   const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ const roomType = ({ accommodationId }: { accommodationId: string }) => {
           onOpenChange={setOpen}
           title="افزودن نوع اتاق جدید"
         />
-        <RoomList AccommodationId={accommodationId} />
+        <RoomTypeList AccommodationId={accommodationId} />
       </main>
     </div>
   );

@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
-interface Props{
-    key: string[];
-    url: string;
-    enabled?: boolean;
-    onSuccess?: () => void;
-    onError?: () => void;
+interface Props {
+  key: string[];
+  url: string;
+  enabled?: boolean;
+  onSuccess?: () => void;
+  onError?: () => void;
 }
 
 function useGetData<T>({ key, url, enabled = true }: Props) {
@@ -16,13 +16,13 @@ function useGetData<T>({ key, url, enabled = true }: Props) {
     queryKey: key,
     enabled,
     queryFn: async () => {
+      console.log(BASE_URL + url);
       const res = await axios.get(BASE_URL + url);
+      console.log(res.data);
       return res.data;
     },
-    staleTime:5*60*1000,
+    staleTime: 5 * 60 * 1000,
   });
-  
 }
-
 
 export default useGetData;
