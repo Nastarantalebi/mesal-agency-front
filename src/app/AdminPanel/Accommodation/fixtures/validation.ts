@@ -38,7 +38,7 @@ export const accommodationInitialValues: TCreateAccomodation = {
   max_guests: 0,
   floors: 0,
   area_sqm: 0,
-  stars: 0,
+  stars: 1,
   total_rooms: 0,
   has_reception_24h: false,
   has_elevator: false,
