@@ -12,7 +12,7 @@ const AccommodationTabs = ({
   const items = [
     {
       title: "اطلاعات اولیه",
-      component: <AccommodationForm accommodationId={accommodationId} />,
+      component: <AccommodationForm buttonText="ویرایش"accommodationId={accommodationId} />,
     },
     {
       title: "ویژگی ها",
@@ -28,7 +28,7 @@ const AccommodationTabs = ({
     },
   ];
   return (
-    <Tabs className="w-full">
+    <Tabs defaultValue={items[0].title} className="w-full">
       <TabsList className="w-full">
         {items.map((item) => (
           <TabsTrigger

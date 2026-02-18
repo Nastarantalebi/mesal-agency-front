@@ -16,12 +16,17 @@ import useGetData from "@/services/useGetData";
 import usePutData from "@/services/usePutData";
 import FormErrorModal from "@/components/FormErrorModal";
 import formTypes from "@/components/form/formInputTypes";
-import { miladiToShamsi, shamsiToMiladi } from "@/components/form/DateConverter";
+import {
+  miladiToShamsi,
+  shamsiToMiladi,
+} from "@/components/form/DateConverter";
 
 const AccommodationForm = ({
   accommodationId,
+  buttonText,
 }: {
   accommodationId?: string;
+  buttonText: string;
 }) => {
   const form = useForm<TCreateAccomodation>({
     resolver: zodResolver(accommodationValidation),
@@ -34,65 +39,30 @@ const AccommodationForm = ({
     enabled: !!accommodationId,
   });
 
-  useEffect(() => {
-    if (!data) return;
-    const transformedData = {
-      
-      ...data,
-      manufacture_date: data.manufacture_date ? miladiToShamsi(data.manufacture_date) : undefined,
-    };
-    form.reset({
-      ...transformedData,
-      type: transformedData.type?.id != null ? String(transformedData.type.id) : "",
-      city: transformedData.city?.name,
-      provience: transformedData.city?.provience?.id,
-    });
-  }, [data]);
+  // console.log(data)
 
-  // const stepFields: Record<number, (keyof TCreateAccomodation)[]> = {
-  //   1: [
-  //     "type",
-  //     "name",
-  //     "provience",
-  //     "city",
-  //     "description",
-  //     "address",
-  //     "manufacture_date",
-  //     "floors",
-  //     "stars",
-  //     "total_rooms",
-  //     "check_in_time",
-  //     "check_out_time",
-  //     "latitude",
-  //     "longitude",
-  //     "max_guests",
-  //     "area_sqm",
-  //     "has_reception_24h",
-  //     "has_elevator",
-  //     "built_with_local_materials",
-  //     "allows_local_food_experience",
-  //     "is_active",
-  //   ],
-  // };
-
-  // const handleNext = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   const ok = await form.trigger(stepFields[step] as any);
-  //   e.preventDefault();
-  //   if (!ok) return;
-  //   setStep((s) => {
-  //     const next = Math.min(s + 1, TOTAL_STEPS);
-  //     return next;
-  //   });
-  // };
-
-  // const handleBack = () => setStep((s) => Math.max(s - 1, 1));
+    useEffect(() => {
+      if (!data) return;
+      const transformedData = {
+        ...data,
+        manufacture_date: data.manufacture_date
+          ? miladiToShamsi(data.manufacture_date)
+          : undefined,
+      };
+      console.log(transformedData);
+      form.reset({
+        ...transformedData,
+        type:
+          transformedData.type?.id != null ? String(transformedData.type.id) : "",
+        city: transformedData.city?.name,
+        provience: transformedData.city?.provience?.id,
+      });
+      console.log("Reset values:", form.getValues());
+    }, [data]);
 
   const province_id = form.watch("provience");
+  console.log(province_id);
   const accommodationFields = useAccomodationFields(Number(province_id));
-
-  // const currentFields = accommodationFields.filter((item) =>
-  //   stepFields[step].includes(item.name),
-  // );
 
   const createMutation = usePostData<
     TCreateAccomodation,
@@ -113,15 +83,14 @@ const AccommodationForm = ({
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
-
   const handleSubmit = (value: TCreateAccomodation) => {
     const isEdit = !!accommodationId;
 
-
     const transformedData = {
-      
       ...value,
-      manufacture_date: value.manufacture_date ? shamsiToMiladi(value.manufacture_date): null,
+      manufacture_date: value.manufacture_date
+        ? shamsiToMiladi(value.manufacture_date)
+        : null,
     };
 
     if (isEdit) {
@@ -140,6 +109,7 @@ const AccommodationForm = ({
         onError: () => setErrorOpen(true),
       });
     }
+    console.log(transformedData);
   };
 
   if (isFetching) return <div className="p-4">Loading...</div>;
@@ -160,7 +130,7 @@ const AccommodationForm = ({
         ))}
 
         <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-end gap-3">
-          <CustomButton type="submit">ثبت</CustomButton>
+          <CustomButton type="submit">{buttonText}</CustomButton>
         </div>
       </form>
       <FormErrorModal

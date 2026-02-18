@@ -1,12 +1,12 @@
-import DatePicker from "react-multi-date-picker";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 import gregorian from "react-date-object/calendars/gregorian";
 import gregorian_en from "react-date-object/locales/gregorian_en";
 import type { Props } from "./PropsType";
 import { Label } from "../ui/label";
 import { FormField, FormMessage } from "../ui/form";
 import { Controller, type FieldValues } from "react-hook-form";
-import persian from "react-date-object/calendars/persian"
-import persian_fa from "react-date-object/locales/persian_fa"
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 const DateInput = <T extends FieldValues>({
   name,
@@ -27,6 +27,13 @@ const DateInput = <T extends FieldValues>({
           <>
             <DatePicker
               value={field.value}
+              onChange={(date: DateObject | null) => {
+                if (date) {
+                  field.onChange(date.format("YYYY/MM/DD"));
+                } else {
+                  field.onChange("");
+                }
+              }}
               calendar={persian}
               locale={persian_fa}
               calendarPosition="bottom-right"
@@ -36,7 +43,11 @@ const DateInput = <T extends FieldValues>({
                 `${fieldState.error ? "border-red-600" : "border-input"}`
               }
             />
-            <FormMessage />
+            {fieldState.error && (
+              <p className="text-sm font-medium text-destructive mt-1">
+                {fieldState.error.message}
+              </p>
+            )}
           </>
         )}
       />
@@ -45,3 +56,25 @@ const DateInput = <T extends FieldValues>({
 };
 
 export default DateInput;
+
+{
+  /* <DatePicker
+  value={field.value}
+  onChange={(date: DateObject | null) => {
+    if (date) {
+      field.onChange(date.format("YYYY/MM/DD"));
+    } else {
+      field.onChange("");
+    }
+  }}
+  calendar={persian}
+  locale={persian_fa}
+  calendarPosition="bottom-right"
+  containerClassName="w-full"
+  inputClass={
+    `w-full rounded-md border p-2 h-9 ` +
+    `${fieldState.error ? "border-red-600" : "border-input"}`
+  }
+  format="YYYY/MM/DD"
+/> */
+}

@@ -6,7 +6,6 @@ import {
   ComboboxList,
 } from "@/components/ui/combobox";
 import { Label } from "../ui/label";
-import { FormMessage } from "../ui/form";
 import { Controller, type FieldValues } from "react-hook-form";
 import type { Props } from "./PropsType";
 
@@ -18,7 +17,6 @@ const CustomCombobox = <T extends FieldValues>({
   onValueChange,
   control,
 }: Props<T>) => {
-
   return (
     <div className="w-full min-w-0">
       <Label className="block mb-3 mr-3">
@@ -59,10 +57,6 @@ const CustomCombobox = <T extends FieldValues>({
                         <ComboboxItem
                           key={item}
                           value={item}
-                          onClick={() => {
-                            field.onChange(item);
-                            onValueChange?.(item);
-                          }}
                         >
                           {item}
                         </ComboboxItem>
@@ -86,7 +80,11 @@ const CustomCombobox = <T extends FieldValues>({
                   })}
                 </ComboboxList>
               </ComboboxContent>
-              <FormMessage />
+              {fieldState.error && (
+                <p className="text-sm font-medium text-destructive mt-1">
+                  {fieldState.error.message}
+                </p>
+              )}
             </Combobox>
           );
         }}

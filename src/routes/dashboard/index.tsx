@@ -1,3 +1,4 @@
+import AccommodationList from "@/app/AdminPanel/Accommodation/components/AccommodationList";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/dashboard/")({
@@ -5,5 +6,9 @@ export const Route = createFileRoute("/dashboard/")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/admin/"!</div>;
+  return (
+    <div className="max-w-5xl mt-10">
+      <AccommodationList />
+    </div>
+  );
 }

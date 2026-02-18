@@ -13,6 +13,7 @@ export interface Items<T> {
   isRequired: boolean;
   options?: Item[];
   inputType?: InputType;
+  valueAsNumber?: boolean,
   onValueChange?: (value: string | number) => void;
   className?: string;
   page?: number;

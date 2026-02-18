@@ -119,6 +119,7 @@ const RoomTypePriceForm = ({
     url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/prices/?start_date=${startDate}&end_date=${endDate}`,
   });
 
+
   const { data: roomTypePricesData } = useGetData<TRoomTypePricesResponse>({
     key: ["roomTypePrices", startDate, endDate],
     url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/prices/?start_date=${startDate}&end_date=${endDate}`,
@@ -149,21 +150,7 @@ const RoomTypePriceForm = ({
     setRowPrices(updated);
   }, [roomTypePricesData]);
 
-  console.log(rowPrices);
 
-  // const handleApplyAll = () => {
-  //   const days = getDaysInMonth();
-  //   setRowPrices((prev) => {
-  //     const updated = { ...prev };
-  //     days.forEach(({ day }) => {
-  //       updated[day] = {
-  //         normalPrice: globalNormalPrice,
-  //         peakPrice: globalPeakPrice,
-  //       };
-  //     });
-  //     return updated;
-  //   });
-  // };
   const handleApplyAll = () => {
     const days = getDaysInMonth();
     setRowPrices((prev) => {
@@ -232,7 +219,7 @@ const RoomTypePriceForm = ({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-
+        {/* <div></div> */}
         <div className="">
           <Calendar
             value={selectedMonth}
@@ -282,16 +269,16 @@ const RoomTypePriceForm = ({
                         {days.map((item) => (
                           <TableRow key={item.shamsi}>
                             <TableCell
-                            // className={
-                            //   isFriday(item.shamsi) ? "text-red-500" : ""
-                            // }
+                            className={
+                              isFriday(item.shamsi) ? "text-red-500" : ""
+                            }
                             >
                               {getDayName(item.shamsi)}
                             </TableCell>
                             <TableCell
-                            // className={
-                            //   isFriday(item.shamsi) ? "text-red-500" : ""
-                            // }
+                            className={
+                              isFriday(item.shamsi) ? "text-red-500" : ""
+                            }
                             >
                               {item.shamsi}
                             </TableCell>

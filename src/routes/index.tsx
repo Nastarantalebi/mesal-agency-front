@@ -1,4 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router'
+import CustomButton from '@/components/form/CustomButton'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
   component: HomeComponent,
@@ -6,8 +7,9 @@ export const Route = createFileRoute('/')({
 
 function HomeComponent() {
   return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
+    <div className="flex items-center justify-center p-20">
+      
+      <CustomButton size="xl"><Link to='/dashboard'> Login</Link></CustomButton>
     </div>
   )
 }

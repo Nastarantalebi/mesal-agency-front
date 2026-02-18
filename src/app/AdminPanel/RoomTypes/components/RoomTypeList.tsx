@@ -47,6 +47,7 @@ interface Props {
 const RoomList = ({ AccommodationId }: Props) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // const [selectedName, setSelectedName] = useState<string| null>(null);
   const [openImg, setOpenImg] = useState(false);
   const [openF, setOpenF] = useState(false);
   const [openB, setOpenB] = useState(false);

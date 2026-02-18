@@ -299,3 +299,17 @@
   font-style: normal;
   font-display: swap;
 }
+
+.big-calendar {
+  width: 380px !important;
+  font-size: 16px !important;
+}
+
+.big-calendar .rmdp-day {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.big-calendar .rmdp-header-values {
+  font-size: 18px !important;
+}

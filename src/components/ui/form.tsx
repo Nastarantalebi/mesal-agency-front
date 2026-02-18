@@ -13,8 +13,8 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
-import type { TCreateRoomType } from "@/app/AdminPanel/Accommodation/types"
 import type { Items } from "../form/formInputTypes"
+import type { TCreateRoomType } from "@/app/AdminPanel/RoomTypes/types"
 
 const Form = FormProvider
 

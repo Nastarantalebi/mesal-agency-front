@@ -6,5 +6,10 @@ export type TCreatePeakDate  = {
 
 export type TResponsePeakDate  = {
     id: string;
-    date: DateObject;
+    date: string;
 }
+
+export type TPeakDateState = {
+  id: string;
+  date: DateObject; // used in component state
+};

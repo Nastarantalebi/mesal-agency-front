@@ -8,7 +8,7 @@ export const Route = createFileRoute("/dashboard/accommodation-add")({
 function RouteComponent() {
   return (
     <div className="flex-1 min-w-0 overflow-x-hidden pt-12">
-      <AccommodationForm />
+      <AccommodationForm buttonText="ثبت"/>
     </div>
   );
 }

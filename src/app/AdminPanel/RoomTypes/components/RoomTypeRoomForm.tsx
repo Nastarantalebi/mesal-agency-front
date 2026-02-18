@@ -35,12 +35,12 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
   });
 
   const [errorOpen, setErrorOpen] = useState(false);
-  const errmessage = "ثبت تخت با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
+  const errmessage = "ثبت اتاق با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handle = (value: TCRoomTypesRoom) => {
     createRoom.mutateAsync(value, {
       onSuccess: () => {
-        toast.success("نوع تخت با موفقیت افزوده شد");
+        toast.success("اتاق با موفقیت افزوده شد");
       },
       onError: () => setErrorOpen(true),
     });

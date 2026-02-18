@@ -3,6 +3,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Controller, type FieldValues, useFormContext } from "react-hook-form";
 import type { Props } from "./PropsType";
+import { number } from "zod";
 
 export type InputType = "text" | "number" | "email" | "password" | "tel";
 
@@ -28,7 +29,13 @@ const CustomInput = <T extends FieldValues>({
             <Input
               {...field}
               type={inputType}
-              className={`${fieldState.error ? "border-red-600" : ""}`}
+              dir={inputType === "number" ? "ltr" : undefined}
+              onChange={
+                inputType === "number"
+                  ? (e) => field.onChange(e.target.valueAsNumber)
+                  : field.onChange
+              }
+              className={`${fieldState.error ? "border-red-600" : ""} ${inputType==="number" ? "text-left" : ""}`}
             />
             {fieldState.error?.message && (
               <p className="text-[0.8rem] font-medium text-destructive">
