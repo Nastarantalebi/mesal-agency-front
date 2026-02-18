@@ -23,18 +23,18 @@ cd /home/production/server_deploy/
 echo "🐳 Pulling image: $DEPLOY_IMAGE"
 docker pull "$DEPLOY_IMAGE"
 
-echo "🏷️  Tagging image as erp-front"
-docker tag "$DEPLOY_IMAGE" erp-front
+echo "🏷️  Tagging image as agency-front"
+docker tag "$DEPLOY_IMAGE" agency-front
 
-echo "🛑 Stopping erp-front service"
-docker compose stop erp-front
+echo "🛑 Stopping agency-front service"
+docker compose stop agency-front
 
-echo "🗑️  Removing old erp-front container"
-docker compose rm -f erp-front
+echo "🗑️  Removing old agency-front container"
+docker compose rm -f agency-front
 
-echo "▶️ Starting erp-front service"
+echo "▶️ Starting agency-front service"
 # Note: DEPLOY_IMAGE is overridden here - is this intentional?
-DEPLOY_IMAGE="erp-front" docker compose up -d erp-front --remove-orphans
+DEPLOY_IMAGE="agency-front" docker compose up -d agency-front --remove-orphans
 
 echo "🔄 Reloading nginx"
 make nginx_reload
