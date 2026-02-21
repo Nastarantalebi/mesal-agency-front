@@ -64,7 +64,7 @@ const CustomMapPicker = ({ label, isRequired }: Props) => {
         render={({ fieldState }) => (
           <>
             <div
-              className={`h-[350px] w-full rounded-md overflow-hidden border relative z-0${
+              className={`h-[350px] w-full rounded-md overflow-hidden border relative ${
                 fieldState.error ? "border-red-600" : "border-input"
               }`}
             >
