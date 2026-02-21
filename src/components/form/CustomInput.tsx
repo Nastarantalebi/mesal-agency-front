@@ -35,7 +35,7 @@ const CustomInput = <T extends FieldValues>({
                   ? (e) => field.onChange(e.target.valueAsNumber)
                   : field.onChange
               }
-              className={`${fieldState.error ? "border-red-600" : ""} ${inputType==="number" ? "text-left" : ""}`}
+              className={`${fieldState.error ? "border-red-600" : ""} ${inputType === "number" ? "text-left" : ""}`}
             />
             {fieldState.error?.message && (
               <p className="text-[0.8rem] font-medium text-destructive">

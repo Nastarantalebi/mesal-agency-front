@@ -130,7 +130,7 @@ const RoomTypeFeatures = ({
             <div className="grid grid-cols-2 gap-10">
               <div className="flex flex-col gap-5 items-start justify-start">
                 <Card className="shadow-lg shadow-primary/50">
-                  <CardTitle className="text-center text-sm font-light">
+                  <CardTitle className="text-center text-sm font-light mr-5">
                     ویژگی های مربوط به اتاق
                   </CardTitle>
                   {roomTypeFeaturesData ? (
@@ -164,11 +164,11 @@ const RoomTypeFeatures = ({
               </div>
               <div className="flex flex-col gap-5 items-start justify-start">
                 <Card className="shadow-lg shadow-primary/50">
-                  <CardTitle className="text-center text-sm font-light">
+                  <CardTitle className="text-center text-sm font-light mx-5">
                     ویژگی های اضافه شده
                   </CardTitle>
                   {roomTypeFeatureList ? (
-                    <CardContent>
+                    <CardContent className="p-5">
                       <div className="flex flex-wrap gap-2">
                         {roomTypeFeatureList?.map((f) => {
                           return (
@@ -184,7 +184,9 @@ const RoomTypeFeatures = ({
                       </div>
                     </CardContent>
                   ) : (
-                    <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
+                    <CardContent className="p-5">
+                      داده ای برای نمایش وجود ندارد
+                    </CardContent>
                   )}
                 </Card>
               </div>

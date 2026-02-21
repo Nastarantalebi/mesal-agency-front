@@ -41,6 +41,7 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
     createRoom.mutateAsync(value, {
       onSuccess: () => {
         toast.success("اتاق با موفقیت افزوده شد");
+        form.reset(roomTypeRoomsInitialValues)
       },
       onError: () => setErrorOpen(true),
     });

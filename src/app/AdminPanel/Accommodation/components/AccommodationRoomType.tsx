@@ -17,7 +17,7 @@ const roomType = ({ accommodationId }: { accommodationId: string }) => {
             setOpen(true);
           }}
         >
-          افزودن اتاق
+          افزودن نوع اتاق جدید
         </CustomButton>
         <RoomTypeForm
           AccommodationId={accommodationId}

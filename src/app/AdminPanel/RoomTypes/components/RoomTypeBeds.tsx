@@ -155,7 +155,7 @@ const RoomTypeBeds = ({
               </div>
               <div className="flex flex-col gap-5 items-start justify-start">
                 <Card className="shadow-lg shadow-primary/50">
-                  <CardTitle className="text-center text-sm font-light">
+                  <CardTitle className="text-center text-sm font-light mx-5">
                     تخت های اضافه شده
                   </CardTitle>
 

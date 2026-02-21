@@ -54,8 +54,8 @@ const AccommodationForm = ({
       ...transformedData,
       type:
         transformedData.type?.id != null ? String(transformedData.type.id) : "",
-      city: String(transformedData.city?.id),
-      provience: transformedData.city?.province?.id,
+      city:  transformedData.city?.id != null ? String(transformedData.city.id) : null,
+      provience: transformedData.city?.province?.id ?? null,
     });
 
   }, [data]);
@@ -86,12 +86,17 @@ const AccommodationForm = ({
   const handleSubmit = (value: TCreateAccomodation) => {
     const isEdit = !!accommodationId;
 
+    // console.log(`value: ${JSON.stringify(value)}`)
+
     const transformedData = {
+      ...accommodationInitialValues,
       ...value,
       manufacture_date: value.manufacture_date
         ? shamsiToMiladi(value.manufacture_date)
         : null,
     };
+
+    // console.log(`transformedData:${JSON.stringify(transformedData)}`)
 
     if (isEdit) {
       updateMutation.mutateAsync(transformedData, {

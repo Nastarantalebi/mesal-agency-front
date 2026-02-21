@@ -60,8 +60,6 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
     enabled: !!accommodationId,
   });
 
-
-
   const submitFeatures = usePostData<
     TCAccommodationFeature,
     TAccommodationFeatureResponse
@@ -131,9 +129,9 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
             )}
           </Card>
           <Card>
-            <CardTitle  className="text-center text-sm font-light">ویژگی های افزوده شده</CardTitle>
+            <CardTitle className="mx-5">ویژگی های افزوده شده</CardTitle>
             {accommodationFeatureList ? (
-              <CardContent>
+              <CardContent className="">
                 <div className="flex flex-wrap gap-2">
                   {accommodationFeatureList?.results.map((f) => {
                     return (
@@ -149,11 +147,15 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
                 </div>
               </CardContent>
             ) : (
-              <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
+              <CardContent className="p-5">
+                داده ای برای نمایش وجود ندارد
+              </CardContent>
             )}
           </Card>
         </div>
-          <CustomButton type="submit" className="mt-5">ثبت</CustomButton>
+        <CustomButton type="submit" className="mt-5">
+          ثبت
+        </CustomButton>
       </form>
       <FormErrorModal
         open={errorOpen}

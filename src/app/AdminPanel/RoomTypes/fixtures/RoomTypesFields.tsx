@@ -4,7 +4,7 @@ import type { TCreateRoomType } from "../types";
 export const RoomFields: Items<TCreateRoomType>[] = [
   {
     name: "name",
-    label: "نام اتاق",
+    label: "نام نوع اتاق",
     isRequired: true,
     fieldType: "input",
     inputType: "text",
