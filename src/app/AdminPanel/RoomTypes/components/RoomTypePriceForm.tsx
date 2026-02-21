@@ -118,14 +118,11 @@ const RoomTypePriceForm = ({
     url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/prices/?start_date=${startDate}&end_date=${endDate}`,
   });
 
-
   const { data: roomTypePricesData } = useGetData<TRoomTypePricesResponse>({
     key: ["roomTypePrices", startDate, endDate],
     url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/prices/?start_date=${startDate}&end_date=${endDate}`,
     enabled: !!RoomId && !!startDate && !!endDate,
   });
-
-
 
   const normalizeKey = (persianDate: string): string => {
     return persianDate
@@ -148,7 +145,6 @@ const RoomTypePriceForm = ({
 
     setRowPrices(updated);
   }, [roomTypePricesData]);
-
 
   const handleApplyAll = () => {
     const days = getDaysInMonth();
@@ -231,7 +227,7 @@ const RoomTypePriceForm = ({
               <>
                 <div className="flex gap-4">
                   <div className="flex flex-col gap-1">
-                    <Label>قیمت نرمال</Label>
+                    <Label>قیمت نرمال (تومان)</Label>
                     <Input
                       type="number"
                       value={globalNormalPrice}
@@ -239,7 +235,7 @@ const RoomTypePriceForm = ({
                     />
                   </div>
                   <div className="flex flex-col gap-1">
-                    <Label>قیمت پیک</Label>
+                    <Label>قیمت پیک ( تومان)</Label>
                     <Input
                       type="number"
                       value={globalPeakPrice}
@@ -267,16 +263,16 @@ const RoomTypePriceForm = ({
                         {days.map((item) => (
                           <TableRow key={item.shamsi}>
                             <TableCell
-                            className={
-                              isFriday(item.shamsi) ? "text-red-500" : ""
-                            }
+                              className={
+                                isFriday(item.shamsi) ? "text-red-500" : ""
+                              }
                             >
                               {getDayName(item.shamsi)}
                             </TableCell>
                             <TableCell
-                            className={
-                              isFriday(item.shamsi) ? "text-red-500" : ""
-                            }
+                              className={
+                                isFriday(item.shamsi) ? "text-red-500" : ""
+                              }
                             >
                               {item.shamsi}
                             </TableCell>
