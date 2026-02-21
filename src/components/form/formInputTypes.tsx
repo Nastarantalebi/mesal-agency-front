@@ -5,6 +5,8 @@ import type { Control, FieldValues, Path } from "react-hook-form";
 import YesNoInput from "./YesNoInput";
 import DateInput from "./DateInput";
 import CustomCheckbox from "./CustomCheckbox";
+import CustomMapPicker from "./Map";
+import TimeInput from "./TimeInput";
 
 export interface Items<T> {
   name: Path<T>;
@@ -13,7 +15,7 @@ export interface Items<T> {
   isRequired: boolean;
   options?: Item[];
   inputType?: InputType;
-  valueAsNumber?: boolean,
+  valueAsNumber?: boolean;
   onValueChange?: (value: string | number) => void;
   className?: string;
   page?: number;
@@ -86,6 +88,12 @@ function formTypes<T extends FieldValues>(
           control={control}
         />
       );
+
+    case "Map":
+      return <CustomMapPicker label="موقعیت مکانی" isRequired />;
+
+    case "Time":
+      return <TimeInput name={name} label={label} isRequired={isRequired} control={control}/>
 
     default:
       return (

@@ -49,6 +49,7 @@ export const accommodationInitialValues: TCreateAccomodation = {
   is_active: false,
 };
 
+
 // export type TCreateAccomodation = z.infer<typeof accommodationValidation>;
 
 

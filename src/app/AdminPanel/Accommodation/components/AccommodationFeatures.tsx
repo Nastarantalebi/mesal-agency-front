@@ -52,18 +52,21 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
     url: `${features_url}?type=accommodation`,
   });
 
-  const { data: accommodationFeatureList } =
-    useGetData<TAccommodationFeatureResponse>({
-      key: ["accommodation-features", String(accommodationId)],
-      url: `${accommodation_url}${accommodationId}/features/`,
-      enabled: !!accommodationId,
-    });
+  const { data: accommodationFeatureList } = useGetData<
+    TPaginatedResponse<TAccommodationFeatureResponse>
+  >({
+    key: ["accommodation-features", accommodationId],
+    url: `${accommodation_url}${accommodationId}/features/`,
+    enabled: !!accommodationId,
+  });
+
+
 
   const submitFeatures = usePostData<
     TCAccommodationFeature,
     TAccommodationFeatureResponse
   >({
-    key: ["accommodation-features"],
+    key: ["accommodation-features", accommodationId],
     url: `${accommodation_url}${accommodationId}/features/`,
   });
 
@@ -97,7 +100,7 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="flex flex-col gap-5 items-start justify-start">
+        <div className="flex flex-row gap-5 items-start justify-start">
           <Card>
             <CardTitle className="mr-5"> ویژگی های مربوط به اقامتگاه</CardTitle>
             {accommodationFeaturesData ? (
@@ -127,8 +130,30 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
               <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
             )}
           </Card>
-          <CustomButton type="submit">ثبت</CustomButton>
+          <Card>
+            <CardTitle  className="text-center text-sm font-light">ویژگی های افزوده شده</CardTitle>
+            {accommodationFeatureList ? (
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {accommodationFeatureList?.results.map((f) => {
+                    return (
+                      <Badge
+                        key={f.id}
+                        variant="primary"
+                        className="px-6 py-2 bg-accent/70 text-black"
+                      >
+                        {f.feature.title}
+                      </Badge>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            ) : (
+              <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
+            )}
+          </Card>
         </div>
+          <CustomButton type="submit" className="mt-5">ثبت</CustomButton>
       </form>
       <FormErrorModal
         open={errorOpen}

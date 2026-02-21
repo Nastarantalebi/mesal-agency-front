@@ -26,19 +26,13 @@ import {
 import CustomButton from "@/components/form/CustomButton";
 import { Form } from "@/components/ui/form";
 
-// interface Props {
-//   title: string;
-//   open: boolean;
-//   onOpenchange: (open: boolean) => void;
-//   fields: Items<TCreateRoomType>[];
-// }
-
 interface Props {
   AccommodationId?: string;
   RoomId?: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
+  buttonTitle?: string;
 }
 
 const RoomTypeForm = ({
@@ -47,14 +41,14 @@ const RoomTypeForm = ({
   open,
   onOpenChange: onOpenchange,
   title,
+  buttonTitle,
 }: Props) => {
-  
   const form = useForm<TCreateRoomType>({
     resolver: zodResolver(roomTypeValidation),
     defaultValues: roomTypeInitialValues,
   });
 
-  const key =  ["RoomTypes", AccommodationId || "", RoomId || ""]
+  const key = ["RoomTypes", AccommodationId || "", RoomId || ""];
 
   const { data, isFetching } = useGetData<TRoomTypeResponse>({
     key,
@@ -62,23 +56,23 @@ const RoomTypeForm = ({
     enabled: !!RoomId,
   });
 
-  const createMutation = usePostData<TCreateRoomType, TRoomTypeResponse>({
-    key,
-    url: `${accommodation_url}${AccommodationId}/room_types/`,
-  });
-
   const updateMutation = usePutData<TCreateRoomType, TRoomTypeResponse>({
     key,
     url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}`,
   });
 
+  const createMutation = usePostData<TCreateRoomType, TRoomTypeResponse>({
+    key: ["RoomTypes", AccommodationId || ""],
+    url: `${accommodation_url}${AccommodationId}/room_types/`,
+  });
+
   useEffect(() => {
     if (!data) return;
     form.reset({
+      ...roomTypeInitialValues,
       ...data,
     });
   }, [data]);
-
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
@@ -90,6 +84,7 @@ const RoomTypeForm = ({
       updateMutation.mutateAsync(value, {
         onSuccess: () => {
           toast.success("ویرایش با موفقیت انجام شد ");
+          onOpenchange(false);
         },
         onError: () => setErrorOpen(true),
       });
@@ -97,6 +92,7 @@ const RoomTypeForm = ({
       createMutation.mutateAsync(value, {
         onSuccess: () => {
           toast.success("نوع اتاق با موفقیت ثبت شد ");
+          onOpenchange(false);
           form.reset(roomTypeInitialValues);
         },
         onError: () => setErrorOpen(true),
@@ -104,11 +100,10 @@ const RoomTypeForm = ({
     }
   };
 
-
   if (isFetching) return <div className="p-4">Loading...</div>;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenchange} >
+    <Dialog open={open} onOpenChange={onOpenchange}>
       <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl">
         <DialogHeader>
           <DialogTitle className="mb-6">{title}</DialogTitle>
@@ -132,9 +127,8 @@ const RoomTypeForm = ({
                   انصراف
                 </CustomButton>
               </DialogClose>
-              <CustomButton type="submit">ثبت</CustomButton>
+              <CustomButton type="submit">{buttonTitle}</CustomButton>
             </DialogFooter>
-
           </form>
         </Form>
       </DialogContent>

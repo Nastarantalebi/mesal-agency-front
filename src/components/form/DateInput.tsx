@@ -1,9 +1,6 @@
 import DatePicker, { DateObject } from "react-multi-date-picker";
-import gregorian from "react-date-object/calendars/gregorian";
-import gregorian_en from "react-date-object/locales/gregorian_en";
 import type { Props } from "./PropsType";
 import { Label } from "../ui/label";
-import { FormField, FormMessage } from "../ui/form";
 import { Controller, type FieldValues } from "react-hook-form";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";

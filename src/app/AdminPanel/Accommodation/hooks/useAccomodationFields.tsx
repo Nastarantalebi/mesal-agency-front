@@ -14,9 +14,7 @@ import {
   accommodation_types_url,
 } from "@/data/querykeys";
 
-
 function useAccomodationFields(province_id?: number) {
-  
   const { data: accommodationTypes } = useGetData<Item[]>({
     key: [accommodation_types_key],
     url: accommodation_types_url,
@@ -33,7 +31,6 @@ function useAccomodationFields(province_id?: number) {
     enabled: !!province_id,
   });
 
-
   const accommodationFields: Items<TCreateAccomodation>[] = [
     {
       name: "type",
@@ -41,7 +38,6 @@ function useAccomodationFields(province_id?: number) {
       isRequired: true,
       fieldType: "dropdown",
       options: accommodationTypes,
-      page: 1,
     },
     {
       name: "name",
@@ -49,7 +45,6 @@ function useAccomodationFields(province_id?: number) {
       isRequired: true,
       fieldType: "input",
       inputType: "text",
-      page: 1,
     },
     {
       name: "provience",
@@ -57,7 +52,6 @@ function useAccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "dropdown",
       options: provinces,
-      page: 1,
     },
     {
       name: "city",
@@ -65,7 +59,6 @@ function useAccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "dropdown",
       options: cities,
-      page: 1,
     },
     {
       name: "address",
@@ -74,7 +67,6 @@ function useAccomodationFields(province_id?: number) {
       fieldType: "input",
       inputType: "text",
       className: "col-span-full",
-      page: 1,
     },
     {
       name: "description",
@@ -83,14 +75,12 @@ function useAccomodationFields(province_id?: number) {
       fieldType: "input",
       inputType: "text",
       className: "col-span-full",
-      page: 1,
     },
     {
       name: "manufacture_date",
       label: "سال تاسیس",
       isRequired: false,
       fieldType: "DatePicker",
-      page: 2,
     },
     {
       name: "floors",
@@ -98,7 +88,6 @@ function useAccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "input",
       inputType: "number",
-      page: 2,
     },
     {
       name: "total_rooms",
@@ -106,7 +95,6 @@ function useAccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "input",
       inputType: "number",
-      page: 2,
     },
     {
       name: "max_guests",
@@ -114,47 +102,26 @@ function useAccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "input",
       inputType: "number",
-      page: 2,
-    },
-    // {
-    //   name: "check_in_time",
-    //   label: "ساعت ورود",
-    //   isRequired: false,
-    //   fieldType: "input",
-    //   inputType: "text",
-    //   page: 2,
-    // },
-    // {
-    //   name: "check_out_time",
-    //   label: "ساعت خروج",
-    //   isRequired: false,
-    //   fieldType: "input",
-    //   inputType: "text",
-    //   page: 2,
-    // },
-    {
-      name: "latitude",
-      label: "عرض جغرافیایی",
-      isRequired: false,
-      fieldType: "input",
-      inputType: "number",
-      page: 2,
     },
     {
-      name: "longitude",
-      label: "طول جغرافیایی",
+      name: "check_in_time",
+      label: "ساعت ورود",
       isRequired: false,
-      fieldType: "input",
-      inputType: "number",
-      page: 2,
+      fieldType: "Time",
     },
+    {
+      name: "check_out_time",
+      label: "ساعت خروج",
+      isRequired: false,
+      fieldType: "Time",
+    },
+
     {
       name: "area_sqm",
       label: "مساحت",
       isRequired: false,
       fieldType: "input",
       inputType: "number",
-      page: 2,
     },
     {
       name: "stars",
@@ -162,8 +129,22 @@ function useAccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "input",
       inputType: "number",
-      page: 2,
     },
+    // {
+    //   name: "longitude",
+    //   label: "طول جغرافیایی",
+    //   isRequired: false,
+    //   fieldType: "input",
+    //   inputType: "number",
+    // },
+    // {
+    //   name: "longitude",
+    //   label: "عرض جغرافیایی",
+    //   isRequired: false,
+    //   fieldType: "input",
+    //   inputType: "number",
+    // },
+
     {
       name: "has_reception_24h",
       label: "پذیرش ۲۴ ساعته ",
@@ -171,7 +152,6 @@ function useAccomodationFields(province_id?: number) {
       fieldType: "yesNoInput",
       options: YES_NO_OPTIONS,
       className: "col-start-1 md:col-start-1 lg:col-start-1",
-      page: 2,
     },
     {
       name: "has_elevator",
@@ -180,7 +160,6 @@ function useAccomodationFields(province_id?: number) {
       fieldType: "yesNoInput",
       className: "col-span-1 md:col-span-1 lg:col-span-1",
       options: YES_NO_OPTIONS,
-      page: 2,
     },
     {
       name: "built_with_local_materials",
@@ -189,7 +168,6 @@ function useAccomodationFields(province_id?: number) {
       fieldType: "yesNoInput",
       className: "col-span-1 md:col-span-1 lg:col-span-1",
       options: YES_NO_OPTIONS,
-      page: 2,
     },
     {
       name: "allows_local_food_experience",
@@ -198,7 +176,6 @@ function useAccomodationFields(province_id?: number) {
       fieldType: "yesNoInput",
       className: "col-start-1 md:col-start-1 lg:col-start-1",
       options: YES_NO_OPTIONS,
-      page: 2,
     },
     {
       name: "is_active",
@@ -207,7 +184,13 @@ function useAccomodationFields(province_id?: number) {
       fieldType: "yesNoInput",
       className: "col-span-1 md:col-span-1 lg:col-span-1",
       options: YES_NO_OPTIONS,
-      page: 2,
+    },
+        {
+      name: "latitude", // just used as key
+      label: "موقعیت مکانی",
+      isRequired: false,
+      fieldType: "Map",
+      className: "col-span-full",
     },
   ];
   return accommodationFields;

@@ -4,6 +4,7 @@ import { routeTree } from "./routeTree.gen";
 import "./index.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/clientQuery";
+import 'leaflet/dist/leaflet.css'
 
 // Set up a Router instance
 const router = createRouter({

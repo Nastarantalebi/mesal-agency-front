@@ -16,9 +16,7 @@ function useGetData<T>({ key, url, enabled = true }: Props) {
     queryKey: key,
     enabled,
     queryFn: async () => {
-      console.log(BASE_URL + url);
       const res = await axios.get(BASE_URL + url);
-      console.log(res.data);
       return res.data;
     },
     staleTime: 5 * 60 * 1000,

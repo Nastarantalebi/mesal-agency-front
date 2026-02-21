@@ -55,7 +55,8 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   const [openD, setopenD] = useState(false);
   const [openP, setopenP] = useState(false);
 
-  const key = [accommodation_key, AccommodationId, "roomType"];
+  // const key = [accommodation_key, AccommodationId, "roomType"];
+  const key = ["RoomTypes", AccommodationId || ""];
   const url = `${accommodation_url}${AccommodationId}/room_types/`;
 
   const { data, isLoading, error } = useGetData<TPaginatedResponse<RoomItem>>({
@@ -63,7 +64,6 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
     url,
   });
 
-  console.log(`roomType:${JSON.stringify(data)}`);
 
   const { mutateAsync: deleteRoomType } = useDeleteData({
     key,
@@ -149,6 +149,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         open={openEdit}
         onOpenChange={() => setOpenEdit(false)}
         title="اطلاعات نوع اتاق"
+        buttonTitle="ویرایش"
       />
       <RoomTypeImg
         RoomId={selectedId}

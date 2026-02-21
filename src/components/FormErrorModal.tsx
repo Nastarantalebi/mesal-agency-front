@@ -28,7 +28,7 @@ export default function FormErrorModal({
 }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-sm">
+      <DialogContent className="sm:max-w-sm z-1000">
         <DialogHeader>
           <DialogTitle className="text-red-600 text-center">{dialogTitle}</DialogTitle>
           <DialogDescription className="text-center leading-7">

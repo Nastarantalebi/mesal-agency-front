@@ -14,21 +14,19 @@ const AccommodationPhotoes = ({
   accommodationId: string;
 }) => {
   const { mutate: uploadImage } = usePostData<FormData, any>({
-    key: ["accommodation-image-upload", accommodationId],
+    key: ["accommodation-image", accommodationId],
     url: `admin/accommodations/${accommodationId}/images/`,
   });
 
   const { mutateAsync: deleteImage } = useDeleteData({
-    key: ["accommodation-image-delete", accommodationId],
+    key: ["accommodation-image", accommodationId],
     url: `admin/accommodations/${accommodationId}/images/`,
   });
 
   const {
     data: imageList,
-    isLoading,
-    error,
   } = useGetData<TPaginatedResponse<TAccommodationImageResponse>>({
-    key: ["accommodation-image-list", accommodationId],
+    key: ["accommodation-image", accommodationId],
     url: `admin/accommodations/${accommodationId}/images/`,
   });
 

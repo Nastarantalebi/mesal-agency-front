@@ -99,7 +99,6 @@ const RoomTypePriceForm = ({
         shamsi: `${year}/${month}/${day}`,
       });
     }
-    console.log(days);
     return days;
   };
 
@@ -192,7 +191,6 @@ const RoomTypePriceForm = ({
     resolver: zodResolver(roomTypePriceValidation),
     defaultValues: roomTypePriceInitialValues,
   });
-  // console.log(typeof value);
 
   const handleSubmit = () => {
     const days = getDaysInMonth();

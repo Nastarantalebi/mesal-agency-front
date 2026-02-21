@@ -39,26 +39,26 @@ const AccommodationForm = ({
     enabled: !!accommodationId,
   });
 
-  // console.log(data)
 
-    useEffect(() => {
-      if (!data) return;
-      const transformedData = {
-        ...data,
-        manufacture_date: data.manufacture_date
-          ? miladiToShamsi(data.manufacture_date)
-          : undefined,
-      };
-      // console.log(transformedData);
-      form.reset({
-        ...transformedData,
-        type:
-          transformedData.type?.id != null ? String(transformedData.type.id) : "",
-        city: transformedData.city?.name,
-        provience: transformedData.city?.provience?.id,
-      });
-      // console.log("Reset values:", form.getValues());
-    }, [data]);
+  useEffect(() => {
+    if (!data) return;
+    const transformedData = {
+      ...data,
+      manufacture_date: data.manufacture_date
+        ? miladiToShamsi(data.manufacture_date)
+        : undefined,
+    };
+;
+    form.reset({
+      ...accommodationInitialValues,
+      ...transformedData,
+      type:
+        transformedData.type?.id != null ? String(transformedData.type.id) : "",
+      city: String(transformedData.city?.id),
+      provience: transformedData.city?.province?.id,
+    });
+
+  }, [data]);
 
   const province_id = form.watch("provience");
 
@@ -109,7 +109,6 @@ const AccommodationForm = ({
         onError: () => setErrorOpen(true),
       });
     }
-    // console.log(transformedData);
   };
 
   if (isFetching) return <div className="p-4">Loading...</div>;

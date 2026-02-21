@@ -26,7 +26,7 @@ export type TAccommodationResponse = {
   id: number;
 
   type: { id: number; name: string } | null;
-  city: { id: number; name: string; provience: {id: number, name:string}} | null;
+  city: { id: number; name: string; province: {id: number, name:string}} | null;
 
   name: string;
   description: string | null;
@@ -75,10 +75,11 @@ export const YES_NO_OPTIONS: Item[] = [
 export type TCAccommodationFeature = {
     feature: number[] ;
 }
+
 export type TAccommodationFeatureResponse = {
     id: string;
     feature: {id: string; title: string};
-}[]
+}
 
 
 export type TAccommodationImage = {

@@ -24,6 +24,7 @@ const roomType = ({ accommodationId }: { accommodationId: string }) => {
           open={open}
           onOpenChange={setOpen}
           title="افزودن نوع اتاق جدید"
+          buttonTitle="ثبت"
         />
         <RoomTypeList AccommodationId={accommodationId} />
       </main>
