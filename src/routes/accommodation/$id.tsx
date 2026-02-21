@@ -13,9 +13,6 @@ function RouteComponent({}) {
 
   return (
     <div className="flex flex-row items-start gap-4 px-10 mt-20">
-      {/* <CustomButton className="bg-primary-50 hover:bg-primary/80 shrink-0 text-white">
-        {name}
-      </CustomButton> */}
       <div className="flex-1 min-w-0">
         <AccommodationTabs accommodationId={id} />
       </div>
