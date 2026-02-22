@@ -36,6 +36,7 @@ import {
 import usePostData from "@/services/usePostData";
 import { toast } from "sonner";
 import FormErrorModal from "@/components/FormErrorModal";
+import PriceTabs from "./PriceTabs";
 
 interface Props {
   open: boolean;
@@ -55,6 +56,10 @@ const RoomTypePriceForm = ({
   const [selectedMonth, setSelectedMonth] = useState<DateObject | null>(null);
   const [globalNormalPrice, setGlobalNormalPrice] = useState<string>("");
   const [globalPeakPrice, setGlobalPeakPrice] = useState<string>("");
+  const [rangeStartDate, setRangeStartDate] = useState<string>("");
+  const [rangeEndDate, setRangeEndDate] = useState<string>("");
+  const [rangeNormalPrice, setRangeNormalPrice] = useState<string>("");
+  const [rangePeakPrice, setRangePeakPrice] = useState<string>("");
   const [rowPrices, setRowPrices] = useState<
     Record<string, { normalPrice: string; peakPrice: string }>
   >({});
@@ -160,7 +165,39 @@ const RoomTypePriceForm = ({
       return updated;
     });
   };
-
+  const handleApplyFridays = () => {
+    const days = getDaysInMonth();
+    setRowPrices((prev) => {
+      const updated = { ...prev };
+      days.forEach(({ shamsi }) => {
+        if (isFriday(shamsi)) {
+          updated[shamsi] = {
+            normalPrice: globalNormalPrice,
+            peakPrice: globalPeakPrice,
+          };
+        }
+      });
+      return updated;
+    });
+  };
+  const handleApplyRange = (
+    start: string,
+    end: string,
+    normalPrice: string,
+    peakPrice: string,
+  ) => {
+    const days = getDaysInMonth();
+    setRowPrices((prev) => {
+      const updated = { ...prev };
+      days.forEach(({ shamsi }) => {
+        const miladi = shamsiToMiladi(shamsi);
+        if (miladi >= shamsiToMiladi(start) && miladi <= shamsiToMiladi(end)) {
+          updated[shamsi] = { normalPrice, peakPrice };
+        }
+      });
+      return updated;
+    });
+  };
   const handleRowChange = (
     shamsi: string,
     field: "normalPrice" | "peakPrice",
@@ -225,29 +262,16 @@ const RoomTypePriceForm = ({
           <div className="mt-10">
             {selectedMonth && (
               <>
-                <div className="flex gap-4">
-                  <div className="flex flex-col gap-1">
-                    <Label>قیمت نرمال (تومان)</Label>
-                    <Input
-                      type="number"
-                      value={globalNormalPrice}
-                      onChange={(e) => setGlobalNormalPrice(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <Label>قیمت پیک ( تومان)</Label>
-                    <Input
-                      type="number"
-                      value={globalPeakPrice}
-                      onChange={(e) => setGlobalPeakPrice(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="flex mt-5 mb-10">
-                  <CustomButton onClick={handleApplyAll}>
-                    اعمال روی همه روز ها
-                  </CustomButton>
-                </div>
+                <PriceTabs
+                  selectedMonth={selectedMonth}
+                  globalNormalPrice={globalNormalPrice}
+                  globalPeakPrice={globalPeakPrice}
+                  setGlobalNormalPrice={setGlobalNormalPrice}
+                  setGlobalPeakPrice={setGlobalPeakPrice}
+                  onApplyAll={handleApplyAll}
+                  onApplyFridays={handleApplyFridays}
+                  onApplyRange={handleApplyRange}
+                />
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(handleSubmit)}>
                     <Table>
