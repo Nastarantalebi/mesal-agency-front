@@ -28,7 +28,7 @@ import { Form } from "@/components/ui/form";
 
 interface Props {
   AccommodationId?: string;
-  RoomId?: string | null;
+  RoomId?: number | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -48,7 +48,7 @@ const RoomTypeForm = ({
     defaultValues: roomTypeInitialValues,
   });
 
-  const key = ["RoomTypes", AccommodationId || "", RoomId || ""];
+  const key = ["RoomTypes", AccommodationId || "", String(RoomId) || ""];
 
   const { data, isFetching } = useGetData<TRoomTypeResponse>({
     key,

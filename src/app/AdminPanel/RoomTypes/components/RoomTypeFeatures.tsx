@@ -27,7 +27,8 @@ import type { TCRoomTypeFeature, TRoomTypeFeatureResponse } from "../types";
 
 interface Props {
   AccommodationId?: string;
-  RoomId?: string | null;
+  RoomId?: number | null;
+  RoomName?: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -49,6 +50,7 @@ const RoomTypeFeatures = ({
   open,
   onOpenChange,
   title,
+  RoomName,
 }: Props) => {
   const form = useForm<TFeatureListForm>({
     resolver: zodResolver(featureListValidation),
@@ -125,6 +127,7 @@ const RoomTypeFeatures = ({
         <DialogHeader>
           <DialogTitle className="mb-6">{title}</DialogTitle>
         </DialogHeader>
+        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <div className="grid grid-cols-2 gap-10">

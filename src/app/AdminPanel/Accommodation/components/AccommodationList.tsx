@@ -7,7 +7,7 @@ import type { TPaginatedResponse } from "@/types";
 import { accommodation_key, accommodation_url } from "@/data/querykeys";
 import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
-import ListDelete from "../../RoomTypes/components/ListDelete";
+import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
 import { string } from "zod";
 import FormErrorModal from "@/components/FormErrorModal";
 import useDeleteData from "@/services/useDeleteData";
@@ -45,7 +45,7 @@ export const columns: ColumnDef<AccommodationItem>[] = [
 
 const AccommodationList = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<AccommodationItem | null>(null);
   const [openD, setOpenDelete] = useState(false);
 
   const { data, isLoading, error } = useGetData<
@@ -79,17 +79,16 @@ const AccommodationList = () => {
   return (
     <>
       <CustomDataTable
-        onRowClick={(id) => {
+        onRowClick={(rowData) => {
           navigate({
             to: "/accommodation/$id",
-            params: { id },
+            params: { id: String(rowData.id) },
           });
         }}
-        extraAction={(id) => (
+        extraAction={(rowData) => (
           <ListDelete
-            id={id}
-            onClick={(id) => {
-              setSelectedId(id);
+            onClick={() => {
+              setSelected(rowData);
               setOpenDelete(true);
             }}
           />
@@ -110,7 +109,7 @@ const AccommodationList = () => {
         open={openD}
         onOpenChange={() => setOpenDelete(false)}
         message={deleteMessage}
-        onAcknowledge={() => handleDelete(Number(selectedId))}
+        onAcknowledge={() => handleDelete(Number(selected))}
         buttonTitle="بله"
         dialogTitle="حذف"
       />

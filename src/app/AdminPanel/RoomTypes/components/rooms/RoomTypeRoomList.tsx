@@ -1,16 +1,15 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { TRoomTypeRoomResponse } from "../types";
 import { accommodation_url } from "@/data/querykeys";
 import type { TPaginatedResponse } from "@/types";
 import useGetData from "@/services/useGetData";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
-import { id } from "zod/v4/locales";
-import ListDelete from "./ListDelete";
 import { useState } from "react";
 import FormErrorModal from "@/components/FormErrorModal";
 import useDeleteData from "@/services/useDeleteData";
 import { toast } from "sonner";
 import ListPagination from "@/components/list/ListPagination";
+import type { TRoomTypeRoomResponse } from "../../types";
+import ListDelete from "../roomTypeListIcons/ListDelete";
 
 export const columns: ColumnDef<TRoomTypeRoomResponse>[] = [
   { accessorKey: "name", header: "نام اتاق" },
@@ -28,14 +27,14 @@ export const columns: ColumnDef<TRoomTypeRoomResponse>[] = [
 
 interface Props {
   AccommodationId: string;
-  RoomId: string | null;
+  RoomId?: number | null;
 }
 const RoomTypeRoomList = ({ AccommodationId, RoomId }: Props) => {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<TRoomTypeRoomResponse | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const key = ["RoomType-rooms", RoomId || "", String(currentPage)];
+  const key = ["RoomType-rooms", String(RoomId) || "", String(currentPage)];
   const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/rooms/?page=${currentPage}`;
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
@@ -71,11 +70,10 @@ const RoomTypeRoomList = ({ AccommodationId, RoomId }: Props) => {
         showAction={true}
         data={data?.results ?? []}
         placeholder="جست و جوی نام اتاق"
-        extraAction={(id) => (
+        extraAction={(rowData) => (
           <ListDelete
-            id={id}
-            onClick={(id) => {
-              setSelectedId(id);
+            onClick={() => {
+              setSelected(rowData);
               setOpenDelete(true);
             }}
           />
@@ -94,7 +92,7 @@ const RoomTypeRoomList = ({ AccommodationId, RoomId }: Props) => {
         message={deleteMessage}
         buttonTitle="بله"
         dialogTitle="حذف"
-        onAcknowledge={() => handleDelete(Number(selectedId))}
+        onAcknowledge={() => handleDelete(Number(selected))}
       />
     </div>
   );

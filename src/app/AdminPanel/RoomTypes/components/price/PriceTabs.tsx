@@ -12,7 +12,12 @@ interface Props {
   onApplyAll: () => void;
   onApplyFridays: () => void;
   selectedMonth: DateObject | null;
-  onApplyRange: (start: string, end: string, normalPrice: string, peakPrice: string) => void;
+  onApplyRange: (
+    start: string,
+    end: string,
+    normalPrice: string,
+    peakPrice: string,
+  ) => void;
 }
 
 const PriceTabs = ({
@@ -31,7 +36,12 @@ const PriceTabs = ({
   const [rangePeakPrice, setRangePeakPrice] = useState<string>("");
 
   const handleApplyRange = () => {
-    onApplyRange(rangeStartDate, rangeEndDate, rangeNormalPrice, rangePeakPrice);
+    onApplyRange(
+      rangeStartDate,
+      rangeEndDate,
+      rangeNormalPrice,
+      rangePeakPrice,
+    );
   };
 
   const items = [

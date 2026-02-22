@@ -8,33 +8,6 @@ export const Route = createFileRoute("/accommodation")({
   component: RouteComponent,
 });
 
-// const items = [
-//   {
-//     title: "لیست اقامتگاه‌ها",
-//     url: "/dashboard/accommodation-list" as const,
-//     icon: <List />,
-//   },
-//   {
-//     title: "ثبت اقامتگاه",
-//     url: "/dashboard/accommodation-add" as const,
-//     icon: <Home />,
-//   },
-//   {
-//     title: "ثبت ویژگی",
-//     url: "/dashboard/accommodation-features" as const,
-//     icon: <Star />,
-//   },
-//   {
-//     title: "ثبت نوع تخت",
-//     url: "/dashboard/accommodation-beds" as const,
-//     icon: <BedSingle />,
-//   },
-//   {
-//     title: "انتخاب روز های پیک",
-//     url: "/dashboard/peakDate" as const,
-//     icon: <CalendarDays />,
-//   },
-// ];
 
 function RouteComponent() {
   return (

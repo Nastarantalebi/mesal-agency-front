@@ -26,12 +26,12 @@ interface Props<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   placeholder: string;
-  onEdit?: (id: string) => void;
+  onEdit?: (rowData: TData) => void;
   onImg?: (id: string) => void;
   onFeature?: (id: string) => void;
   onBed?: (id: string) => void;
-  onRowClick?: (id: string) => void;
-  extraAction?: (id: string) => ReactNode;
+  onRowClick?: (rowData: TData) => void;
+  extraAction?: (rowData : TData) => ReactNode;
   showAction: boolean;
 }
 
@@ -119,19 +119,18 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => onRowClick(String(row.original.id))}
+                          onClick={() => onRowClick(row.original)}
                         >
                           جزییات
                         </Button>
                       )}
                       {onEdit && (
                         <ListEdit
-                          id={String(row.original.id)}
-                          onClick={onEdit}
+                          onClick={() => onEdit(row.original)}
                         />
                       )}
 
-                      {extraAction?.(String(row.original.id))}
+                      {extraAction?.(row.original)}
                     </div>
                   </TableCell>
                 </TableRow>

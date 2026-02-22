@@ -25,14 +25,14 @@ import { useEffect, useState } from "react";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { Calendar, DateObject } from "react-multi-date-picker";
-import type { TCRoomTypePrices, TRoomTypePricesResponse } from "../types";
+import type { TCRoomTypePrices, TRoomTypePricesResponse } from "../../types";
 import { accommodation_url } from "@/data/querykeys";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   roomTypePriceInitialValues,
   roomTypePriceValidation,
-} from "../fixtures/Validation";
+} from "../../fixtures/Validation";
 import usePostData from "@/services/usePostData";
 import { toast } from "sonner";
 import FormErrorModal from "@/components/FormErrorModal";
@@ -43,7 +43,8 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   title: string;
   AccommodationId: string;
-  RoomId: string | null;
+  RoomId?: number | null;
+  RoomName?: string | null;
 }
 
 const RoomTypePriceForm = ({
@@ -52,14 +53,11 @@ const RoomTypePriceForm = ({
   title,
   AccommodationId,
   RoomId,
+  RoomName,
 }: Props) => {
   const [selectedMonth, setSelectedMonth] = useState<DateObject | null>(null);
   const [globalNormalPrice, setGlobalNormalPrice] = useState<string>("");
   const [globalPeakPrice, setGlobalPeakPrice] = useState<string>("");
-  const [rangeStartDate, setRangeStartDate] = useState<string>("");
-  const [rangeEndDate, setRangeEndDate] = useState<string>("");
-  const [rangeNormalPrice, setRangeNormalPrice] = useState<string>("");
-  const [rangePeakPrice, setRangePeakPrice] = useState<string>("");
   const [rowPrices, setRowPrices] = useState<
     Record<string, { normalPrice: string; peakPrice: string }>
   >({});
@@ -250,7 +248,7 @@ const RoomTypePriceForm = ({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        {/* <div></div> */}
+        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
         <div className="">
           <Calendar
             value={selectedMonth}

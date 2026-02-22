@@ -15,14 +15,14 @@ import { accommodation_url } from "@/data/querykeys";
 import useDeleteData from "@/services/useDeleteData";
 import { X } from "lucide-react";
 import type { TPaginatedResponse } from "@/types";
-import { toast } from "sonner";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
   accommodationPk: string;
-  RoomId: string | null;
+  RoomId?: number | null;
+  RoomName?: string | null;
 }
 
 const roomTypeImg = ({
@@ -31,9 +31,10 @@ const roomTypeImg = ({
   title,
   accommodationPk,
   RoomId,
+  RoomName,
 }: Props) => {
 
-  const key = ["RoomType-image", RoomId || ""];
+  const key = ["RoomType-image", String(RoomId) || ""];
   const url = `${accommodation_url}${accommodationPk}/room_types/${RoomId}/images/`;
 
   const { mutate: uploadImage } = usePostData<FormData, any>({
@@ -77,6 +78,7 @@ const roomTypeImg = ({
         <DialogHeader>
           <DialogTitle className="mb-6">{title}</DialogTitle>
         </DialogHeader>
+        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
         <div className="flex items-center justify-center">
           <PhotoUploader size={260} onPick={onPick} />
         </div>

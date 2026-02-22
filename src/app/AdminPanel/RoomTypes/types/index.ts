@@ -26,14 +26,7 @@ export type TRoomTypeFeatureResponse = {
     feature: {id: string; title: string};
 }[]
 
-export type TCRoomTypeBed = {
-    beds: number[] ;
-}
 
-export type TRoomTypeBedResponse = {
-    id: string;
-    bed: {id: string; name: string}
-}[]
 
 export type TCRoomTypeImage = {
   image: string;

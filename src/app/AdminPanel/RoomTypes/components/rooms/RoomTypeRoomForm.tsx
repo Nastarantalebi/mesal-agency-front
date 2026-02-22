@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import {
   roomTypeRoomsInitialValues,
   roomTypeRoomValidation,
-} from "../fixtures/Validation";
-import type { TCRoomTypesRoom, TRoomTypeRoomResponse } from "../types";
+} from "../../fixtures/Validation";
+import type { TCRoomTypesRoom, TRoomTypeRoomResponse } from "../../types";
 import { toast } from "sonner";
-import { RoomFields } from "../fixtures/RoomFields";
+import { RoomFields } from "../../fixtures/RoomFields";
 import formTypes from "@/components/form/formInputTypes";
 import CustomButton from "@/components/form/CustomButton";
 import { accommodation_url } from "@/data/querykeys";
@@ -17,11 +17,11 @@ import { Form } from "@/components/ui/form";
 
 interface Props {
   AccommodationId: string;
-  RoomId: string | null;
+  RoomId?: number | null;
 }
 
 const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
-  const key = ["RoomType-rooms", RoomId || ""];
+  const key = ["RoomType-rooms", String(RoomId) || ""];
   const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/rooms/`;
 
   const createRoom = usePostData<TCRoomTypesRoom, TRoomTypeRoomResponse>({
@@ -41,7 +41,7 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
     createRoom.mutateAsync(value, {
       onSuccess: () => {
         toast.success("اتاق با موفقیت افزوده شد");
-        form.reset(roomTypeRoomsInitialValues)
+        form.reset(roomTypeRoomsInitialValues);
       },
       onError: () => setErrorOpen(true),
     });
@@ -50,14 +50,14 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handle)}>
-            {RoomFields.map((item) => (
-              <div
-                key={String(item.name)}
-                className={item.className || "col-span-1 mb-4"}
-              >
-                {formTypes<TCRoomTypesRoom>(item, form.control)}
-              </div>
-            ))}
+          {RoomFields.map((item) => (
+            <div
+              key={String(item.name)}
+              className={item.className || "col-span-1 mb-4"}
+            >
+              {formTypes<TCRoomTypesRoom>(item, form.control)}
+            </div>
+          ))}
           <div className="col-span-1 md:col-span-2 lg:grid-cols-4 flex justify-start gap-3 mt-6">
             <CustomButton type="submit">افزودن</CustomButton>
           </div>

@@ -5,20 +5,20 @@ import { useState } from "react";
 import RoomTypeForm from "./RoomTypeForm";
 import RoomTypeImg from "./RoomTypeImg";
 import RoomTypeFeatures from "./RoomTypeFeatures";
-import ListBeds from "./ListBeds";
-import ListImage from "./ListImage";
-import ListFeatures from "./ListFeatures";
-import RoomTypeBeds from "./RoomTypeBeds";
+import ListBeds from "./roomTypeListIcons/ListBeds";
+import ListImage from "./roomTypeListIcons/ListImage";
+import ListFeatures from "./roomTypeListIcons/ListFeatures";
+import RoomTypeBeds from "./beds/components/RoomTypeBeds";
 import type { TPaginatedResponse } from "@/types";
-import { accommodation_key, accommodation_url } from "@/data/querykeys";
-import ListRooms from "./ListRooms";
-import RoomTypeRooms from "./RoomTypeRooms";
-import ListDelete from "./ListDelete";
+import { accommodation_url } from "@/data/querykeys";
+import ListRooms from "./roomTypeListIcons/ListRooms";
+import RoomTypeRooms from "./rooms/RoomTypeRooms";
+import ListDelete from "./roomTypeListIcons/ListDelete";
 import FormErrorModal from "@/components/FormErrorModal";
 import useDeleteData from "@/services/useDeleteData";
 import { toast } from "sonner";
-import ListPrice from "./ListPrice";
-import RoomTypePriceForm from "./RoomTypePriceForm";
+import ListPrice from "./roomTypeListIcons/ListPrice";
+import RoomTypePriceForm from "./price/RoomTypePriceForm";
 
 type Type = {
   id: number;
@@ -46,7 +46,8 @@ interface Props {
 
 const RoomTypeList = ({ AccommodationId }: Props) => {
   const [openEdit, setOpenEdit] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<RoomItem | null>(null);
+
   // const [selectedName, setSelectedName] = useState<string| null>(null);
   const [openImg, setOpenImg] = useState(false);
   const [openF, setOpenF] = useState(false);
@@ -63,7 +64,6 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
     key,
     url,
   });
-
 
   const { mutateAsync: deleteRoomType } = useDeleteData({
     key,
@@ -87,51 +87,45 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   return (
     <>
       <CustomDataTable
-        onEdit={(id) => {
-          setSelectedId(id);
+        onEdit={(rowData) => {
+          setSelected(rowData);
           setOpenEdit(true);
         }}
-        extraAction={(id) => (
+        extraAction={(rowData) => (
           <>
             <ListImage
-              id={id}
-              onClick={(id) => {
-                setSelectedId(id);
+              onClick={() => {
+                setSelected(rowData);
                 setOpenImg(true);
               }}
             />
             <ListFeatures
-              id={id}
-              onClick={(id) => {
-                setSelectedId(id);
+              onClick={() => {
+                setSelected(rowData);
                 setOpenF(true);
               }}
             />
             <ListBeds
-              id={id}
-              onClick={(id) => {
-                setSelectedId(id);
+              onClick={() => {
+                setSelected(rowData);
                 setOpenB(true);
               }}
             />
             <ListRooms
-              id={id}
-              onClick={(id) => {
-                setSelectedId(id);
+              onClick={() => {
+                setSelected(rowData);
                 setopenR(true);
               }}
             />
             <ListPrice
-              id={id}
-              onClick={(id) => {
-                setSelectedId(id);
+              onClick={() => {
+                setSelected(rowData);
                 setopenP(true);
               }}
             />
             <ListDelete
-              id={id}
-              onClick={(id) => {
-                setSelectedId(id);
+              onClick={() => {
+                setSelected(rowData);
                 setopenD(true);
               }}
             />
@@ -145,42 +139,47 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
 
       <RoomTypeForm
         AccommodationId={AccommodationId}
-        RoomId={selectedId}
+        RoomId={selected?.id}
         open={openEdit}
         onOpenChange={() => setOpenEdit(false)}
         title="اطلاعات نوع اتاق"
         buttonTitle="ویرایش"
       />
       <RoomTypeImg
-        RoomId={selectedId}
+        RoomName={selected?.name}
+        RoomId={selected?.id}
         accommodationPk={AccommodationId}
         open={openImg}
         onOpenChange={() => setOpenImg(false)}
         title="افزودن عکس"
       />
       <RoomTypeFeatures
-        RoomId={selectedId}
+        RoomName={selected?.name}
+        RoomId={selected?.id}
         AccommodationId={AccommodationId}
         open={openF}
         onOpenChange={() => setOpenF(false)}
         title="افزودن ویژگی"
       />
       <RoomTypeBeds
-        RoomId={selectedId}
+        RoomName={selected?.name}
+        RoomId={selected?.id}
         AccommodationId={AccommodationId}
         open={openB}
         onOpenChange={() => setOpenB(false)}
         title="افزودن تخت"
       />
       <RoomTypeRooms
-        RoomId={selectedId}
+        RoomName={selected?.name}
+        RoomId={selected?.id}
         AccommodationId={AccommodationId}
         open={openR}
         onOpenChange={() => setopenR(false)}
         title="افزودن اتاق"
       />
       <RoomTypePriceForm
-        RoomId={selectedId}
+        RoomName={selected?.name}
+        RoomId={selected?.id}
         AccommodationId={AccommodationId}
         open={openP}
         onOpenChange={() => setopenP(false)}
@@ -190,7 +189,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         open={openD}
         onOpenChange={() => setopenD(false)}
         message={deleteMessage}
-        onAcknowledge={() => handleDelete(Number(selectedId))}
+        onAcknowledge={() => handleDelete(Number(selected?.id))}
         buttonTitle="بله"
         dialogTitle="حذف"
       />

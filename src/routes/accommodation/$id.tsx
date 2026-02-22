@@ -1,7 +1,6 @@
 import AccommodationTabs from "@/app/AdminPanel/Accommodation/components/AccommodationTabs";
-import CustomButton from "@/components/form/CustomButton";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { MoveLeft } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+
 
 export const Route = createFileRoute("/accommodation/$id")({
   component: RouteComponent,
