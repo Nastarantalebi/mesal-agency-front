@@ -46,22 +46,31 @@ const AccommodationTabs = ({
     },
   ];
   return (
-    <div className="flex flex-row items-start gap-4 px-10">
-      <CustomButton className="bg-primary hover:bg-primary/80 shrink-0 text-white">
-        {`اقامتگاه ${data?.name}`}
-      </CustomButton>
+    <div className="flex flex-row items-start justify-center gap-4 px-8">
       <Tabs defaultValue={items[0].title} className="w-full">
-        <TabsList className="w-full">
-          {items.map((item) => (
-            <TabsTrigger
-              key={item.title}
-              value={item.title}
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 text-base"
-            >
-              {item.title}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        <div className="flex items-center justify-center gap-5">
+          <CustomButton className="bg-primary hover:bg-primary/80 shrink-0 text-white">
+            {`اقامتگاه ${data?.name}`}
+          </CustomButton>
+          <TabsList className="w-full py-7 px-5">
+            {items.map((item) => (
+              <TabsTrigger
+                key={item.title}
+                value={item.title}
+                className="data-[state=active]:bg-primary/30 data-[state=active]:border data-[state=active]:border-primary data-[state=active]:text-secondary py-5 text-secondary"
+              >
+                {item.title}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          <CustomButton
+            className="bg-primary hover:bg-primary/80 shrink-0 text-white"
+            onClick={() => navigate({ to: "/dashboard/accommodation-list" })}
+          >
+            <MoveLeft />
+          </CustomButton>
+        </div>
+
         <div className="py-10">
           {items.map((item) => (
             <TabsContent key={item.title} value={item.title}>
@@ -70,12 +79,6 @@ const AccommodationTabs = ({
           ))}
         </div>
       </Tabs>
-      <CustomButton
-        className="bg-primary-50/70 hover:bg-primary/80 shrink-0 "
-        onClick={() => navigate({ to: "/dashboard/accommodation-list" })}
-      >
-        <MoveLeft />
-      </CustomButton>
     </div>
   );
 };

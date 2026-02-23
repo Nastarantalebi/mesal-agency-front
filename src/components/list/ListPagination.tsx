@@ -20,7 +20,7 @@ const ListPagination = ({ pageCount, currentPage, onPageChange }: Props) => {
         <PaginationItem>
           <PaginationPrevious
             onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-            className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+            className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer hover:bg-primary/20"}
           />
         </PaginationItem>
 
@@ -29,7 +29,7 @@ const ListPagination = ({ pageCount, currentPage, onPageChange }: Props) => {
             <PaginationLink
               isActive={currentPage === page}
               onClick={() => onPageChange(page)}
-              className="cursor-pointer"
+              className="cursor-pointer hover:bg-primary/20"
             >
               {page}
             </PaginationLink>
@@ -39,7 +39,7 @@ const ListPagination = ({ pageCount, currentPage, onPageChange }: Props) => {
         <PaginationItem>
           <PaginationNext
             onClick={() => currentPage < pageCount && onPageChange(currentPage + 1)}
-            className={currentPage === pageCount ? "pointer-events-none opacity-50" : "cursor-pointer"}
+            className={currentPage === pageCount ? "pointer-events-none opacity-50" : "cursor-pointer hover:bg-primary/20"}
           />
         </PaginationItem>
       </PaginationContent>

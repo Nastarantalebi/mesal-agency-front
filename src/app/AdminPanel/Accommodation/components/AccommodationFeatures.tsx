@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import type { TFeatureResponse } from "../../AccommodationFeatures/types";
@@ -100,7 +100,7 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="flex flex-row gap-5 items-start justify-start">
           <Card>
-            <CardTitle className="mr-5"> ویژگی های مربوط به اقامتگاه</CardTitle>
+            <CardTitle className="mx-5"> ویژگی های مربوط به اقامتگاه</CardTitle>
             {accommodationFeaturesData ? (
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -147,7 +147,7 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
                 </div>
               </CardContent>
             ) : (
-              <CardContent className="p-5">
+              <CardContent >
                 داده ای برای نمایش وجود ندارد
               </CardContent>
             )}

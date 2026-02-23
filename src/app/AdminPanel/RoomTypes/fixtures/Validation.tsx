@@ -36,8 +36,8 @@ export const roomTypePriceValidation = z.object({
   prices: z.array(
     z.object({
       date: z.string(),
-      normal_price: z.number(),
-      peak_price: z.number(),
+      normal_price: z.number().min(0, "عدد باید مثبت باشد"),
+      peak_price: z.number().min(0, "قیمت باید مثبت باشد"),
     })
   ),
 });

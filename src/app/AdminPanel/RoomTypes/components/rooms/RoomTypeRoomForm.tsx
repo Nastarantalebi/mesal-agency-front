@@ -43,7 +43,7 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
         toast.success("اتاق با موفقیت افزوده شد");
         form.reset(roomTypeRoomsInitialValues);
       },
-      onError: () => setErrorOpen(true),
+      onError: () => {setErrorOpen(true)},
     });
   };
   return (

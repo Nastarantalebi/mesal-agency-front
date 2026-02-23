@@ -1,13 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import type { Props } from "./types";
 
-type Props = {
-  key: string[];
-  url: string;
-  id?: string | number;
-  onSuccess?: () => void;
-  onError?: () => void;
-};
 
 function usePutData<TRequest, TResponse>({ key, url, id }: Props) {
   const BASE_URL = import.meta.env.VITE_BASE_URL as string;
@@ -21,7 +15,7 @@ function usePutData<TRequest, TResponse>({ key, url, id }: Props) {
       const { data } = await axios.put<TResponse>(full_url, body);
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: key });
     },
   });

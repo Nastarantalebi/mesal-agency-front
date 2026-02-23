@@ -1,13 +1,6 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-
-interface Props {
-  key: string[];
-  url: string;
-  enabled?: boolean;
-  onSuccess?: () => void;
-  onError?: () => void;
-}
+import type { Props } from "./types";
 
 function useGetData<T>({ key, url, enabled = true }: Props) {
   const BASE_URL = import.meta.env.VITE_BASE_URL;

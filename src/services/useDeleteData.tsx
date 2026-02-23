@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 
 interface Props {
-  key: unknown[];
+  key: string[];
   url: string;
   onSuccess?: () => void;
   onError?: (error: AxiosError) => void;

@@ -80,11 +80,11 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
             ))}
           </colgroup>
 
-          <TableHeader>
+          <TableHeader className="bg-primary-90 ">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead className="text-white" key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -93,7 +93,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                         )}
                   </TableHead>
                 ))}
-                {showAction && <TableHead className="w-32">عملیات</TableHead>}
+                {showAction && <TableHead className="w-32 text-white">عملیات</TableHead>}
               </TableRow>
             ))}
           </TableHeader>
@@ -118,6 +118,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                       {onRowClick && (
                         <Button
                           variant="outline"
+                          className="bg-primary/20 hover:bg-primary/40"
                           size="sm"
                           onClick={() => onRowClick(row.original)}
                         >

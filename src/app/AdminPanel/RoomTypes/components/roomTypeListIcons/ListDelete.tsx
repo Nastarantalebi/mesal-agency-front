@@ -12,8 +12,8 @@ const ListDelete = ({onClick} : Props) => {
 
   return (
     <div onClick={stopRowClick}>
-      <CustomButton className="bg-primary/20 hover:bg-primary/40" type="button" onClick={onClick}>
-        <Trash2 className="h-5 w-5 cursor-pointer" strokeWidth={1.5}  />
+      <CustomButton className=" border bg-red-100  hover:bg-red-200" type="button" onClick={onClick}>
+        <Trash2 className=" cursor-pointer text-red-700" strokeWidth={1.5}  />
       </CustomButton>
     </div>
   );
