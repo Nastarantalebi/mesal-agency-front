@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import type { DateObject } from "react-multi-date-picker";
+import PriceInputs from "./PriceInputs";
 
 interface Props {
   normalPrice: string;
@@ -36,10 +37,10 @@ const GlobalPriceInputRange = ({
   };
 
   useEffect(() => {
-  setRangeValues([]);
-  onStartDateChange("");
-  onEndDateChange("");
-}, [selectedMonth]);
+    setRangeValues([]);
+    onStartDateChange("");
+    onEndDateChange("");
+  }, [selectedMonth]);
 
   return (
     <div>
@@ -52,22 +53,12 @@ const GlobalPriceInputRange = ({
             onChange={handleRangeChange}
           />
         </div>
-        <div className="flex flex-col gap-1 mt-3">
-          <Label>قیمت نرمال (تومان)</Label>
-          <Input
-            type="number"
-            value={normalPrice}
-            onChange={(e) => onNormalPriceChange(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <Label>قیمت پیک (تومان)</Label>
-          <Input
-            type="number"
-            value={peakPrice}
-            onChange={(e) => onPeakPriceChange(e.target.value)}
-          />
-        </div>
+        <PriceInputs
+          normalPrice={normalPrice}
+          peakPrice={peakPrice}
+          onNormalPriceChange={onNormalPriceChange}
+          onPeakPriceChange={onPeakPriceChange}
+        />
       </div>
       <div className="flex mt-5 mb-10">
         <Badge

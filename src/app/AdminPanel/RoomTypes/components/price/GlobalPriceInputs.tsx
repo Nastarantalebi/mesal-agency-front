@@ -1,7 +1,6 @@
 // components/GlobalPriceInputs.tsx
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import PriceInputs from "./PriceInputs";
 
 interface Props {
   normalPrice: string;
@@ -23,22 +22,12 @@ const GlobalPriceInputs = ({
   return (
     <div>
       <div className="flex gap-4">
-        <div className="flex flex-col gap-1">
-          <Label>قیمت نرمال (تومان)</Label>
-          <Input
-            type="number"
-            value={normalPrice}
-            onChange={(e) => onNormalPriceChange(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <Label>قیمت پیک (تومان)</Label>
-          <Input
-            type="number"
-            value={peakPrice}
-            onChange={(e) => onPeakPriceChange(e.target.value)}
-          />
-        </div>
+        <PriceInputs
+          normalPrice={normalPrice}
+          peakPrice={peakPrice}
+          onNormalPriceChange={onNormalPriceChange}
+          onPeakPriceChange={onPeakPriceChange}
+        />
       </div>
       <div className="flex mt-5 mb-10">
         <Badge
@@ -59,6 +48,5 @@ const GlobalPriceInputs = ({
     </div>
   );
 };
-
 
 export default GlobalPriceInputs;
