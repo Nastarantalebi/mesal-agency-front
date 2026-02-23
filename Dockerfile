@@ -1,4 +1,4 @@
-ARG BUN_VERSION=1.3.0
+ARG BUN_VERSION=1.3.9-alpine
 ARG NGINX_VERSION=stable-alpine3.23
 
 FROM artifacts.repo.mesal.ir/docker-proxy/oven/bun:${BUN_VERSION} AS deps
