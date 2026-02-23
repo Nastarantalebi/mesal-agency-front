@@ -44,7 +44,7 @@ const GlobalPriceInputRange = ({
 
   return (
     <div>
-      <div className="flex gap-4 flex-wrap items-end">
+      <div className="flex flex-row gap-10 items-center justify-center ">
         <div className="flex flex-col gap-1">
           <Label className="mb-3">انتخاب بازه زمانی:</Label>
           <MonthRangeCalendar
@@ -53,21 +53,21 @@ const GlobalPriceInputRange = ({
             onChange={handleRangeChange}
           />
         </div>
-        <PriceInputs
-          normalPrice={normalPrice}
-          peakPrice={peakPrice}
-          onNormalPriceChange={onNormalPriceChange}
-          onPeakPriceChange={onPeakPriceChange}
-        />
-      </div>
-      <div className="flex mt-5 mb-10">
-        <Badge
-          variant="outline"
-          className="rounded-full border-accent bg-accent/20 cursor-pointer"
-          onClick={onApplyRange}
-        >
-          اعمال روی بازه
-        </Badge>
+        <div className="flex flex-col items-center justify-center gap-5">
+          <PriceInputs
+            normalPrice={normalPrice}
+            peakPrice={peakPrice}
+            onNormalPriceChange={onNormalPriceChange}
+            onPeakPriceChange={onPeakPriceChange}
+          />
+          <Badge
+            variant="outline"
+            className="rounded-full border-accent bg-accent/20 cursor-pointer"
+            onClick={onApplyRange}
+          >
+            اعمال روی بازه
+          </Badge>
+        </div>
       </div>
     </div>
   );

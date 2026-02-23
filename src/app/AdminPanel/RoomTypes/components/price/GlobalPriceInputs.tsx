@@ -20,7 +20,7 @@ const GlobalPriceInputs = ({
   onApplyFridays,
 }: Props) => {
   return (
-    <div>
+    <div className="flex items-center justify-center flex-col">
       <div className="flex gap-4">
         <PriceInputs
           normalPrice={normalPrice}

@@ -244,19 +244,22 @@ const RoomTypePriceForm = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
         <div className="">
-          <Calendar
-            value={selectedMonth}
-            onChange={handleMonthChange}
-            onlyMonthPicker
-            calendar={persian}
-            locale={persian_fa}
-          />
+          <div className="flex items-center justify-center">
+            <Calendar
+              value={selectedMonth}
+              onChange={handleMonthChange}
+              onlyMonthPicker
+              calendar={persian}
+              locale={persian_fa}
+            />
+          </div>
+
           <div className="mt-10">
             {selectedMonth && (
               <>
