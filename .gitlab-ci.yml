@@ -12,7 +12,8 @@ workflow:
     - when: never
 
 stages:
-  - build   
+  - build
+  - security-scan   
   - deploy  
 
 include:
