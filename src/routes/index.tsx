@@ -1,5 +1,5 @@
 import CustomButton from "@/components/form/CustomButton";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
@@ -12,6 +12,7 @@ function HomeComponent() {
       <CustomButton onClick={() => navigate({ to: "/dashboard" })} size="xl">
         Login
       </CustomButton>
+
     </div>
   );
 }

@@ -7,6 +7,7 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import type { TCreateAccomodation } from "@/app/AdminPanel/Accommodation/types/index";
+import CurrentLocationButton from "./currentLocationButton";
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -75,7 +76,7 @@ const CustomMapPicker = ({ label, isRequired }: Props) => {
                     : DEFAULT_CENTER
                 }
                 zoom={13}
-                scrollWheelZoom={false}
+                scrollWheelZoom={true}
                 style={{ height: "100%", width: "100%" }}
               >
                 <TileLayer
@@ -86,8 +87,26 @@ const CustomMapPicker = ({ label, isRequired }: Props) => {
                   lat={lat}
                   lng={lng}
                   onChange={(lat, lng) => {
-                    setValue("latitude", lat, { shouldValidate: true, shouldDirty: true });
-                    setValue("longitude", lng, { shouldValidate: true, shouldDirty: true });
+                    setValue("latitude", lat, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                    });
+                    setValue("longitude", lng, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                    });
+                  }}
+                />
+                <CurrentLocationButton
+                  onLocate={(lat, lng) => {
+                    setValue("latitude", lat, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                    });
+                    setValue("longitude", lng, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                    });
                   }}
                 />
               </MapContainer>
