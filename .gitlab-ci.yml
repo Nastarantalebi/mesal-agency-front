@@ -12,7 +12,8 @@ workflow:
     - when: never
 
 stages:
-  - build   
+  - build
+  - security-scan   
   - deploy  
 
 include:
@@ -23,6 +24,16 @@ include:
       environment: "production"
       target_image: "${IMAGE_BASE}/agency-front:latest"
       stage_name: "build"
+
+  
+  # Production Security Scan
+  - project: 'devops/ci-templates'
+    file: '/security/security-scan.yml'
+    inputs:
+      target_image: "${IMAGE_BASE}/agency-front:latest"
+      stage_name: "security-scan"
+      db_repository: "artifacts.repo.mesal.ir/docker-proxy/aquasec/trivy-db:latest"
+
 
   # Production Deploy 
   - project: 'devops/ci-templates'
