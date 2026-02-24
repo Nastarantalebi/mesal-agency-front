@@ -1,28 +1,34 @@
 import { Badge } from "@/components/ui/badge";
 import { beds_key, beds_url } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
-import type { TBedResponse } from "../types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { TPaginatedResponse } from "@/types";
 import { X } from "lucide-react";
 import useDeleteData from "@/services/useDeleteData";
+import type { TBedResponse } from "../../types";
+import HandlePagination from "../HandlePagination";
+import { useState } from "react";
 
 const BedsList = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+
   const { data: bedsData } = useGetData<TPaginatedResponse<TBedResponse>>({
-    key: [beds_key],
-    url: beds_url,
+    key: [beds_key, String(currentPage)],
+    url: `${beds_url}?page=${currentPage}`,
   });
 
   const { mutateAsync } = useDeleteData({
-    key: [beds_key],
+    key: [beds_key, String(currentPage)],
     url: beds_url,
   });
 
+  const PageCount = bedsData?.count ? Math.ceil(bedsData.count / 10) : 0;
+
   return (
     <div className="flex flex-col gap-10">
-      <Card className="shadow-lg shadow-primary/50">
+      <Card className=" border-2 border-primary bg-primary/10">
         <CardHeader>
-          <CardTitle className="text-primary">نوع اتاق های اضافه شده</CardTitle>
+          <CardTitle className="text-secondary">نوع اتاق های اضافه شده</CardTitle>
         </CardHeader>
         {bedsData ? (
           <CardContent>
@@ -47,6 +53,11 @@ const BedsList = () => {
         ) : (
           <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
         )}
+        <HandlePagination
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          pageCount={PageCount}
+        />
       </Card>
     </div>
   );

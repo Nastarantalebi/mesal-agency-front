@@ -1,7 +1,6 @@
 import type { Items } from "@/components/form/formInputTypes";
 import type { TCreateBed } from "../types";
 
-
 export const BedFields: Items<TCreateBed>[] = [
   {
     name: "name",
@@ -10,5 +9,4 @@ export const BedFields: Items<TCreateBed>[] = [
     fieldType: "input",
     inputType: "text",
   },
-
 ];

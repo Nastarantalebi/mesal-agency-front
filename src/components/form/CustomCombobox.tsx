@@ -45,7 +45,7 @@ const CustomCombobox = <T extends FieldValues>({
               <ComboboxInput
                 value={selectedText}
                 readOnly
-                className={`${fieldState.error ? "border-red-600" : ""}`}
+                className={`${fieldState.error ? "border-red-600" : "border border-primary/50 "}`}
               />
 
               <ComboboxContent>

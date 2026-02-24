@@ -61,7 +61,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
 
   return (
     <div>
-      <div className="relative py-4 max-w-3xs">
+      <div className="relative mb-4 max-w-3xs">
         <Input
           placeholder={placeholder}
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}

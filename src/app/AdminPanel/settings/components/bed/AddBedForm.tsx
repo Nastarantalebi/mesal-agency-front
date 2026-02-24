@@ -1,25 +1,23 @@
 import CustomButton from "@/components/form/CustomButton";
 import { Form } from "@/components/ui/form";
-import type { TBedResponse, TCreateBed } from "../types";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-import useGetData from "@/services/useGetData";
-import {
-  beds_key,
-  beds_url,
-  features_key,
-  features_url,
-} from "@/data/querykeys";
-import { useEffect, useState } from "react";
-import usePostData from "@/services/usePostData";
-import { toast } from "sonner";
+
 import formTypes from "@/components/form/formInputTypes";
 import FormErrorModal from "@/components/FormErrorModal";
-import { bedInitialValues, bedValidation } from "../fixtures/validation";
-import { BedFields } from "../fixtures/BedsField";
+import {
+  beds_key,
+  beds_url
+} from "@/data/querykeys";
+import usePostData from "@/services/usePostData";
+import { useState } from "react";
+import { toast } from "sonner";
+import { BedFields } from "../../fixtures/BedsField";
+import { bedInitialValues, bedValidation } from "../../fixtures/validation";
+import type { TBedResponse, TCreateBed } from "../../types";
 
-const AddFeaturesForm = () => {
+const AddBedsForm = () => {
   const form = useForm<TCreateBed>({
     resolver: zodResolver(bedValidation),
     defaultValues: bedInitialValues,
@@ -69,4 +67,4 @@ const AddFeaturesForm = () => {
   );
 };
 
-export default AddFeaturesForm;
+export default AddBedsForm;

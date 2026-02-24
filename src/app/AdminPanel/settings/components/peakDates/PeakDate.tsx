@@ -2,7 +2,11 @@ import { Calendar, DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import usePostData from "@/services/usePostData";
-import type { TCreatePeakDate, TPeakDateState, TResponsePeakDate } from "../types";
+import type {
+  TCreatePeakDate,
+  TPeakDateState,
+  TResponsePeakDate,
+} from "../../types";
 import { peakDate_key, peakDate_url } from "@/data/querykeys";
 import { toast } from "sonner";
 import { useEffect, useRef, useState } from "react";
@@ -107,7 +111,8 @@ function PeakDate() {
             // Replace optimistic entry with real id
             setSelectedDates((prev) =>
               prev.map((d) =>
-                d.id === "" && d.date.format("YYYY-MM-DD") === newDate.format("YYYY-MM-DD")
+                d.id === "" &&
+                d.date.format("YYYY-MM-DD") === newDate.format("YYYY-MM-DD")
                   ? { ...d, id: response.id }
                   : d,
               ),

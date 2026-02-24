@@ -1,54 +1,61 @@
+import AccommodationForm from "@/app/AdminPanel/AccommodationAdd/AccommodationForm";
+import AccommodationList from "@/app/AdminPanel/AccommodationLists/AccommodationList";
 import Header from "@/app/AdminPanel/AdminHeader";
-import { AppSidebar } from "@/app/AdminPanel/AdminSidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { BedSingle, CalendarDays, Home, List, Star } from "lucide-react";
+import AccommodationSettings from "@/app/AdminPanel/settings/components/AccommodationSettings";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/dashboard")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const items = [
+
+  const tabsItems = [
     {
       title: "لیست اقامتگاه‌ها",
-      url: "/dashboard/accommodation-list" as const,
-      icon: <List />,
+      component: <AccommodationList />,
     },
     {
       title: "ثبت اقامتگاه",
-      url: "/dashboard/accommodation-add" as const,
-      icon: <Home />,
+      component: <AccommodationForm buttonText="ثبت" />,
     },
     {
-      title: "ثبت ویژگی",
-      url: "/dashboard/accommodation-features" as const,
-      icon: <Star />,
-    },
-    {
-      title: "ثبت نوع تخت",
-      url: "/dashboard/accommodation-beds" as const,
-      icon: <BedSingle />,
-    },
-    {
-      title: "انتخاب روز های پیک",
-      url: "/dashboard/peakDate" as const,
-      icon: <CalendarDays />,
+      title: "تنظیمات",
+      component: <AccommodationSettings />,
     },
   ];
 
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full">
-        <AppSidebar sidebaritems={items} />
+    <div className="mt-20">
+      <div className="flex-1 flex flex-col">
+        <Header />
+        <div className="flex flex-row items-start justify-center gap-4 px-8">
+          <Tabs defaultValue={tabsItems[0].title} className="w-full">
+            <div className="flex items-center justify-center gap-5">
+              <TabsList className="w-full py-7 px-5">
+                {tabsItems.map((item) => (
+                  <TabsTrigger
+                    key={item.title}
+                    value={item.title}
+                    className="data-[state=active]:bg-primary/30 data-[state=active]:border data-[state=active]:border-primary data-[state=active]:text-secondary py-5 text-secondary"
+                  >
+                    {item.title}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
 
-        <div className="flex-1 flex flex-col">
-          <Header />
-          <main className="flex-1 p-10">
-            <Outlet />
-          </main>
+            <div className="py-5">
+              {tabsItems.map((item) => (
+                <TabsContent key={item.title} value={item.title} >
+                  {item.component}
+                </TabsContent>
+              ))}
+            </div>
+          </Tabs>
         </div>
       </div>
-    </SidebarProvider>
+    </div>
   );
 }

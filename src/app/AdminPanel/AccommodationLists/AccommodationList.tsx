@@ -7,11 +7,10 @@ import type { TPaginatedResponse } from "@/types";
 import { accommodation_key, accommodation_url } from "@/data/querykeys";
 import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
-import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
-import { string } from "zod";
 import FormErrorModal from "@/components/FormErrorModal";
 import useDeleteData from "@/services/useDeleteData";
 import { toast } from "sonner";
+import ListDelete from "../RoomTypes/components/roomTypeListIcons/ListDelete";
 
 type City = {
   id: number;

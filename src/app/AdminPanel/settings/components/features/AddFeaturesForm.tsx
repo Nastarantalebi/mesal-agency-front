@@ -1,19 +1,16 @@
 import CustomButton from "@/components/form/CustomButton";
 import { Form } from "@/components/ui/form";
-import type { TCFeature, TFeatureResponse } from "../types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  FeaturesInitialValues,
-  FeaturesValidation,
-} from "../fixtures/Validation";
 import { features_key, features_url } from "@/data/querykeys";
 import { useState } from "react";
 import usePostData from "@/services/usePostData";
 import { toast } from "sonner";
-import { FeaturesFields } from "../fixtures/FeatuesField";
 import formTypes from "@/components/form/formInputTypes";
 import FormErrorModal from "@/components/FormErrorModal";
+import { FeaturesInitialValues, FeaturesValidation } from "../../fixtures/validation";
+import type { TCFeature, TFeatureResponse } from "../../types";
+import { FeaturesFields } from "../../fixtures/FeatuesField";
 
 const AddFeaturesForm = () => {
   const form = useForm<TCFeature>({

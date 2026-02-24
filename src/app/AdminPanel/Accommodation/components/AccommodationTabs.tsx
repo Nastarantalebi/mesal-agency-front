@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import AccommodationForm from "./AccommodationForm";
+import AccommodationForm from "../../AccommodationAdd/AccommodationForm";
 import RoomType from "./AccommodationRoomType";
 import AccommodationFeatures from "./AccommodationFeatures";
 import AccommodationPhotoes from "./AccommodationPhotoes";
@@ -65,7 +65,7 @@ const AccommodationTabs = ({
           </TabsList>
           <CustomButton
             className="bg-primary hover:bg-primary/80 shrink-0 text-white"
-            onClick={() => navigate({ to: "/dashboard/accommodation-list" })}
+            onClick={() => navigate({ to: "/dashboard" })}
           >
             <MoveLeft />
           </CustomButton>

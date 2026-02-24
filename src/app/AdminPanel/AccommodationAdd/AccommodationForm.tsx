@@ -1,11 +1,14 @@
-import useAccomodationFields from "../hooks/useAccomodationFields";
+import useAccomodationFields from "../Accommodation/hooks/useAccomodationFields";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   accommodationInitialValues,
   accommodationValidation,
-} from "../fixtures/validation";
-import type { TAccommodationResponse, TCreateAccomodation } from "../types";
+} from "../Accommodation/fixtures/validation";
+import type {
+  TAccommodationResponse,
+  TCreateAccomodation,
+} from "../Accommodation/types";
 import { Form } from "@/components/ui/form";
 import usePostData from "@/services/usePostData";
 import { accommodation_key, accommodation_url } from "@/data/querykeys";
@@ -39,7 +42,6 @@ const AccommodationForm = ({
     enabled: !!accommodationId,
   });
 
-
   useEffect(() => {
     if (!data) return;
     const transformedData = {
@@ -48,16 +50,17 @@ const AccommodationForm = ({
         ? miladiToShamsi(data.manufacture_date)
         : undefined,
     };
-;
     form.reset({
       ...accommodationInitialValues,
       ...transformedData,
       type:
         transformedData.type?.id != null ? String(transformedData.type.id) : "",
-      city:  transformedData.city?.id != null ? String(transformedData.city.id) : null,
+      city:
+        transformedData.city?.id != null
+          ? String(transformedData.city.id)
+          : null,
       provience: transformedData.city?.province?.id ?? null,
     });
-
   }, [data]);
 
   const province_id = form.watch("provience");
