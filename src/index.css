@@ -28,6 +28,9 @@
     --color-primary-60: var(--primary-60);
     --color-primary-50: var(--primary-50);
     --color-primary-40: var(--primary-40);
+    --color-primary-30: var(--primary-30);
+    --color-primary-20: var(--primary-20);
+    --color-primary-10: var(--primary-10);
   
     --color-accent-40: var(--primary-40);
     --color-accent-30: var(--primary-30);
@@ -95,6 +98,9 @@
     --primary-60: #5d84a2;
     --primary-50: #6e90ab;
     --primary-40: #6e9db5;
+    --primary-30:#cdd9e3;;
+    --primary-20:#dde6ec;
+    --primary-10:#eef2f6;
 
     --secondary: #1a3263;
     --secondary-foreground:oklch(1 0 0);
