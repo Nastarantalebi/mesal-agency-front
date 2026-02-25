@@ -144,6 +144,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         onOpenChange={() => setOpenEdit(false)}
         title="اطلاعات نوع اتاق"
         buttonTitle="ویرایش"
+        asModal={true}
       />
       <RoomTypeImg
         RoomName={selected?.name}

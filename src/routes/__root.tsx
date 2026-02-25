@@ -8,7 +8,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <div className="!font-display">
-      <Toaster richColors position="top-right" />
+      <Toaster richColors position="top-right"  />
       <Outlet />
     </div>
   );

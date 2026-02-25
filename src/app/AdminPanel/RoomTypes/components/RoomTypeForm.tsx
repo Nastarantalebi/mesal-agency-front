@@ -29,15 +29,17 @@ import { Form } from "@/components/ui/form";
 interface Props {
   AccommodationId?: string;
   RoomId?: number | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  title?: string;
   buttonTitle?: string;
+  asModal?: boolean;
 }
 
 const RoomTypeForm = ({
   AccommodationId,
   RoomId,
+  asModal,
   open,
   onOpenChange: onOpenchange,
   title,
@@ -84,7 +86,7 @@ const RoomTypeForm = ({
       updateMutation.mutateAsync(value, {
         onSuccess: () => {
           toast.success("ویرایش با موفقیت انجام شد ");
-          onOpenchange(false);
+          onOpenchange?.(false);
         },
         onError: () => setErrorOpen(true),
       });
@@ -92,7 +94,6 @@ const RoomTypeForm = ({
       createMutation.mutateAsync(value, {
         onSuccess: () => {
           toast.success("نوع اتاق با موفقیت ثبت شد ");
-          onOpenchange(false);
           form.reset(roomTypeInitialValues);
         },
         onError: () => setErrorOpen(true),
@@ -102,43 +103,63 @@ const RoomTypeForm = ({
 
   if (isFetching) return <div className="p-4">Loading...</div>;
 
-  return (
-    <Dialog open={open} onOpenChange={onOpenchange}>
-      <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl">
-        <DialogHeader>
-          <DialogTitle className="mb-6">{title}</DialogTitle>
-        </DialogHeader>
+  const formContent = (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <FieldGroup>
+          {RoomFields.map((item) => (
+            <div
+              key={String(item.name)}
+              className={item.className || "col-span-1"}
+            >
+              {formTypes<TCreateRoomType>(item, form.control)}
+            </div>
+          ))}
+        </FieldGroup>
+        <div className="mt-10">
+          <CustomButton
+            type="button"
+            variant="outline"
+            onClick={() => onOpenchange?.(false)}
+          >
+            انصراف
+          </CustomButton>
+          <CustomButton type="submit">{buttonTitle}</CustomButton>
+        </div>
+      </form>
+    </Form>
+  );
+  if (asModal) {
+    return (
+      <>
+        <Dialog open={open} onOpenChange={onOpenchange}>
+          <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl">
+            <DialogHeader>
+              <DialogTitle className="mb-6">{title}</DialogTitle>
+            </DialogHeader>
+            {formContent}
+          </DialogContent>
+        </Dialog>
+        <FormErrorModal
+          open={errorOpen}
+          message={errmessage}
+          onOpenChange={setErrorOpen}
+          onAcknowledge={() => setErrorOpen(false)}
+        />
+      </>
+    );
+  }
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <FieldGroup>
-              {RoomFields.map((item) => (
-                <div
-                  key={String(item.name)}
-                  className={item.className || "col-span-1"}
-                >
-                  {formTypes<TCreateRoomType>(item, form.control)}
-                </div>
-              ))}
-            </FieldGroup>
-            <DialogFooter className="mt-6">
-              <DialogClose asChild>
-                <CustomButton type="button" variant="outline">
-                  انصراف
-                </CustomButton>
-              </DialogClose>
-              <CustomButton type="submit">{buttonTitle}</CustomButton>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
+  return (
+    <>
+      {formContent}
       <FormErrorModal
         open={errorOpen}
         message={errmessage}
         onOpenChange={setErrorOpen}
         onAcknowledge={() => setErrorOpen(false)}
       />
-    </Dialog>
+    </>
   );
 };
 

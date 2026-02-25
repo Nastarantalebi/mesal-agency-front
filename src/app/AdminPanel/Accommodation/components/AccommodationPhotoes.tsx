@@ -1,5 +1,4 @@
 import type { TPaginatedResponse } from "@/types";
-import React from "react";
 import type { TAccommodationImageResponse } from "../types";
 import useGetData from "@/services/useGetData";
 import { toast } from "sonner";

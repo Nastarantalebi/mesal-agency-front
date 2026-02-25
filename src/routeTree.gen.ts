@@ -10,22 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as AccommodationRouteImport } from './routes/accommodation'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccommodationIndexRouteImport } from './routes/accommodation/index'
-import { Route as AccommodationAddAccommodationRouteImport } from './routes/accommodation/add-accommodation'
-import { Route as AccommodationAccommodationDetailsRouteImport } from './routes/accommodation/accommodation-details'
-import { Route as AccommodationRoomidRouteImport } from './routes/accommodation/$roomid'
-import { Route as AccommodationIdRouteImport } from './routes/accommodation/$id'
+import { Route as AccommodationIdRouteRouteImport } from './routes/accommodation/$id/route'
+import { Route as AccommodationIdIndexRouteImport } from './routes/accommodation/$id/index'
+import { Route as AccommodationIdListRoomTypesTestRouteImport } from './routes/accommodation/$id/listRoomTypesTest'
+import { Route as AccommodationIdInfoRouteImport } from './routes/accommodation/$id/info'
+import { Route as AccommodationIdImagesRouteImport } from './routes/accommodation/$id/images'
+import { Route as AccommodationIdFeaturesRouteImport } from './routes/accommodation/$id/features'
+import { Route as AccommodationIdAddRoomTypesRouteImport } from './routes/accommodation/$id/addRoomTypes'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AccommodationRoute = AccommodationRouteImport.update({
-  id: '/accommodation',
-  path: '/accommodation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -38,95 +35,122 @@ const AccommodationIndexRoute = AccommodationIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AccommodationRoute,
 } as any)
-const AccommodationAddAccommodationRoute =
-  AccommodationAddAccommodationRouteImport.update({
-    id: '/add-accommodation',
-    path: '/add-accommodation',
-    getParentRoute: () => AccommodationRoute,
-  } as any)
-const AccommodationAccommodationDetailsRoute =
-  AccommodationAccommodationDetailsRouteImport.update({
-    id: '/accommodation-details',
-    path: '/accommodation-details',
-    getParentRoute: () => AccommodationRoute,
-  } as any)
-const AccommodationRoomidRoute = AccommodationRoomidRouteImport.update({
-  id: '/$roomid',
-  path: '/$roomid',
-  getParentRoute: () => AccommodationRoute,
+const AccommodationIdRouteRoute = AccommodationIdRouteRouteImport.update({
+  id: '/accommodation/$id',
+  path: '/accommodation/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AccommodationIdRoute = AccommodationIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AccommodationRoute,
+const AccommodationIdIndexRoute = AccommodationIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AccommodationIdRouteRoute,
 } as any)
+const AccommodationIdListRoomTypesTestRoute =
+  AccommodationIdListRoomTypesTestRouteImport.update({
+    id: '/listRoomTypesTest',
+    path: '/listRoomTypesTest',
+    getParentRoute: () => AccommodationIdRouteRoute,
+  } as any)
+const AccommodationIdInfoRoute = AccommodationIdInfoRouteImport.update({
+  id: '/info',
+  path: '/info',
+  getParentRoute: () => AccommodationIdRouteRoute,
+} as any)
+const AccommodationIdImagesRoute = AccommodationIdImagesRouteImport.update({
+  id: '/images',
+  path: '/images',
+  getParentRoute: () => AccommodationIdRouteRoute,
+} as any)
+const AccommodationIdFeaturesRoute = AccommodationIdFeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => AccommodationIdRouteRoute,
+} as any)
+const AccommodationIdAddRoomTypesRoute =
+  AccommodationIdAddRoomTypesRouteImport.update({
+    id: '/addRoomTypes',
+    path: '/addRoomTypes',
+    getParentRoute: () => AccommodationIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/accommodation': typeof AccommodationRouteWithChildren
   '/dashboard': typeof DashboardRoute
-  '/accommodation/$id': typeof AccommodationIdRoute
-  '/accommodation/$roomid': typeof AccommodationRoomidRoute
-  '/accommodation/accommodation-details': typeof AccommodationAccommodationDetailsRoute
-  '/accommodation/add-accommodation': typeof AccommodationAddAccommodationRoute
+  '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
   '/accommodation/': typeof AccommodationIndexRoute
+  '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
+  '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
+  '/accommodation/$id/images': typeof AccommodationIdImagesRoute
+  '/accommodation/$id/info': typeof AccommodationIdInfoRoute
+  '/accommodation/$id/listRoomTypesTest': typeof AccommodationIdListRoomTypesTestRoute
+  '/accommodation/$id/': typeof AccommodationIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
-  '/accommodation/$id': typeof AccommodationIdRoute
-  '/accommodation/$roomid': typeof AccommodationRoomidRoute
-  '/accommodation/accommodation-details': typeof AccommodationAccommodationDetailsRoute
-  '/accommodation/add-accommodation': typeof AccommodationAddAccommodationRoute
   '/accommodation': typeof AccommodationIndexRoute
+  '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
+  '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
+  '/accommodation/$id/images': typeof AccommodationIdImagesRoute
+  '/accommodation/$id/info': typeof AccommodationIdInfoRoute
+  '/accommodation/$id/listRoomTypesTest': typeof AccommodationIdListRoomTypesTestRoute
+  '/accommodation/$id': typeof AccommodationIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/accommodation': typeof AccommodationRouteWithChildren
   '/dashboard': typeof DashboardRoute
-  '/accommodation/$id': typeof AccommodationIdRoute
-  '/accommodation/$roomid': typeof AccommodationRoomidRoute
-  '/accommodation/accommodation-details': typeof AccommodationAccommodationDetailsRoute
-  '/accommodation/add-accommodation': typeof AccommodationAddAccommodationRoute
+  '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
   '/accommodation/': typeof AccommodationIndexRoute
+  '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
+  '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
+  '/accommodation/$id/images': typeof AccommodationIdImagesRoute
+  '/accommodation/$id/info': typeof AccommodationIdInfoRoute
+  '/accommodation/$id/listRoomTypesTest': typeof AccommodationIdListRoomTypesTestRoute
+  '/accommodation/$id/': typeof AccommodationIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/accommodation'
     | '/dashboard'
     | '/accommodation/$id'
-    | '/accommodation/$roomid'
-    | '/accommodation/accommodation-details'
-    | '/accommodation/add-accommodation'
     | '/accommodation/'
+    | '/accommodation/$id/addRoomTypes'
+    | '/accommodation/$id/features'
+    | '/accommodation/$id/images'
+    | '/accommodation/$id/info'
+    | '/accommodation/$id/listRoomTypesTest'
+    | '/accommodation/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/dashboard'
-    | '/accommodation/$id'
-    | '/accommodation/$roomid'
-    | '/accommodation/accommodation-details'
-    | '/accommodation/add-accommodation'
     | '/accommodation'
+    | '/accommodation/$id/addRoomTypes'
+    | '/accommodation/$id/features'
+    | '/accommodation/$id/images'
+    | '/accommodation/$id/info'
+    | '/accommodation/$id/listRoomTypesTest'
+    | '/accommodation/$id'
   id:
     | '__root__'
     | '/'
-    | '/accommodation'
     | '/dashboard'
     | '/accommodation/$id'
-    | '/accommodation/$roomid'
-    | '/accommodation/accommodation-details'
-    | '/accommodation/add-accommodation'
     | '/accommodation/'
+    | '/accommodation/$id/addRoomTypes'
+    | '/accommodation/$id/features'
+    | '/accommodation/$id/images'
+    | '/accommodation/$id/info'
+    | '/accommodation/$id/listRoomTypesTest'
+    | '/accommodation/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AccommodationRoute: typeof AccommodationRouteWithChildren
   DashboardRoute: typeof DashboardRoute
+  AccommodationIdRouteRoute: typeof AccommodationIdRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -136,13 +160,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/accommodation': {
-      id: '/accommodation'
-      path: '/accommodation'
-      fullPath: '/accommodation'
-      preLoaderRoute: typeof AccommodationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -159,62 +176,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccommodationIndexRouteImport
       parentRoute: typeof AccommodationRoute
     }
-    '/accommodation/add-accommodation': {
-      id: '/accommodation/add-accommodation'
-      path: '/add-accommodation'
-      fullPath: '/accommodation/add-accommodation'
-      preLoaderRoute: typeof AccommodationAddAccommodationRouteImport
-      parentRoute: typeof AccommodationRoute
-    }
-    '/accommodation/accommodation-details': {
-      id: '/accommodation/accommodation-details'
-      path: '/accommodation-details'
-      fullPath: '/accommodation/accommodation-details'
-      preLoaderRoute: typeof AccommodationAccommodationDetailsRouteImport
-      parentRoute: typeof AccommodationRoute
-    }
-    '/accommodation/$roomid': {
-      id: '/accommodation/$roomid'
-      path: '/$roomid'
-      fullPath: '/accommodation/$roomid'
-      preLoaderRoute: typeof AccommodationRoomidRouteImport
-      parentRoute: typeof AccommodationRoute
-    }
     '/accommodation/$id': {
       id: '/accommodation/$id'
-      path: '/$id'
+      path: '/accommodation/$id'
       fullPath: '/accommodation/$id'
-      preLoaderRoute: typeof AccommodationIdRouteImport
-      parentRoute: typeof AccommodationRoute
+      preLoaderRoute: typeof AccommodationIdRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accommodation/$id/': {
+      id: '/accommodation/$id/'
+      path: '/'
+      fullPath: '/accommodation/$id/'
+      preLoaderRoute: typeof AccommodationIdIndexRouteImport
+      parentRoute: typeof AccommodationIdRouteRoute
+    }
+    '/accommodation/$id/listRoomTypesTest': {
+      id: '/accommodation/$id/listRoomTypesTest'
+      path: '/listRoomTypesTest'
+      fullPath: '/accommodation/$id/listRoomTypesTest'
+      preLoaderRoute: typeof AccommodationIdListRoomTypesTestRouteImport
+      parentRoute: typeof AccommodationIdRouteRoute
+    }
+    '/accommodation/$id/info': {
+      id: '/accommodation/$id/info'
+      path: '/info'
+      fullPath: '/accommodation/$id/info'
+      preLoaderRoute: typeof AccommodationIdInfoRouteImport
+      parentRoute: typeof AccommodationIdRouteRoute
+    }
+    '/accommodation/$id/images': {
+      id: '/accommodation/$id/images'
+      path: '/images'
+      fullPath: '/accommodation/$id/images'
+      preLoaderRoute: typeof AccommodationIdImagesRouteImport
+      parentRoute: typeof AccommodationIdRouteRoute
+    }
+    '/accommodation/$id/features': {
+      id: '/accommodation/$id/features'
+      path: '/features'
+      fullPath: '/accommodation/$id/features'
+      preLoaderRoute: typeof AccommodationIdFeaturesRouteImport
+      parentRoute: typeof AccommodationIdRouteRoute
+    }
+    '/accommodation/$id/addRoomTypes': {
+      id: '/accommodation/$id/addRoomTypes'
+      path: '/addRoomTypes'
+      fullPath: '/accommodation/$id/addRoomTypes'
+      preLoaderRoute: typeof AccommodationIdAddRoomTypesRouteImport
+      parentRoute: typeof AccommodationIdRouteRoute
     }
   }
 }
 
-interface AccommodationRouteChildren {
-  AccommodationIdRoute: typeof AccommodationIdRoute
-  AccommodationRoomidRoute: typeof AccommodationRoomidRoute
-  AccommodationAccommodationDetailsRoute: typeof AccommodationAccommodationDetailsRoute
-  AccommodationAddAccommodationRoute: typeof AccommodationAddAccommodationRoute
-  AccommodationIndexRoute: typeof AccommodationIndexRoute
+interface AccommodationIdRouteRouteChildren {
+  AccommodationIdAddRoomTypesRoute: typeof AccommodationIdAddRoomTypesRoute
+  AccommodationIdFeaturesRoute: typeof AccommodationIdFeaturesRoute
+  AccommodationIdImagesRoute: typeof AccommodationIdImagesRoute
+  AccommodationIdInfoRoute: typeof AccommodationIdInfoRoute
+  AccommodationIdListRoomTypesTestRoute: typeof AccommodationIdListRoomTypesTestRoute
+  AccommodationIdIndexRoute: typeof AccommodationIdIndexRoute
 }
 
-const AccommodationRouteChildren: AccommodationRouteChildren = {
-  AccommodationIdRoute: AccommodationIdRoute,
-  AccommodationRoomidRoute: AccommodationRoomidRoute,
-  AccommodationAccommodationDetailsRoute:
-    AccommodationAccommodationDetailsRoute,
-  AccommodationAddAccommodationRoute: AccommodationAddAccommodationRoute,
-  AccommodationIndexRoute: AccommodationIndexRoute,
+const AccommodationIdRouteRouteChildren: AccommodationIdRouteRouteChildren = {
+  AccommodationIdAddRoomTypesRoute: AccommodationIdAddRoomTypesRoute,
+  AccommodationIdFeaturesRoute: AccommodationIdFeaturesRoute,
+  AccommodationIdImagesRoute: AccommodationIdImagesRoute,
+  AccommodationIdInfoRoute: AccommodationIdInfoRoute,
+  AccommodationIdListRoomTypesTestRoute: AccommodationIdListRoomTypesTestRoute,
+  AccommodationIdIndexRoute: AccommodationIdIndexRoute,
 }
 
-const AccommodationRouteWithChildren = AccommodationRoute._addFileChildren(
-  AccommodationRouteChildren,
-)
+const AccommodationIdRouteRouteWithChildren =
+  AccommodationIdRouteRoute._addFileChildren(AccommodationIdRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AccommodationRoute: AccommodationRouteWithChildren,
   DashboardRoute: DashboardRoute,
+  AccommodationIdRouteRoute: AccommodationIdRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

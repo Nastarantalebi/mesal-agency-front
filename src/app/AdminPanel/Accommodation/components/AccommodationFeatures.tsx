@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import type { TFeatureResponse } from "../../AccommodationFeatures/types";
 import type { TPaginatedResponse } from "@/types";
 import {
   accommodation_url,
@@ -21,6 +20,7 @@ import CustomButton from "@/components/form/CustomButton";
 import { Form } from "@/components/ui/form";
 import FormErrorModal from "@/components/FormErrorModal";
 import { toast } from "sonner";
+import type { TFeatureResponse } from "../../settings/types";
 
 const featureListValidation = z.object({
   feature: z.array(z.number()).min(1, "لطفاً حداقل یک ویژگی را انتخاب کنید"),
