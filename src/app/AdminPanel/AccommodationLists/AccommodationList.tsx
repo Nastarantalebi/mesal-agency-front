@@ -15,11 +15,17 @@ import ListDelete from "../RoomTypes/components/roomTypeListIcons/ListDelete";
 type City = {
   id: number;
   name: string;
+  province: { id: number; name: string }; // was: provience
 };
 type Type = {
   id: number;
   name: string;
 };
+
+// type Provience = {
+//   id: number;
+//   name: string;
+// };
 
 type AccommodationItem = {
   id: number;
@@ -29,11 +35,22 @@ type AccommodationItem = {
 };
 
 export const columns: ColumnDef<AccommodationItem>[] = [
+  {
+    id: "index",
+    header: "ردیف",
+    cell: ({ row }) => row.index + 1,
+    size: 30,
+  },
   { accessorKey: "name", header: "نام اقامتگاه" },
   {
     id: "type",
     header: "نوع اقامتگاه",
     accessorFn: (row) => row.type?.name ?? "",
+  },
+  {
+    id: "province",
+    header: "استان",
+    accessorFn: (row) => row.city?.province?.name ?? "",
   },
   {
     id: "city",
@@ -53,6 +70,8 @@ const AccommodationList = () => {
     key: [accommodation_key, String(currentPage)],
     url: `${accommodation_url}?page=${currentPage}`,
   });
+
+  console.log(data);
 
   const { mutateAsync: deleteAccommodation } = useDeleteData({
     key: [accommodation_key],

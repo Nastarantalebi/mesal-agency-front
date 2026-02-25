@@ -72,8 +72,8 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
         />
         <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
       </div>
-      <div className="mx-auto overflow-x-auto rounded-md border">
-        <Table className="w-full table-fixed">
+      <div className="mx-auto overflow-x-auto rounded-sm">
+        <Table className="w-full table-fixed border border-primary ">
           <colgroup>
             {table.getAllLeafColumns().map((col) => (
               <col key={col.id} style={{ width: `${col.getSize()}px` }} />
@@ -82,7 +82,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
 
           <TableHeader className="bg-primary-90 ">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow  key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead className="text-white" key={header.id}>
                     {header.isPlaceholder
@@ -102,18 +102,19 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                className="border border-primary border-dashed"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell className="border-r border-primary" key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
                       )}
                     </TableCell>
                   ))}
-                  <TableCell>
+                  <TableCell className="border-x border-primary">
                     <div className="flex items-center gap-2">
                       {onRowClick && (
                         <Button
