@@ -1,8 +1,5 @@
 import Header from "@/app/AdminPanel/AdminHeader";
-import { AppSidebar } from "@/app/AdminPanel/AdminSidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { BedSingle, CalendarDays, Home, List, Star } from "lucide-react";
 
 export const Route = createFileRoute("/accommodation")({
   component: RouteComponent,

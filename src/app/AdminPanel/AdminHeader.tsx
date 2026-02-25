@@ -3,7 +3,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -13,7 +12,9 @@ import { Bell, LogOut, User } from "lucide-react";
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className="fixed top-0 left-0 right-0 h-20 backdrop-blur-sm z-[9] pointer-events-none">
+    <>
+      {" "}
+      <div className="fixed top-0 left-0 right-0 h-20 backdrop-blur-sm z-[9] pointer-events-none" />
       <header className="fixed mx-5 my-2 rounded-xl top-0 left-0 right-0 z-10 flex h-14 justify-between items-center border px-4 bg-primary-10">
         <div className="flex items-center gap-5 mr-5 text-primary">
           <span>آژانس</span>
@@ -49,7 +50,7 @@ const Header = () => {
           </DropdownMenu>
         </div>
       </header>
-    </div>
+    </>
   );
 };
 
