@@ -1,7 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import GlobalPriceInputs from "./GlobalPriceInputs";
-import type { DateObject } from "react-multi-date-picker";
 import GlobalPriceInputRange from "./GlobalPriceInputRange";
 
 interface Props {
@@ -9,7 +8,6 @@ interface Props {
   globalPeakPrice: string;
   setGlobalNormalPrice: (value: string) => void;
   setGlobalPeakPrice: (value: string) => void;
-  selectedMonth: DateObject | null;
   onApplySelectedDay: (selectedDays: string[]) => void; 
   onApplyRange: (
     start: string,
@@ -24,7 +22,6 @@ const PriceTabs = ({
   globalPeakPrice,
   setGlobalNormalPrice,
   setGlobalPeakPrice,
-  selectedMonth,
   onApplySelectedDay,
   onApplyRange,
 }: Props) => {
@@ -59,7 +56,6 @@ const PriceTabs = ({
       title: "انتخاب رنج تاریخ",
       component: (
         <GlobalPriceInputRange
-          selectedMonth={selectedMonth}
           normalPrice={rangeNormalPrice}
           peakPrice={rangePeakPrice}
           onStartDateChange={setRangeStartDate}

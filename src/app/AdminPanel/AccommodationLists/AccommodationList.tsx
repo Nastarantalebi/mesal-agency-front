@@ -11,6 +11,8 @@ import FormErrorModal from "@/components/FormErrorModal";
 import useDeleteData from "@/services/useDeleteData";
 import { toast } from "sonner";
 import ListDelete from "../RoomTypes/components/roomTypeListIcons/ListDelete";
+import { id } from "zod/v4/locales";
+import { url } from "zod";
 
 type City = {
   id: number;
@@ -71,8 +73,6 @@ const AccommodationList = () => {
     url: `${accommodation_url}?page=${currentPage}`,
   });
 
-  console.log(data);
-
   const { mutateAsync: deleteAccommodation } = useDeleteData({
     key: [accommodation_key],
     url: `${accommodation_url}`,
@@ -85,6 +85,7 @@ const AccommodationList = () => {
 
   const PageCount = data?.count ? Math.ceil(data.count / 10) : 0;
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
+
   const handleDelete = async (id: number) => {
     try {
       await deleteAccommodation({ id });
@@ -127,7 +128,7 @@ const AccommodationList = () => {
         open={openD}
         onOpenChange={() => setOpenDelete(false)}
         message={deleteMessage}
-        onAcknowledge={() => handleDelete(Number(selected))}
+        onAcknowledge={() => handleDelete(Number(selected?.id))}
         buttonTitle="بله"
         dialogTitle="حذف"
       />

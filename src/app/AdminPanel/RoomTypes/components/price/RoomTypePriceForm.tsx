@@ -36,6 +36,7 @@ import usePostData from "@/services/usePostData";
 import { toast } from "sonner";
 import FormErrorModal from "@/components/FormErrorModal";
 import PriceTabs from "./PriceTabs";
+import useMonthStores from "./monthStore";
 
 interface Props {
   open: boolean;
@@ -54,7 +55,7 @@ const RoomTypePriceForm = ({
   RoomId,
   RoomName,
 }: Props) => {
-  const [selectedMonth, setSelectedMonth] = useState<DateObject | null>(null);
+  const { selectedMonth, setSelectedMonth } = useMonthStores();
   const [globalNormalPrice, setGlobalNormalPrice] = useState<string>("");
   const [globalPeakPrice, setGlobalPeakPrice] = useState<string>("");
   const [rowPrices, setRowPrices] = useState<
@@ -149,28 +150,28 @@ const RoomTypePriceForm = ({
   }, [roomTypePricesData]);
 
   const whatDay = (shamsi: string) => {
-  const miladi = shamsiToMiladi(shamsi);
-  const date = new Date(miladi);
-  const getDay = date.getDay();
-  switch (getDay) {
-    case 0:
-      return "saturday";
-    case 1:
-      return "sunday";
-    case 2:
-      return "monday";
-    case 3:
-      return "tuesday";
-    case 4:
-      return "wednesday";
-    case 5:
-      return "thursday";
-    case 6:
-      return "friday";
-  }
+    const miladi = shamsiToMiladi(shamsi);
+    const date = new Date(miladi);
+    const getDay = date.getDay();
+    switch (getDay) {
+      case 0:
+        return "saturday";
+      case 1:
+        return "sunday";
+      case 2:
+        return "monday";
+      case 3:
+        return "tuesday";
+      case 4:
+        return "wednesday";
+      case 5:
+        return "thursday";
+      case 6:
+        return "friday";
+    }
 
-  return "";
-};
+    return "";
+  };
   const handleApplySelectedDays = (selectedDays: string[]) => {
     setRowPrices((prev) => {
       const updated = { ...prev };
@@ -179,7 +180,7 @@ const RoomTypePriceForm = ({
         const dayName = whatDay(shamsi);
         if (selectedDays.includes(dayName)) {
           updated[shamsi] = {
-            normalPrice: globalNormalPrice, 
+            normalPrice: globalNormalPrice,
             peakPrice: globalPeakPrice,
           };
         }
@@ -222,7 +223,7 @@ const RoomTypePriceForm = ({
 
   // reset row prices when month changes
   const handleMonthChange = (date: DateObject) => {
-    setSelectedMonth(date);
+    setSelectedMonth?.(date);
     setRowPrices({});
     setGlobalNormalPrice("");
     setGlobalPeakPrice("");
@@ -274,7 +275,6 @@ const RoomTypePriceForm = ({
             {selectedMonth && (
               <>
                 <PriceTabs
-                  selectedMonth={selectedMonth}
                   globalNormalPrice={globalNormalPrice}
                   globalPeakPrice={globalPeakPrice}
                   setGlobalNormalPrice={setGlobalNormalPrice}

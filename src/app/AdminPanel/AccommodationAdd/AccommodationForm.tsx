@@ -110,7 +110,7 @@ const AccommodationForm = ({
       });
     } else {
       createMutation.mutateAsync(transformedData, {
-        onSuccess: () => {
+        onSuccess: () => {w
           toast.success("اقامتگاه با موفقیت ثبت شد ");
           form.reset(accommodationInitialValues);
         },

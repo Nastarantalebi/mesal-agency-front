@@ -1,14 +1,17 @@
+import useMonthStores from "@/app/AdminPanel/RoomTypes/components/price/monthStore";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { Calendar, DateObject } from "react-multi-date-picker";
 
 interface Props {
-  selectedMonth: DateObject | null; // from your month picker
   values: DateObject[];
   onChange: (values: DateObject[]) => void;
 }
 
-const MonthRangeCalendar = ({ selectedMonth, values, onChange }: Props) => {
+const MonthRangeCalendar = ({ values, onChange }: Props) => {
+
+  const selectedMonth = useMonthStores(s => s.selectedMonth);
+
   if (!selectedMonth) return null;
 
   const year = selectedMonth.year;

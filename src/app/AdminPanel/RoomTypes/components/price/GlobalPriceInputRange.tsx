@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type { DateObject } from "react-multi-date-picker";
 import PriceInputs from "./PriceInputs";
 import { Button } from "@/components/ui/button";
+import useMonthStores from "./monthStore";
 
 interface Props {
   normalPrice: string;
@@ -15,7 +16,6 @@ interface Props {
   onNormalPriceChange: (value: string) => void;
   onPeakPriceChange: (value: string) => void;
   onApplyRange: () => void;
-  selectedMonth: DateObject | null;
 }
 
 const GlobalPriceInputRange = ({
@@ -26,9 +26,9 @@ const GlobalPriceInputRange = ({
   onNormalPriceChange,
   onPeakPriceChange,
   onApplyRange,
-  selectedMonth,
 }: Props) => {
   const [rangeValues, setRangeValues] = useState<DateObject[]>([]);
+  const selectedMonth = useMonthStores(s => s.selectedMonth);
 
   const handleRangeChange = (values: DateObject[]) => {
     setRangeValues(values);
@@ -48,7 +48,6 @@ const GlobalPriceInputRange = ({
         <div className="flex flex-col gap-1">
           <Label className="mb-3">انتخاب بازه زمانی:</Label>
           <MonthRangeCalendar
-            selectedMonth={selectedMonth}
             values={rangeValues}
             onChange={handleRangeChange}
           />
