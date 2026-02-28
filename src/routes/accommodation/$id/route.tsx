@@ -47,7 +47,7 @@ const sidebarItems = (id: string) => [
       },
       {
         title: "لیست نوع اتاق ها",
-        url: `/accommodation/${id}/listRoomTypesTest`,
+        url: `/accommodation/${id}/listRoomTypes`,
         icon: <List />,
       },
     ],

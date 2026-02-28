@@ -10,7 +10,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Form } from "@/components/ui/form";
 import {
   Table,
@@ -149,35 +148,6 @@ const RoomTypePriceForm = ({
     setRowPrices(updated);
   }, [roomTypePricesData]);
 
-  const handleApplyAll = () => {
-    const days = getDaysInMonth();
-    setRowPrices((prev) => {
-      const updated = { ...prev };
-      days.forEach(({ shamsi }) => {
-        // shamsi نه day
-        updated[shamsi] = {
-          normalPrice: globalNormalPrice,
-          peakPrice: globalPeakPrice,
-        };
-      });
-      return updated;
-    });
-  };
-  const handleApplyFridays = () => {
-    const days = getDaysInMonth();
-    setRowPrices((prev) => {
-      const updated = { ...prev };
-      days.forEach(({ shamsi }) => {
-        if (isFriday(shamsi)) {
-          updated[shamsi] = {
-            normalPrice: globalNormalPrice,
-            peakPrice: globalPeakPrice,
-          };
-        }
-      });
-      return updated;
-    });
-  };
   const whatDay = (shamsi: string) => {
   const miladi = shamsiToMiladi(shamsi);
   const date = new Date(miladi);
@@ -207,7 +177,6 @@ const RoomTypePriceForm = ({
 
       days.forEach(({ shamsi }) => {
         const dayName = whatDay(shamsi);
-        console.log(selectedDays)
         if (selectedDays.includes(dayName)) {
           updated[shamsi] = {
             normalPrice: globalNormalPrice, 
