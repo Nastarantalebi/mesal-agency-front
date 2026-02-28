@@ -178,6 +178,47 @@ const RoomTypePriceForm = ({
       return updated;
     });
   };
+  const whatDay = (shamsi: string) => {
+  const miladi = shamsiToMiladi(shamsi);
+  const date = new Date(miladi);
+  const getDay = date.getDay();
+  switch (getDay) {
+    case 0:
+      return "saturday";
+    case 1:
+      return "sunday";
+    case 2:
+      return "monday";
+    case 3:
+      return "tuesday";
+    case 4:
+      return "wednesday";
+    case 5:
+      return "thursday";
+    case 6:
+      return "friday";
+  }
+
+  return "";
+};
+  const handleApplySelectedDays = (selectedDays: string[]) => {
+    setRowPrices((prev) => {
+      const updated = { ...prev };
+
+      days.forEach(({ shamsi }) => {
+        const dayName = whatDay(shamsi);
+        console.log(selectedDays)
+        if (selectedDays.includes(dayName)) {
+          updated[shamsi] = {
+            normalPrice: globalNormalPrice, 
+            peakPrice: globalPeakPrice,
+          };
+        }
+      });
+
+      return updated;
+    });
+  };
   const handleApplyRange = (
     start: string,
     end: string,
@@ -269,9 +310,8 @@ const RoomTypePriceForm = ({
                   globalPeakPrice={globalPeakPrice}
                   setGlobalNormalPrice={setGlobalNormalPrice}
                   setGlobalPeakPrice={setGlobalPeakPrice}
-                  onApplyAll={handleApplyAll}
-                  onApplyFridays={handleApplyFridays}
                   onApplyRange={handleApplyRange}
+                  onApplySelectedDay={handleApplySelectedDays}
                 />
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(handleSubmit)}>

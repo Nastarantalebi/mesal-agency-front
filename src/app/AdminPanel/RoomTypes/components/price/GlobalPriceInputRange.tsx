@@ -1,11 +1,11 @@
 // components/GlobalPriceInputRange.tsx
 import MonthRangeCalendar from "@/components/form/MonthRangeCalendar";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import type { DateObject } from "react-multi-date-picker";
 import PriceInputs from "./PriceInputs";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   normalPrice: string;
@@ -60,13 +60,12 @@ const GlobalPriceInputRange = ({
             onNormalPriceChange={onNormalPriceChange}
             onPeakPriceChange={onPeakPriceChange}
           />
-          <Badge
-            variant="outline"
-            className="rounded-full border-accent bg-accent/20 cursor-pointer"
+          <Button
+            className="bg-accent text-black cursor-pointer"
             onClick={onApplyRange}
           >
             اعمال روی بازه
-          </Badge>
+          </Button>
         </div>
       </div>
     </div>

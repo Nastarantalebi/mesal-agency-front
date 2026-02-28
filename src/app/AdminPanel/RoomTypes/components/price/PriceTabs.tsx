@@ -9,9 +9,8 @@ interface Props {
   globalPeakPrice: string;
   setGlobalNormalPrice: (value: string) => void;
   setGlobalPeakPrice: (value: string) => void;
-  onApplyAll: () => void;
-  onApplyFridays: () => void;
   selectedMonth: DateObject | null;
+  onApplySelectedDay: (selectedDays: string[]) => void; 
   onApplyRange: (
     start: string,
     end: string,
@@ -25,9 +24,8 @@ const PriceTabs = ({
   globalPeakPrice,
   setGlobalNormalPrice,
   setGlobalPeakPrice,
-  onApplyAll,
-  onApplyFridays,
   selectedMonth,
+  onApplySelectedDay,
   onApplyRange,
 }: Props) => {
   const [rangeStartDate, setRangeStartDate] = useState<string>("");
@@ -53,8 +51,7 @@ const PriceTabs = ({
           peakPrice={globalPeakPrice}
           onNormalPriceChange={setGlobalNormalPrice}
           onPeakPriceChange={setGlobalPeakPrice}
-          onApplyAll={onApplyAll}
-          onApplyFridays={onApplyFridays}
+          onApplySelectedDays={onApplySelectedDay}
         />
       ),
     },
