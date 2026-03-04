@@ -1,4 +1,4 @@
-import useAccomodationFields from "../Accommodation/hooks/useAccomodationFields";
+import useAccomodationFields from "../Accommodation/hooks/accomodationFields";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {

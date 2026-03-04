@@ -1,10 +1,11 @@
-import type { Items } from "@/components/form/formInputTypes";
-import useGetData from "@/services/useGetData";
 import {
   YES_NO_OPTIONS,
-  type Item,
-  type TCreateAccomodation,
+  type accommodationTypes,
+  type cities,
+  type provience,
+  type TCreateAccomodation
 } from "@/app/AdminPanel/Accommodation/types/index";
+import type { Items } from "@/components/form/formInputTypes";
 import {
   accommodation_cities_key,
   accommodation_cities_url,
@@ -13,23 +14,30 @@ import {
   accommodation_types_key,
   accommodation_types_url,
 } from "@/data/querykeys";
+import APIClient from "@/services/apiClient";
+import { useQuery } from '@tanstack/react-query';
 
-function useAccomodationFields(province_id?: number) {
-  const { data: accommodationTypes } = useGetData<Item[]>({
-    key: [accommodation_types_key],
-    url: accommodation_types_url,
-  });
+function AccomodationFields(province_id?: number) {
 
-  const { data: provinces } = useGetData<Item[]>({
-    key: [accommodation_proviences_key],
-    url: accommodation_proviences_url,
-  });
+  const apiClientTypes = new APIClient<accommodationTypes>(accommodation_types_url)
+  const apiClientProvience = new APIClient<provience>(accommodation_proviences_url)
+  const apiClientCities = new APIClient<cities>(`${accommodation_cities_url}?province_id=${province_id}`)
 
-  const { data: cities } = useGetData<Item[]>({
-    key: [accommodation_cities_key, String(province_id) ?? ""],
-    url: `${accommodation_cities_url}?province_id=${province_id}`,
-    enabled: !!province_id,
-  });
+  const {data : accommodationTypes} = useQuery<accommodationTypes[], Error>({
+    queryKey: [accommodation_types_key],
+    queryFn: apiClientTypes.getAll,
+  })
+
+  const { data: provinces } = useQuery<accommodationTypes[], Error>({
+    queryKey: [accommodation_proviences_key],
+    queryFn: apiClientProvience.getAll,
+  })
+
+  const { data: cities } = useQuery<accommodationTypes[], Error>({
+    queryKey: [accommodation_cities_key, String(province_id) ?? ""],
+    queryFn: apiClientCities.getAll,
+    enabled: !!province_id
+  })
 
   const accommodationFields: Items<TCreateAccomodation>[] = [
     {
@@ -130,21 +138,6 @@ function useAccomodationFields(province_id?: number) {
       fieldType: "input",
       inputType: "number",
     },
-    // {
-    //   name: "longitude",
-    //   label: "طول جغرافیایی",
-    //   isRequired: false,
-    //   fieldType: "input",
-    //   inputType: "number",
-    // },
-    // {
-    //   name: "longitude",
-    //   label: "عرض جغرافیایی",
-    //   isRequired: false,
-    //   fieldType: "input",
-    //   inputType: "number",
-    // },
-
     {
       name: "has_reception_24h",
       label: "پذیرش ۲۴ ساعته ",
@@ -186,7 +179,7 @@ function useAccomodationFields(province_id?: number) {
       options: YES_NO_OPTIONS,
     },
         {
-      name: "latitude", // just used as key
+      name: "latitude", 
       label: "موقعیت مکانی",
       isRequired: false,
       fieldType: "Map",
@@ -196,4 +189,4 @@ function useAccomodationFields(province_id?: number) {
   return accommodationFields;
 }
 
-export default useAccomodationFields;
+export default AccomodationFields;

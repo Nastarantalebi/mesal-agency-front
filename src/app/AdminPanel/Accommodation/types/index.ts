@@ -1,3 +1,5 @@
+import type { number } from "zod";
+
 export type TCreateAccomodation = {
     type: string,
     name: string,
@@ -64,6 +66,20 @@ export interface Item {
   name?: string;
   value?: string;
   label?: string;
+}
+
+export interface accommodationTypes{
+  id?: number;
+  name?: string;
+}
+export interface provience{
+  id?: number;
+  name?: string;
+}
+
+export interface cities{
+  id?: number;
+  name?: string;
 }
 
 export const YES_NO_OPTIONS: Item[] = [
