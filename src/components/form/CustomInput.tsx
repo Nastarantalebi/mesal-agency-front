@@ -2,6 +2,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Controller, type FieldValues } from "react-hook-form";
 import type { Props } from "./PropsType";
+import { useEffect } from "react";
 
 export type InputType = "text" | "number" | "email" | "password" | "tel";
 
@@ -28,11 +29,17 @@ const CustomInput = <T extends FieldValues>({
               {...field}
               type={inputType}
               dir={inputType === "number" ? "ltr" : undefined}
-              onChange={
-                inputType === "number"
-                  ? (e) => field.onChange(e.target.valueAsNumber)
-                  : field.onChange
-              }
+              onChange={(e) => {
+                if (inputType === "number") {
+                  if (e.target.value === null) {
+                    field.onChange(0);
+                  } else {
+                    field.onChange(e.target.valueAsNumber);
+                  }
+                } else {
+                  field.onChange(e.target.value);
+                }
+              }}
               className={`${fieldState.error ? "border-red-600" : ""} ${inputType === "number" ? "text-left" : ""}`}
             />
             {fieldState.error?.message && (
