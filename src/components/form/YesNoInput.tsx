@@ -2,7 +2,6 @@ import { Controller, type FieldValues } from "react-hook-form";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import type { Props } from "./PropsType";
-import { FormMessage } from "../ui/form";
 
 function YesNoInput<T extends FieldValues>({
   name,

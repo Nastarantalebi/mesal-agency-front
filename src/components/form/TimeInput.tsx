@@ -37,7 +37,7 @@ const TimeInput = <T extends FieldValues>({
               }}
               render={(value, openCalendar) => (
                 <input
-                  value={field.value || ""}
+                  value={field.value || value}
                   onClick={openCalendar}
                   onChange={() => {}}
                   readOnly

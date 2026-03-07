@@ -11,8 +11,6 @@ import FormErrorModal from "@/components/FormErrorModal";
 import useDeleteData from "@/services/useDeleteData";
 import { toast } from "sonner";
 import ListDelete from "../RoomTypes/components/roomTypeListIcons/ListDelete";
-import { id } from "zod/v4/locales";
-import { url } from "zod";
 
 type City = {
   id: number;

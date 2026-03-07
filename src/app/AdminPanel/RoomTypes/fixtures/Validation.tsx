@@ -1,5 +1,9 @@
-import { date, z } from "zod";
-import type { TCreateRoomType, TCRoomTypePrices, TCRoomTypesRoom } from "../types";
+import { z } from "zod";
+import type {
+  TCreateRoomType,
+  TCRoomTypePrices,
+  TCRoomTypesRoom,
+} from "../types";
 
 export const roomTypeValidation = z.object({
   name: z.string().min(1, "نام نوع اتاق الزامی است"),
@@ -13,8 +17,8 @@ export const roomTypeValidation = z.object({
 
 export const roomTypeInitialValues: TCreateRoomType = {
   name: "",
-  capacity: 0,  
-  extraPerson: 0, 
+  capacity: 0,
+  extraPerson: 0,
   description: "",
   breakfast: false,
   lunch: false,
@@ -31,14 +35,14 @@ export const roomTypeRoomsInitialValues: TCRoomTypesRoom = {
   name: "",
   floor: 0,
   description: "",
-}
+};
 export const roomTypePriceValidation = z.object({
   prices: z.array(
     z.object({
       date: z.string(),
       normal_price: z.number().min(0, "عدد باید مثبت باشد"),
       peak_price: z.number().min(0, "قیمت باید مثبت باشد"),
-    })
+    }),
   ),
 });
 

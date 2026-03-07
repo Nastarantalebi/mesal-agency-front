@@ -4,8 +4,8 @@ import {
   features_url,
 } from "@/data/querykeys";
 import type { TPaginatedResponse } from "@/types";
-import React, { useEffect, useState } from "react";
-import type { TFeatureResponse } from "../../AccommodationFeatures/types";
+import { useEffect, useState } from "react";
+
 import useGetData from "@/services/useGetData";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { Form } from "@/components/ui/form";
 import FormErrorModal from "@/components/FormErrorModal";
 import type { TCRoomTypeFeature, TRoomTypeFeatureResponse } from "../types";
+import type { TFeatureResponse } from "../../settings/types";
 
 interface Props {
   AccommodationId?: string;

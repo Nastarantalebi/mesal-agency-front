@@ -1,9 +1,7 @@
-import { FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Controller, type FieldValues, useFormContext } from "react-hook-form";
+import { Controller, type FieldValues } from "react-hook-form";
 import type { Props } from "./PropsType";
-import { number } from "zod";
 
 export type InputType = "text" | "number" | "email" | "password" | "tel";
 

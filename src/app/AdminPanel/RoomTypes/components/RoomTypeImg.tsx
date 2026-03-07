@@ -1,9 +1,6 @@
-import React from "react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -33,7 +30,6 @@ const roomTypeImg = ({
   RoomId,
   RoomName,
 }: Props) => {
-
   const key = ["RoomType-image", String(RoomId) || ""];
   const url = `${accommodation_url}${accommodationPk}/room_types/${RoomId}/images/`;
 

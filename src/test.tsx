@@ -1,244 +1,139 @@
-import clsx from "clsx";
+import type { TPaginatedResponse } from "@/types";
+import type { TAccommodationImageResponse } from "../types";
+import useGetData from "@/services/useGetData";
+import { toast } from "sonner";
+import useDeleteData from "@/services/useDeleteData";
+import usePostData from "@/services/usePostData";
+import PhotoUploader from "@/components/form/PhotoUploader";
+import { X } from "lucide-react";
 import { useState } from "react";
-import { Menu } from "@/components/Headless";
-import QuickSearch from "@/components/QuickSearch";
-import ActivitiesPanel from "@/components/ActivitiesPanel";
-import NotificationsPanel from "@/components/NotificationsPanel";
-import SwitchAccount from "@/components/SwitchAccount";
-import Lucide from "@/components/Lucide";
-import { useNavigate } from "react-router-dom";
-import { AlignJustify } from "lucide-react";
-import DynamicBreadcrumb from "./DynamicBreadcrumb";
-import { useLogout } from "@/features/auth/_services/useLogout";
-import Modal from "@/components/Headless/Dialog/Modal";
-import useMe from "@/features/auth/_services/useMe";
-import { useAuthStore } from "@/features/auth/store/authStore";
-function Topbar({
-  setActiveMobileMenu,
-  setCompactMenuOnHover,
-  toggleCompactMenu,
+
+const AccommodationPhotoes = ({
+  accommodationId,
 }: {
-  setActiveMobileMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  setCompactMenuOnHover: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleCompactMenu: () => void;
-}) {
-  const navigate = useNavigate();
-  const { data } = useMe();
-  const [quickSearch, setQuickSearch] = useState(false);
-  const [switchAccount, setSwitchAccount] = useState(false);
-  const [notificationsPanel, setNotificationsPanel] = useState(false);
-  const [activitiesPanel, setActivitiesPanel] = useState(false);
-  const { mutateAsync: logoutApi, isPending } = useLogout();
-  const requestFullscreen = () => {
-    const el = document.documentElement;
-    if (el.requestFullscreen) el.requestFullscreen();
+  accommodationId: string;
+}) => {
+  const { mutate: uploadImage } = usePostData<FormData, any>({
+    key: ["accommodation-image", accommodationId],
+    url: `admin/accommodations/${accommodationId}/images/`,
+  });
+
+  const { mutateAsync: deleteImage } = useDeleteData({
+    key: ["accommodation-image", accommodationId],
+    url: `admin/accommodations/${accommodationId}/images/`,
+  });
+
+  const { data: imageList } = useGetData<
+    TPaginatedResponse<TAccommodationImageResponse>
+  >({
+    key: ["accommodation-image", accommodationId],
+    url: `admin/accommodations/${accommodationId}/images/`,
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+
+  const onPick = async (file: File) => {
+    setLoading(true);
+    const fd = new FormData();
+    fd.append("image", file);
+    try {
+      await handleUpload(fd);
+    } finally {
+      setLoading(false);
+    }
   };
-  const [logout, setLogout] = useState<boolean>(false);
-  const userData = useAuthStore((s) => s.userData);
+
+  const handleUpload = async (file: FormData) => {
+    try {
+      const response = await uploadImage(file);
+
+      // Extract the image URL from the response
+      const imageUrl = uploadImage.u // Adjust this based on your API's response format
+
+      // Update the state with the new image URL, triggering a re-render
+      setUploadedImageUrl(imageUrl);
+
+      toast.success("تصویر با موفقیت ثبت شد");
+    } catch (error) {
+      toast.error("خطا در بارگزاری تصویر");
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteImage({ id });
+
+      // Refresh the image list after deletion to ensure UI updates
+      // This might involve re-fetching the data from the API
+      // For example:
+      // invalidate: ["accommodation-image", accommodationId];  // Using React Query invalidation
+      // or
+      // setimageList(prevList => prevList.filter(img => img.id !== id)); // If managing the list directly.
+
+      setUploadedImageUrl(null); // Clear the uploadedImageUrl state
+      toast.success("تصویر با موفقیت حذف شد");
+    } catch (error) {
+      toast.error("خطا در حذف تصویر");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const images = imageList?.results || [];
+  const mainImage = images.find((img) => img.main);
+  const sideImages = images.filter((img) => !img.main).slice(0, 4);
+
   return (
-    <div className="fixed top-0 inset-x-0 z-10 h-[65px] box bg-slate-50 border-x-0 border-t-0 rounded-none flex shadow-none">
-      <div
-        className={clsx([
-          "xl:bg-slate-100 flex-none flex items-center z-10 px-1 h-full xl:w-[275px] overflow-hidden relative duration-300 group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000001f]",
-          "before:content-[''] before:hidden before:xl:block before:absolute before:end-0 before:border-e before:border-slate-300/50 before:h-full",
-        ])}
-        onMouseOver={(event) => {
-          event.preventDefault();
-          setCompactMenuOnHover(true);
-        }}
-        onMouseLeave={(event) => {
-          event.preventDefault();
-          setCompactMenuOnHover(false);
-        }}>
-        <a
-          href=""
-          className="hidden xl:flex items-center justify-center transition-[margin] group-[.side-menu--collapsed]:xl:ms-2 group-[.side-menu--collapsed.side-menu--on-hover]:xl:ms-0 w-full mx-auto">
-          <div className="flex items-center justify-center w-[42px] rounded-lg h-[42px]">
-            <img src="/logo-192×192.png" alt="لوگو" />
-          </div>
-        </a>
-        <button
-          onClick={toggleCompactMenu}
-          className="group-[.side-menu--collapsed.side-menu--on-hover]:xl:opacity-100 group-[.side-menu--collapsed]:xl:rotate-180 group-[.side-menu--collapsed]:xl:opacity-0 transition-[opacity,transform] hidden 3xl:flex items-center justify-center w-[20px] h-[20px] ms-auto border rounded-full border-slate-600/40 hover:bg-slate-600/5">
-          <Lucide icon="ArrowLeft" className="w-3.5 h-3.5 stroke-[1.3]" />
-        </button>
-        <div className="flex items-center gap-1 xl:hidden">
-          <a
-            href=""
-            onClick={(event) => {
-              event.preventDefault();
-              setActiveMobileMenu(true);
-            }}
-            className="p-2 rounded-full hover:bg-slate-100">
-            <AlignJustify className="w-[18px] h-[18px]" />
-          </a>
-          <a
-            href=""
-            className="p-2 rounded-full hover:bg-slate-100"
-            onClick={(e) => {
-              e.preventDefault();
-              setQuickSearch(true);
-            }}>
-            <Lucide icon="Search" className="w-[18px] h-[18px]" />
-          </a>
-        </div>
+    <main className="w-full flex flex-row gap-4 justify-center">
+      <div className="relative">
+        {mainImage ? (
+          <>
+            <img
+              src={mainImage.image}
+              alt="main"
+              className="w-132.5 h-132.5 object-cover rounded-2xl"
+            />
+            <button
+              onClick={() => handleDelete(mainImage.id)}
+              className="absolute top-2 right-2 bg-primary/10 text-white rounded-full p-2 cursor-pointer"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </>
+        ) : (
+          <PhotoUploader size={530} onPick={onPick} />
+        )}
       </div>
-      <div className="absolute transition-[padding] duration-100 xl:ps-[275px] group-[.side-menu--collapsed]:xl:ps-[91px] h-full inset-x-0">
-        <div className="flex items-center w-full h-full px-1 md:px-5">
-          {/* BEGIN: Breadcrumb */}
-          <div className="hidden xl:block">
-            <DynamicBreadcrumb />
-          </div>
-
-          {/* END: Breadcrumb */}
-          {/* BEGIN: Search */}
-          <div
-            className="relative  flex-1 hidden xl:flex justify-end"
-            onClick={() => setQuickSearch(true)}>
-            <div className="bg-slate-100 border w-[350px] flex items-center py-2 px-3.5 rounded-[0.5rem] text-slate-400 cursor-pointer hover:bg-slate-50 transition-colors">
-              <Lucide icon="Search" className="w-[18px] h-[18px]" />
-              <div className="ms-2.5 me-auto">جستجوی سریع...</div>
-            </div>
-          </div>
-          <QuickSearch
-            quickSearch={quickSearch}
-            setQuickSearch={setQuickSearch}
-          />
-          {/* END: Search */}
-          {/* BEGIN: Notification & User Menu */}
-          <div className="flex items-center flex-1">
-            <div className="flex items-center gap-1 ms-auto">
-              <a
-                href=""
-                className="p-2 rounded-full hover:bg-slate-100"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActivitiesPanel(true);
-                }}>
-                <Lucide icon="LayoutGrid" className="w-[18px] h-[18px]" />
-              </a>
-              {/* <a href="" className="p-2 rounded-full hover:bg-slate-100">
-                    <Lucide icon="Goal" className="w-[18px] h-[18px]" />
-                  </a> */}
-              <a
-                href=""
-                className="p-2 rounded-full hover:bg-slate-100 hidden lg:inline-block"
-                onClick={(e) => {
-                  e.preventDefault();
-                  requestFullscreen();
-                }}>
-                <Lucide icon="Expand" className="w-[18px] h-[18px]" />
-              </a>
-              <a
-                href=""
-                className="p-2 rounded-full hover:bg-slate-100"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setNotificationsPanel(true);
-                }}>
-                <Lucide icon="Bell" className="w-[18px] h-[18px]" />
-              </a>
-            </div>
-            <Menu>
-              <Menu.Button className="overflow-hidden rounded-full w-[36px] h-[36px] border-[3px] border-slate-200/70 image-fit">
-                {/* <img
-                  alt="تیل وایز - قالب داشبورد مدیریتی"
-                  src={users.fakeUsers()[0].photo}
-                /> */}
-                {data?.avatar ? (
+      <div className="grid grid-cols-2 gap-4">
+        {[0, 1, 2, 3].map((index) => {
+          const image = sideImages[index];
+          return (
+            <div key={index} className="relative">
+              {image ? (
+                <>
                   <img
-                    alt="تصویر پروفایل"
-                    src={data.avatar}
-                    className="cursor-pointer transition-transform hover:scale-110 h-6 w-6 object-cover rounded-full"
+                    src={image.image}
+                    alt={`side-${index}`}
+                    className="w-65 h-65 object-cover rounded-2xl"
                   />
-                ) : (
-                  <Lucide
-                    icon="User"
-                    className="text-white cursor-pointer transition-transform hover:scale-110 h-6 w-6"
-                  />
-                )}
-              </Menu.Button>
-              <Menu.Items className="w-56 mt-1">
-                <Menu.Item
-                  onClick={() => {
-                    navigate("profile");
-                  }}>
-                  <Lucide icon="User" className="w-4 h-4 me-2" />
-                  {userData?.user ? (
-                    <span>
-                      {userData.user.first_name} {userData.user.last_name}
-                    </span>
-                  ) : (
-                    <span>پروفایل</span>
-                  )}
-                </Menu.Item>
-                {/* <Menu.Divider /> */}
-                {/* <Menu.Item
-                  onClick={() => {
-                    navigate("settings?page=connected-services");
-                  }}>
-                  <Lucide icon="Settings" className="w-4 h-4 me-2" />
-                  خدمات متصل
-                </Menu.Item>
-                <Menu.Item
-                  onClick={() => {
-                    navigate("settings?page=email-settings");
-                  }}>
-                  <Lucide icon="Inbox" className="w-4 h-4 me-2" />
-                  تنظیمات ایمیل
-                </Menu.Item>
-                <Menu.Item
-                  onClick={() => {
-                    navigate("settings?page=security");
-                  }}>
-                  <Lucide icon="Lock" className="w-4 h-4 me-2" />
-                  بازنشانی رمز عبور
-                </Menu.Item> */}
-                <Menu.Divider />
-                {/* <Menu.Item
-                  onClick={() => {
-                    setSwitchAccount(true);
-                  }}>
-                  <Lucide icon="ToggleLeft" className="w-4 h-4 me-2" />
-                  تغییر حساب
-                </Menu.Item> */}
-                <Menu.Item onClick={() => setLogout(true)}>
-                  <Lucide icon="Power" className="w-4 h-4 me-2" />
-                  خروج
-                </Menu.Item>
-              </Menu.Items>
-            </Menu>
-          </div>
-          <ActivitiesPanel
-            activitiesPanel={activitiesPanel}
-            setActivitiesPanel={setActivitiesPanel}
-          />
-          <NotificationsPanel
-            notificationsPanel={notificationsPanel}
-            setNotificationsPanel={setNotificationsPanel}
-          />
-          <SwitchAccount
-            switchAccount={switchAccount}
-            setSwitchAccount={setSwitchAccount}
-          />
-          {/* END: Notification & User Menu */}
-        </div>
+                  <button
+                    onClick={() => handleDelete(image.id)}
+                    className="absolute top-2 right-2 bg-primary/50 text-white rounded-full p-2 cursor-pointer"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </>
+              ) : (
+                <PhotoUploader size={260} onPick={onPick} />
+              )}
+            </div>
+          );
+        })}
       </div>
-      <Modal
-        open={logout}
-        close={() => setLogout(false)}
-        title="خروج از حساب کاربری"
-        cancelText="انصراف"
-        submitText={isPending ? "درحال خروج" : "خارج میشوم"}
-        onSubmit={() => logoutApi()}
-        variant_cancel="outline-success"
-        variant_submit="outline-danger">
-        <div className="text-center py-2">
-          <span>آیا از خروج از حساب کاربری خود اطمینان دارید؟</span>
-        </div>
-      </Modal>
-    </div>
+    </main>
   );
-}
+};
 
-export default Topbar;
+export default AccommodationPhotoes;

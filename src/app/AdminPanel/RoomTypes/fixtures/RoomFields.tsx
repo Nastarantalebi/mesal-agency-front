@@ -1,6 +1,5 @@
 import type { Items } from "@/components/form/formInputTypes";
-import type { TCPriceRange, TCRoomTypesRoom } from "../types";
-import { fa } from "zod/v4/locales";
+import type { TCRoomTypesRoom } from "../types";
 
 export const RoomFields: Items<TCRoomTypesRoom>[] = [
   {
@@ -11,11 +10,11 @@ export const RoomFields: Items<TCRoomTypesRoom>[] = [
     inputType: "text",
   },
   {
-    name:"floor",
+    name: "floor",
     label: "طبقه",
     isRequired: false,
     fieldType: "input",
-    inputType: "number"
+    inputType: "number",
   },
   {
     name: "description",

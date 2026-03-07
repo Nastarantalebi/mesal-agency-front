@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import usePostData from "@/services/usePostData";
 import { toast } from "sonner";
 import { Form } from "@/components/ui/form";
-import type { TBedResponse } from "../../../../Beds/types";
+
 import FormErrorModal from "@/components/FormErrorModal";
 import CustomButton from "@/components/form/CustomButton";
 import BedButtonTemplate from "./BedButtonTemplate";
@@ -25,6 +25,7 @@ import {
   type TBedListForm,
 } from "../Fixtures/validation";
 import type { TCRoomTypeBed, TRoomTypeBedResponse } from "../types";
+import type { TBedResponse } from "@/app/AdminPanel/settings/types";
 
 interface Props {
   AccommodationId?: string;

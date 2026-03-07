@@ -2,7 +2,6 @@ import { Checkbox } from "../ui/checkbox";
 import { Field, FieldGroup, FieldLabel } from "../ui/field";
 import { Controller, type FieldValues } from "react-hook-form";
 import type { Props } from "./PropsType";
-import { FormField } from "../ui/form";
 
 const CustomCheckbox = <T extends FieldValues>({
   name,

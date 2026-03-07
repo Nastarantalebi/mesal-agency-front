@@ -1,4 +1,3 @@
-import useAccomodationFields from "../Accommodation/hooks/accomodationFields";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -23,6 +22,7 @@ import {
   miladiToShamsi,
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
+import AccomodationFields from "../Accommodation/hooks/accomodationFields";
 
 const AccommodationForm = ({
   accommodationId,
@@ -65,7 +65,7 @@ const AccommodationForm = ({
 
   const province_id = form.watch("provience");
 
-  const accommodationFields = useAccomodationFields(Number(province_id));
+  const accommodationFields = AccomodationFields(Number(province_id));
 
   const createMutation = usePostData<
     TCreateAccomodation,
@@ -110,7 +110,7 @@ const AccommodationForm = ({
       });
     } else {
       createMutation.mutateAsync(transformedData, {
-        onSuccess: () => {w
+        onSuccess: () => {
           toast.success("اقامتگاه با موفقیت ثبت شد ");
           form.reset(accommodationInitialValues);
         },

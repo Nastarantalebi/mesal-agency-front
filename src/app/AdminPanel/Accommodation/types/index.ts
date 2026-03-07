@@ -1,4 +1,4 @@
-import type { number } from "zod";
+
 
 export type TCreateAccomodation = {
     type: string,

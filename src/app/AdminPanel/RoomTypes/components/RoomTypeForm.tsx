@@ -17,9 +17,7 @@ import formTypes from "../../../../components/form/formInputTypes";
 import FormErrorModal from "@/components/FormErrorModal";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
