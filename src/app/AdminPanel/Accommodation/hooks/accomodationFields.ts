@@ -93,13 +93,13 @@ function AccomodationFields(province_id?: number) {
     {
       name: "open_start",
       label: "تاریخ شروع قرارداد",
-      isRequired: false,
+      isRequired: true,
       fieldType: "DatePicker",
     },
     {
       name: "open_end",
       label: "تاریخ پایان قرارداد",
-      isRequired: false,
+      isRequired: true,
       fieldType: "DatePicker",
     },
     {
@@ -149,6 +149,14 @@ function AccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "input",
       inputType: "number",
+    },
+    {
+      name: "top",
+      label: "ستاره برتر؟",
+      isRequired: false,
+      fieldType: "yesNoInput",
+      options: YES_NO_OPTIONS,
+      // className: "col-start-1 md:col-start-1 lg:col-start-1",
     },
     {
       name: "has_reception_24h",

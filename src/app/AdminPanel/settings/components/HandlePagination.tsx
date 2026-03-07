@@ -12,6 +12,7 @@ const HandlePagination = ({ pageCount, currentPage, onPageChange }: Props) => {
     <div className="flex flex-row items-end justify-end ml-5 gap-0.5 ">
       <Button
         size={"icon-sm"}
+        type="button"
         className={
           currentPage === 1
             ? "pointer-events-none opacity-50 rounded-full bg-primary/20 hover:bg-primary/40"
@@ -23,6 +24,7 @@ const HandlePagination = ({ pageCount, currentPage, onPageChange }: Props) => {
       </Button>
       <Button
         size={"icon-sm"}
+        type="button"
         className={
           currentPage === pageCount
             ? "pointer-events-none opacity-50 rounded-full bg-primary/20 hover:bg-primary/40"

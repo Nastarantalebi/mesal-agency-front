@@ -13,15 +13,16 @@ export type TCreateAccomodation = {
     floors: number | null,
     area_sqm: number | null,
     stars: number | null,
+    top: boolean,
     total_rooms: number | null,
     has_reception_24h: boolean,
-    has_elevator: boolean,
+    has_elevator: boolean ,
     check_in_time: string | null,
     check_out_time: string | null,
     built_with_local_materials: boolean,
     allows_local_food_experience: boolean,
-    open_start: string | null,
-    open_end: string | null,
+    open_start: string,
+    open_end: string,
     is_active: boolean
     provience?: number | string | null
 }
@@ -29,7 +30,7 @@ export type TCreateAccomodation = {
 export type TAccommodationResponse = {
   id: number;
 
-  type: { id: number; name: string } | null;
+  type: { id: number; name: string };
   city: { id: number; name: string; province: {id: number, name:string}} | null;
 
   name: string;
@@ -45,6 +46,7 @@ export type TAccommodationResponse = {
   floors: number | null;
   area_sqm: number | null;
   stars: number | null;
+  top: boolean;
   total_rooms: number | null;
 
   has_reception_24h: boolean;
