@@ -23,6 +23,8 @@ export const accommodationValidation = z.object({
   check_out_time: z.string().nullable(),
   built_with_local_materials: z.boolean(),
   allows_local_food_experience: z.boolean(),
+  open_start: z.string().nullable(),
+  open_end: z.string().nullable(),
   is_active: z.boolean(),
 });
 
@@ -46,6 +48,8 @@ export const accommodationInitialValues: TCreateAccomodation = {
   check_out_time: null,
   built_with_local_materials: false,
   allows_local_food_experience: false,
+  open_start : null,
+  open_end: null,
   is_active: false,
 };
 

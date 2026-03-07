@@ -20,6 +20,8 @@ export type TCreateAccomodation = {
     check_out_time: string | null,
     built_with_local_materials: boolean,
     allows_local_food_experience: boolean,
+    open_start: string | null,
+    open_end: string | null,
     is_active: boolean
     provience?: number | string | null
 }
@@ -54,6 +56,9 @@ export type TAccommodationResponse = {
   built_with_local_materials: boolean;
   allows_local_food_experience: boolean;
   is_active: boolean;
+
+  open_start: string | null,
+  open_end: string | null,
 
   created_at: string; 
   updated_at: string; 

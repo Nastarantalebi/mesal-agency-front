@@ -91,6 +91,18 @@ function AccomodationFields(province_id?: number) {
       fieldType: "DatePicker",
     },
     {
+      name: "open_start",
+      label: "تاریخ شروع قرارداد",
+      isRequired: false,
+      fieldType: "DatePicker",
+    },
+    {
+      name: "open_end",
+      label: "تاریخ پایان قرارداد",
+      isRequired: false,
+      fieldType: "DatePicker",
+    },
+    {
       name: "floors",
       label: "تعداد طبقات",
       isRequired: false,
