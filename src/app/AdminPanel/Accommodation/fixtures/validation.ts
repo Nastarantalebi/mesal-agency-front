@@ -26,6 +26,8 @@ export const accommodationValidation = z.object({
   allows_local_food_experience: z.boolean(),
   open_start: z.string().min(1, "انتخاب تاریخ شروع قرار داد الزامی است"),
   open_end: z.string().min(1, "انتخاب تاریخ پایان قرارداد الزامی است"),
+  min_child_age: z.number().min(0, "سن کودک حداقل میتواند ۱ باشد"),
+  max_child_age: z.number().max(20, "سن کودک حداکثر میتواند 20 باشد"),
   is_active: z.boolean(),
 });
 
@@ -50,8 +52,10 @@ export const accommodationInitialValues: TCreateAccomodation = {
   check_out_time: null,
   built_with_local_materials: false,
   allows_local_food_experience: false,
-  open_start : "",
+  open_start: "",
   open_end: "",
+  min_child_age: 0,
+  max_child_age: 0,
   is_active: false,
 };
 

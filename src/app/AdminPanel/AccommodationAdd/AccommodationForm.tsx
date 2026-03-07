@@ -41,8 +41,8 @@ const AccommodationForm = ({
         : undefined,
 
       open_start: miladiToShamsi(get.data.open_start),
-
       ope_end: miladiToShamsi(get.data.open_end),
+
     };
     form.reset({
       ...accommodationInitialValues,
@@ -75,8 +75,8 @@ const AccommodationForm = ({
         : null,
 
       open_start: shamsiToMiladi(value.open_start),
-
       open_end: shamsiToMiladi(value.open_end),
+
     };
 
     if (isEdit) {
@@ -96,8 +96,6 @@ const AccommodationForm = ({
       });
     }
   };
-
-  console.log(form.watch("stars"));
 
   if (get.isFetching) return <div className="p-4">Loading...</div>;
 

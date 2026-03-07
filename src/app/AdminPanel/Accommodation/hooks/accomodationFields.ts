@@ -85,12 +85,6 @@ function AccomodationFields(province_id?: number) {
       className: "col-span-full",
     },
     {
-      name: "manufacture_date",
-      label: "سال تاسیس",
-      isRequired: false,
-      fieldType: "DatePicker",
-    },
-    {
       name: "open_start",
       label: "تاریخ شروع قرارداد",
       isRequired: true,
@@ -100,6 +94,26 @@ function AccomodationFields(province_id?: number) {
       name: "open_end",
       label: "تاریخ پایان قرارداد",
       isRequired: true,
+      fieldType: "DatePicker",
+    },
+    {
+      name: "min_child_age",
+      label: "حداقل سن کودک",
+      isRequired: true,
+      fieldType: "input",
+      inputType:"number",
+    },
+    {
+      name: "max_child_age",
+      label: "ماکزیمم سن کودک",
+      isRequired: true,
+      fieldType: "input",
+      inputType:"number",
+    },
+    {
+      name: "manufacture_date",
+      label: "سال تاسیس",
+      isRequired: false,
       fieldType: "DatePicker",
     },
     {

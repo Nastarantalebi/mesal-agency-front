@@ -23,6 +23,8 @@ export type TCreateAccomodation = {
     allows_local_food_experience: boolean,
     open_start: string,
     open_end: string,
+    min_child_age: number,
+    max_child_age: number,
     is_active: boolean
     provience?: number | string | null
 }
@@ -61,6 +63,9 @@ export type TAccommodationResponse = {
 
   open_start: string,
   open_end: string,
+
+  min_child_age: number,
+  max_child_age: number,
 
   created_at: string; 
   updated_at: string; 
