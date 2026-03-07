@@ -1,4 +1,3 @@
-import PeakDate from "./peakDates/PeakDate";
 import AddBedForm from "./bed/AddBedForm";
 import BedsList from "./bed/BedsList";
 import FeaturesList from "./features/FeaturesList";
@@ -23,14 +22,6 @@ const AccommodationSettings = () => {
         </div>
       ),
     },
-    {
-      title: "تاریخ های پیک",
-      component: (
-        <div className="flex flex-col">
-          <PeakDate />
-        </div>
-      ),
-    },
   ];
 
   return (
@@ -40,7 +31,6 @@ const AccommodationSettings = () => {
         orientation="vertical"
         className="flex flex-row items-start gap-6"
       >
-        {/* Tab triggers — fixed on the right */}
         <TabsList className="flex flex-col h-auto w-48 shrink-0 sticky top-4 py-3 px-3 gap-1 ">
           {tabsItems.map((item) => (
             <TabsTrigger

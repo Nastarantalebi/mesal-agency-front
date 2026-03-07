@@ -40,13 +40,9 @@ const AccommodationForm = ({
         ? miladiToShamsi(get.data.manufacture_date)
         : undefined,
 
-      open_start: get.data.open_start
-      ? miladiToShamsi(get.data.open_start)
-      : undefined,
+      open_start: miladiToShamsi(get.data.open_start),
 
-      ope_end: get.data.open_end
-      ? miladiToShamsi(get.data.open_end)
-      : undefined,
+      ope_end: miladiToShamsi(get.data.open_end),
     };
     form.reset({
       ...accommodationInitialValues,
@@ -78,14 +74,9 @@ const AccommodationForm = ({
         ? shamsiToMiladi(value.manufacture_date)
         : null,
 
-      open_start: value.open_start
-      ? shamsiToMiladi(value.open_start)
-      : null,
+      open_start: shamsiToMiladi(value.open_start),
 
-      open_end: value.open_end
-      ? shamsiToMiladi(value.open_end)
-      : null,
-
+      open_end: shamsiToMiladi(value.open_end),
     };
 
     if (isEdit) {

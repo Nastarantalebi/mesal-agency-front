@@ -7,13 +7,17 @@ import type {
   TPeakDateState,
   TResponsePeakDate,
 } from "../../types";
-import { peakDate_key, peakDate_url } from "@/data/querykeys";
 import { toast } from "sonner";
 import { useEffect, useRef, useState } from "react";
 import useDeleteData from "@/services/useDeleteData";
 import useGetData from "@/services/useGetData";
+import { accommodation_url } from "@/data/querykeys";
 
-function PeakDate() {
+interface Props {
+  accommodationId: string;
+}
+
+function PeakDate({accommodationId}: Props) {
   const [currentDate, setCurrentDate] = useState<DateObject>(
     new DateObject({ calendar: persian, locale: persian_fa }),
   );
@@ -45,19 +49,21 @@ function PeakDate() {
     .toISOString()
     .split("T")[0];
 
+  const url = `${accommodation_url}${accommodationId}/peak_dates/`
+
   const submitDate = usePostData<TCreatePeakDate, TResponsePeakDate>({
-    key: [peakDate_key, startDate, endDate],
-    url: peakDate_url,
+    key: ["peakdate", startDate, endDate],
+    url,
   });
 
   const dateDelete = useDeleteData<TResponsePeakDate>({
-    key: [peakDate_key, startDate, endDate],
-    url: peakDate_url,
+    key: ["peakdate", startDate, endDate],
+    url,
   });
 
   const { data: peakDates } = useGetData<TResponsePeakDate[]>({
-    key: [peakDate_key, startDate, endDate],
-    url: `${peakDate_url}?start_date=${startDate}&end_date=${endDate}`,
+    key: ["peakdate", startDate, endDate],
+    url: `${url}?start_date=${startDate}&end_date=${endDate}`,
   });
 
   // Sync server data → local state on month change (fresh fetch)

@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccommodationIndexRouteImport } from './routes/accommodation/index'
 import { Route as AccommodationIdRouteRouteImport } from './routes/accommodation/$id/route'
 import { Route as AccommodationIdIndexRouteImport } from './routes/accommodation/$id/index'
+import { Route as AccommodationIdPeakDatesRouteImport } from './routes/accommodation/$id/peakDates'
 import { Route as AccommodationIdListRoomTypesRouteImport } from './routes/accommodation/$id/listRoomTypes'
 import { Route as AccommodationIdInfoRouteImport } from './routes/accommodation/$id/info'
 import { Route as AccommodationIdImagesRouteImport } from './routes/accommodation/$id/images'
@@ -45,6 +46,12 @@ const AccommodationIdIndexRoute = AccommodationIdIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AccommodationIdRouteRoute,
 } as any)
+const AccommodationIdPeakDatesRoute =
+  AccommodationIdPeakDatesRouteImport.update({
+    id: '/peakDates',
+    path: '/peakDates',
+    getParentRoute: () => AccommodationIdRouteRoute,
+  } as any)
 const AccommodationIdListRoomTypesRoute =
   AccommodationIdListRoomTypesRouteImport.update({
     id: '/listRoomTypes',
@@ -83,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/accommodation/$id/images': typeof AccommodationIdImagesRoute
   '/accommodation/$id/info': typeof AccommodationIdInfoRoute
   '/accommodation/$id/listRoomTypes': typeof AccommodationIdListRoomTypesRoute
+  '/accommodation/$id/peakDates': typeof AccommodationIdPeakDatesRoute
   '/accommodation/$id/': typeof AccommodationIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -94,6 +102,7 @@ export interface FileRoutesByTo {
   '/accommodation/$id/images': typeof AccommodationIdImagesRoute
   '/accommodation/$id/info': typeof AccommodationIdInfoRoute
   '/accommodation/$id/listRoomTypes': typeof AccommodationIdListRoomTypesRoute
+  '/accommodation/$id/peakDates': typeof AccommodationIdPeakDatesRoute
   '/accommodation/$id': typeof AccommodationIdIndexRoute
 }
 export interface FileRoutesById {
@@ -107,6 +116,7 @@ export interface FileRoutesById {
   '/accommodation/$id/images': typeof AccommodationIdImagesRoute
   '/accommodation/$id/info': typeof AccommodationIdInfoRoute
   '/accommodation/$id/listRoomTypes': typeof AccommodationIdListRoomTypesRoute
+  '/accommodation/$id/peakDates': typeof AccommodationIdPeakDatesRoute
   '/accommodation/$id/': typeof AccommodationIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/accommodation/$id/images'
     | '/accommodation/$id/info'
     | '/accommodation/$id/listRoomTypes'
+    | '/accommodation/$id/peakDates'
     | '/accommodation/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/accommodation/$id/images'
     | '/accommodation/$id/info'
     | '/accommodation/$id/listRoomTypes'
+    | '/accommodation/$id/peakDates'
     | '/accommodation/$id'
   id:
     | '__root__'
@@ -144,6 +156,7 @@ export interface FileRouteTypes {
     | '/accommodation/$id/images'
     | '/accommodation/$id/info'
     | '/accommodation/$id/listRoomTypes'
+    | '/accommodation/$id/peakDates'
     | '/accommodation/$id/'
   fileRoutesById: FileRoutesById
 }
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccommodationIdIndexRouteImport
       parentRoute: typeof AccommodationIdRouteRoute
     }
+    '/accommodation/$id/peakDates': {
+      id: '/accommodation/$id/peakDates'
+      path: '/peakDates'
+      fullPath: '/accommodation/$id/peakDates'
+      preLoaderRoute: typeof AccommodationIdPeakDatesRouteImport
+      parentRoute: typeof AccommodationIdRouteRoute
+    }
     '/accommodation/$id/listRoomTypes': {
       id: '/accommodation/$id/listRoomTypes'
       path: '/listRoomTypes'
@@ -235,6 +255,7 @@ interface AccommodationIdRouteRouteChildren {
   AccommodationIdImagesRoute: typeof AccommodationIdImagesRoute
   AccommodationIdInfoRoute: typeof AccommodationIdInfoRoute
   AccommodationIdListRoomTypesRoute: typeof AccommodationIdListRoomTypesRoute
+  AccommodationIdPeakDatesRoute: typeof AccommodationIdPeakDatesRoute
   AccommodationIdIndexRoute: typeof AccommodationIdIndexRoute
 }
 
@@ -244,6 +265,7 @@ const AccommodationIdRouteRouteChildren: AccommodationIdRouteRouteChildren = {
   AccommodationIdImagesRoute: AccommodationIdImagesRoute,
   AccommodationIdInfoRoute: AccommodationIdInfoRoute,
   AccommodationIdListRoomTypesRoute: AccommodationIdListRoomTypesRoute,
+  AccommodationIdPeakDatesRoute: AccommodationIdPeakDatesRoute,
   AccommodationIdIndexRoute: AccommodationIdIndexRoute,
 }
 

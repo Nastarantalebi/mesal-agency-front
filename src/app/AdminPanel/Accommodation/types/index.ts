@@ -59,8 +59,8 @@ export type TAccommodationResponse = {
   allows_local_food_experience: boolean;
   is_active: boolean;
 
-  open_start: string | null,
-  open_end: string | null,
+  open_start: string,
+  open_end: string,
 
   created_at: string; 
   updated_at: string; 
