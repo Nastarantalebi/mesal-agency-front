@@ -25,6 +25,7 @@ import { Form } from "@/components/ui/form";
 import FormErrorModal from "@/components/FormErrorModal";
 import type { TCRoomTypeFeature, TRoomTypeFeatureResponse } from "../types";
 import type { TFeatureResponse } from "../../settings/types";
+import HandlePagination from "../../settings/components/HandlePagination";
 
 interface Props {
   AccommodationId?: string;
@@ -63,12 +64,14 @@ const RoomTypeFeatures = ({
 
   const key = [features_key, String(AccommodationId), String(RoomId)];
   const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`;
+  const [currentRoomTypeFeaturePage, setCurrentRoomTypeFeaturePage] = useState(1);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const { data: roomTypeFeaturesData } = useGetData<
     TPaginatedResponse<TFeatureResponse>
   >({
-    key: [features_key],
-    url: `${features_url}?type=roomtype`,
+    key: [features_key, "roomtype", String(currentRoomTypeFeaturePage)],
+    url: `${features_url}?page=${currentRoomTypeFeaturePage}&type=roomtype`,
   });
 
   const { data: roomTypeFeatureList } = useGetData<TRoomTypeFeatureResponse>({
@@ -85,7 +88,9 @@ const RoomTypeFeatures = ({
     url,
   });
 
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const roomTypeFeaturesPageCount = roomTypeFeaturesData?.count
+  ? Math.ceil(roomTypeFeaturesData.count / 10)
+  : 0;
 
   const toggle = (id: number) => {
     setSelectedIds((prev) => {
@@ -163,6 +168,11 @@ const RoomTypeFeatures = ({
                   ) : (
                     <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
                   )}
+                  <HandlePagination
+                    currentPage={currentRoomTypeFeaturePage}
+                    onPageChange={setCurrentRoomTypeFeaturePage}
+                    pageCount={roomTypeFeaturesPageCount}
+                  />
                 </Card>
                 <CustomButton type="submit">ثبت</CustomButton>
               </div>
