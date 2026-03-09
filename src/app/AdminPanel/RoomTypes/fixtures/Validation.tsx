@@ -40,10 +40,12 @@ export const roomTypePriceValidation = z.object({
   prices: z.array(
     z.object({
       date: z.string(),
-      adult_normal_price: z.number().min(0, "عدد باید مثبت باشد"),
-      adult_peak_price: z.number().min(0, "قیمت باید مثبت باشد"),
-      child_normal_price: z.number().min(0, "قیمت باید مثبت باشد"),
-      child_peak_price: z.number().min(0, "قیمت باید مثبت باشد"),
+      normal_price: z.number().min(0, "عدد باید مثبت باشد"),
+      normal_child_price: z.number().min(0, "قیمت باید مثبت باشد"),
+      peak_price: z.number().min(0, "قیمت باید مثبت باشد"),
+      peak_child_price: z.number().min(0, "قیمت باید مثبت باشد"),
+      phone_call_price: z.boolean()
+
     }),
   ),
 });

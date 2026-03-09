@@ -37,6 +37,7 @@ import { toast } from "sonner";
 import FormErrorModal from "@/components/FormErrorModal";
 import PriceTabs from "./PriceTabs";
 import useMonthStores from "./monthStore";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface Props {
   open: boolean;
@@ -66,6 +67,7 @@ const RoomTypePriceForm = ({
         adultPeakPrice?: string;
         childNormalPrice?: string;
         childPeakPrice?: string;
+        phoneCallPrice?: boolean;
       }
     >
   >({});
@@ -150,20 +152,20 @@ const RoomTypePriceForm = ({
           const shamsiDate = miladiToShamsi(price.date);
           const normalizedKey = normalizeKey(shamsiDate);
 
-          if (price.adult_normal_price || price.adult_peak_price) {
+          if (price.normal_price || price.peak_price) {
             return [
               normalizedKey,
               {
-                adult_normal_price: String(price.adult_normal_price),
-                adult_peak_price: String(price.adult_peak_price),
+                adult_normal_price: String(price.normal_price),
+                adult_peak_price: String(price.peak_price),
               },
             ];
-          } else if (price.child_normal_price || price.child_peak_price) {
+          } else if (price.normal_child_price || price.peak_child_price) {
             return [
               normalizedKey,
               {
-                child_normal_price: String(price.child_normal_price),
-                child_peak_price: String(price.child_peak_price),
+                child_normal_price: String(price.normal_child_price),
+                child_peak_price: String(price.peak_child_price),
               },
             ];
           } else {
@@ -318,10 +320,12 @@ const RoomTypePriceForm = ({
     const payload = {
       prices: days.map((item) => ({
         date: shamsiToMiladi(item.shamsi),
-        adult_normal_price:Number(rowPrices[item.shamsi]?.adultNormalPrice) || 0,
-        adult_peak_price: Number(rowPrices[item.shamsi]?.adultPeakPrice) || 0,
-        child_normal_price:Number(rowPrices[item.shamsi]?.childNormalPrice) || 0,
-        child_peak_price: Number(rowPrices[item.shamsi]?.childPeakPrice) || 0,
+        normal_price: Number(rowPrices[item.shamsi]?.adultNormalPrice) || 0,
+        normal_child_price:
+          Number(rowPrices[item.shamsi]?.childNormalPrice) || 0,
+        peak_price: Number(rowPrices[item.shamsi]?.adultPeakPrice) || 0,
+        peak_child_price: Number(rowPrices[item.shamsi]?.childPeakPrice) || 0,
+        phone_call_price: rowPrices[item.shamsi]?.phoneCallPrice || false,
       })),
     };
 
@@ -332,6 +336,16 @@ const RoomTypePriceForm = ({
       },
       onError: () => setErrorOpen(true),
     });
+  };
+
+  const handlePhoneCallPriceChange = (shamsi: string, isChecked: boolean) => {
+    setRowPrices((prev) => ({
+      ...prev,
+      [shamsi]: {
+        ...prev[shamsi],
+        phone_call_price: isChecked,
+      },
+    }));
   };
 
   return (
@@ -376,6 +390,7 @@ const RoomTypePriceForm = ({
                           <TableHead>قیمت پیک بزرگسال</TableHead>
                           <TableHead>قیمت نرمال کودک</TableHead>
                           <TableHead>قیمت پیک کودک</TableHead>
+                          <TableHead>اطلاع قیمت به صورت تلفنی</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -454,6 +469,22 @@ const RoomTypePriceForm = ({
                                   )
                                 }
                               />
+                            </TableCell>
+                            <TableCell>
+                              <div className="pr-10">
+                                <Checkbox
+                                  checked={
+                                    rowPrices[item.shamsi]?.phoneCallPrice
+                                  }
+                                  onChange={(event) => {
+                                    handlePhoneCallPriceChange(
+                                      item.shamsi,
+                                      (event.target as HTMLInputElement)
+                                        .checked,
+                                    );
+                                  }}
+                                />
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))}
