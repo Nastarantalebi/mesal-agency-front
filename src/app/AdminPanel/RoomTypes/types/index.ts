@@ -60,12 +60,16 @@ export type TCPriceRange = {
 export type TCRoomTypePrices = {
   prices: {
     date: string;
-    normal_price: number;
-    peak_price: number;
+    adult_normal_price: number;
+    adult_peak_price: number;
+    child_normal_price: number;
+    child_peak_price: number;
   }[];
 };
 export type TRoomTypePricesResponse = {
     date: string ;
-    normal_price: number;
-    peak_price: number;
+    adult_normal_price: number;
+    adult_peak_price: number;
+    child_normal_price: number;
+    child_peak_price: number;
 }[]

@@ -7,18 +7,25 @@ import { Button } from "@/components/ui/button";
 interface Props {
   normalPrice: string;
   peakPrice: string;
-  onNormalPriceChange: (value: string) => void;
-  onPeakPriceChange: (value: string) => void;
-  onApplySelectedDays: (selectedDays: string[]) => void;
+  onAdultNormalPriceChange: (value: string) => void;
+  onAdultPeakPriceChange: (value: string) => void;
+  onChildNormalPriceChange: (value: string) => void;
+  onChildPeakPriceChange: (value: string) => void;
+  onApplyAdultSelectedDays: (selectedDays: string[]) => void;
+  onApplyChildSelectedDays: (selectedDays: string[]) => void;
 }
 
 const GlobalPriceInputs = ({
   normalPrice,
   peakPrice,
-  onNormalPriceChange,
-  onPeakPriceChange,
-  onApplySelectedDays,
+  onAdultNormalPriceChange,
+  onAdultPeakPriceChange,
+  onChildNormalPriceChange,
+  onChildPeakPriceChange,
+  onApplyAdultSelectedDays,
+  onApplyChildSelectedDays,
 }: Props) => {
+  
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const toggleDaySelection = (day: string) => {
     setSelectedDays((prev) =>
@@ -43,8 +50,10 @@ const GlobalPriceInputs = ({
         <PriceInputs
           normalPrice={normalPrice}
           peakPrice={peakPrice}
-          onNormalPriceChange={onNormalPriceChange}
-          onPeakPriceChange={onPeakPriceChange}
+          onAdultNormalPriceChange={onAdultNormalPriceChange}
+          onAdultPeakPriceChange={onAdultPeakPriceChange}
+          onChildNormalPriceChange={onChildNormalPriceChange}
+          onChildPeakPriceChange={onChildPeakPriceChange}
         />
       </div>
       <div className="flex mt-5 mb-10 gap-2 flex-wrap">
@@ -64,15 +73,26 @@ const GlobalPriceInputs = ({
           </Badge>
         ))}
       </div>
-      <Button
-        className="bg-accent text-black cursor-pointer"
-        onClick={() => {
-          onApplySelectedDays(selectedDays);
-          setSelectedDays([]);
-        }}
-      >
-        اعمال
-      </Button>
+      <div className="flex flex-row gap-2">
+        <Button
+          className="bg-accent text-black cursor-pointer"
+          onClick={() => {
+            onApplyAdultSelectedDays(selectedDays);
+            setSelectedDays([]);
+          }}
+        >
+          اعمال قیمت روی بزرگسال
+        </Button>
+        <Button
+          className="bg-accent text-black cursor-pointer"
+          onClick={() => {
+            onApplyChildSelectedDays(selectedDays);
+            setSelectedDays([]);
+          }}
+        >
+          اعمال قیمت روی کودک
+        </Button>
+      </div>
     </div>
   );
 };

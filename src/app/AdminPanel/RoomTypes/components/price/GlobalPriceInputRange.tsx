@@ -13,9 +13,12 @@ interface Props {
   peakPrice: string;
   onStartDateChange: (value: string) => void;
   onEndDateChange: (value: string) => void;
-  onNormalPriceChange: (value: string) => void;
-  onPeakPriceChange: (value: string) => void;
-  onApplyRange: () => void;
+  onAdultNormalPriceChange: (value: string) => void;
+  onAdultPeakPriceChange: (value: string) => void;
+  onChildNormalPriceChange: (value: string) => void;
+  onChildPeakPriceChange: (value: string) => void;
+  onAdultPriceApply: () => void;
+  onChildPriceApply: () => void;
 }
 
 const GlobalPriceInputRange = ({
@@ -23,12 +26,15 @@ const GlobalPriceInputRange = ({
   peakPrice,
   onStartDateChange,
   onEndDateChange,
-  onNormalPriceChange,
-  onPeakPriceChange,
-  onApplyRange,
+  onAdultNormalPriceChange,
+  onAdultPeakPriceChange,
+  onChildNormalPriceChange,
+  onChildPeakPriceChange,
+  onAdultPriceApply,
+  onChildPriceApply,
 }: Props) => {
   const [rangeValues, setRangeValues] = useState<DateObject[]>([]);
-  const selectedMonth = useMonthStores(s => s.selectedMonth);
+  const selectedMonth = useMonthStores((s) => s.selectedMonth);
 
   const handleRangeChange = (values: DateObject[]) => {
     setRangeValues(values);
@@ -41,6 +47,10 @@ const GlobalPriceInputRange = ({
     onStartDateChange("");
     onEndDateChange("");
   }, [selectedMonth]);
+
+  
+  // console.log("onAdultPriceApply:", onAdultPriceApply); // Inspect in console
+  // console.log("onChildPriceApply:", onChildPriceApply); // Inspect in console
 
   return (
     <div>
@@ -56,15 +66,25 @@ const GlobalPriceInputRange = ({
           <PriceInputs
             normalPrice={normalPrice}
             peakPrice={peakPrice}
-            onNormalPriceChange={onNormalPriceChange}
-            onPeakPriceChange={onPeakPriceChange}
+            onAdultNormalPriceChange={onAdultNormalPriceChange}
+            onAdultPeakPriceChange={onAdultPeakPriceChange}
+            onChildNormalPriceChange={onChildNormalPriceChange}
+            onChildPeakPriceChange={onChildPeakPriceChange}
           />
-          <Button
-            className="bg-accent text-black cursor-pointer"
-            onClick={onApplyRange}
-          >
-            اعمال روی بازه
-          </Button>
+          <div className="flex flex-row gap-2">
+            <Button
+              className="bg-accent text-black cursor-pointer"
+              onClick={onAdultPriceApply}
+            >
+              اعمال قیمت روی بزرگسال
+            </Button>
+            <Button
+              className="bg-accent text-black cursor-pointer"
+              onClick={onChildPriceApply}
+            >
+              اعمال قیمت روی کودک
+            </Button>
+          </div>
         </div>
       </div>
     </div>

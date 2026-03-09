@@ -59,7 +59,15 @@ const RoomTypePriceForm = ({
   const [globalNormalPrice, setGlobalNormalPrice] = useState<string>("");
   const [globalPeakPrice, setGlobalPeakPrice] = useState<string>("");
   const [rowPrices, setRowPrices] = useState<
-    Record<string, { normalPrice: string; peakPrice: string }>
+    Record<
+      string,
+      {
+        adultNormalPrice?: string;
+        adultPeakPrice?: string;
+        childNormalPrice?: string;
+        childPeakPrice?: string;
+      }
+    >
   >({});
   const [errorOpen, setErrorOpen] = useState(false);
 
@@ -137,13 +145,32 @@ const RoomTypePriceForm = ({
     if (!roomTypePricesData || roomTypePricesData.length === 0) return;
 
     const updated = Object.fromEntries(
-      roomTypePricesData.map((price) => [
-        normalizeKey(miladiToShamsi(price.date)), // → "1404/1/1" ✅
-        {
-          normalPrice: String(price.normal_price),
-          peakPrice: String(price.peak_price),
-        },
-      ]),
+      roomTypePricesData
+        .map((price) => {
+          const shamsiDate = miladiToShamsi(price.date);
+          const normalizedKey = normalizeKey(shamsiDate);
+
+          if (price.adult_normal_price || price.adult_peak_price) {
+            return [
+              normalizedKey,
+              {
+                adult_normal_price: String(price.adult_normal_price),
+                adult_peak_price: String(price.adult_peak_price),
+              },
+            ];
+          } else if (price.child_normal_price || price.child_peak_price) {
+            return [
+              normalizedKey,
+              {
+                child_normal_price: String(price.child_normal_price),
+                child_peak_price: String(price.child_peak_price),
+              },
+            ];
+          } else {
+            return null;
+          }
+        })
+        .filter((pair) => pair !== null),
     );
 
     setRowPrices(updated);
@@ -172,7 +199,8 @@ const RoomTypePriceForm = ({
 
     return "";
   };
-  const handleApplySelectedDays = (selectedDays: string[]) => {
+
+  const handleApplyAdultSelectedDays = (selectedDays: string[]) => {
     setRowPrices((prev) => {
       const updated = { ...prev };
 
@@ -180,8 +208,28 @@ const RoomTypePriceForm = ({
         const dayName = whatDay(shamsi);
         if (selectedDays.includes(dayName)) {
           updated[shamsi] = {
-            normalPrice: globalNormalPrice,
-            peakPrice: globalPeakPrice,
+            ...updated[shamsi],
+            adultNormalPrice: globalNormalPrice,
+            adultPeakPrice: globalPeakPrice,
+          };
+        }
+      });
+
+      // console.log(`AdultSelectedDays: ${updated}`)
+      return updated;
+    });
+  };
+  const handleApplyChildSelectedDays = (selectedDays: string[]) => {
+    setRowPrices((prev) => {
+      const updated = { ...prev };
+
+      days.forEach(({ shamsi }) => {
+        const dayName = whatDay(shamsi);
+        if (selectedDays.includes(dayName)) {
+          updated[shamsi] = {
+            ...updated[shamsi],
+            childNormalPrice: globalNormalPrice,
+            childPeakPrice: globalPeakPrice,
           };
         }
       });
@@ -189,11 +237,12 @@ const RoomTypePriceForm = ({
       return updated;
     });
   };
-  const handleApplyRange = (
+
+  const handleChildApplyRange = (
     start: string,
     end: string,
-    normalPrice: string,
-    peakPrice: string,
+    childNormalPrice?: string,
+    childPeakPrice?: string,
   ) => {
     const days = getDaysInMonth();
     setRowPrices((prev) => {
@@ -201,7 +250,33 @@ const RoomTypePriceForm = ({
       days.forEach(({ shamsi }) => {
         const miladi = shamsiToMiladi(shamsi);
         if (miladi >= shamsiToMiladi(start) && miladi <= shamsiToMiladi(end)) {
-          updated[shamsi] = { normalPrice, peakPrice };
+          updated[shamsi] = {
+            ...updated[shamsi],
+            childNormalPrice: childNormalPrice,
+            childPeakPrice: childPeakPrice,
+          };
+        }
+      });
+      return updated;
+    });
+  };
+  const handleAdultApplyRange = (
+    start: string,
+    end: string,
+    adultNormalPrice?: string,
+    adultPeakPrice?: string,
+  ) => {
+    const days = getDaysInMonth();
+    setRowPrices((prev) => {
+      const updated = { ...prev };
+      days.forEach(({ shamsi }) => {
+        const miladi = shamsiToMiladi(shamsi);
+        if (miladi >= shamsiToMiladi(start) && miladi <= shamsiToMiladi(end)) {
+          updated[shamsi] = {
+            ...updated[shamsi],
+            adultNormalPrice: adultNormalPrice,
+            adultPeakPrice: adultPeakPrice,
+          };
         }
       });
       return updated;
@@ -209,7 +284,11 @@ const RoomTypePriceForm = ({
   };
   const handleRowChange = (
     shamsi: string,
-    field: "normalPrice" | "peakPrice",
+    field:
+      | "adultNormalPrice"
+      | "adultPeakPrice"
+      | "childNormalPrice"
+      | "childPeakPrice",
     value: string,
   ) => {
     setRowPrices((prev) => ({
@@ -239,8 +318,10 @@ const RoomTypePriceForm = ({
     const payload = {
       prices: days.map((item) => ({
         date: shamsiToMiladi(item.shamsi),
-        normal_price: Number(rowPrices[item.shamsi]?.normalPrice) || 0, // item.shamsi نه item.day
-        peak_price: Number(rowPrices[item.shamsi]?.peakPrice) || 0,
+        adult_normal_price:Number(rowPrices[item.shamsi]?.adultNormalPrice) || 0,
+        adult_peak_price: Number(rowPrices[item.shamsi]?.adultPeakPrice) || 0,
+        child_normal_price:Number(rowPrices[item.shamsi]?.childNormalPrice) || 0,
+        child_peak_price: Number(rowPrices[item.shamsi]?.childPeakPrice) || 0,
       })),
     };
 
@@ -279,8 +360,10 @@ const RoomTypePriceForm = ({
                   globalPeakPrice={globalPeakPrice}
                   setGlobalNormalPrice={setGlobalNormalPrice}
                   setGlobalPeakPrice={setGlobalPeakPrice}
-                  onApplyRange={handleApplyRange}
-                  onApplySelectedDay={handleApplySelectedDays}
+                  onApplyAdultRange={handleAdultApplyRange}
+                  onApplyChildRange={handleChildApplyRange}
+                  onApplyAdultSelectedDay={handleApplyAdultSelectedDays}
+                  onApplyChildSelectedDay={handleApplyChildSelectedDays}
                 />
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -289,8 +372,10 @@ const RoomTypePriceForm = ({
                         <TableRow>
                           <TableHead>روز</TableHead>
                           <TableHead>تاریخ</TableHead>
-                          <TableHead>قیمت نرمال</TableHead>
-                          <TableHead>قیمت پیک</TableHead>
+                          <TableHead>قیمت نرمال بزرگسال</TableHead>
+                          <TableHead>قیمت پیک بزرگسال</TableHead>
+                          <TableHead>قیمت نرمال کودک</TableHead>
+                          <TableHead>قیمت پیک کودک</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -314,12 +399,12 @@ const RoomTypePriceForm = ({
                               <Input
                                 type="number"
                                 value={
-                                  rowPrices[item.shamsi]?.normalPrice ?? ""
+                                  rowPrices[item.shamsi]?.adultNormalPrice ?? ""
                                 }
                                 onChange={(e) =>
                                   handleRowChange(
                                     item.shamsi,
-                                    "normalPrice",
+                                    "adultNormalPrice",
                                     e.target.value,
                                   )
                                 }
@@ -328,11 +413,43 @@ const RoomTypePriceForm = ({
                             <TableCell>
                               <Input
                                 type="number"
-                                value={rowPrices[item.shamsi]?.peakPrice ?? ""}
+                                value={
+                                  rowPrices[item.shamsi]?.adultPeakPrice ?? ""
+                                }
                                 onChange={(e) =>
                                   handleRowChange(
                                     item.shamsi,
-                                    "peakPrice",
+                                    "adultPeakPrice",
+                                    e.target.value,
+                                  )
+                                }
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Input
+                                type="number"
+                                value={
+                                  rowPrices[item.shamsi]?.childNormalPrice ?? ""
+                                }
+                                onChange={(e) =>
+                                  handleRowChange(
+                                    item.shamsi,
+                                    "childNormalPrice",
+                                    e.target.value,
+                                  )
+                                }
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Input
+                                type="number"
+                                value={
+                                  rowPrices[item.shamsi]?.childPeakPrice ?? ""
+                                }
+                                onChange={(e) =>
+                                  handleRowChange(
+                                    item.shamsi,
+                                    "childPeakPrice",
                                     e.target.value,
                                   )
                                 }

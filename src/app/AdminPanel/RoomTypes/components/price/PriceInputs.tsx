@@ -1,20 +1,25 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Value } from "@radix-ui/react-select";
 import { Equal, Plus } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
   normalPrice: string;
   peakPrice: string;
-  onNormalPriceChange: (value: string) => void;
-  onPeakPriceChange: (value: string) => void;
+  onAdultNormalPriceChange: (value: string) => void;
+  onAdultPeakPriceChange: (value: string) => void;
+  onChildNormalPriceChange: (value: string) => void;
+  onChildPeakPriceChange: (value: string) => void;
 }
 
 const PriceInputs = ({
   normalPrice,
   peakPrice,
-  onNormalPriceChange,
-  onPeakPriceChange,
+  onAdultNormalPriceChange,
+  onAdultPeakPriceChange,
+  onChildNormalPriceChange,
+  onChildPeakPriceChange,
 }: Props) => {
   const [pricePlus, setPricePlus] = useState<string>("");
   const [pricePercentage, setPricePercentage] = useState<string>("");
@@ -24,12 +29,15 @@ const PriceInputs = ({
   };
 
   const calculateByPlus = (normal: string, plus: string) => {
-    onPeakPriceChange(String(Number(normal) + Number(plus)));
+    const result = String(Number(normal) + Number(plus));
+    onAdultPeakPriceChange(result);
+    onChildPeakPriceChange(result);
   };
 
   const calculateByPercentage = (normal: string, percent: string) => {
     const result = (Number(normal) * Number(percent)) / 100;
-    onPeakPriceChange(String(Number(normal) + result));
+    onAdultPeakPriceChange(String(Number(normal) + result));
+    onChildPeakPriceChange(String(Number(normal) + result));
   };
 
   const handlePricePlusChange = (value: string) => {
@@ -47,9 +55,15 @@ const PriceInputs = ({
   };
 
   const handleNormalPriceChange = (value: string) => {
-    onNormalPriceChange(value);
+    onAdultNormalPriceChange(value);
+    onChildNormalPriceChange(value);
     if (pricePlus) calculateByPlus(value, pricePlus);
     else if (pricePercentage) calculateByPercentage(value, pricePercentage);
+  };
+
+  const handlePeakPriceChange = (value: string) => {
+    onAdultPeakPriceChange(value);
+    onChildPeakPriceChange(value);
   };
 
   return (
@@ -85,7 +99,7 @@ const PriceInputs = ({
           type="number"
           className="w-30"
           value={peakPrice}
-          onChange={(e) => onPeakPriceChange(e.target.value)}
+          onChange={(e) => handlePeakPriceChange(e.target.value)}
         />
       </div>
     </div>

@@ -8,13 +8,20 @@ interface Props {
   globalPeakPrice: string;
   setGlobalNormalPrice: (value: string) => void;
   setGlobalPeakPrice: (value: string) => void;
-  onApplySelectedDay: (selectedDays: string[]) => void; 
-  onApplyRange: (
+  onApplyAdultSelectedDay: (selectedDays: string[]) => void;
+  onApplyChildSelectedDay: (selectedDays: string[]) => void;
+  onApplyAdultRange: (
     start: string,
     end: string,
-    normalPrice: string,
-    peakPrice: string,
+    adultNormalPrice?: string,
+    adultPeakPrice?: string,
   ) => void;
+  onApplyChildRange: (
+    start: string,
+    end: string,
+    childNormalPrice?: string,
+    childPeakPrice?: string,
+  ) => void
 }
 
 const PriceTabs = ({
@@ -22,20 +29,35 @@ const PriceTabs = ({
   globalPeakPrice,
   setGlobalNormalPrice,
   setGlobalPeakPrice,
-  onApplySelectedDay,
-  onApplyRange,
+  onApplyAdultSelectedDay,
+  onApplyChildSelectedDay,
+  onApplyAdultRange,
+  onApplyChildRange,
 }: Props) => {
   const [rangeStartDate, setRangeStartDate] = useState<string>("");
   const [rangeEndDate, setRangeEndDate] = useState<string>("");
-  const [rangeNormalPrice, setRangeNormalPrice] = useState<string>("");
-  const [rangePeakPrice, setRangePeakPrice] = useState<string>("");
+  const [rangeAdultNormalPrice, setRangeAdultNormalPrice] =
+    useState<string>("");
+  const [rangeAdultPeakPrice, setRangeAdultPeakPrice] = useState<string>("");
+  const [rangeChildNormalPrice, setRangeChildNormalPrice] =
+    useState<string>("");
+  const [rangeChildPeakPrice, setRangeChildPeakPrice] = useState<string>("");
 
-  const handleApplyRange = () => {
-    onApplyRange(
+  const handleAdultApplyRange = () => {
+    onApplyAdultRange(
       rangeStartDate,
       rangeEndDate,
-      rangeNormalPrice,
-      rangePeakPrice,
+      rangeAdultNormalPrice,
+      rangeAdultPeakPrice,
+    );
+  };
+
+  const handleChildApplyRange = () => {
+    onApplyChildRange(
+      rangeStartDate,
+      rangeEndDate,
+      rangeChildNormalPrice,
+      rangeChildPeakPrice,
     );
   };
 
@@ -46,9 +68,12 @@ const PriceTabs = ({
         <GlobalPriceInputs
           normalPrice={globalNormalPrice}
           peakPrice={globalPeakPrice}
-          onNormalPriceChange={setGlobalNormalPrice}
-          onPeakPriceChange={setGlobalPeakPrice}
-          onApplySelectedDays={onApplySelectedDay}
+          onAdultNormalPriceChange={setGlobalNormalPrice}
+          onAdultPeakPriceChange={setGlobalPeakPrice}
+          onChildNormalPriceChange={setRangeChildNormalPrice}
+          onChildPeakPriceChange={setRangeChildPeakPrice}
+          onApplyAdultSelectedDays={onApplyAdultSelectedDay}
+          onApplyChildSelectedDays={onApplyChildSelectedDay}
         />
       ),
     },
@@ -56,13 +81,16 @@ const PriceTabs = ({
       title: "انتخاب رنج تاریخ",
       component: (
         <GlobalPriceInputRange
-          normalPrice={rangeNormalPrice}
-          peakPrice={rangePeakPrice}
+          normalPrice={rangeAdultNormalPrice}
+          peakPrice={rangeAdultPeakPrice}
           onStartDateChange={setRangeStartDate}
           onEndDateChange={setRangeEndDate}
-          onNormalPriceChange={setRangeNormalPrice}
-          onPeakPriceChange={setRangePeakPrice}
-          onApplyRange={handleApplyRange}
+          onAdultNormalPriceChange={setRangeAdultNormalPrice}
+          onAdultPeakPriceChange={setRangeAdultPeakPrice}
+          onChildNormalPriceChange={setRangeChildNormalPrice}
+          onChildPeakPriceChange={setRangeChildPeakPrice}
+          onAdultPriceApply={handleAdultApplyRange}
+          onChildPriceApply={handleChildApplyRange}
         />
       ),
     },
