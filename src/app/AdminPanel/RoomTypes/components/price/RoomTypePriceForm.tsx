@@ -147,32 +147,16 @@ const RoomTypePriceForm = ({
     if (!roomTypePricesData || roomTypePricesData.length === 0) return;
 
     const updated = Object.fromEntries(
-      roomTypePricesData
-        .map((price) => {
-          const shamsiDate = miladiToShamsi(price.date);
-          const normalizedKey = normalizeKey(shamsiDate);
-
-          if (price.normal_price || price.peak_price) {
-            return [
-              normalizedKey,
-              {
-                adult_normal_price: String(price.normal_price),
-                adult_peak_price: String(price.peak_price),
-              },
-            ];
-          } else if (price.normal_child_price || price.peak_child_price) {
-            return [
-              normalizedKey,
-              {
-                child_normal_price: String(price.normal_child_price),
-                child_peak_price: String(price.peak_child_price),
-              },
-            ];
-          } else {
-            return null;
-          }
-        })
-        .filter((pair) => pair !== null),
+      roomTypePricesData.map((price) => [
+        normalizeKey(miladiToShamsi(price.date)), // → "1404/1/1" ✅
+        {
+          adultNormalPrice: String(price.normal_price),
+          adultPeakPrice: String(price.peak_price),
+          childNormalPrice: String(price.normal_child_price),
+          childPeakPrice: String(price.peak_child_price),
+          phoneCallPrice: price.phone_call_price,
+        },
+      ]),
     );
 
     setRowPrices(updated);
@@ -217,7 +201,6 @@ const RoomTypePriceForm = ({
         }
       });
 
-      // console.log(`AdultSelectedDays: ${updated}`)
       return updated;
     });
   };
@@ -343,7 +326,7 @@ const RoomTypePriceForm = ({
       ...prev,
       [shamsi]: {
         ...prev[shamsi],
-        phone_call_price: isChecked,
+        rowphone_call_price: isChecked,
       },
     }));
   };
@@ -474,13 +457,15 @@ const RoomTypePriceForm = ({
                               <div className="pr-10">
                                 <Checkbox
                                   checked={
-                                    rowPrices[item.shamsi]?.phoneCallPrice
+                                    !!rowPrices[item.shamsi]?.phoneCallPrice
                                   }
                                   onChange={(event) => {
+                                    const isChecked = (
+                                      event.target as HTMLInputElement
+                                    ).checked;
                                     handlePhoneCallPriceChange(
                                       item.shamsi,
-                                      (event.target as HTMLInputElement)
-                                        .checked,
+                                      isChecked,
                                     );
                                   }}
                                 />

@@ -6,7 +6,7 @@ import type {
   TCreatePeakDate,
   TPeakDateState,
   TResponsePeakDate,
-} from "../../types";
+} from "../settings/types";
 import { toast } from "sonner";
 import { useEffect, useRef, useState } from "react";
 import useDeleteData from "@/services/useDeleteData";
@@ -17,7 +17,7 @@ interface Props {
   accommodationId: string;
 }
 
-function PeakDate({accommodationId}: Props) {
+function PeakDate({ accommodationId }: Props) {
   const [currentDate, setCurrentDate] = useState<DateObject>(
     new DateObject({ calendar: persian, locale: persian_fa }),
   );
@@ -49,7 +49,7 @@ function PeakDate({accommodationId}: Props) {
     .toISOString()
     .split("T")[0];
 
-  const url = `${accommodation_url}${accommodationId}/peak_dates/`
+  const url = `${accommodation_url}${accommodationId}/peak_dates/`;
 
   const submitDate = usePostData<TCreatePeakDate, TResponsePeakDate>({
     key: ["peakdate", startDate, endDate],

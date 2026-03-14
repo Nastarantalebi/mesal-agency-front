@@ -11,9 +11,9 @@ import {
   CopyPlus,
   LayoutDashboard,
   Calendar,
+  Settings2,
 } from "lucide-react";
-import { url } from "zod";
-import { icon } from "leaflet";
+
 
 export const Route = createFileRoute("/accommodation/$id")({
   component: RouteComponent,
@@ -59,7 +59,7 @@ const sidebarItems = (id: string) => [
     title: "تاریخ های پیک",
     url: `/accommodation/${id}/peakDates`,
     icon: <Calendar/>
-  }
+  },
 ];
 
 function RouteComponent() {
