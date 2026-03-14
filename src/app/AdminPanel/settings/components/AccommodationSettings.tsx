@@ -3,6 +3,7 @@ import BedsList from "./bed/BedsList";
 import FeaturesList from "./features/FeaturesList";
 import AddFeaturesForm from "./features/AddFeaturesForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import DefaultsForm from "../../Accommodation/defaults/AddDefaults";
 
 const AccommodationSettings = () => {
   const tabsItems = [
@@ -19,6 +20,14 @@ const AccommodationSettings = () => {
       component: (
         <div className="flex flex-col gap-10">
           <AddBedForm /> <BedsList />
+        </div>
+      ),
+    },
+    {
+      title: "پیشفرض ها",
+      component: (
+        <div className="flex flex-col gap-10">
+          <DefaultsForm/>
         </div>
       ),
     },

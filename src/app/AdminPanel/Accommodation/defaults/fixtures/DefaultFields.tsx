@@ -20,14 +20,13 @@ export const DefaultFields: Items<TCreateDefaults>[] = [
     name: "check_in_time",
     label: "ساعت ورود",
     isRequired: true,
-    fieldType: "input",
-    inputType: "text",
+    className: "col-start-1",
+    fieldType: "Time",
   },
   {
     name: "check_out_time",
     label: "ساعت خروج",
     isRequired: true,
-    fieldType: "input",
-    inputType: "text",
+    fieldType: "Time",
   },
 ];

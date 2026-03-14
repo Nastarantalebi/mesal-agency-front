@@ -10,13 +10,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  accommodationInitialValues,
-  accommodationValidation,
-} from "../Accommodation/fixtures/validation";
 import AccomodationFields from "../Accommodation/hooks/accomodationFields";
 import type { TCreateAccomodation } from "../Accommodation/types";
 import useAddAccommodation from "./services/useAddAccommodation";
+import useValidation from "../Accommodation/fixtures/useValidation";
 
 const AccommodationForm = ({
   accommodationId,
@@ -25,7 +22,8 @@ const AccommodationForm = ({
   accommodationId?: string;
   buttonText: string;
 }) => {
-  const { get, post, put } = useAddAccommodation(accommodationId);
+  const {post, put, get } = useAddAccommodation(accommodationId);
+  const {accommodationValidation, accommodationInitialValues} = useValidation()
 
   const form = useForm<TCreateAccomodation>({
     resolver: zodResolver(accommodationValidation),

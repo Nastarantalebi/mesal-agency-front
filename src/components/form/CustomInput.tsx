@@ -2,7 +2,6 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Controller, type FieldValues } from "react-hook-form";
 import type { Props } from "./PropsType";
-import { useEffect } from "react";
 
 export type InputType = "text" | "number" | "email" | "password" | "tel";
 

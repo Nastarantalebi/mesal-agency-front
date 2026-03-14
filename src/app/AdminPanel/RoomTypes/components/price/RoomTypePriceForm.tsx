@@ -1,8 +1,5 @@
 import CustomButton from "@/components/form/CustomButton";
-import {
-  miladiToShamsi,
-  shamsiToMiladi,
-} from "@/components/form/DateConverter";
+import { shamsiToMiladi } from "@/components/form/DateConverter";
 import {
   Dialog,
   DialogContent,
@@ -26,7 +23,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import { Calendar, DateObject } from "react-multi-date-picker";
 import type { TCRoomTypePrices, TRoomTypePricesResponse } from "../../types";
 import { accommodation_url } from "@/data/querykeys";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   roomTypePriceInitialValues,
@@ -38,6 +35,7 @@ import FormErrorModal from "@/components/FormErrorModal";
 import PriceTabs from "./PriceTabs";
 import useMonthStores from "./monthStore";
 import { Checkbox } from "@/components/ui/checkbox";
+import { getDaysInMonth } from "@/lib/getDaysInMonth";
 
 interface Props {
   open: boolean;
@@ -57,20 +55,7 @@ const RoomTypePriceForm = ({
   RoomName,
 }: Props) => {
   const { selectedMonth, setSelectedMonth } = useMonthStores();
-  const [globalNormalPrice, setGlobalNormalPrice] = useState<string>("");
-  const [globalPeakPrice, setGlobalPeakPrice] = useState<string>("");
-  const [rowPrices, setRowPrices] = useState<
-    Record<
-      string,
-      {
-        adultNormalPrice?: string;
-        adultPeakPrice?: string;
-        childNormalPrice?: string;
-        childPeakPrice?: string;
-        phoneCallPrice?: boolean;
-      }
-    >
-  >({});
+
   const [errorOpen, setErrorOpen] = useState(false);
 
   const dayNames = [
@@ -96,33 +81,19 @@ const RoomTypePriceForm = ({
     return date.getDay() === 6; // 5 = جمعه
   };
 
-  const getDaysInMonth = () => {
-    if (!selectedMonth) return [];
-
-    const year = selectedMonth.year;
-    const month = selectedMonth.month.number;
-
-    // تعداد روزهای هر ماه شمسی
-    const daysInMonth = month <= 6 ? 31 : month <= 11 ? 30 : 29;
-
-    const days = [];
-    for (let day = 1; day <= daysInMonth; day++) {
-      days.push({
-        day,
-        shamsi: `${year}/${month}/${day}`,
-      });
-    }
-    return days;
-  };
-
-  const days = getDaysInMonth();
+  const days = getDaysInMonth(selectedMonth);
   const startDate = shamsiToMiladi(days[0]?.shamsi).replaceAll("/", "-");
   const endDate = shamsiToMiladi(days[days.length - 1]?.shamsi).replaceAll(
     "/",
     "-",
   );
-  const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
+  const form = useForm<TCRoomTypePrices>({
+    resolver: zodResolver(roomTypePriceValidation),
+    defaultValues: roomTypePriceInitialValues,
+  });
+
+  const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
   const submitRoomTypePrices = usePostData<
     TCRoomTypePrices,
     TRoomTypePricesResponse
@@ -137,178 +108,41 @@ const RoomTypePriceForm = ({
     enabled: !!RoomId && !!startDate && !!endDate,
   });
 
-  const normalizeKey = (persianDate: string): string => {
-    return persianDate
-      .replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))) // Persian → Latin digits
-      .replace(/\/0(\d)/g, "/$1"); // remove zero-padding → "01" becomes "1"
-  };
+  // const normalizeKey = (persianDate: string): string => {
+  //   return persianDate
+  //     .replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))) // Persian → Latin digits
+  //     .replace(/\/0(\d)/g, "/$1"); // remove zero-padding → "01" becomes "1"
+  // };
 
   useEffect(() => {
-    if (!roomTypePricesData || roomTypePricesData.length === 0) return;
+    // if (!roomTypePricesData || roomTypePricesData.length === 0) return;
 
-    const updated = Object.fromEntries(
-      roomTypePricesData.map((price) => [
-        normalizeKey(miladiToShamsi(price.date)), // → "1404/1/1" ✅
-        {
-          adultNormalPrice: String(price.normal_price),
-          adultPeakPrice: String(price.peak_price),
-          childNormalPrice: String(price.normal_child_price),
-          childPeakPrice: String(price.peak_child_price),
-          phoneCallPrice: price.phone_call_price,
-        },
-      ]),
-    );
-
-    setRowPrices(updated);
+    form.reset({
+      prices: days.map((day) => {
+        const item = roomTypePricesData?.find((p) => p.date === shamsiToMiladi(day.shamsi),);
+        return {
+          date: day.shamsi,
+          normal_price: item?.normal_price ?? 0,
+          normal_child_price: item?.normal_child_price ?? 0,
+          peak_price: item?.peak_price ?? 0,
+          peak_child_price: item?.peak_child_price ?? 0,
+          phone_call_price: item?.phone_call_price ?? false,
+        };
+      }),
+    });
   }, [roomTypePricesData]);
-
-  const whatDay = (shamsi: string) => {
-    const miladi = shamsiToMiladi(shamsi);
-    const date = new Date(miladi);
-    const getDay = date.getDay();
-    switch (getDay) {
-      case 0:
-        return "saturday";
-      case 1:
-        return "sunday";
-      case 2:
-        return "monday";
-      case 3:
-        return "tuesday";
-      case 4:
-        return "wednesday";
-      case 5:
-        return "thursday";
-      case 6:
-        return "friday";
-    }
-
-    return "";
-  };
-
-  const handleApplyAdultSelectedDays = (selectedDays: string[]) => {
-    setRowPrices((prev) => {
-      const updated = { ...prev };
-
-      days.forEach(({ shamsi }) => {
-        const dayName = whatDay(shamsi);
-        if (selectedDays.includes(dayName)) {
-          updated[shamsi] = {
-            ...updated[shamsi],
-            adultNormalPrice: globalNormalPrice,
-            adultPeakPrice: globalPeakPrice,
-          };
-        }
-      });
-
-      return updated;
-    });
-  };
-  const handleApplyChildSelectedDays = (selectedDays: string[]) => {
-    setRowPrices((prev) => {
-      const updated = { ...prev };
-
-      days.forEach(({ shamsi }) => {
-        const dayName = whatDay(shamsi);
-        if (selectedDays.includes(dayName)) {
-          updated[shamsi] = {
-            ...updated[shamsi],
-            childNormalPrice: globalNormalPrice,
-            childPeakPrice: globalPeakPrice,
-          };
-        }
-      });
-
-      return updated;
-    });
-  };
-
-  const handleChildApplyRange = (
-    start: string,
-    end: string,
-    childNormalPrice?: string,
-    childPeakPrice?: string,
-  ) => {
-    const days = getDaysInMonth();
-    setRowPrices((prev) => {
-      const updated = { ...prev };
-      days.forEach(({ shamsi }) => {
-        const miladi = shamsiToMiladi(shamsi);
-        if (miladi >= shamsiToMiladi(start) && miladi <= shamsiToMiladi(end)) {
-          updated[shamsi] = {
-            ...updated[shamsi],
-            childNormalPrice: childNormalPrice,
-            childPeakPrice: childPeakPrice,
-          };
-        }
-      });
-      return updated;
-    });
-  };
-  const handleAdultApplyRange = (
-    start: string,
-    end: string,
-    adultNormalPrice?: string,
-    adultPeakPrice?: string,
-  ) => {
-    const days = getDaysInMonth();
-    setRowPrices((prev) => {
-      const updated = { ...prev };
-      days.forEach(({ shamsi }) => {
-        const miladi = shamsiToMiladi(shamsi);
-        if (miladi >= shamsiToMiladi(start) && miladi <= shamsiToMiladi(end)) {
-          updated[shamsi] = {
-            ...updated[shamsi],
-            adultNormalPrice: adultNormalPrice,
-            adultPeakPrice: adultPeakPrice,
-          };
-        }
-      });
-      return updated;
-    });
-  };
-  const handleRowChange = (
-    shamsi: string,
-    field:
-      | "adultNormalPrice"
-      | "adultPeakPrice"
-      | "childNormalPrice"
-      | "childPeakPrice",
-    value: string,
-  ) => {
-    setRowPrices((prev) => ({
-      ...prev,
-      [shamsi]: {
-        ...prev[shamsi],
-        [field]: value,
-      },
-    }));
-  };
 
   // reset row prices when month changes
   const handleMonthChange = (date: DateObject) => {
     setSelectedMonth?.(date);
-    setRowPrices({});
-    setGlobalNormalPrice("");
-    setGlobalPeakPrice("");
+    form.reset();
   };
 
-  const form = useForm<TCRoomTypePrices>({
-    resolver: zodResolver(roomTypePriceValidation),
-    defaultValues: roomTypePriceInitialValues,
-  });
-
-  const handleSubmit = () => {
-    const days = getDaysInMonth();
+  const handleSubmit = (value: TCRoomTypePrices) => {
     const payload = {
-      prices: days.map((item) => ({
-        date: shamsiToMiladi(item.shamsi),
-        normal_price: Number(rowPrices[item.shamsi]?.adultNormalPrice) || 0,
-        normal_child_price:
-          Number(rowPrices[item.shamsi]?.childNormalPrice) || 0,
-        peak_price: Number(rowPrices[item.shamsi]?.adultPeakPrice) || 0,
-        peak_child_price: Number(rowPrices[item.shamsi]?.childPeakPrice) || 0,
-        phone_call_price: rowPrices[item.shamsi]?.phoneCallPrice || false,
+      prices: value.prices.map((item) => ({
+        ...item,
+        date: shamsiToMiladi(item.date),
       })),
     };
 
@@ -319,16 +153,6 @@ const RoomTypePriceForm = ({
       },
       onError: () => setErrorOpen(true),
     });
-  };
-
-  const handlePhoneCallPriceChange = (shamsi: string, isChecked: boolean) => {
-    setRowPrices((prev) => ({
-      ...prev,
-      [shamsi]: {
-        ...prev[shamsi],
-        rowphone_call_price: isChecked,
-      },
-    }));
   };
 
   return (
@@ -352,18 +176,9 @@ const RoomTypePriceForm = ({
           <div className="mt-10">
             {selectedMonth && (
               <>
-                <PriceTabs
-                  globalNormalPrice={globalNormalPrice}
-                  globalPeakPrice={globalPeakPrice}
-                  setGlobalNormalPrice={setGlobalNormalPrice}
-                  setGlobalPeakPrice={setGlobalPeakPrice}
-                  onApplyAdultRange={handleAdultApplyRange}
-                  onApplyChildRange={handleChildApplyRange}
-                  onApplyAdultSelectedDay={handleApplyAdultSelectedDays}
-                  onApplyChildSelectedDay={handleApplyChildSelectedDays}
-                />
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(handleSubmit)}>
+                    <PriceTabs form={form} />
                     <Table>
                       <TableHeader>
                         <TableRow>
@@ -377,7 +192,7 @@ const RoomTypePriceForm = ({
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {days.map((item) => (
+                        {days.map((item, index) => (
                           <TableRow key={item.shamsi}>
                             <TableCell
                               className={
@@ -394,80 +209,97 @@ const RoomTypePriceForm = ({
                               {item.shamsi}
                             </TableCell>
                             <TableCell>
-                              <Input
-                                type="number"
-                                value={
-                                  rowPrices[item.shamsi]?.adultNormalPrice ?? ""
-                                }
-                                onChange={(e) =>
-                                  handleRowChange(
-                                    item.shamsi,
-                                    "adultNormalPrice",
-                                    e.target.value,
-                                  )
-                                }
+                              <Controller
+                                name={`prices.${index}.normal_price`}
+                                control={form.control}
+                                render={({ field, fieldState }) => (
+                                  <>
+                                    <Input
+                                      {...field}
+                                      type="number"
+                                      dir="ltr"
+                                      onChange={(e) => {
+                                        field.onChange(e.target.valueAsNumber);
+                                      }}
+                                      className={`text-left ${fieldState.error ? "border-red-600" : ""} `}
+                                    />
+                                  </>
+                                )}
                               />
                             </TableCell>
                             <TableCell>
-                              <Input
-                                type="number"
-                                value={
-                                  rowPrices[item.shamsi]?.adultPeakPrice ?? ""
-                                }
-                                onChange={(e) =>
-                                  handleRowChange(
-                                    item.shamsi,
-                                    "adultPeakPrice",
-                                    e.target.value,
-                                  )
-                                }
+                              <Controller
+                                name={`prices.${index}.peak_price`}
+                                control={form.control}
+                                render={({ field, fieldState }) => (
+                                  <>
+                                    <Input
+                                      {...field}
+                                      type="number"
+                                      dir="ltr"
+                                      onChange={(e) => {
+                                        field.onChange(e.target.valueAsNumber);
+                                      }}
+                                      className={`text-left ${fieldState.error ? "border-red-600" : ""} `}
+                                    />
+                                  </>
+                                )}
                               />
                             </TableCell>
                             <TableCell>
-                              <Input
-                                type="number"
-                                value={
-                                  rowPrices[item.shamsi]?.childNormalPrice ?? ""
-                                }
-                                onChange={(e) =>
-                                  handleRowChange(
-                                    item.shamsi,
-                                    "childNormalPrice",
-                                    e.target.value,
-                                  )
-                                }
+                              <Controller
+                                name={`prices.${index}.normal_child_price`}
+                                control={form.control}
+                                render={({ field, fieldState }) => (
+                                  <>
+                                    <Input
+                                      {...field}
+                                      type="number"
+                                      dir="ltr"
+                                      onChange={(e) => {
+                                        field.onChange(e.target.valueAsNumber);
+                                      }}
+                                      className={`text-left ${fieldState.error ? "border-red-600" : ""} `}
+                                    />
+                                  </>
+                                )}
                               />
                             </TableCell>
                             <TableCell>
-                              <Input
-                                type="number"
-                                value={
-                                  rowPrices[item.shamsi]?.childPeakPrice ?? ""
-                                }
-                                onChange={(e) =>
-                                  handleRowChange(
-                                    item.shamsi,
-                                    "childPeakPrice",
-                                    e.target.value,
-                                  )
-                                }
+                              <Controller
+                                name={`prices.${index}.peak_child_price`}
+                                control={form.control}
+                                render={({ field, fieldState }) => (
+                                  <>
+                                    <Input
+                                      {...field}
+                                      type="number"
+                                      dir="ltr"
+                                      onChange={(e) => {
+                                        field.onChange(e.target.valueAsNumber);
+                                      }}
+                                      className={`text-left ${fieldState.error ? "border-red-600" : ""} `}
+                                    />
+                                  </>
+                                )}
                               />
                             </TableCell>
                             <TableCell>
                               <div className="pr-10">
-                                <Checkbox
-                                  checked={
-                                    !!rowPrices[item.shamsi]?.phoneCallPrice
-                                  }
-                                  onChange={(event) => {
-                                    const isChecked = (
-                                      event.target as HTMLInputElement
-                                    ).checked;
-                                    handlePhoneCallPriceChange(
-                                      item.shamsi,
-                                      isChecked,
-                                    );
-                                  }}
+                                <Controller
+                                  name={`prices.${index}.phone_call_price`}
+                                  control={form.control}
+                                  render={({ field }) => (
+                                    <>
+                                      <Checkbox
+                                        // {...field}
+                                        checked={field.value}
+                                        onCheckedChange={(check) => {
+                                          field.onChange(check);
+                                        }}
+                                      />
+                                    </>
+                                  )}
                                 />
                               </div>
                             </TableCell>

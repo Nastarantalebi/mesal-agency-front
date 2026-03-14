@@ -3,30 +3,19 @@ import { Badge } from "@/components/ui/badge";
 import PriceInputs from "./PriceInputs";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { whatDay } from "@/lib/getDaysInMonth";
+import { useWatch, type UseFormReturn } from "react-hook-form";
+import type { TCRoomTypePrices } from "../../types";
 
 interface Props {
-  normalPrice: string;
-  peakPrice: string;
-  onAdultNormalPriceChange: (value: string) => void;
-  onAdultPeakPriceChange: (value: string) => void;
-  onChildNormalPriceChange: (value: string) => void;
-  onChildPeakPriceChange: (value: string) => void;
-  onApplyAdultSelectedDays: (selectedDays: string[]) => void;
-  onApplyChildSelectedDays: (selectedDays: string[]) => void;
+  form: UseFormReturn<TCRoomTypePrices, any, TCRoomTypePrices>;
 }
 
-const GlobalPriceInputs = ({
-  normalPrice,
-  peakPrice,
-  onAdultNormalPriceChange,
-  onAdultPeakPriceChange,
-  onChildNormalPriceChange,
-  onChildPeakPriceChange,
-  onApplyAdultSelectedDays,
-  onApplyChildSelectedDays,
-}: Props) => {
-  
+const GlobalPriceInputs = ({ form }: Props) => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [globalNormalPrice, setGlobalNormalPrice] = useState<number>(0);
+  const [globalPeakPrice, setGlobalPeakPrice] = useState<number>(0);
+
   const toggleDaySelection = (day: string) => {
     setSelectedDays((prev) =>
       prev.includes(day)
@@ -44,16 +33,45 @@ const GlobalPriceInputs = ({
     { name: "جمعه", value: "friday" },
   ];
 
+  const prices = useWatch({ control: form.control, name: "prices" });
+
+  const onApplySelectedDays = (
+    selectedDays: string[],
+    type: "child" | "adult",
+  ) => {
+    const updated = prices.map((price) => {
+      const dayName = whatDay(price.date);
+      const isInclude = selectedDays.includes(dayName);
+      return {
+        ...price,
+        normal_price:
+          isInclude && type === "adult"
+            ? +globalNormalPrice
+            : price.normal_price,
+        peak_price:
+          isInclude && type === "adult" ? +globalPeakPrice : price.peak_price,
+        normal_child_price:
+          isInclude && type === "child"
+            ? +globalNormalPrice
+            : price.normal_child_price,
+        peak_child_price:
+          isInclude && type === "child"
+            ? +globalPeakPrice
+            : price.peak_child_price,
+      };
+    });
+
+    form.reset({ prices: updated });
+  };
+
   return (
     <div className="flex items-center justify-center flex-col">
       <div className="flex gap-4">
         <PriceInputs
-          normalPrice={normalPrice}
-          peakPrice={peakPrice}
-          onAdultNormalPriceChange={onAdultNormalPriceChange}
-          onAdultPeakPriceChange={onAdultPeakPriceChange}
-          onChildNormalPriceChange={onChildNormalPriceChange}
-          onChildPeakPriceChange={onChildPeakPriceChange}
+          normalPrice={globalNormalPrice}
+          peakPrice={globalPeakPrice}
+          onNormalPriceChange={setGlobalNormalPrice}
+          onPeakPriceChange={setGlobalPeakPrice}
         />
       </div>
       <div className="flex mt-5 mb-10 gap-2 flex-wrap">
@@ -75,18 +93,20 @@ const GlobalPriceInputs = ({
       </div>
       <div className="flex flex-row gap-2">
         <Button
+          type="button"
           className="bg-accent text-black cursor-pointer"
           onClick={() => {
-            onApplyAdultSelectedDays(selectedDays);
+            onApplySelectedDays(selectedDays, "adult");
             setSelectedDays([]);
           }}
         >
           اعمال قیمت روی بزرگسال
         </Button>
         <Button
+          type="button"
           className="bg-accent text-black cursor-pointer"
           onClick={() => {
-            onApplyChildSelectedDays(selectedDays);
+            onApplySelectedDays(selectedDays, "child");
             setSelectedDays([]);
           }}
         >

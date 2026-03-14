@@ -17,7 +17,7 @@ export const beds_key = "beds"
 export const beds_url = "admin/beds/"
 
 export const default_key = "defaults"
-export const default_url = "/admin/defaults/"
+export const default_url = "admin/defaults/"
 
 
 

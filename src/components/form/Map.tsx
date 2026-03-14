@@ -56,7 +56,7 @@ const CustomMapPicker = ({ label, isRequired }: Props) => {
     <div className="col-span-full space-y-2">
       <Label className="block">
         {label}
-        {isRequired && <span className="text-red-600">*</span>}
+        {isRequired && <span className="text-red-600"></span>}
       </Label>
 
       <Controller
@@ -65,7 +65,7 @@ const CustomMapPicker = ({ label, isRequired }: Props) => {
         render={({ fieldState }) => (
           <>
             <div
-              className={`h-[350px] w-full rounded-md overflow-hidden border relative ${
+              className={`h-87.5 w-full rounded-md overflow-hidden border relative ${
                 fieldState.error ? "border-red-600" : "border-input"
               }`}
             >

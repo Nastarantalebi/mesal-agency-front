@@ -11,7 +11,6 @@ import {
   CopyPlus,
   LayoutDashboard,
   Calendar,
-  Settings2,
 } from "lucide-react";
 
 

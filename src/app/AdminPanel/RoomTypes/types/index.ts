@@ -75,4 +75,4 @@ export type TRoomTypePricesResponse = {
     peak_price: number;
     peak_child_price: number;
     phone_call_price: boolean;
-}[]
+}[];

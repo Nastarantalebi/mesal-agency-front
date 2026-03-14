@@ -1,69 +1,58 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Value } from "@radix-ui/react-select";
 import { Equal, Plus } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
-  normalPrice: string;
-  peakPrice: string;
-  onAdultNormalPriceChange: (value: string) => void;
-  onAdultPeakPriceChange: (value: string) => void;
-  onChildNormalPriceChange: (value: string) => void;
-  onChildPeakPriceChange: (value: string) => void;
+  normalPrice: number;
+  peakPrice: number;
+  onNormalPriceChange: (value: number) => void;
+  onPeakPriceChange: (value: number) => void;
 }
 
 const PriceInputs = ({
   normalPrice,
   peakPrice,
-  onAdultNormalPriceChange,
-  onAdultPeakPriceChange,
-  onChildNormalPriceChange,
-  onChildPeakPriceChange,
+  onNormalPriceChange,
+  onPeakPriceChange,
 }: Props) => {
-  const [pricePlus, setPricePlus] = useState<string>("");
-  const [pricePercentage, setPricePercentage] = useState<string>("");
+  const [pricePlus, setPricePlus] = useState<number>(0);
+  const [pricePercentage, setPricePercentage] = useState<number>(0);
 
-  const deletePercentageCharacter = (value: string) => {
-    return value.replace(/[^0-9]/g, "");
+  // const deletePercentageCharacter = (value: number) => {
+  //   return value.replace(/[^0-9]/g, "");
+  // };
+
+  const calculateByPlus = (normal: number, plus: number) => {
+    const result = normal + plus;
+    onPeakPriceChange(result);
   };
 
-  const calculateByPlus = (normal: string, plus: string) => {
-    const result = String(Number(normal) + Number(plus));
-    onAdultPeakPriceChange(result);
-    onChildPeakPriceChange(result);
+  const calculateByPercentage = (normal: number, percent: number) => {
+    const result = (normal * percent) / 100;
+    onPeakPriceChange(normal + result);
   };
 
-  const calculateByPercentage = (normal: string, percent: string) => {
-    const result = (Number(normal) * Number(percent)) / 100;
-    onAdultPeakPriceChange(String(Number(normal) + result));
-    onChildPeakPriceChange(String(Number(normal) + result));
+  const handlePricePlusChange = (value: number) => {
+    setPricePlus(value);
+    setPricePercentage(0);
+    calculateByPlus(normalPrice, value);
   };
 
-  const handlePricePlusChange = (value: string) => {
-    const newValue = deletePercentageCharacter(value);
-    setPricePlus(newValue);
-    setPricePercentage("");
-    calculateByPlus(normalPrice, newValue);
+  const handlePricePercentageChange = (value: number) => {
+    setPricePercentage(value);
+    setPricePlus(0);
+    calculateByPercentage(normalPrice, value);
   };
 
-  const handlePricePercentageChange = (value: string) => {
-    const newValue = deletePercentageCharacter(value);
-    setPricePercentage(newValue);
-    setPricePlus("");
-    calculateByPercentage(normalPrice, newValue);
-  };
-
-  const handleNormalPriceChange = (value: string) => {
-    onAdultNormalPriceChange(value);
-    onChildNormalPriceChange(value);
+  const handleNormalPriceChange = (value: number) => {
+    onNormalPriceChange(value);
     if (pricePlus) calculateByPlus(value, pricePlus);
     else if (pricePercentage) calculateByPercentage(value, pricePercentage);
   };
 
-  const handlePeakPriceChange = (value: string) => {
-    onAdultPeakPriceChange(value);
-    onChildPeakPriceChange(value);
+  const handlePeakPriceChange = (value: number) => {
+    onPeakPriceChange(value);
   };
 
   return (
@@ -74,22 +63,24 @@ const PriceInputs = ({
           type="number"
           className="w-30"
           value={normalPrice}
-          onChange={(e) => handleNormalPriceChange(e.target.value)}
+          onChange={(e) => handleNormalPriceChange(+e.target.value)}
         />
       </div>
       <Plus />
       <div className="flex flex-col gap-1">
+        <Label>تومان</Label>
         <Input
           className="w-15"
+          type="number"
           value={pricePlus}
-          placeholder="تومان"
-          onChange={(e) => handlePricePlusChange(e.target.value)}
+          onChange={(e) => handlePricePlusChange(+e.target.value)}
         />
+        <Label>درصد</Label>
         <Input
           className="w-15"
+          type="number"
           value={pricePercentage}
-          placeholder="درصد"
-          onChange={(e) => handlePricePercentageChange(e.target.value)}
+          onChange={(e) => handlePricePercentageChange(+e.target.value)}
         />
       </div>
       <Equal />
@@ -99,7 +90,7 @@ const PriceInputs = ({
           type="number"
           className="w-30"
           value={peakPrice}
-          onChange={(e) => handlePeakPriceChange(e.target.value)}
+          onChange={(e) => handlePeakPriceChange(+e.target.value)}
         />
       </div>
     </div>
