@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import type { TPaginatedResponse } from "@/types";
@@ -21,6 +21,8 @@ import { Form } from "@/components/ui/form";
 import FormErrorModal from "@/components/FormErrorModal";
 import { toast } from "sonner";
 import type { TFeatureResponse } from "../../settings/types";
+import useDeleteData from "@/services/useDeleteData";
+import { X } from "lucide-react";
 
 const featureListValidation = z.object({
   feature: z.array(z.number()).min(1, "لطفاً حداقل یک ویژگی را انتخاب کنید"),
@@ -44,6 +46,8 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
+  const key = ["accommodation-features", accommodationId];
+  const url = `${accommodation_url}${accommodationId}/features/`;
 
   const { data: accommodationFeaturesData } = useGetData<
     TPaginatedResponse<TFeatureResponse>
@@ -64,8 +68,13 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
     TCAccommodationFeature,
     TAccommodationFeatureResponse
   >({
-    key: ["accommodation-features", accommodationId],
-    url: `${accommodation_url}${accommodationId}/features/`,
+    key,
+    url,
+  });
+
+  const { mutateAsync: deleteFeature } = useDeleteData({
+    key,
+    url,
   });
 
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -95,6 +104,11 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
     );
   };
 
+  const AllFeaturesIds = accommodationFeatureList?.results.map(
+    (r) => r.id,
+  );
+
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -106,17 +120,23 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
                 <div className="flex flex-wrap gap-2">
                   {accommodationFeaturesData.results?.map((f) => {
                     const selected = selectedIds.includes(f.id);
+                    const isAdded = AllFeaturesIds?.includes(String(f.id));
                     return (
                       <Badge
                         key={f.id}
                         variant="outline"
                         onClick={() => toggle(f.id)}
-                        className={
-                          "cursor-pointer px-6 py-2 " +
-                          (selected
-                            ? "bg-green-400/10 text-black border-green-400"
-                            : "")
-                        }
+                        // className={
+                        //   "cursor-pointer px-6 py-2 " +
+                        //   (selected
+                        //     ? "bg-green-400/10 text-black border-green-400"
+                        //     : "")
+                        // }
+                        className={`
+                          cursor-pointer px-6 py-2
+                          ${isAdded ? "bg-accent/20 border-accent" : ""}
+                          ${selected ? "bg-green-400/10 text-black border-green-400" : ""}
+                        `}
                       >
                         {f.title}
                       </Badge>
@@ -130,25 +150,33 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
           </Card>
           <Card>
             <CardTitle className="mx-5">ویژگی های افزوده شده</CardTitle>
-            {accommodationFeatureList ? (
+            {accommodationFeatureList?.results.length ? (
               <CardContent className="">
                 <div className="flex flex-wrap gap-2">
                   {accommodationFeatureList?.results.map((f) => {
                     return (
-                      <Badge
-                        key={f.id}
-                        variant="primary"
-                        className="px-6 py-2 bg-accent/70 text-black"
-                      >
-                        {f.feature.title}
-                      </Badge>
+                      <>
+                        <Badge
+                          key={f.id}
+                          variant="primary"
+                          className="px-6 py-2 bg-accent/70 text-black relative pr-10"
+                        >
+                          {f.feature.title}
+                          <button
+                            onClick={() => deleteFeature({ id: f.id })}
+                            className="absolute right-1 top-1/2 -translate-y-1/2 bg-destructive/20 hover:bg-destructive/40 rounded-full p-1.5 cursor-pointer"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </Badge>
+                      </>
                     );
                   })}
                 </div>
               </CardContent>
             ) : (
-              <CardContent >
-                داده ای برای نمایش وجود ندارد
+              <CardContent>
+                هیچ ویژگی اضافه نشده است. از لیست سمت راست اضافه کنید.
               </CardContent>
             )}
           </Card>

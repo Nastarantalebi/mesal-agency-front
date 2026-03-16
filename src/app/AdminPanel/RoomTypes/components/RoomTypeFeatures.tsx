@@ -26,6 +26,8 @@ import FormErrorModal from "@/components/FormErrorModal";
 import type { TCRoomTypeFeature, TRoomTypeFeatureResponse } from "../types";
 import type { TFeatureResponse } from "../../settings/types";
 import HandlePagination from "../../settings/components/HandlePagination";
+import useDeleteData from "@/services/useDeleteData";
+import { X } from "lucide-react";
 
 interface Props {
   AccommodationId?: string;
@@ -64,7 +66,8 @@ const RoomTypeFeatures = ({
 
   const key = [features_key, String(AccommodationId), String(RoomId)];
   const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`;
-  const [currentRoomTypeFeaturePage, setCurrentRoomTypeFeaturePage] = useState(1);
+  const [currentRoomTypeFeaturePage, setCurrentRoomTypeFeaturePage] =
+    useState(1);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const { data: roomTypeFeaturesData } = useGetData<
@@ -88,9 +91,14 @@ const RoomTypeFeatures = ({
     url,
   });
 
+  const { mutateAsync: deleteRoomTypeFeatures } = useDeleteData({
+    key,
+    url,
+  });
+
   const roomTypeFeaturesPageCount = roomTypeFeaturesData?.count
-  ? Math.ceil(roomTypeFeaturesData.count / 10)
-  : 0;
+    ? Math.ceil(roomTypeFeaturesData.count / 10)
+    : 0;
 
   const toggle = (id: number) => {
     setSelectedIds((prev) => {
@@ -181,7 +189,7 @@ const RoomTypeFeatures = ({
                   <CardTitle className="text-center text-sm font-light mx-5">
                     ویژگی های اضافه شده
                   </CardTitle>
-                  {roomTypeFeatureList ? (
+                  {roomTypeFeatureList?.length ? (
                     <CardContent className="p-5">
                       <div className="flex flex-wrap gap-2">
                         {roomTypeFeatureList?.map((f) => {
@@ -189,9 +197,17 @@ const RoomTypeFeatures = ({
                             <Badge
                               key={f.id}
                               variant="primary"
-                              className="px-6 py-2 bg-accent/70 text-black"
+                              className="px-6 py-2 bg-accent/70 text-black relative pr-10"
                             >
                               {f.feature.title}
+                              <button
+                                onClick={() =>
+                                  deleteRoomTypeFeatures({ id: f.id })
+                                }
+                                className="absolute right-1 top-1/2 -translate-y-1/2 bg-destructive/20 hover:bg-destructive/40 rounded-full p-1.5 cursor-pointer"
+                              >
+                                <X className="h-3 w-3" />
+                              </button>
                             </Badge>
                           );
                         })}
@@ -199,7 +215,7 @@ const RoomTypeFeatures = ({
                     </CardContent>
                   ) : (
                     <CardContent className="p-5">
-                      داده ای برای نمایش وجود ندارد
+                      هیچ ویژگی اضافه نشده است. از لیست سمت راست اضافه کنید.
                     </CardContent>
                   )}
                 </Card>

@@ -143,7 +143,6 @@ function PeakDate({ accommodationId }: Props) {
           },
           onError: () => {
             toast.error("خطا در حذف تاریخ");
-            // Rollback: re-add the removed date
             setSelectedDates((prev) => [...prev, removedDate]);
           },
         },

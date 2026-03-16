@@ -39,20 +39,21 @@ const sidebarItems = (id: string) => [
     icon: <Image />,
   },
   {
-    title: "نوع اتاق ها",
-    icon: <DoorClosed />,
-    children: [
-      {
-        title: "ثبت نوع اتاق",
-        url: `/accommodation/${id}/addRoomTypes`,
-        icon: <CopyPlus />,
-      },
-      {
-        title: "لیست نوع اتاق ها",
-        url: `/accommodation/${id}/listRoomTypes`,
-        icon: <List />,
-      },
-    ],
+    title: "لیست نوع اتاق ها",
+    url: `/accommodation/${id}/listRoomTypes`,
+    icon: <List />,
+    // children: [
+    //   {
+    //     title: "ثبت نوع اتاق",
+    //     url: `/accommodation/${id}/addRoomTypes`,
+    //     icon: <CopyPlus />,
+    //   },
+    //   {
+    //     title: "لیست نوع اتاق ها",
+    //     url: `/accommodation/${id}/listRoomTypes`,
+    //     icon: <List />,
+    //   },
+    // ],
   },
   {
     title: "تاریخ های پیک",

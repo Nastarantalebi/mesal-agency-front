@@ -19,6 +19,8 @@ import useDeleteData from "@/services/useDeleteData";
 import { toast } from "sonner";
 import ListPrice from "./roomTypeListIcons/ListPrice";
 import RoomTypePriceForm from "./price/RoomTypePriceForm";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 type Type = {
   id: number;
@@ -49,6 +51,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   const [selected, setSelected] = useState<RoomItem | null>(null);
 
   // const [selectedName, setSelectedName] = useState<string| null>(null);
+  const [openAdd, setAddRoomType] = useState(false);
   const [openImg, setOpenImg] = useState(false);
   const [openF, setOpenF] = useState(false);
   const [openB, setOpenB] = useState(false);
@@ -86,6 +89,16 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
 
   return (
     <>
+      <Button
+        variant={"outline"}
+        className="mb-5 border-3 border-accent hover:bg-accent/10"
+        onClick={() => {
+          setAddRoomType(true);
+        }}
+      >
+        <Plus className="" />
+        افزودن نوع اتاق جدید
+      </Button>
       <CustomDataTable
         onEdit={(rowData) => {
           setSelected(rowData);
@@ -135,6 +148,15 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         columns={columns}
         data={data?.results ?? []}
         placeholder="جست و جوی نوع اتاق"
+      />
+
+      <RoomTypeForm
+        AccommodationId={AccommodationId}
+        open={openAdd}
+        onOpenChange={() => setAddRoomType(false)}
+        title="افزودن نوع اتاق جدید"
+        buttonTitle="ثبت"
+        asModal={true}
       />
 
       <RoomTypeForm
