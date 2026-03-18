@@ -6,7 +6,7 @@ interface Props {
   key: string[];
   url: string;
   onSuccess?: () => void;
-  onError?: (error: AxiosError) => void;
+  onError?: () => void;
 }
 
 interface DeleteResponse {
@@ -29,28 +29,22 @@ function useDeleteData<TResponse = DeleteResponse>({
       const { data } = await axios.delete<TResponse>(fullUrl);
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: key });
       
       if (onSuccess) {
         onSuccess();
       } else {
-        const message = (data as DeleteResponse)?.message || "آیتم با موفقیت حذف شد";
-        toast.success(message);
+        toast.success("آیتم با موفقیت حذف شد");
       }
     },
-    onError: (error) => {
-      const errorData = error.response?.data as any;
-      const message =
-        errorData?.message || 
-        errorData?.detail || 
-        error.message || 
-        "خطا در حذف آیتم";
-      toast.error(message);
-
+    onError: () => {
       if (onError) {
-        onError(error);
+        onError();
+      } else {
+        toast.error("خطا در حذف آیتم");
       }
+      
     },
   });
 }

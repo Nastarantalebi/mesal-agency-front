@@ -26,7 +26,7 @@ import { Form } from "@/components/ui/form";
 
 interface Props {
   AccommodationId?: string;
-  RoomId?: number | null;
+  RoomTypeId?: number | null;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   title?: string;
@@ -36,7 +36,7 @@ interface Props {
 
 const RoomTypeForm = ({
   AccommodationId,
-  RoomId,
+  RoomTypeId,
   asModal,
   open,
   onOpenChange: onOpenchange,
@@ -48,17 +48,17 @@ const RoomTypeForm = ({
     defaultValues: roomTypeInitialValues,
   });
 
-  const key = ["RoomTypes", AccommodationId || "", String(RoomId) || ""];
+  const key = ["RoomTypes", AccommodationId || "", String(RoomTypeId) || ""];
 
   const { data, isFetching } = useGetData<TRoomTypeResponse>({
     key,
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}`,
-    enabled: !!RoomId,
+    url: `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}`,
+    enabled: !!RoomTypeId,
   });
 
   const updateMutation = usePutData<TCreateRoomType, TRoomTypeResponse>({
-    key,
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}`,
+    key: ["RoomTypes", AccommodationId || ""],
+    url: `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}`,
   });
 
   const createMutation = usePostData<TCreateRoomType, TRoomTypeResponse>({
@@ -78,7 +78,7 @@ const RoomTypeForm = ({
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handleSubmit = (value: TCreateRoomType) => {
-    const isEdit = !!RoomId;
+    const isEdit = !!RoomTypeId;
 
     if (isEdit) {
       updateMutation.mutateAsync(value, {

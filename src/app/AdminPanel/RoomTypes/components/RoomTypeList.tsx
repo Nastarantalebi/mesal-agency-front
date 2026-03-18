@@ -59,7 +59,6 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   const [openD, setopenD] = useState(false);
   const [openP, setopenP] = useState(false);
 
-  // const key = [accommodation_key, AccommodationId, "roomType"];
   const key = ["RoomTypes", AccommodationId || ""];
   const url = `${accommodation_url}${AccommodationId}/room_types/`;
 
@@ -161,7 +160,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
 
       <RoomTypeForm
         AccommodationId={AccommodationId}
-        RoomId={selected?.id}
+        RoomTypeId={selected?.id}
         open={openEdit}
         onOpenChange={() => setOpenEdit(false)}
         title="اطلاعات نوع اتاق"

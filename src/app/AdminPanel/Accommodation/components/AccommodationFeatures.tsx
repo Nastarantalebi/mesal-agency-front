@@ -19,7 +19,6 @@ import { Badge } from "@/components/ui/badge";
 import CustomButton from "@/components/form/CustomButton";
 import { Form } from "@/components/ui/form";
 import FormErrorModal from "@/components/FormErrorModal";
-import { toast } from "sonner";
 import type { TFeatureResponse } from "../../settings/types";
 import useDeleteData from "@/services/useDeleteData";
 import { X } from "lucide-react";
@@ -106,11 +105,9 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
       { feature: values.feature },
       {
         onSuccess: () => {
-          toast.success("ویژگی‌ها با موفقیت ثبت شد");
           form.reset();
           setSelectedIds([]);
         },
-        onError: () => setErrorOpen(true),
       },
     );
   };
