@@ -105,8 +105,8 @@ export type TCAccommodationFeature = {
 }
 
 export type TAccommodationFeatureResponse = {
-    id: string;
-    feature: {id: string; title: string};
+    id: number;
+    feature: {id: number; title: string};
 }
 
 

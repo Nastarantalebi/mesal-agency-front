@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import type { TPaginatedResponse } from "@/types";
@@ -77,18 +77,30 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
     url,
   });
 
+
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  
+  const allAddedFeaturesIds = accommodationFeatureList?.results.map(
+    (r) => r.feature.id,
+  );
+
+  
   const toggle = (id: number) => {
+
     setSelectedIds((prev) => {
       const newSelection = prev.includes(id)
         ? prev.filter((x) => x !== id)
         : [...prev, id];
 
-      form.setValue("feature", newSelection, { shouldValidate: true });
+        const resultSelection = Array.from(new Set([...newSelection, ...(allAddedFeaturesIds || [])]));
 
-      return newSelection;
-    });
-  };
+        form.setValue("feature", resultSelection, { shouldValidate: true });
+        return resultSelection;
+      });
+    };
+    
+    console.log(allAddedFeaturesIds);
+
 
   const handleSubmit = (values: TCAccommodationFeature) => {
     submitFeatures.mutateAsync(
@@ -104,9 +116,6 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
     );
   };
 
-  const AllFeaturesIds = accommodationFeatureList?.results.map(
-    (r) => r.id,
-  );
 
 
   return (
@@ -119,23 +128,19 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {accommodationFeaturesData.results?.map((f) => {
-                    const selected = selectedIds.includes(f.id);
-                    const isAdded = AllFeaturesIds?.includes(String(f.id));
+                    const isAdded = allAddedFeaturesIds?.includes(f.id);
+                    // console.log(`isAdded items: ${isAdded}`);
+                    const selected = selectedIds.includes(f.id) && !isAdded;
+                    // console.log(`selected items: ${selected}`);
                     return (
                       <Badge
                         key={f.id}
                         variant="outline"
-                        onClick={() => toggle(f.id)}
-                        // className={
-                        //   "cursor-pointer px-6 py-2 " +
-                        //   (selected
-                        //     ? "bg-green-400/10 text-black border-green-400"
-                        //     : "")
-                        // }
+                        onClick={() => {!isAdded && toggle(f.id)}}
                         className={`
-                          cursor-pointer px-6 py-2
+                          px-6 py-2
                           ${isAdded ? "bg-accent/20 border-accent" : ""}
-                          ${selected ? "bg-green-400/10 text-black border-green-400" : ""}
+                          ${selected ? "bg-green-400/10 text-black border-green-400 cursor-pointer" : ""}
                         `}
                       >
                         {f.title}

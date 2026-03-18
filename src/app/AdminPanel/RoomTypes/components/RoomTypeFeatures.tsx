@@ -100,15 +100,21 @@ const RoomTypeFeatures = ({
     ? Math.ceil(roomTypeFeaturesData.count / 10)
     : 0;
 
+    const allAddedFeaturesIds = roomTypeFeatureList?.map(
+    (r) => r.feature.id,
+  );
   const toggle = (id: number) => {
     setSelectedIds((prev) => {
       const newSelection = prev.includes(id)
         ? prev.filter((x) => x !== id)
         : [...prev, id];
 
-      form.setValue("feature", newSelection, { shouldValidate: true });
+      const resultSelection = Array.from(new Set([...newSelection, ...(allAddedFeaturesIds || [])]));
 
-      return newSelection;
+      form.setValue("feature", resultSelection, { shouldValidate: true });
+      console.log(`new selection: ${newSelection}`);
+      console.log(`result selection: ${resultSelection}`);
+      return resultSelection;
     });
   };
 
@@ -154,17 +160,15 @@ const RoomTypeFeatures = ({
                     <CardContent>
                       <div className="flex flex-wrap gap-2">
                         {roomTypeFeaturesData.results?.map((f) => {
-                          const selected = selectedIds.includes(f.id);
+                          const isAdded = allAddedFeaturesIds?.includes(f.id);
+                          const selected = selectedIds.includes(f.id) && !isAdded;
                           return (
                             <Badge
                               key={f.id}
                               variant="outline"
-                              onClick={() => toggle(f.id)}
-                              className={
-                                "cursor-pointer px-6 py-2 " +
-                                (selected
-                                  ? "bg-green-400/10 text-black border-green-400"
-                                  : "")
+                              onClick={() => {!isAdded && toggle(f.id)}}
+                              className={`px-6 py-2 ${isAdded ? "bg-accent/20 border-accent" : ""} ${selected ? "bg-green-400/10 text-black border-green-400 cursor-pointer" : ""}`
+
                               }
                             >
                               {f.title}
