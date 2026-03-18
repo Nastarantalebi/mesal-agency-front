@@ -1,18 +1,20 @@
-import CustomButton from "@/components/form/CustomButton";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-  component: HomeComponent,
+  beforeLoad: () => {
+    throw redirect({ to: "/dashboard" })
+  }
+  // component: HomeComponent,
 });
 
-function HomeComponent() {
-  const navigate = useNavigate();
-  return (
-    <div className="flex items-center justify-center p-20">
-      <CustomButton onClick={() => navigate({ to: "/dashboard" })} size="xl">
-        Login
-      </CustomButton>
+// function HomeComponent() {
+//   // const navigate = useNavigate();
+//   return (
+//     <div className="flex items-center justify-center p-20">
+//       {/* <CustomButton onClick={() => navigate({ to: "/dashboard" })} size="xl">
+//         Login
+//       </CustomButton> */}
 
-    </div>
-  );
-}
+//     </div>
+//   );
+// }
