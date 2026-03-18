@@ -20,7 +20,7 @@ function usePostData<TRequest, TResponse>({ key, url, onSuccess, onError }: Prop
       if(onSuccess) {
         onSuccess();
       } else {
-        toast.success("آیتم با موفقیت ارسال شد")
+        toast.success("آیتم با موفقیت ثبت شد")
       }
     },
 
@@ -28,7 +28,7 @@ function usePostData<TRequest, TResponse>({ key, url, onSuccess, onError }: Prop
       if(onError){
         onError();
       } else {
-        toast.error("خطا در ارسال آیتم")  
+        toast.error("خطا در ثبت آیتم")  
       }
     }
   });

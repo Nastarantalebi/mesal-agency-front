@@ -58,12 +58,6 @@ const roomTypeImg = ({
   };
   const handleDelete = async (id: number) => {
     await deleteImage({ id });
-    // try {
-    //   await deleteImage({ id });
-    //   toast.success("تصویر با موفقیت حذف شد");
-    // } catch (error) {
-    //   toast.error("خطا در حذف تصویر");
-    // }
   };
 
   const images = imageList?.results;

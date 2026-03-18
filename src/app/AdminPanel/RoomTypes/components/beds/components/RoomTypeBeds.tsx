@@ -92,7 +92,6 @@ const RoomTypeBeds = ({
       { beds: values.beds },
       {
         onSuccess: () => {
-          toast.success("ویژگی‌ها با موفقیت ثبت شد");
           onOpenChange(false);
           form.reset();
           setBedCounts([]);

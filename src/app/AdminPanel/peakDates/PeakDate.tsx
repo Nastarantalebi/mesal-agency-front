@@ -113,8 +113,6 @@ function PeakDate({ accommodationId }: Props) {
         { date: formattedDate },
         {
           onSuccess: (response) => {
-            toast.success("تاریخ با موفقیت ثبت شد");
-            // Replace optimistic entry with real id
             setSelectedDates((prev) =>
               prev.map((d) =>
                 d.id === "" &&
@@ -125,8 +123,6 @@ function PeakDate({ accommodationId }: Props) {
             );
           },
           onError: () => {
-            toast.error("خطا در ثبت تاریخ");
-            // Rollback optimistic update
             setSelectedDates((prev) => prev.filter((d) => d.id !== ""));
           },
         },
@@ -138,11 +134,7 @@ function PeakDate({ accommodationId }: Props) {
       dateDelete.mutateAsync(
         { id: removedDate.id },
         {
-          onSuccess: () => {
-            toast.success("تاریخ با موفقیت حذف شد");
-          },
           onError: () => {
-            toast.error("خطا در حذف تاریخ");
             setSelectedDates((prev) => [...prev, removedDate]);
           },
         },

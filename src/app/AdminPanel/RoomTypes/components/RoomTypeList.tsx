@@ -73,12 +73,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   });
 
   const handleDelete = async (id: number) => {
-    try {
-      await deleteRoomType({ id });
-      toast.success("آیتم با موفقیت حذف شد");
-    } catch (error) {
-      toast.error("خطا در حذف آیتم");
-    }
+    await deleteRoomType({ id });
   };
 
   if (isLoading) return <div>Loading...</div>;

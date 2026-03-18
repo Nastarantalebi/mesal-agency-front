@@ -9,7 +9,6 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import AccomodationFields from "../Accommodation/hooks/accomodationFields";
 import type { TCreateAccomodation } from "../Accommodation/types";
 import useAddAccommodation from "./services/useAddAccommodation";
@@ -79,15 +78,11 @@ const AccommodationForm = ({
 
     if (isEdit) {
       put.mutateAsync(transformedData, {
-        onSuccess: () => {
-          toast.success("ویرایش با موفقیت انجام شد ");
-        },
         onError: () => setErrorOpen(true),
       });
     } else {
       post.mutateAsync(transformedData, {
         onSuccess: () => {
-          toast.success("اقامتگاه با موفقیت ثبت شد ");
           form.reset(accommodationInitialValues);
         },
         onError: () => setErrorOpen(true),

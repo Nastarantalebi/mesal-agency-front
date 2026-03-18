@@ -9,7 +9,6 @@ import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import FormErrorModal from "@/components/FormErrorModal";
 import useDeleteData from "@/services/useDeleteData";
-import { toast } from "sonner";
 import ListDelete from "../RoomTypes/components/roomTypeListIcons/ListDelete";
 
 type City = {
@@ -85,12 +84,7 @@ const AccommodationList = () => {
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
   const handleDelete = async (id: number) => {
-    try {
-      await deleteAccommodation({ id });
-      toast.success("آیتم با موفقیت حذف شد");
-    } catch (error) {
-      toast.error("خطا در حذف آیتم");
-    }
+    await deleteAccommodation({ id });
   };
 
   return (

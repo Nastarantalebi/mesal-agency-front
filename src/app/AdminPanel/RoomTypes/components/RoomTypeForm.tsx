@@ -83,7 +83,6 @@ const RoomTypeForm = ({
     if (isEdit) {
       updateMutation.mutateAsync(value, {
         onSuccess: () => {
-          toast.success("ویرایش با موفقیت انجام شد ");
           onOpenchange?.(false);
         },
         onError: () => setErrorOpen(true),
@@ -91,7 +90,6 @@ const RoomTypeForm = ({
     } else {
       createMutation.mutateAsync(value, {
         onSuccess: () => {
-          toast.success("نوع اتاق با موفقیت ثبت شد ");
           form.reset(roomTypeInitialValues);
         },
         onError: () => setErrorOpen(true),

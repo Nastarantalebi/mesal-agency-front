@@ -33,9 +33,6 @@ const AddBedsForm = () => {
 
   const handleSubmit = (value: TCreateBed) => {
     createMutation.mutateAsync(value, {
-      onSuccess: () => {
-        toast.success("نوع تخت با موفقیت افزوده شد");
-      },
       onError: () => setErrorOpen(true),
     });
   };

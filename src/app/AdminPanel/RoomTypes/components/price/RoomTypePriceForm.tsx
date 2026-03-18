@@ -148,7 +148,7 @@ const RoomTypePriceForm = ({
 
     submitRoomTypePrices.mutateAsync(payload, {
       onSuccess: () => {
-        toast.success("قیمت ها با موفقیت ثبت شد");
+        toast.success("قیمت ها با  ثبت شد");
         onOpenChange(false);
       },
       onError: () => setErrorOpen(true),

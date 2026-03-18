@@ -21,14 +21,14 @@ function usePutData<TRequest, TResponse>({ key, url, onSuccess, onError }: Props
       if (onSuccess) {
         onSuccess();
       } else {
-        toast.success("آیتم با موفقیت تغییر یافت.");
+        toast.success("ویرایش آیتم با موفقیت انجام شد");
       }
     },
     onError: () => {
       if (onError) {
         onError();
       } else {
-        toast.error("خطا در تغییر آیتم");
+        toast.error("خطا در ویرایش آیتم");
       }
       
     },

@@ -29,9 +29,6 @@ const AddFeaturesForm = () => {
 
   const handleSubmit = (value: TCFeature) => {
     createMutation.mutateAsync(value, {
-      onSuccess: () => {
-        toast.success("افزودن ویژگی با موفقیت انجام شد");
-      },
       onError: () => setErrorOpen(true),
     });
   };

@@ -123,7 +123,6 @@ const RoomTypeFeatures = ({
       { feature: values.feature },
       {
         onSuccess: () => {
-          toast.success("ویژگی‌ها با موفقیت ثبت شد");
           onOpenChange(false);
           form.reset();
           setSelectedIds([]);

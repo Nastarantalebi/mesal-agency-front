@@ -105,7 +105,7 @@ function AccomodationFields(province_id?: number) {
     },
     {
       name: "max_child_age",
-      label: "ماکزیمم سن کودک",
+      label: "حداکثر سن کودک",
       isRequired: true,
       fieldType: "input",
       inputType:"number",
@@ -163,6 +163,7 @@ function AccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "input",
       inputType: "number",
+      className: "col-start-1"
     },
     {
       name: "top",
@@ -170,7 +171,6 @@ function AccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "yesNoInput",
       options: YES_NO_OPTIONS,
-      // className: "col-start-1 md:col-start-1 lg:col-start-1",
     },
     {
       name: "has_reception_24h",
@@ -178,14 +178,13 @@ function AccomodationFields(province_id?: number) {
       isRequired: false,
       fieldType: "yesNoInput",
       options: YES_NO_OPTIONS,
-      className: "col-start-1 md:col-start-1 lg:col-start-1",
+      className: "col-start-1"
     },
     {
       name: "has_elevator",
       label: "آسانسور",
       isRequired: false,
       fieldType: "yesNoInput",
-      className: "col-span-1 md:col-span-1 lg:col-span-1",
       options: YES_NO_OPTIONS,
     },
     {
@@ -193,7 +192,6 @@ function AccomodationFields(province_id?: number) {
       label: "ساخته شده با مصالح محلی",
       isRequired: false,
       fieldType: "yesNoInput",
-      className: "col-span-1 md:col-span-1 lg:col-span-1",
       options: YES_NO_OPTIONS,
     },
     {
@@ -201,15 +199,14 @@ function AccomodationFields(province_id?: number) {
       label: "اجازه تجربه غذای محلی",
       isRequired: false,
       fieldType: "yesNoInput",
-      className: "col-start-1 md:col-start-1 lg:col-start-1",
       options: YES_NO_OPTIONS,
+      className: "col-start-1"
     },
     {
       name: "is_active",
       label: "فعال",
       isRequired: false,
       fieldType: "yesNoInput",
-      className: "col-span-1 md:col-span-1 lg:col-span-1",
       options: YES_NO_OPTIONS,
     },
         {

@@ -11,7 +11,6 @@ import formTypes from "@/components/form/formInputTypes";
 import CustomButton from "@/components/form/CustomButton";
 import FormErrorModal from "@/components/FormErrorModal";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import useAddDefaults from "./services/useAddDefaults";
 
 
@@ -34,9 +33,6 @@ const DefaultsForm = () => {
 
   const handleSubmit = (value: TCreateDefaults) => {
     post.mutateAsync(value, {
-      onSuccess: () => {
-        toast.success("تغییرات با موفقیت ثبت شد");
-      },
       onError: () => setErrorOpen(true),
     });
   };
