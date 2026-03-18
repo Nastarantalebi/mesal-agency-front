@@ -1,19 +1,4 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  roomTypeInitialValues,
-  roomTypeValidation,
-} from "../fixtures/Validation";
-import type { TCreateRoomType, TRoomTypeResponse } from "../types";
-import useGetData from "@/services/useGetData";
-import { accommodation_url } from "@/data/querykeys";
-import { useEffect, useState } from "react";
-import usePostData from "@/services/usePostData";
-import usePutData from "@/services/usePutData";
-import { toast } from "sonner";
-import { RoomFields } from "../fixtures/RoomTypesFields";
-import { FieldGroup } from "@/components/ui/field";
-import formTypes from "../../../../components/form/formInputTypes";
+import CustomButton from "@/components/form/CustomButton";
 import FormErrorModal from "@/components/FormErrorModal";
 import {
   Dialog,
@@ -21,11 +6,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import CustomButton from "@/components/form/CustomButton";
+import { FieldGroup } from "@/components/ui/field";
 import { Form } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import formTypes from "../../../../components/form/formInputTypes";
+import { RoomFields } from "../fixtures/RoomTypesFields";
+import {
+  roomTypeInitialValues,
+  roomTypeValidation,
+} from "../fixtures/Validation";
+import { useRoomType } from "../services/useRoomType";
+import type { TCreateRoomType } from "../types";
 
 interface Props {
-  AccommodationId?: string;
+  AccommodationId?: number;
   RoomTypeId?: number | null;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -43,36 +39,22 @@ const RoomTypeForm = ({
   title,
   buttonTitle,
 }: Props) => {
+  
+  const { getRoomType, putRoomType, postRoomType } = useRoomType(AccommodationId, RoomTypeId!)
+
   const form = useForm<TCreateRoomType>({
     resolver: zodResolver(roomTypeValidation),
     defaultValues: roomTypeInitialValues,
   });
 
-  const key = ["RoomTypes", AccommodationId || "", String(RoomTypeId) || ""];
-
-  const { data, isFetching } = useGetData<TRoomTypeResponse>({
-    key,
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}`,
-    enabled: !!RoomTypeId,
-  });
-
-  const updateMutation = usePutData<TCreateRoomType, TRoomTypeResponse>({
-    key: ["RoomTypes", AccommodationId || ""],
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}`,
-  });
-
-  const createMutation = usePostData<TCreateRoomType, TRoomTypeResponse>({
-    key: ["RoomTypes", AccommodationId || ""],
-    url: `${accommodation_url}${AccommodationId}/room_types/`,
-  });
 
   useEffect(() => {
-    if (!data) return;
+    if (!getRoomType.data) return;
     form.reset({
       ...roomTypeInitialValues,
-      ...data,
+      ...getRoomType.data,
     });
-  }, [data]);
+  }, [getRoomType.data]);
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
@@ -81,23 +63,24 @@ const RoomTypeForm = ({
     const isEdit = !!RoomTypeId;
 
     if (isEdit) {
-      updateMutation.mutateAsync(value, {
+      putRoomType.mutateAsync(value, {
         onSuccess: () => {
           onOpenchange?.(false);
         },
         onError: () => setErrorOpen(true),
       });
     } else {
-      createMutation.mutateAsync(value, {
+      postRoomType.mutateAsync(value, {
         onSuccess: () => {
           form.reset(roomTypeInitialValues);
+          onOpenchange?.(false);
         },
         onError: () => setErrorOpen(true),
       });
     }
   };
 
-  if (isFetching) return <div className="p-4">Loading...</div>;
+  if (getRoomType.isFetching) return <div className="p-4">Loading...</div>;
 
   const formContent = (
     <Form {...form}>

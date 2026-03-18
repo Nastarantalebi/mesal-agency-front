@@ -14,7 +14,7 @@ interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  AccommodationId: string;
+  AccommodationId: number;
   RoomId?: number | null;
   RoomName?: string | null;
 }

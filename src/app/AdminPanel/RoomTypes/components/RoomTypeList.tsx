@@ -1,37 +1,25 @@
+import FormErrorModal from "@/components/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
+import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";
-import useGetData from "@/services/useGetData";
+import { Plus } from "lucide-react";
 import { useState } from "react";
+import { useRoomTypeList } from "../services/useRoomType";
+import type { RoomItem } from "../types/index";
+import RoomTypeBeds from "./beds/components/RoomTypeBeds";
+import RoomTypePriceForm from "./price/RoomTypePriceForm";
+import RoomTypeRooms from "./rooms/RoomTypeRooms";
+import RoomTypeFeatures from "./RoomTypeFeatures";
 import RoomTypeForm from "./RoomTypeForm";
 import RoomTypeImg from "./RoomTypeImg";
-import RoomTypeFeatures from "./RoomTypeFeatures";
 import ListBeds from "./roomTypeListIcons/ListBeds";
-import ListImage from "./roomTypeListIcons/ListImage";
-import ListFeatures from "./roomTypeListIcons/ListFeatures";
-import RoomTypeBeds from "./beds/components/RoomTypeBeds";
-import type { TPaginatedResponse } from "@/types";
-import { accommodation_url } from "@/data/querykeys";
-import ListRooms from "./roomTypeListIcons/ListRooms";
-import RoomTypeRooms from "./rooms/RoomTypeRooms";
 import ListDelete from "./roomTypeListIcons/ListDelete";
-import FormErrorModal from "@/components/FormErrorModal";
-import useDeleteData from "@/services/useDeleteData";
-import { toast } from "sonner";
+import ListFeatures from "./roomTypeListIcons/ListFeatures";
+import ListImage from "./roomTypeListIcons/ListImage";
 import ListPrice from "./roomTypeListIcons/ListPrice";
-import RoomTypePriceForm from "./price/RoomTypePriceForm";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import ListRooms from "./roomTypeListIcons/ListRooms";
 
-type Type = {
-  id: number;
-  name: string;
-};
 
-type RoomItem = {
-  id: number;
-  type: Type | null;
-  name: string;
-};
 
 export const columns: ColumnDef<RoomItem>[] = [
   {
@@ -43,14 +31,16 @@ export const columns: ColumnDef<RoomItem>[] = [
 ];
 
 interface Props {
-  AccommodationId: string;
+  AccommodationId: number;
 }
 
 const RoomTypeList = ({ AccommodationId }: Props) => {
+
+  const { getRoomTypeList, deleteRoomType } = useRoomTypeList(AccommodationId)
+
   const [openEdit, setOpenEdit] = useState(false);
   const [selected, setSelected] = useState<RoomItem | null>(null);
 
-  // const [selectedName, setSelectedName] = useState<string| null>(null);
   const [openAdd, setAddRoomType] = useState(false);
   const [openImg, setOpenImg] = useState(false);
   const [openF, setOpenF] = useState(false);
@@ -59,25 +49,13 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   const [openD, setopenD] = useState(false);
   const [openP, setopenP] = useState(false);
 
-  const key = ["RoomTypes", AccommodationId || ""];
-  const url = `${accommodation_url}${AccommodationId}/room_types/`;
-
-  const { data, isLoading, error } = useGetData<TPaginatedResponse<RoomItem>>({
-    key,
-    url,
-  });
-
-  const { mutateAsync: deleteRoomType } = useDeleteData({
-    key,
-    url,
-  });
 
   const handleDelete = async (id: number) => {
-    await deleteRoomType({ id });
+    await deleteRoomType.mutateAsync({ id });
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-600">{String(error)}</div>;
+  if (getRoomTypeList.isFetching) return <div>Loading...</div>;
+  if (getRoomTypeList.error) return <div className="text-red-600">{getRoomTypeList.error.message}</div>;
 
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
@@ -140,7 +118,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         )}
         showAction={true}
         columns={columns}
-        data={data?.results ?? []}
+        data={getRoomTypeList.data?.results ?? []}
         placeholder="جست و جوی نوع اتاق"
       />
 

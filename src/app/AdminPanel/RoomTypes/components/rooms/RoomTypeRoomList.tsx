@@ -26,7 +26,7 @@ export const columns: ColumnDef<TRoomTypeRoomResponse>[] = [
 ];
 
 interface Props {
-  AccommodationId: string;
+  AccommodationId: number;
   RoomId?: number | null;
 }
 const RoomTypeRoomList = ({ AccommodationId, RoomId }: Props) => {

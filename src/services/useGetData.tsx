@@ -13,6 +13,7 @@ function useGetData<T>({ key, url, enabled = true }: Props) {
       return res.data;
     },
     staleTime: 5 * 60 * 1000,
+    
   });
 }
 

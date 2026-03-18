@@ -13,7 +13,6 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import usePostData from "@/services/usePostData";
-import { toast } from "sonner";
 import { Form } from "@/components/ui/form";
 
 import FormErrorModal from "@/components/FormErrorModal";
@@ -28,7 +27,7 @@ import type { TCRoomTypeBed, TRoomTypeBedResponse } from "../types";
 import type { TBedResponse } from "@/app/AdminPanel/settings/types";
 
 interface Props {
-  AccommodationId?: string;
+  AccommodationId?: number;
   RoomId?: number | null;
   RoomName?: string | null;
   open: boolean;

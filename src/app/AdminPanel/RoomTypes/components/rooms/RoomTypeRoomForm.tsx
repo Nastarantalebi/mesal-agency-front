@@ -16,7 +16,7 @@ import FormErrorModal from "@/components/FormErrorModal";
 import { Form } from "@/components/ui/form";
 
 interface Props {
-  AccommodationId: string;
+  AccommodationId: number;
   RoomId?: number | null;
 }
 

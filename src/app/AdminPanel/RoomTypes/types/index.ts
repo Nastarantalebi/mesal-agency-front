@@ -76,3 +76,14 @@ export type TRoomTypePricesResponse = {
     peak_child_price: number;
     phone_call_price: boolean;
 }[];
+
+type Type = {
+  id: number;
+  name: string;
+};
+
+export type RoomItem = {
+  id: number;
+  type: Type | null;
+  name: string;
+};

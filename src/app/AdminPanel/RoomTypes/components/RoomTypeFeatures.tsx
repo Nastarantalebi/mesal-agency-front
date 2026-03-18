@@ -20,7 +20,6 @@ import usePostData from "@/services/usePostData";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 import { Form } from "@/components/ui/form";
 import FormErrorModal from "@/components/FormErrorModal";
 import type { TCRoomTypeFeature, TRoomTypeFeatureResponse } from "../types";
@@ -30,7 +29,7 @@ import useDeleteData from "@/services/useDeleteData";
 import { X } from "lucide-react";
 
 interface Props {
-  AccommodationId?: string;
+  AccommodationId?: number;
   RoomId?: number | null;
   RoomName?: string | null;
   open: boolean;
