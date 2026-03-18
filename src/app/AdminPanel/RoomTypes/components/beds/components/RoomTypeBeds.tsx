@@ -135,21 +135,20 @@ const RoomTypeBeds = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl ">
+      <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl">
         <DialogHeader>
           <DialogTitle className="mb-6">{title}</DialogTitle>
         </DialogHeader>
         <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <div className="grid grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 gap-10">
               <div className="flex flex-col gap-5 items-start justify-start">
-                <Card className="shadow-lg shadow-primary/50 grid grid-cols-3 ">
+                <Card className="shadow-lg shadow-primary/50 grid grid-cols-1">
                   {isLoadingRoomBeds ? (
                     <CardContent>در حال بارگذاری...</CardContent>
                   ) : roomBedsData ? (
                     <CardContent>
-                      <div className="flex flex-col gap-2 flex-wrap">
                         {roomBedsData.results?.map((f) => (
                           <BedButtonTemplate
                             key={f.id}
@@ -159,7 +158,6 @@ const RoomTypeBeds = ({
                             onRemove={() => handleRemove(f.id)}
                           />
                         ))}
-                      </div>
                     </CardContent>
                   ) : (
                     <CardContent>داده ای برای نمایش وجود ندارد</CardContent>

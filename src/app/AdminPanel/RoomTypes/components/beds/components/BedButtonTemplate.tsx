@@ -10,7 +10,7 @@ interface Props {
 
 const BedButtonTemplate = ({ buttonName, count, onAdd, onRemove }: Props) => {
   return (
-    <div className="flex flex-row inline-flex items-center gap-5 px-4 py-3 rounded-lg border bg-muted/30 hover:bg-muted/50 transition-colors">
+    <div className="flex flex-row inline-flex items-center gap-5 m-1 px-4 py-3 rounded-lg border bg-muted/30 hover:bg-muted/50 transition-colors">
       <div className="flex items-center ">
         <Button
           type="button"
