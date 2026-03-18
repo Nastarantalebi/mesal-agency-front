@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import type { TPaginatedResponse } from "@/types";
@@ -52,7 +52,7 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
   const { data: accommodationFeaturesData } = useGetData<
     TPaginatedResponse<TFeatureResponse>
   >({
-    key: [features_key, String(accommodationId)],
+    key: [features_key, accommodationId],
     url: `${features_url}?type=accommodation`,
   });
 
@@ -98,9 +98,8 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
         return resultSelection;
       });
     };
-    
-    console.log(allAddedFeaturesIds);
 
+    
 
   const handleSubmit = (values: TCAccommodationFeature) => {
     submitFeatures.mutateAsync(
@@ -121,17 +120,18 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="flex flex-row gap-5 items-start justify-start">
-          <Card>
+        <div className="grid grid-cols-2">
+          <Card className="grid-cols-1 ml-2">
             <CardTitle className="mx-5"> ویژگی های مربوط به اقامتگاه</CardTitle>
             {accommodationFeaturesData ? (
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {accommodationFeaturesData.results?.map((f) => {
+                  {accommodationFeaturesData.results?.map((f, index) => {
                     const isAdded = allAddedFeaturesIds?.includes(f.id);
-                    // console.log(`isAdded items: ${isAdded}`);
+                    console.log(`index=${index}`);
+                    console.log(`isAdded items: ${isAdded}`);
                     const selected = selectedIds.includes(f.id) && !isAdded;
-                    // console.log(`selected items: ${selected}`);
+                    console.log(`selected items: ${selected}`);
                     return (
                       <Badge
                         key={f.id}
@@ -168,7 +168,8 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
                         >
                           {f.feature.title}
                           <button
-                            onClick={() => deleteFeature({ id: f.id })}
+                            type="button"
+                            onClick={() => {deleteFeature({ id: f.id }); setSelectedIds(selectedIds.filter((id) => id !== f.id));}}
                             className="absolute right-1 top-1/2 -translate-y-1/2 bg-destructive/20 hover:bg-destructive/40 rounded-full p-1.5 cursor-pointer"
                           >
                             <X className="h-3 w-3" />

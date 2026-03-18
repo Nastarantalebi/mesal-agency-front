@@ -205,8 +205,9 @@ const RoomTypeFeatures = ({
                             >
                               {f.feature.title}
                               <button
-                                onClick={() =>
-                                  deleteRoomTypeFeatures({ id: f.id })
+                                type="button"
+                                onClick={() => {deleteRoomTypeFeatures({ id: f.id }); setSelectedIds(selectedIds.filter((id) => id !== f.id));}
+                                  
                                 }
                                 className="absolute right-1 top-1/2 -translate-y-1/2 bg-destructive/20 hover:bg-destructive/40 rounded-full p-1.5 cursor-pointer"
                               >
