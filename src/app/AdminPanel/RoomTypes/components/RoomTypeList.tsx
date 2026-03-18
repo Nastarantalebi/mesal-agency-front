@@ -63,7 +63,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
     <>
       <Button
         variant={"outline"}
-        className="mb-5 border-3 border-accent hover:bg-accent/10"
+        className="mb-5 border-green-600 text-green-600 hover:bg-green-50 hover:text-green-600"
         onClick={() => {
           setAddRoomType(true);
         }}

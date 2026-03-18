@@ -9,7 +9,7 @@ function RouteComponent() {
   const { id } = Route.useParams();
   return (
     <div className="w-1/2">
-      <RoomTypeForm AccommodationId={id} buttonTitle="ثبت" asModal={false}/>
+      <RoomTypeForm AccommodationId={+id} buttonTitle="ثبت" asModal={false}/>
     </div>
   );
 }

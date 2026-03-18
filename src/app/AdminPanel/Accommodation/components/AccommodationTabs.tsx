@@ -13,7 +13,7 @@ import { useNavigate } from "@tanstack/react-router";
 const AccommodationTabs = ({
   accommodationId,
 }: {
-  accommodationId: string;
+  accommodationId: number;
 }) => {
   const { data } = useGetData<TAccommodationResponse>({
     key: [accommodation_key, String(accommodationId)],

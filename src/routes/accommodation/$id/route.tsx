@@ -6,9 +6,7 @@ import {
   SquarePen,
   Star,
   Image,
-  DoorClosed,
   List,
-  CopyPlus,
   LayoutDashboard,
   Calendar,
 } from "lucide-react";

@@ -34,7 +34,7 @@ const featureListInitialValues = {
 type TFeatureListForm = z.infer<typeof featureListValidation>;
 
 interface Props {
-  accommodationId: string;
+  accommodationId: number;
 }
 
 const AccommodationFeatures = ({ accommodationId }: Props) => {
@@ -45,20 +45,20 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-  const key = ["accommodation-features", accommodationId];
+  const key = ["accommodation-features", String(accommodationId)];
   const url = `${accommodation_url}${accommodationId}/features/`;
 
   const { data: accommodationFeaturesData } = useGetData<
     TPaginatedResponse<TFeatureResponse>
   >({
-    key: [features_key, accommodationId],
+    key: [features_key, String(accommodationId)],
     url: `${features_url}?type=accommodation`,
   });
 
   const { data: accommodationFeatureList } = useGetData<
     TPaginatedResponse<TAccommodationFeatureResponse>
   >({
-    key: ["accommodation-features", accommodationId],
+    key: ["accommodation-features", String(accommodationId)],
     url: `${accommodation_url}${accommodationId}/features/`,
     enabled: !!accommodationId,
   });

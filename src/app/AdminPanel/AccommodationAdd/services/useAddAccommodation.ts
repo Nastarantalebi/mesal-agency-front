@@ -4,7 +4,7 @@ import { accommodation_key, accommodation_url } from "@/data/querykeys";
 import usePutData from "@/services/usePutData";
 import useGetData from "@/services/useGetData";
 
-const useAddAccommodation = (accommodationId: string | undefined) => {
+const useAddAccommodation = (accommodationId: number | undefined) => {
 
     const post = usePostData<
         TCreateAccomodation,

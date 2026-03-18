@@ -6,27 +6,32 @@ import useDeleteData from "@/services/useDeleteData";
 import usePostData from "@/services/usePostData";
 import PhotoUploader from "@/components/form/PhotoUploader";
 import { X } from "lucide-react";
+import { accommodation_url } from "@/data/querykeys";
 
 const AccommodationPhotoes = ({
   accommodationId,
 }: {
-  accommodationId: string;
+  accommodationId: number;
 }) => {
+
+  const key = ["accommodation-image", String(accommodationId)];
+  const url = `${accommodation_url}${accommodationId}/images/`;
+
   const { mutate: uploadImage } = usePostData<FormData, any>({
-    key: ["accommodation-image", accommodationId],
-    url: `admin/accommodations/${accommodationId}/images/`,
+    key,
+    url,
   });
 
   const { mutateAsync: deleteImage } = useDeleteData({
-    key: ["accommodation-image", accommodationId],
-    url: `admin/accommodations/${accommodationId}/images/`,
+    key,
+    url,
   });
 
   const { data: imageList } = useGetData<
     TPaginatedResponse<TAccommodationImageResponse>
   >({
-    key: ["accommodation-image", accommodationId],
-    url: `admin/accommodations/${accommodationId}/images/`,
+    key,
+    url,
   });
 
 

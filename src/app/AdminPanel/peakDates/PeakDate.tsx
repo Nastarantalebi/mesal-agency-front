@@ -7,7 +7,6 @@ import type {
   TPeakDateState,
   TResponsePeakDate,
 } from "../settings/types";
-import { toast } from "sonner";
 import { useEffect, useRef, useState } from "react";
 import useDeleteData from "@/services/useDeleteData";
 import useGetData from "@/services/useGetData";

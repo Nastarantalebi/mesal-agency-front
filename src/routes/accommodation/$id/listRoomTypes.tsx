@@ -9,7 +9,7 @@ function RouteComponent() {
   const { id } = Route.useParams();
   return (
     <div className="">
-      <RoomTypeList AccommodationId={id} />
+      <RoomTypeList AccommodationId={+id} />
     </div>
   );
 }

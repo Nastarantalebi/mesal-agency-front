@@ -7,5 +7,5 @@ export const Route = createFileRoute("/accommodation/$id/info")({
 
 function RouteComponent() {
   const { id } = Route.useParams();
-  return <AccommodationForm buttonText="ویرایش" accommodationId={id} />;
+  return <AccommodationForm buttonText="ویرایش" accommodationId={+id} />;
 }

@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { features_key, features_url } from "@/data/querykeys";
 import { useState } from "react";
 import usePostData from "@/services/usePostData";
-import { toast } from "sonner";
 import formTypes from "@/components/form/formInputTypes";
 import FormErrorModal from "@/components/FormErrorModal";
 import { FeaturesInitialValues, FeaturesValidation } from "../../fixtures/validation";

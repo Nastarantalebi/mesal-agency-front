@@ -18,7 +18,7 @@ const AccommodationForm = ({
   accommodationId,
   buttonText,
 }: {
-  accommodationId?: string;
+  accommodationId?: number;
   buttonText: string;
 }) => {
   const {post, put, get } = useAddAccommodation(accommodationId);

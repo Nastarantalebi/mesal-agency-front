@@ -4,7 +4,7 @@ import { useState } from "react";
 import RoomTypeForm from "../../RoomTypes/components/RoomTypeForm";
 import RoomTypeList from "../../RoomTypes/components/RoomTypeList";
 
-const roomType = ({ accommodationId }: { accommodationId: string }) => {
+const roomType = ({ accommodationId }: { accommodationId: number }) => {
   const [open, setOpen] = useState(false);
 
   return (

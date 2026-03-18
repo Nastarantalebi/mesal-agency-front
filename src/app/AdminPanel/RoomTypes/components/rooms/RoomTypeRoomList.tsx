@@ -6,7 +6,6 @@ import { CustomDataTable } from "@/components/list/CustomDataTable";
 import { useState } from "react";
 import FormErrorModal from "@/components/FormErrorModal";
 import useDeleteData from "@/services/useDeleteData";
-import { toast } from "sonner";
 import ListPagination from "@/components/list/ListPagination";
 import type { TRoomTypeRoomResponse } from "../../types";
 import ListDelete from "../roomTypeListIcons/ListDelete";

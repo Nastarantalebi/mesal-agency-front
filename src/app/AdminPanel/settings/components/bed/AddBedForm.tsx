@@ -12,7 +12,6 @@ import {
 } from "@/data/querykeys";
 import usePostData from "@/services/usePostData";
 import { useState } from "react";
-import { toast } from "sonner";
 import { BedFields } from "../../fixtures/BedsField";
 import { bedInitialValues, bedValidation } from "../../fixtures/validation";
 import type { TBedResponse, TCreateBed } from "../../types";
