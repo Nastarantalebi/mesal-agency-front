@@ -1,13 +1,15 @@
+import FormErrorModal from "@/components/FormErrorModal";
 import CustomButton from "@/components/form/CustomButton";
 import { shamsiToMiladi } from "@/components/form/DateConverter";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -16,33 +18,29 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import useGetData from "@/services/useGetData";
+import { getDaysInMonth } from "@/lib/getDaysInMonth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { Calendar, DateObject } from "react-multi-date-picker";
-import type { TCRoomTypePrices, TRoomTypePricesResponse } from "../../types";
-import { accommodation_url } from "@/data/querykeys";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Calendar, DateObject } from "react-multi-date-picker";
+import { toast } from "sonner";
 import {
   roomTypePriceInitialValues,
   roomTypePriceValidation,
 } from "../../fixtures/Validation";
-import usePostData from "@/services/usePostData";
-import { toast } from "sonner";
-import FormErrorModal from "@/components/FormErrorModal";
+import { useRoomTypePrice } from "../../services/useRoomType";
+import type { TCRoomTypePrices } from "../../types";
 import PriceTabs from "./PriceTabs";
 import useMonthStores from "./monthStore";
-import { Checkbox } from "@/components/ui/checkbox";
-import { getDaysInMonth } from "@/lib/getDaysInMonth";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
   AccommodationId: number;
-  RoomId?: number | null;
+  RoomTypeId?: number | null;
   RoomTypeName?: string | null;
 }
 
@@ -51,9 +49,10 @@ const RoomTypePriceForm = ({
   onOpenChange,
   title,
   AccommodationId,
-  RoomId,
+  RoomTypeId,
   RoomTypeName,
 }: Props) => {
+
   const { selectedMonth, setSelectedMonth } = useMonthStores();
 
   const [errorOpen, setErrorOpen] = useState(false);
@@ -88,25 +87,15 @@ const RoomTypePriceForm = ({
     "-",
   );
 
+  const { getRoomTypePrices, postRoomTypePrices } = useRoomTypePrice( AccommodationId, RoomTypeId!, startDate, endDate);
+
   const form = useForm<TCRoomTypePrices>({
     resolver: zodResolver(roomTypePriceValidation),
     defaultValues: roomTypePriceInitialValues,
   });
 
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-  const submitRoomTypePrices = usePostData<
-    TCRoomTypePrices,
-    TRoomTypePricesResponse
-  >({
-    key: ["roomTypePrices", startDate, endDate],
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/prices/?start_date=${startDate}&end_date=${endDate}`,
-  });
-
-  const { data: roomTypePricesData } = useGetData<TRoomTypePricesResponse>({
-    key: ["roomTypePrices", startDate, endDate],
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomId}/prices/?start_date=${startDate}&end_date=${endDate}`,
-    enabled: !!RoomId && !!startDate && !!endDate,
-  });
+  
 
   // const normalizeKey = (persianDate: string): string => {
   //   return persianDate
@@ -115,11 +104,10 @@ const RoomTypePriceForm = ({
   // };
 
   useEffect(() => {
-    // if (!roomTypePricesData || roomTypePricesData.length === 0) return;
 
     form.reset({
       prices: days.map((day) => {
-        const item = roomTypePricesData?.find((p) => p.date === shamsiToMiladi(day.shamsi),);
+        const item = getRoomTypePrices.data?.find((p) => p.date === shamsiToMiladi(day.shamsi),);
         return {
           date: day.shamsi,
           normal_price: item?.normal_price ?? 0,
@@ -130,7 +118,7 @@ const RoomTypePriceForm = ({
         };
       }),
     });
-  }, [roomTypePricesData]);
+  }, [getRoomTypePrices.data]);
 
   // reset row prices when month changes
   const handleMonthChange = (date: DateObject) => {
@@ -146,7 +134,7 @@ const RoomTypePriceForm = ({
       })),
     };
 
-    submitRoomTypePrices.mutateAsync(payload, {
+    postRoomTypePrices.mutateAsync(payload, {
       onSuccess: () => {
         toast.success("قیمت ها با  ثبت شد");
         onOpenChange(false);

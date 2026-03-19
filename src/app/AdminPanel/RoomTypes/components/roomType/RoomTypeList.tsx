@@ -19,8 +19,6 @@ import ListImage from "../roomTypeListIcons/ListImage";
 import ListPrice from "../roomTypeListIcons/ListPrice";
 import ListRooms from "../roomTypeListIcons/ListRooms";
 
-
-
 export const columns: ColumnDef<RoomItem>[] = [
   {
     id: "name",
@@ -158,7 +156,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
       />
       <RoomTypeBeds
         RoomTypeName={selected?.name}
-        RoomId={selected?.id}
+        RoomTypeId={selected?.id}
         AccommodationId={AccommodationId}
         open={openB}
         onOpenChange={() => setOpenB(false)}
@@ -174,7 +172,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
       />
       <RoomTypePriceForm
         RoomTypeName={selected?.name}
-        RoomId={selected?.id}
+        RoomTypeId={selected?.id}
         AccommodationId={AccommodationId}
         open={openP}
         onOpenChange={() => setopenP(false)}

@@ -1,11 +1,11 @@
-import { accommodation_url, features_key, features_url } from "@/data/querykeys";
+import { accommodation_url, beds_key, beds_url, features_key, features_url } from "@/data/querykeys";
 import useDeleteData from "@/services/useDeleteData";
 import useGetData from "@/services/useGetData";
 import type { TPaginatedResponse } from "@/types";
-import type { RoomItem, TCreateRoomType, TCRoomTypeFeature, TCRoomTypesRoom, TRoomTypeFeatureResponse, TRoomTypeImageResponse, TRoomTypeResponse, TRoomTypeRoomResponse } from "../types";
+import type { RoomItem, TCreateRoomType, TCRoomTypeBed, TCRoomTypeFeature, TCRoomTypePrices, TCRoomTypesRoom, TRoomTypeBedResponse, TRoomTypeFeatureResponse, TRoomTypeImageResponse, TRoomTypePricesResponse, TRoomTypeResponse, TRoomTypeRoomResponse } from "../types";
 import usePutData from "@/services/usePutData";
 import usePostData from "@/services/usePostData";
-import type { TFeatureResponse } from "../../settings/types";
+import type { TBedResponse, TFeatureResponse } from "../../settings/types";
 
 export const useRoomType = (AccommodationId: number | undefined, RoomTypeId: number) => {
 
@@ -151,4 +151,57 @@ export const useRoomList  = (AccommodationId: number, RoomTypeId: number, curren
   return { getRooms, deleteRoom }
 
 }
+
+// ----------------------------------------------------------------------------------------
+
+export const useRoomTypeBed = (AccommodationId: number, RoomTypeId: number) => {
+  
+  const key = [beds_key, String(AccommodationId), String(RoomTypeId)];
+    const url = `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/beds/`;
+
+    const getbeds = useGetData<TPaginatedResponse<TBedResponse>>({
+      key: [beds_key],
+      url: `${beds_url}`,
+    });
+
+    const getRoomTypeBeds =
+      useGetData<TRoomTypeBedResponse>({
+        key,
+        url,
+        enabled: !!RoomTypeId,
+      });
+
+    const postRoomTypeBeds = usePostData<TCRoomTypeBed, TRoomTypeBedResponse>({
+      key,
+      url,
+    });
+
+    return { getbeds, getRoomTypeBeds, postRoomTypeBeds }
+}
+
+// ----------------------------------------------------------------------------------------
+
+export const useRoomTypePrice = (AccommodationId: number, RoomTypeId: number, startDate: string, endDate: string) => {
+
+  const key = ["roomTypePrices", startDate, endDate];
+  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/prices/?start_date=${startDate}&end_date=${endDate}`
+  
+  const getRoomTypePrices = useGetData<TRoomTypePricesResponse>({
+    key,
+    url,
+    enabled: !!RoomTypeId && !!startDate && !!endDate,
+  });
+  
+  const postRoomTypePrices = usePostData<
+      TCRoomTypePrices,
+      TRoomTypePricesResponse
+    >({
+      key,
+      url,
+    });
+
+    return { getRoomTypePrices, postRoomTypePrices }
+}
+
+
 
