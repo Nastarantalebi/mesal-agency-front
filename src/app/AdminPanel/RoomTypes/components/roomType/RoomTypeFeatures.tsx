@@ -110,7 +110,7 @@ const RoomTypeFeatures = ({
                               key={f.id}
                               variant="outline"
                               onClick={() => {!isAdded && toggle(f.id)}}
-                              className={`px-6 py-2 ${isAdded ? "bg-accent/20 border-accent" : ""} ${selected ? "bg-green-400/10 text-black border-green-400 cursor-pointer" : ""}`
+                              className={`cursor-pointer px-6 py-2 ${isAdded ? "cursor-not-allowed bg-accent/20 border-accent" : ""} ${selected ? "bg-green-400/10 text-black border-green-400 cursor-pointer" : ""}`
 
                               }
                             >
