@@ -1,39 +1,11 @@
-import type { TPaginatedResponse } from "@/types";
-import type { TAccommodationImageResponse } from "../types";
-import useGetData from "@/services/useGetData";
-import { toast } from "sonner";
-import useDeleteData from "@/services/useDeleteData";
-import usePostData from "@/services/usePostData";
 import PhotoUploader from "@/components/form/PhotoUploader";
 import { X } from "lucide-react";
-import { accommodation_url } from "@/data/querykeys";
+import { useAccommodationImg } from "../services/useAccommodation";
+import type { Props } from "../types";
 
-const AccommodationPhotoes = ({
-  accommodationId,
-}: {
-  accommodationId: number;
-}) => {
+const AccommodationPhotoes = ({AccommodationId}: Props) => {
 
-  const key = ["accommodation-image", String(accommodationId)];
-  const url = `${accommodation_url}${accommodationId}/images/`;
-
-  const { mutate: uploadImage } = usePostData<FormData, any>({
-    key,
-    url,
-  });
-
-  const { mutateAsync: deleteImage } = useDeleteData({
-    key,
-    url,
-  });
-
-  const { data: imageList } = useGetData<
-    TPaginatedResponse<TAccommodationImageResponse>
-  >({
-    key,
-    url,
-  });
-
+  const { getImgs, postImg, deleteImg } = useAccommodationImg(AccommodationId)
 
   const onPick = (file: File) => {
     const fd = new FormData();
@@ -41,27 +13,18 @@ const AccommodationPhotoes = ({
     handleUpload(fd);
   };
 
-
-
   const handleUpload = async (file: FormData) => {
-    try {
-      await uploadImage(file);
-      toast.success("تصویر با موفقیت ثبت شد");
-    } catch (error) {
-      toast.error("خطا در بارگزاری تصویر");
-    }
+    
+    await postImg.mutateAsync(file);
+
   };
 
   const handleDelete = async (id: number) => {
-    try {
-      await deleteImage({ id });
-      toast.success("تصویر با موفقیت حذف شد");
-    } catch (error) {
-      toast.error("خطا در حذف تصویر");
-    }
+      await deleteImg.mutateAsync({ id });
+
   };
 
-  const images = imageList?.results || [];
+  const images = getImgs.data?.results || [];
   const mainImage = images.find((img) => img.main);
   const sideImages = images.filter((img) => !img.main).slice(0, 4);
 

@@ -1,4 +1,9 @@
+import type z from "zod";
+import type { accommodationFeatureListValidation } from "../fixtures/Validation";
 
+export interface Props {
+  AccommodationId: number;
+}
 
 export type TCreateAccomodation = {
     type: string,
@@ -120,6 +125,21 @@ export type TAccommodationImageResponse = {
   image: string;
   main: boolean;
 }
+
+export type TCFeature = {
+    title: string;
+    type: string;
+}
+
+export type TFeatureResponse = {
+    id: number;
+    title: string;
+    type: string;
+}
+
+export type TFeatureListForm = z.infer<typeof accommodationFeatureListValidation>;
+
+
 
 
 

@@ -1,25 +1,20 @@
+import CustomButton from "@/components/form/CustomButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useNavigate } from "@tanstack/react-router";
+import { MoveLeft } from "lucide-react";
 import AccommodationForm from "../../AccommodationAdd/AccommodationForm";
-import RoomType from "./AccommodationRoomType";
+import { useAccommodation } from "../services/useAccommodation";
 import AccommodationFeatures from "./AccommodationFeatures";
 import AccommodationPhotoes from "./AccommodationPhotoes";
-import useGetData from "@/services/useGetData";
-import type { TAccommodationResponse } from "../types";
-import { accommodation_key, accommodation_url } from "@/data/querykeys";
-import CustomButton from "@/components/form/CustomButton";
-import { MoveLeft } from "lucide-react";
-import { useNavigate } from "@tanstack/react-router";
+import RoomType from "./AccommodationRoomType";
+import type { Props } from "../types";
 
 const AccommodationTabs = ({
-  accommodationId,
-}: {
-  accommodationId: number;
-}) => {
-  const { data } = useGetData<TAccommodationResponse>({
-    key: [accommodation_key, String(accommodationId)],
-    url: `${accommodation_url}${accommodationId}/`,
-    enabled: !!accommodationId,
-  });
+  AccommodationId,
+}: Props) => {
+
+  const getAccommodation = useAccommodation(AccommodationId);
+  
   const navigate = useNavigate();
 
   const items = [
@@ -28,21 +23,21 @@ const AccommodationTabs = ({
       component: (
         <AccommodationForm
           buttonText="ویرایش"
-          accommodationId={accommodationId}
+          accommodationId={AccommodationId}
         />
       ),
     },
     {
       title: "ویژگی ها",
-      component: <AccommodationFeatures accommodationId={accommodationId} />,
+      component: <AccommodationFeatures AccommodationId={AccommodationId} />,
     },
     {
       title: "تصاویر اقامتگاه",
-      component: <AccommodationPhotoes accommodationId={accommodationId} />,
+      component: <AccommodationPhotoes AccommodationId={AccommodationId} />,
     },
     {
       title: "نوع اتاق",
-      component: <RoomType accommodationId={accommodationId} />,
+      component: <RoomType AccommodationId={AccommodationId} />,
     },
   ];
   return (
@@ -50,7 +45,7 @@ const AccommodationTabs = ({
       <Tabs defaultValue={items[0].title} className="w-full">
         <div className="flex items-center justify-center gap-5">
           <CustomButton className="bg-primary hover:bg-primary/80 shrink-0 text-white">
-            {`اقامتگاه ${data?.name}`}
+            {`اقامتگاه ${getAccommodation.data?.name}`}
           </CustomButton>
           <TabsList className="w-full py-7 px-5">
             {items.map((item) => (

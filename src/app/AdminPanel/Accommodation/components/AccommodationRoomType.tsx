@@ -3,8 +3,9 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import RoomTypeList from "../../RoomTypes/components/roomType/RoomTypeList";
 import RoomTypeForm from "../../RoomTypes/components/roomType/RoomTypeForm";
+import type { Props } from "../types";
 
-const roomType = ({ accommodationId }: { accommodationId: number }) => {
+const roomType = ({ AccommodationId }: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -20,13 +21,13 @@ const roomType = ({ accommodationId }: { accommodationId: number }) => {
           افزودن نوع اتاق جدید
         </CustomButton>
         <RoomTypeForm
-          AccommodationId={accommodationId}
+          AccommodationId={AccommodationId}
           open={open}
           onOpenChange={setOpen}
           title="افزودن نوع اتاق جدید"
           buttonTitle="ثبت"
         />
-        <RoomTypeList AccommodationId={accommodationId} />
+        <RoomTypeList AccommodationId={AccommodationId} />
       </main>
     </div>
   );

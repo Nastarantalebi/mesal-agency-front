@@ -1,85 +1,36 @@
+import CustomButton from "@/components/form/CustomButton";
+import FormErrorModal from "@/components/FormErrorModal";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { X } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import z from "zod";
-import type { TPaginatedResponse } from "@/types";
-import {
-  accommodation_url,
-  features_key,
-  features_url,
-} from "@/data/querykeys";
-import useGetData from "@/services/useGetData";
-import usePostData from "@/services/usePostData";
+import { accommodationFeatureListInitialValues, accommodationFeatureListValidation } from "../fixtures/Validation";
+import { useAccommodationFeatures } from "../services/useAccommodation";
 import type {
-  TAccommodationFeatureResponse,
+  Props,
   TCAccommodationFeature,
+  TFeatureListForm
 } from "../types";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import CustomButton from "@/components/form/CustomButton";
-import { Form } from "@/components/ui/form";
-import FormErrorModal from "@/components/FormErrorModal";
-import type { TFeatureResponse } from "../../settings/types";
-import useDeleteData from "@/services/useDeleteData";
-import { X } from "lucide-react";
 
-const featureListValidation = z.object({
-  feature: z.array(z.number()).min(1, "لطفاً حداقل یک ویژگی را انتخاب کنید"),
-});
+const AccommodationFeatures = ({ AccommodationId }: Props) => {
 
-const featureListInitialValues = {
-  feature: [],
-};
+  const { accommodationFeatures, accommodationFeatureList, postAccommodationFeatures, deleteAccommodatioFeature} = useAccommodationFeatures(AccommodationId);
 
-type TFeatureListForm = z.infer<typeof featureListValidation>;
-
-interface Props {
-  accommodationId: number;
-}
-
-const AccommodationFeatures = ({ accommodationId }: Props) => {
   const form = useForm<TFeatureListForm>({
-    resolver: zodResolver(featureListValidation),
-    defaultValues: featureListInitialValues,
+    resolver: zodResolver(accommodationFeatureListValidation),
+    defaultValues: accommodationFeatureListInitialValues,
   });
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-  const key = ["accommodation-features", String(accommodationId)];
-  const url = `${accommodation_url}${accommodationId}/features/`;
-
-  const { data: accommodationFeaturesData } = useGetData<
-    TPaginatedResponse<TFeatureResponse>
-  >({
-    key: [features_key, String(accommodationId)],
-    url: `${features_url}?type=accommodation`,
-  });
-
-  const { data: accommodationFeatureList } = useGetData<
-    TPaginatedResponse<TAccommodationFeatureResponse>
-  >({
-    key: ["accommodation-features", String(accommodationId)],
-    url: `${accommodation_url}${accommodationId}/features/`,
-    enabled: !!accommodationId,
-  });
-
-  const submitFeatures = usePostData<
-    TCAccommodationFeature,
-    TAccommodationFeatureResponse
-  >({
-    key,
-    url,
-  });
-
-  const { mutateAsync: deleteFeature } = useDeleteData({
-    key,
-    url,
-  });
-
+  
 
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   
-  const allAddedFeaturesIds = accommodationFeatureList?.results.map(
+  const allAddedFeaturesIds = accommodationFeatureList.data?.results.map(
     (r) => r.feature.id,
   );
 
@@ -101,7 +52,7 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
     
 
   const handleSubmit = (values: TCAccommodationFeature) => {
-    submitFeatures.mutateAsync(
+    postAccommodationFeatures.mutateAsync(
       { feature: values.feature },
       {
         onSuccess: () => {
@@ -120,10 +71,10 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
         <div className="grid grid-cols-2">
           <Card className="grid-cols-1 ml-2">
             <CardTitle className="mx-5"> ویژگی های مربوط به اقامتگاه</CardTitle>
-            {accommodationFeaturesData ? (
+            {accommodationFeatures.data ? (
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {accommodationFeaturesData.results?.map((f, index) => {
+                  {accommodationFeatures.data.results?.map((f, index) => {
                     const isAdded = allAddedFeaturesIds?.includes(f.id);
                     console.log(`index=${index}`);
                     console.log(`isAdded items: ${isAdded}`);
@@ -152,10 +103,10 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
           </Card>
           <Card>
             <CardTitle className="mx-5">ویژگی های افزوده شده</CardTitle>
-            {accommodationFeatureList?.results.length ? (
+            {accommodationFeatureList.data?.results.length ? (
               <CardContent className="">
                 <div className="flex flex-wrap gap-2">
-                  {accommodationFeatureList?.results.map((f) => {
+                  {accommodationFeatureList.data?.results.map((f) => {
                     return (
                       <>
                         <Badge
@@ -166,7 +117,7 @@ const AccommodationFeatures = ({ accommodationId }: Props) => {
                           {f.feature.title}
                           <button
                             type="button"
-                            onClick={() => {deleteFeature({ id: f.id }); setSelectedIds(selectedIds.filter((id) => id !== f.id));}}
+                            onClick={() => {deleteAccommodatioFeature.mutateAsync({ id: f.id }); setSelectedIds(selectedIds.filter((id) => id !== f.id));}}
                             className="absolute right-1 top-1/2 -translate-y-1/2 bg-destructive/20 hover:bg-destructive/40 rounded-full p-1.5 cursor-pointer"
                           >
                             <X className="h-3 w-3" />
