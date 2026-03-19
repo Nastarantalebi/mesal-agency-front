@@ -1,10 +1,10 @@
 import z from "zod"
 import type { TCreateAccomodation } from "../types";
-import useAddDefaults from "../defaults/services/useAddDefaults";
+import { useAddDefaults } from "../../settings/services/useSetting";
 
 const useValidation = () => {
 
-  const { get } = useAddDefaults();
+  const { getDefaults } = useAddDefaults();
 
  const accommodationValidation = z.object({
     type: z.string().min(1, "نوع اقامتگاه الزامی است"),
@@ -51,14 +51,14 @@ const useValidation = () => {
     total_rooms: 0,
     has_reception_24h: false,
     has_elevator: false,
-    check_in_time: get.data?.check_in_time || null,
-    check_out_time: get.data?.check_out_time || null,
+    check_in_time: getDefaults.data?.check_in_time || null,
+    check_out_time: getDefaults.data?.check_out_time || null,
     built_with_local_materials: false,
     allows_local_food_experience: false,
     open_start: "",
     open_end: "",
-    min_child_age: get.data?.min_child_age || 0,
-    max_child_age: get.data?.max_child_age || 0,
+    min_child_age: getDefaults.data?.min_child_age || 0,
+    max_child_age: getDefaults.data?.max_child_age || 0,
     is_active: false,
   };
 

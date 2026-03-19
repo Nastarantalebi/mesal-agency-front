@@ -3,7 +3,7 @@ import BedsList from "./bed/BedsList";
 import FeaturesList from "./features/FeaturesList";
 import AddFeaturesForm from "./features/AddFeaturesForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import DefaultsForm from "../../Accommodation/defaults/AddDefaults";
+import DefaultsForm from "./defaults/AddDefaults";
 
 const AccommodationSettings = () => {
   const tabsItems = [

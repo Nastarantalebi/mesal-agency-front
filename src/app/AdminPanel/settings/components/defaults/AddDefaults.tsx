@@ -1,38 +1,35 @@
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import type { TCreateDefaults } from "./types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  DefaultsValidation,
-  FeaturesInitialValues,
-} from "./fixtures/validation";
-import { DefaultFields } from "./fixtures/DefaultFields";
 import formTypes from "@/components/form/formInputTypes";
 import CustomButton from "@/components/form/CustomButton";
 import FormErrorModal from "@/components/FormErrorModal";
 import { useEffect, useState } from "react";
-import useAddDefaults from "./services/useAddDefaults";
+import { useAddDefaults } from "../../services/useSetting";
+import type { TCreateDefaults } from "../../types";
+import { DefaultsInitialValues, DefaultsValidation } from "../../fixtures/validation";
+import { DefaultFields } from "../../fixtures/DefaultFields";
 
 
 const DefaultsForm = () => {
   
-  const { post, get } = useAddDefaults();
+  const { getDefaults , postDefaults } = useAddDefaults();
 
   const form = useForm<TCreateDefaults>({
     resolver: zodResolver(DefaultsValidation),
-    defaultValues: FeaturesInitialValues,
+    defaultValues: DefaultsInitialValues,
   });
 
   useEffect(() => {
-    if(!get.data) return;
-    form.reset(get.data)
-  }, [get.data])
+    if(!getDefaults.data) return;
+    form.reset(getDefaults.data)
+  }, [getDefaults.data])
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد";
 
   const handleSubmit = (value: TCreateDefaults) => {
-    post.mutateAsync(value, {
+    postDefaults.mutateAsync(value, {
       onError: () => setErrorOpen(true),
     });
   };
