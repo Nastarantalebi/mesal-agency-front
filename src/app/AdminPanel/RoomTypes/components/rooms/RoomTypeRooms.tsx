@@ -9,15 +9,7 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 import RoomTypeRoomForm from "./RoomTypeRoomForm";
 import RoomTypeRoomList from "./RoomTypeRoomList";
-
-interface Props {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
-  AccommodationId: number;
-  RoomTypeId?: number;
-  RoomTypeName?: string | null;
-}
+import type { Props } from "../../types";
 
 const RoomTypeRooms = ({
   open,

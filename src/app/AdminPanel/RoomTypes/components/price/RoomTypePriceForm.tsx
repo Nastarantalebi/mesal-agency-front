@@ -31,18 +31,10 @@ import {
   roomTypePriceValidation,
 } from "../../fixtures/Validation";
 import { useRoomTypePrice } from "../../services/useRoomType";
-import type { TCRoomTypePrices } from "../../types";
+import type { Props, TCRoomTypePrices } from "../../types";
 import PriceTabs from "./PriceTabs";
 import useMonthStores from "./monthStore";
 
-interface Props {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
-  AccommodationId: number;
-  RoomTypeId?: number | null;
-  RoomTypeName?: string | null;
-}
 
 const RoomTypePriceForm = ({
   open,
@@ -67,7 +59,7 @@ const RoomTypePriceForm = ({
     "جمعه",
   ];
 
-  new Map();
+
   const getDayName = (shamsi: string) => {
     const miladi = shamsiToMiladi(shamsi); // تابعی که داری import کردی
     const date = new Date(miladi);
@@ -137,7 +129,7 @@ const RoomTypePriceForm = ({
     postRoomTypePrices.mutateAsync(payload, {
       onSuccess: () => {
         toast.success("قیمت ها با  ثبت شد");
-        onOpenChange(false);
+        onOpenChange?.(false);
       },
       onError: () => setErrorOpen(true),
     });

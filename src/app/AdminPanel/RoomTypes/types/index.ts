@@ -1,6 +1,16 @@
 import type z from "zod";
 import type { roomTypeFeatureListValidation } from "../fixtures/Validation";
 
+
+export interface Props {
+  AccommodationId: number;
+  RoomTypeId?: number | null;
+  RoomTypeName?: string | null;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  title?: string;
+}
+
 export type TCreateRoomType = {
   name: string,
   capacity : number | null,

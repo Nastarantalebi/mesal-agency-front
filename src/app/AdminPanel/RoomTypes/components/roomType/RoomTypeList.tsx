@@ -5,7 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useRoomTypeList } from "../../services/useRoomType";
-import type { RoomItem } from "../../types/index";
+import type { Props, RoomItem } from "../../types/index";
 import RoomTypeBeds from "../beds/components/RoomTypeBeds";
 import RoomTypePriceForm from "../price/RoomTypePriceForm";
 import RoomTypeRooms from "../rooms/RoomTypeRooms";
@@ -28,9 +28,6 @@ export const columns: ColumnDef<RoomItem>[] = [
   },
 ];
 
-interface Props {
-  AccommodationId: number;
-}
 
 const RoomTypeList = ({ AccommodationId }: Props) => {
 

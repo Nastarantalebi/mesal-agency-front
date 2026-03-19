@@ -4,7 +4,7 @@ import ListPagination from "@/components/list/ListPagination";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import { useRoomList } from "../../services/useRoomType";
-import type { TRoomTypeRoomResponse } from "../../types";
+import type { Props, TRoomTypeRoomResponse } from "../../types";
 import ListDelete from "../roomTypeListIcons/ListDelete";
 
 export const columns: ColumnDef<TRoomTypeRoomResponse>[] = [
@@ -20,12 +20,6 @@ export const columns: ColumnDef<TRoomTypeRoomResponse>[] = [
     accessorFn: (row) => row.description ?? "",
   },
 ];
-
-interface Props {
-  AccommodationId: number;
-  RoomTypeId?: number | null;
-}
-
 
 const RoomTypeRoomList = ({ AccommodationId, RoomTypeId }: Props) => {
 

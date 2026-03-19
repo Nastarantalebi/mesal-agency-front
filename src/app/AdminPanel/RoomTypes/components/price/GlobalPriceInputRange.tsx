@@ -1,4 +1,3 @@
-// components/GlobalPriceInputRange.tsx
 import MonthRangeCalendar from "@/components/form/MonthRangeCalendar";
 
 import { Label } from "@/components/ui/label";
@@ -22,9 +21,6 @@ const GlobalPriceInputRange = ({ form }: Props) => {
   const [rangeEndDate, setRangeEndDate] = useState<string>("");
   const [rangeNormalPrice, setRangeNormalPrice] = useState<number>(0);
   const [rangePeakPrice, setRangePeakPrice] = useState<number>(0);
-  // const [rangeChildNormalPrice, setRangeChildNormalPrice] =
-  //   useState<string>("");
-  // const [rangeChildPeakPrice, setRangeChildPeakPrice] = useState<string>("");
   const prices = useWatch({ control: form.control, name: "prices" });
 
   const handleApplyRange = (type: "child" | "adult") => {
@@ -64,9 +60,6 @@ const GlobalPriceInputRange = ({ form }: Props) => {
     setRangeStartDate("");
     setRangeEndDate("");
   }, [selectedMonth]);
-
-  // console.log("onAdultPriceApply:", onAdultPriceApply); // Inspect in console
-  // console.log("onChildPriceApply:", onChildPriceApply); // Inspect in console
 
   return (
     <div>

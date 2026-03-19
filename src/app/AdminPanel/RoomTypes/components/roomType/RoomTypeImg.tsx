@@ -7,15 +7,8 @@ import {
 } from "@/components/ui/dialog";
 import { X } from "lucide-react";
 import { useRoomTypeImg } from "../../services/useRoomType";
+import type { Props } from "../../types";
 
-interface Props {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
-  AccommodationId: number;
-  RoomTypeId?: number;
-  RoomTypeName?: string | null;
-}
 
 const roomTypeImg = ({
   open,

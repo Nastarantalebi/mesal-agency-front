@@ -13,19 +13,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import type { TCRoomTypeFeature, TRoomTypeFeatureListForm } from "../../types";
+import type { Props, TCRoomTypeFeature, TRoomTypeFeatureListForm } from "../../types";
 import { roomTypeFeatureListInitialValues, roomTypeFeatureListValidation } from "../../fixtures/Validation";
 import { useRoomTypeFeatures } from "../../services/useRoomType";
 import HandlePagination from "@/app/AdminPanel/settings/components/HandlePagination";
-
-interface Props {
-  AccommodationId: number;
-  RoomTypeId?: number | null;
-  RoomTypeName?: string | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
-}
 
 const RoomTypeFeatures = ({
   AccommodationId,
@@ -76,7 +67,7 @@ const RoomTypeFeatures = ({
       { feature: values.feature },
       {
         onSuccess: () => {
-          onOpenChange(false);
+          onOpenChange?.(false);
           form.reset();
           setSelectedIds([]);
         },

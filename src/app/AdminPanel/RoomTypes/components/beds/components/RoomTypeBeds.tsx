@@ -13,17 +13,9 @@ import FormErrorModal from "@/components/FormErrorModal";
 import CustomButton from "@/components/form/CustomButton";
 import { badListInitialValues, bedListValidation, type TBedListForm } from "../../../fixtures/Validation";
 import { useRoomTypeBed } from "../../../services/useRoomType";
-import type { TCRoomTypeBed } from "../../../types";
+import type { Props, TCRoomTypeBed } from "../../../types";
 import BedButtonTemplate from "./BedButtonTemplate";
 
-interface Props {
-  AccommodationId: number;
-  RoomTypeId?: number | null;
-  RoomTypeName?: string | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
-}
 
 const RoomTypeBeds = ({
   AccommodationId,
@@ -63,7 +55,7 @@ const RoomTypeBeds = ({
       { beds: values.beds },
       {
         onSuccess: () => {
-          onOpenChange(false);
+          onOpenChange?.(false);
           form.reset();
           setBedCounts([]);
         },

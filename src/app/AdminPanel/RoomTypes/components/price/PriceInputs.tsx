@@ -16,12 +16,9 @@ const PriceInputs = ({
   onNormalPriceChange,
   onPeakPriceChange,
 }: Props) => {
+  
   const [pricePlus, setPricePlus] = useState<number>(0);
   const [pricePercentage, setPricePercentage] = useState<number>(0);
-
-  // const deletePercentageCharacter = (value: number) => {
-  //   return value.replace(/[^0-9]/g, "");
-  // };
 
   const calculateByPlus = (normal: number, plus: number) => {
     const result = normal + plus;

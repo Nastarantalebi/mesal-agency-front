@@ -11,12 +11,7 @@ import {
   roomTypeRoomValidation,
 } from "../../fixtures/Validation";
 import { useRooms } from "../../services/useRoomType";
-import type { TCRoomTypesRoom } from "../../types";
-
-interface Props {
-  AccommodationId: number;
-  RoomTypeId?: number;
-}
+import type { Props, TCRoomTypesRoom } from "../../types";
 
 const RoomTypeRoomForm = ({ AccommodationId, RoomTypeId }: Props) => {
 
