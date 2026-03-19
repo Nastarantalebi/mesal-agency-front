@@ -92,3 +92,14 @@ export type RoomItem = {
 };
 
 export type TRoomTypeFeatureListForm = z.infer<typeof roomTypeFeatureListValidation>;
+
+
+export type TCRoomTypeBed = {
+  beds: { bed: number; number: number }[];
+};
+
+export type TRoomTypeBedResponse = {
+    id: number;
+    bed: {id: string; name: string}
+    number: number
+}[]

@@ -1,8 +1,4 @@
-import { accommodation_url, beds_key, beds_url } from "@/data/querykeys";
-import type { TPaginatedResponse } from "@/types";
 import { useEffect, useState } from "react";
-
-import useGetData from "@/services/useGetData";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
@@ -10,25 +6,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import usePostData from "@/services/usePostData";
 import { Form } from "@/components/ui/form";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import FormErrorModal from "@/components/FormErrorModal";
 import CustomButton from "@/components/form/CustomButton";
+import { badListInitialValues, bedListValidation, type TBedListForm } from "../../../fixtures/Validation";
+import { useRoomTypeBed } from "../../../services/useRoomType";
+import type { TCRoomTypeBed } from "../../../types";
 import BedButtonTemplate from "./BedButtonTemplate";
-import {
-  badListInitialValues,
-  bedListValidation,
-  type TBedListForm,
-} from "../Fixtures/validation";
-import type { TCRoomTypeBed, TRoomTypeBedResponse } from "../types";
-import type { TBedResponse } from "@/app/AdminPanel/settings/types";
 
 interface Props {
-  AccommodationId?: number;
-  RoomId?: number | null;
+  AccommodationId: number;
+  RoomTypeId?: number | null;
   RoomTypeName?: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -37,7 +27,7 @@ interface Props {
 
 const RoomTypeBeds = ({
   AccommodationId,
-  RoomId,
+  RoomTypeId,
   RoomTypeName,
   open,
   onOpenChange,
@@ -53,41 +43,23 @@ const RoomTypeBeds = ({
 
   const [bedCounts, setBedCounts] = useState<Record<number, number>>({});
 
-  const key = [beds_key, String(AccommodationId), String(RoomId)];
-  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/beds/`;
-
-  const { data: roomBedsData } = useGetData<TPaginatedResponse<TBedResponse>>({
-    key: [beds_key],
-    url: `${beds_url}`,
-  });
-
-  const { data: roomTypeBedList, isLoading: isLoadingRoomBeds } =
-    useGetData<TRoomTypeBedResponse>({
-      key,
-      url,
-      enabled: !!RoomId,
-    });
-
-  const submitBeds = usePostData<TCRoomTypeBed, TRoomTypeBedResponse>({
-    key,
-    url,
-  });
+  const { getbeds, getRoomTypeBeds, postRoomTypeBeds } = useRoomTypeBed(AccommodationId, RoomTypeId!);
 
   useEffect(() => {
-    if (!roomTypeBedList || !open) return;
+    if (!getRoomTypeBeds.data || !open) return;
 
     const counts: Record<number, number> = {};
-    roomTypeBedList.forEach((item) => {
+    getRoomTypeBeds.data.forEach((item) => {
       counts[Number(item.bed.id)] = item.number; // 👈 convert string to number
     });
 
     setBedCounts(counts);
     form.setValue("beds", buildBedPayload(counts), { shouldValidate: true });
-  }, [roomTypeBedList, open]);
+  }, [getRoomTypeBeds.data, open]);
 
   const handleSubmit = (values: TCRoomTypeBed) => {
     console.log(values);
-    submitBeds.mutateAsync(
+    postRoomTypeBeds.mutateAsync(
       { beds: values.beds },
       {
         onSuccess: () => {
@@ -143,11 +115,11 @@ const RoomTypeBeds = ({
             <div className="grid grid-cols-1 gap-10">
               <div className="flex flex-col gap-5 items-start justify-start">
                 <Card className="shadow-lg shadow-primary/50 grid grid-cols-1">
-                  {isLoadingRoomBeds ? (
+                  {getRoomTypeBeds.isFetching ? (
                     <CardContent>در حال بارگذاری...</CardContent>
-                  ) : roomBedsData ? (
+                  ) : getbeds.data ? (
                     <CardContent>
-                        {roomBedsData.results?.map((f) => (
+                        {getbeds.data.results?.map((f) => (
                           <BedButtonTemplate
                             key={f.id}
                             buttonName={f.name}
@@ -178,3 +150,5 @@ const RoomTypeBeds = ({
 };
 
 export default RoomTypeBeds;
+
+
