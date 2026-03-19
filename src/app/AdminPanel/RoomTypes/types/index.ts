@@ -1,3 +1,6 @@
+import type z from "zod";
+import type { roomTypeFeatureListValidation } from "../fixtures/Validation";
+
 export type TCreateRoomType = {
   name: string,
   capacity : number | null,
@@ -87,3 +90,5 @@ export type RoomItem = {
   type: Type | null;
   name: string;
 };
+
+export type TRoomTypeFeatureListForm = z.infer<typeof roomTypeFeatureListValidation>;

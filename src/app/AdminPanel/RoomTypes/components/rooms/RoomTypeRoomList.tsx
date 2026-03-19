@@ -1,12 +1,9 @@
-import type { ColumnDef } from "@tanstack/react-table";
-import { accommodation_url } from "@/data/querykeys";
-import type { TPaginatedResponse } from "@/types";
-import useGetData from "@/services/useGetData";
-import { CustomDataTable } from "@/components/list/CustomDataTable";
-import { useState } from "react";
 import FormErrorModal from "@/components/FormErrorModal";
-import useDeleteData from "@/services/useDeleteData";
+import { CustomDataTable } from "@/components/list/CustomDataTable";
 import ListPagination from "@/components/list/ListPagination";
+import type { ColumnDef } from "@tanstack/react-table";
+import { useState } from "react";
+import { useRoomList } from "../../services/useRoomType";
 import type { TRoomTypeRoomResponse } from "../../types";
 import ListDelete from "../roomTypeListIcons/ListDelete";
 
@@ -26,43 +23,34 @@ export const columns: ColumnDef<TRoomTypeRoomResponse>[] = [
 
 interface Props {
   AccommodationId: number;
-  RoomId?: number | null;
+  RoomTypeId?: number | null;
 }
-const RoomTypeRoomList = ({ AccommodationId, RoomId }: Props) => {
+
+
+const RoomTypeRoomList = ({ AccommodationId, RoomTypeId }: Props) => {
+
   const [selected, setSelected] = useState<TRoomTypeRoomResponse | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const key = ["RoomType-rooms", String(RoomId) || "", String(currentPage)];
-  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/rooms/?page=${currentPage}`;
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
-  const { data, isLoading, error } = useGetData<
-    TPaginatedResponse<TRoomTypeRoomResponse>
-  >({
-    key,
-    url,
-  });
-  const { mutateAsync: deleteRoom } = useDeleteData({
-    key,
-    url,
-  });
+  const { getRooms, deleteRoom } = useRoomList(AccommodationId, RoomTypeId!, currentPage);
 
   const handleDelete = async (id: number) => {
-    await deleteRoom({ id });
+    await deleteRoom.mutateAsync({ id });
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-600">{String(error)}</div>;
+  if (getRooms.isFetching) return <div>Loading...</div>;
+  if (getRooms.error) return <div className="text-red-600">{String(getRooms.error.message)}</div>;
 
-  const PageCount = data?.count ? Math.ceil(data.count / 10) : 0;
+  const PageCount = getRooms.data?.count ? Math.ceil(getRooms.data.count / 10) : 0;
 
   return (
     <div className="">
       <CustomDataTable
         columns={columns}
         showAction={true}
-        data={data?.results ?? []}
+        data={getRooms.data?.results ?? []}
         placeholder="جست و جوی نام اتاق"
         extraAction={(rowData) => (
           <ListDelete
@@ -86,7 +74,7 @@ const RoomTypeRoomList = ({ AccommodationId, RoomId }: Props) => {
         message={deleteMessage}
         buttonTitle="بله"
         dialogTitle="حذف"
-        onAcknowledge={() => handleDelete(Number(selected))}
+        onAcknowledge={() => handleDelete(selected?.id!)}
       />
     </div>
   );

@@ -53,3 +53,11 @@ export const roomTypePriceValidation = z.object({
 export const roomTypePriceInitialValues: TCRoomTypePrices = {
   prices: [],
 };
+
+export const roomTypeFeatureListValidation = z.object({
+  feature: z.array(z.number()).min(1, "لطفاً حداقل یک ویژگی را انتخاب کنید"),
+});
+
+export const roomTypeFeatureListInitialValues = {
+  feature: [],
+};

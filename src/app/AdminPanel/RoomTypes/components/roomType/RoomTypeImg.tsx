@@ -1,66 +1,45 @@
+import PhotoUploader from "@/components/form/PhotoUploader";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import PhotoUploader from "@/components/form/PhotoUploader";
-import usePostData from "@/services/usePostData";
-import useGetData from "@/services/useGetData";
-import type { TRoomTypeImageResponse } from "../types";
-import { accommodation_url } from "@/data/querykeys";
-import useDeleteData from "@/services/useDeleteData";
 import { X } from "lucide-react";
-import type { TPaginatedResponse } from "@/types";
+import { useRoomTypeImg } from "../../services/useRoomType";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  accommodationPk: number;
-  RoomId?: number | null;
-  RoomName?: string | null;
+  AccommodationId: number;
+  RoomTypeId?: number;
+  RoomTypeName?: string | null;
 }
 
 const roomTypeImg = ({
   open,
   onOpenChange,
   title,
-  accommodationPk,
-  RoomId,
-  RoomName,
+  AccommodationId,
+  RoomTypeId,
+  RoomTypeName,
 }: Props) => {
-  const key = ["RoomType-image", String(RoomId) || ""];
-  const url = `${accommodation_url}${accommodationPk}/room_types/${RoomId}/images/`;
 
-  const { mutate: uploadImage } = usePostData<FormData, any>({
-    key,
-    url,
-  });
 
-  const { data: imageList } = useGetData<
-    TPaginatedResponse<TRoomTypeImageResponse>
-  >({
-    key,
-    url,
-    enabled: !!RoomId,
-  });
+  const { getImgs, postImg, deleteImg } =  useRoomTypeImg(AccommodationId, RoomTypeId!);
 
-  const { mutateAsync: deleteImage } = useDeleteData({
-    key,
-    url,
-  });
 
   const onPick = (file: File) => {
     const fd = new FormData();
     fd.append("image", file); // if backend expects "file", change key
-    uploadImage(fd);
-  };
-  const handleDelete = async (id: number) => {
-    await deleteImage({ id });
+    postImg.mutate(fd);
   };
 
-  const images = imageList?.results;
+  const handleDelete = async (id: number) => {
+    await deleteImg.mutateAsync({ id });
+  };
+
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -68,12 +47,12 @@ const roomTypeImg = ({
         <DialogHeader>
           <DialogTitle className="mb-6">{title}</DialogTitle>
         </DialogHeader>
-        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
+        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomTypeName}`}</div>
         <div className="flex items-center justify-center">
           <PhotoUploader size={260} onPick={onPick} />
         </div>
         <div className="grid grid-cols-3 gap-4">
-          {images?.map((image) => (
+          {getImgs.data?.results?.map((image) => (
             <div key={image.id} className="relative">
               <img
                 src={image.image}

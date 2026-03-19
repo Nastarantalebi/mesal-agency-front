@@ -1,107 +1,61 @@
-import {
-  accommodation_url,
-  features_key,
-  features_url,
-} from "@/data/querykeys";
-import type { TPaginatedResponse } from "@/types";
-import { useEffect, useState } from "react";
-
-import useGetData from "@/services/useGetData";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import CustomButton from "@/components/form/CustomButton";
+import FormErrorModal from "@/components/FormErrorModal";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import CustomButton from "@/components/form/CustomButton";
-import usePostData from "@/services/usePostData";
-import z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import FormErrorModal from "@/components/FormErrorModal";
-import type { TCRoomTypeFeature, TRoomTypeFeatureResponse } from "../types";
-import type { TFeatureResponse } from "../../settings/types";
-import HandlePagination from "../../settings/components/HandlePagination";
-import useDeleteData from "@/services/useDeleteData";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import type { TCRoomTypeFeature, TRoomTypeFeatureListForm } from "../../types";
+import { roomTypeFeatureListInitialValues, roomTypeFeatureListValidation } from "../../fixtures/Validation";
+import { useRoomTypeFeatures } from "../../services/useRoomType";
+import HandlePagination from "@/app/AdminPanel/settings/components/HandlePagination";
 
 interface Props {
-  AccommodationId?: number;
-  RoomId?: number | null;
-  RoomName?: string | null;
+  AccommodationId: number;
+  RoomTypeId?: number | null;
+  RoomTypeName?: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
 }
 
-const featureListValidation = z.object({
-  feature: z.array(z.number()).min(1, "لطفاً حداقل یک ویژگی را انتخاب کنید"),
-});
-
-const featureListInitialValues = {
-  feature: [],
-};
-
-type TFeatureListForm = z.infer<typeof featureListValidation>;
-
 const RoomTypeFeatures = ({
   AccommodationId,
-  RoomId,
+  RoomTypeId,
   open,
   onOpenChange,
   title,
-  RoomName,
+  RoomTypeName,
 }: Props) => {
-  const form = useForm<TFeatureListForm>({
-    resolver: zodResolver(featureListValidation),
-    defaultValues: featureListInitialValues,
+
+  const form = useForm<TRoomTypeFeatureListForm>({
+    resolver: zodResolver(roomTypeFeatureListValidation),
+    defaultValues: roomTypeFeatureListInitialValues,
   });
 
+  const [currentRoomTypeFeaturePage, setCurrentRoomTypeFeaturePage] = useState(1);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const { getFeatures, getRoomTypeFeatures, postRoomTypeFeatures, deleteRoomTypeFeatures } = useRoomTypeFeatures(AccommodationId, RoomTypeId!, currentRoomTypeFeaturePage);
+  
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-
-  const key = [features_key, String(AccommodationId), String(RoomId)];
-  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/features/`;
-  const [currentRoomTypeFeaturePage, setCurrentRoomTypeFeaturePage] =
-    useState(1);
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-
-  const { data: roomTypeFeaturesData } = useGetData<
-    TPaginatedResponse<TFeatureResponse>
-  >({
-    key: [features_key, "roomtype", String(currentRoomTypeFeaturePage)],
-    url: `${features_url}?page=${currentRoomTypeFeaturePage}&type=roomtype`,
-  });
-
-  const { data: roomTypeFeatureList } = useGetData<TRoomTypeFeatureResponse>({
-    key,
-    url,
-    enabled: !!RoomId,
-  });
-
-  const submitFeatures = usePostData<
-    TCRoomTypeFeature,
-    TRoomTypeFeatureResponse
-  >({
-    key,
-    url,
-  });
-
-  const { mutateAsync: deleteRoomTypeFeatures } = useDeleteData({
-    key,
-    url,
-  });
-
-  const roomTypeFeaturesPageCount = roomTypeFeaturesData?.count
-    ? Math.ceil(roomTypeFeaturesData.count / 10)
+  
+  const roomTypeFeaturesPageCount = getFeatures.data?.count
+    ? Math.ceil(getFeatures.data.count / 10)
     : 0;
 
-    const allAddedFeaturesIds = roomTypeFeatureList?.map(
+    const allAddedFeaturesIds = getRoomTypeFeatures.data?.map(
     (r) => r.feature.id,
   );
+
   const toggle = (id: number) => {
     setSelectedIds((prev) => {
       const newSelection = prev.includes(id)
@@ -118,7 +72,7 @@ const RoomTypeFeatures = ({
   };
 
   const handleSubmit = (values: TCRoomTypeFeature) => {
-    submitFeatures.mutateAsync(
+    postRoomTypeFeatures.mutateAsync(
       { feature: values.feature },
       {
         onSuccess: () => {
@@ -145,7 +99,7 @@ const RoomTypeFeatures = ({
         <DialogHeader>
           <DialogTitle className="mb-6">{title}</DialogTitle>
         </DialogHeader>
-        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
+        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomTypeName}`}</div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <div className="grid grid-cols-2 gap-10">
@@ -154,10 +108,10 @@ const RoomTypeFeatures = ({
                   <CardTitle className="text-center text-sm font-light mr-5">
                     ویژگی های مربوط به اتاق
                   </CardTitle>
-                  {roomTypeFeaturesData ? (
+                  {getFeatures.data ? (
                     <CardContent>
                       <div className="flex flex-wrap gap-2">
-                        {roomTypeFeaturesData.results?.map((f) => {
+                        {getFeatures.data.results?.map((f) => {
                           const isAdded = allAddedFeaturesIds?.includes(f.id);
                           const selected = selectedIds.includes(f.id) && !isAdded;
                           return (
@@ -191,10 +145,10 @@ const RoomTypeFeatures = ({
                   <CardTitle className="text-center text-sm font-light mx-5">
                     ویژگی های اضافه شده
                   </CardTitle>
-                  {roomTypeFeatureList?.length ? (
+                  {getRoomTypeFeatures.data?.length ? (
                     <CardContent className="p-5">
                       <div className="flex flex-wrap gap-2">
-                        {roomTypeFeatureList?.map((f) => {
+                        {getRoomTypeFeatures.data?.map((f) => {
                           return (
                             <Badge
                               key={f.id}
@@ -204,7 +158,7 @@ const RoomTypeFeatures = ({
                               {f.feature.title}
                               <button
                                 type="button"
-                                onClick={() => {deleteRoomTypeFeatures({ id: f.id }); setSelectedIds(selectedIds.filter((id) => id !== f.id));}
+                                onClick={() => {deleteRoomTypeFeatures.mutateAsync({ id: f.id }); setSelectedIds(selectedIds.filter((id) => id !== f.id));}
                                   
                                 }
                                 className="absolute right-1 top-1/2 -translate-y-1/2 bg-destructive/20 hover:bg-destructive/40 rounded-full p-1.5 cursor-pointer"

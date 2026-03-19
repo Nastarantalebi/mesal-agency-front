@@ -4,20 +4,20 @@ import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import { useRoomTypeList } from "../services/useRoomType";
-import type { RoomItem } from "../types/index";
-import RoomTypeBeds from "./beds/components/RoomTypeBeds";
-import RoomTypePriceForm from "./price/RoomTypePriceForm";
-import RoomTypeRooms from "./rooms/RoomTypeRooms";
+import { useRoomTypeList } from "../../services/useRoomType";
+import type { RoomItem } from "../../types/index";
+import RoomTypeBeds from "../beds/components/RoomTypeBeds";
+import RoomTypePriceForm from "../price/RoomTypePriceForm";
+import RoomTypeRooms from "../rooms/RoomTypeRooms";
 import RoomTypeFeatures from "./RoomTypeFeatures";
 import RoomTypeForm from "./RoomTypeForm";
 import RoomTypeImg from "./RoomTypeImg";
-import ListBeds from "./roomTypeListIcons/ListBeds";
-import ListDelete from "./roomTypeListIcons/ListDelete";
-import ListFeatures from "./roomTypeListIcons/ListFeatures";
-import ListImage from "./roomTypeListIcons/ListImage";
-import ListPrice from "./roomTypeListIcons/ListPrice";
-import ListRooms from "./roomTypeListIcons/ListRooms";
+import ListBeds from "../roomTypeListIcons/ListBeds";
+import ListDelete from "../roomTypeListIcons/ListDelete";
+import ListFeatures from "../roomTypeListIcons/ListFeatures";
+import ListImage from "../roomTypeListIcons/ListImage";
+import ListPrice from "../roomTypeListIcons/ListPrice";
+import ListRooms from "../roomTypeListIcons/ListRooms";
 
 
 
@@ -141,23 +141,23 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         asModal={true}
       />
       <RoomTypeImg
-        RoomName={selected?.name}
-        RoomId={selected?.id}
-        accommodationPk={AccommodationId}
+        RoomTypeName={selected?.name}
+        RoomTypeId={selected?.id}
+        AccommodationId={AccommodationId}
         open={openImg}
         onOpenChange={() => setOpenImg(false)}
         title="افزودن عکس"
       />
       <RoomTypeFeatures
-        RoomName={selected?.name}
-        RoomId={selected?.id}
+        RoomTypeName={selected?.name}
+        RoomTypeId={selected?.id}
         AccommodationId={AccommodationId}
         open={openF}
         onOpenChange={() => setOpenF(false)}
         title="افزودن ویژگی"
       />
       <RoomTypeBeds
-        RoomName={selected?.name}
+        RoomTypeName={selected?.name}
         RoomId={selected?.id}
         AccommodationId={AccommodationId}
         open={openB}
@@ -165,15 +165,15 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         title="افزودن تخت"
       />
       <RoomTypeRooms
-        RoomName={selected?.name}
-        RoomId={selected?.id}
+        RoomTypeName={selected?.name}
+        RoomTypeId={selected?.id}
         AccommodationId={AccommodationId}
         open={openR}
         onOpenChange={() => setopenR(false)}
         title="افزودن اتاق"
       />
       <RoomTypePriceForm
-        RoomName={selected?.name}
+        RoomTypeName={selected?.name}
         RoomId={selected?.id}
         AccommodationId={AccommodationId}
         open={openP}

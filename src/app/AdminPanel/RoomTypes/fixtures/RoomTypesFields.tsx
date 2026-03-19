@@ -1,7 +1,7 @@
 import type { Items } from "@/components/form/formInputTypes";
 import type { TCreateRoomType } from "../types";
 
-export const RoomFields: Items<TCreateRoomType>[] = [
+export const RoomTypeFields: Items<TCreateRoomType>[] = [
   {
     name: "name",
     label: "نام نوع اتاق",

@@ -11,14 +11,12 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import formTypes from "../../../../components/form/formInputTypes";
-import { RoomFields } from "../fixtures/RoomTypesFields";
-import {
-  roomTypeInitialValues,
-  roomTypeValidation,
-} from "../fixtures/Validation";
-import { useRoomType } from "../services/useRoomType";
-import type { TCreateRoomType } from "../types";
+import type { TCreateRoomType } from "../../types";
+import { useRoomType } from "../../services/useRoomType";
+import { roomTypeInitialValues, roomTypeValidation } from "../../fixtures/Validation";
+import formTypes from "@/components/form/formInputTypes";
+import { RoomTypeFields } from "../../fixtures/RoomTypesFields";
+
 
 interface Props {
   AccommodationId?: number;
@@ -86,7 +84,7 @@ const RoomTypeForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <FieldGroup>
-          {RoomFields.map((item) => (
+          {RoomTypeFields.map((item) => (
             <div
               key={String(item.name)}
               className={item.className || "col-span-1"}

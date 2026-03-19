@@ -1,8 +1,8 @@
 import CustomButton from "@/components/form/CustomButton";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import RoomTypeForm from "../../RoomTypes/components/RoomTypeForm";
-import RoomTypeList from "../../RoomTypes/components/RoomTypeList";
+import RoomTypeList from "../../RoomTypes/components/roomType/RoomTypeList";
+import RoomTypeForm from "../../RoomTypes/components/roomType/RoomTypeForm";
 
 const roomType = ({ accommodationId }: { accommodationId: number }) => {
   const [open, setOpen] = useState(false);

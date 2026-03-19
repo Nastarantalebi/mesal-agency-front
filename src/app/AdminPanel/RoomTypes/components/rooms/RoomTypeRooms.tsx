@@ -15,8 +15,8 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   title: string;
   AccommodationId: number;
-  RoomId?: number | null;
-  RoomName?: string | null;
+  RoomTypeId?: number;
+  RoomTypeName?: string | null;
 }
 
 const RoomTypeRooms = ({
@@ -24,8 +24,8 @@ const RoomTypeRooms = ({
   onOpenChange,
   title,
   AccommodationId,
-  RoomId,
-  RoomName,
+  RoomTypeId,
+  RoomTypeName,
 }: Props) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -33,8 +33,8 @@ const RoomTypeRooms = ({
         <DialogHeader>
           <DialogTitle className="mb-6">{title}</DialogTitle>
         </DialogHeader>
-        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
-        <RoomTypeRoomForm AccommodationId={AccommodationId} RoomId={RoomId} />
+        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomTypeName}`}</div>
+        <RoomTypeRoomForm AccommodationId={AccommodationId} RoomTypeId={RoomTypeId} />
 
         <div className="m-5">
           <Card className="shadow-lg shadow-primary/50 ">
@@ -44,7 +44,7 @@ const RoomTypeRooms = ({
             <CardContent className="flex flex-wrap gap-2">
               <RoomTypeRoomList
                 AccommodationId={AccommodationId}
-                RoomId={RoomId}
+                RoomTypeId={RoomTypeId}
               />
             </CardContent>
           </Card>

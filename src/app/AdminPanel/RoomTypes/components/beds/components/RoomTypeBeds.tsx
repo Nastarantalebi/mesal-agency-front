@@ -29,7 +29,7 @@ import type { TBedResponse } from "@/app/AdminPanel/settings/types";
 interface Props {
   AccommodationId?: number;
   RoomId?: number | null;
-  RoomName?: string | null;
+  RoomTypeName?: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -38,7 +38,7 @@ interface Props {
 const RoomTypeBeds = ({
   AccommodationId,
   RoomId,
-  RoomName,
+  RoomTypeName,
   open,
   onOpenChange,
   title,
@@ -137,7 +137,7 @@ const RoomTypeBeds = ({
         <DialogHeader>
           <DialogTitle className="mb-6">{title}</DialogTitle>
         </DialogHeader>
-        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
+        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomTypeName}`}</div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <div className="grid grid-cols-1 gap-10">

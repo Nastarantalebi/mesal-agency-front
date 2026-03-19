@@ -1,4 +1,4 @@
-import RoomTypeForm from '@/app/AdminPanel/RoomTypes/components/RoomTypeForm';
+import RoomTypeForm from '@/app/AdminPanel/RoomTypes/components/roomType/RoomTypeForm';
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/accommodation/$id/addRoomTypes')({

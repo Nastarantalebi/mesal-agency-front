@@ -43,7 +43,7 @@ interface Props {
   title: string;
   AccommodationId: number;
   RoomId?: number | null;
-  RoomName?: string | null;
+  RoomTypeName?: string | null;
 }
 
 const RoomTypePriceForm = ({
@@ -52,7 +52,7 @@ const RoomTypePriceForm = ({
   title,
   AccommodationId,
   RoomId,
-  RoomName,
+  RoomTypeName,
 }: Props) => {
   const { selectedMonth, setSelectedMonth } = useMonthStores();
 
@@ -161,7 +161,7 @@ const RoomTypePriceForm = ({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomName}`}</div>
+        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomTypeName}`}</div>
         <div className="">
           <div className="flex items-center justify-center">
             <Calendar

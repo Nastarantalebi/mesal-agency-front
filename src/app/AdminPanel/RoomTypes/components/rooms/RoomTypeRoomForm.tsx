@@ -1,32 +1,26 @@
+import CustomButton from "@/components/form/CustomButton";
+import formTypes from "@/components/form/formInputTypes";
+import FormErrorModal from "@/components/FormErrorModal";
+import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { RoomFields } from "../../fixtures/RoomFields";
 import {
   roomTypeRoomsInitialValues,
   roomTypeRoomValidation,
 } from "../../fixtures/Validation";
-import type { TCRoomTypesRoom, TRoomTypeRoomResponse } from "../../types";
-import { RoomFields } from "../../fixtures/RoomFields";
-import formTypes from "@/components/form/formInputTypes";
-import CustomButton from "@/components/form/CustomButton";
-import { accommodation_url } from "@/data/querykeys";
-import usePostData from "@/services/usePostData";
-import FormErrorModal from "@/components/FormErrorModal";
-import { Form } from "@/components/ui/form";
+import { useRooms } from "../../services/useRoomType";
+import type { TCRoomTypesRoom } from "../../types";
 
 interface Props {
   AccommodationId: number;
-  RoomId?: number | null;
+  RoomTypeId?: number;
 }
 
-const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
-  const key = ["RoomType-rooms", String(RoomId) || ""];
-  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomId}/rooms/`;
+const RoomTypeRoomForm = ({ AccommodationId, RoomTypeId }: Props) => {
 
-  const createRoom = usePostData<TCRoomTypesRoom, TRoomTypeRoomResponse>({
-    key,
-    url,
-  });
+  const { postRoom } = useRooms(AccommodationId, RoomTypeId!);
 
   const form = useForm<TCRoomTypesRoom>({
     resolver: zodResolver(roomTypeRoomValidation),
@@ -37,7 +31,7 @@ const RoomTypeRoomForm = ({ AccommodationId, RoomId }: Props) => {
   const errmessage = "ثبت اتاق با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handle = (value: TCRoomTypesRoom) => {
-    createRoom.mutateAsync(value, {
+    postRoom.mutateAsync(value, {
       onSuccess: () => {
         form.reset(roomTypeRoomsInitialValues);
       },

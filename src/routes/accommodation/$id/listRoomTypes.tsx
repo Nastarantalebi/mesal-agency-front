@@ -1,4 +1,4 @@
-import RoomTypeList from "@/app/AdminPanel/RoomTypes/components/RoomTypeList";
+import RoomTypeList from "@/app/AdminPanel/RoomTypes/components/roomType/RoomTypeList";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/accommodation/$id/listRoomTypes")({
