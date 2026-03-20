@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 
 import formTypes from "@/components/form/formInputTypes";
-import FormErrorModal from "@/components/FormErrorModal";
+import FormErrorModal from "@/components/form/FormErrorModal";
 import { useState } from "react";
 import { BedFields } from "../../fixtures/BedsField";
 import { bedInitialValues, bedValidation } from "../../fixtures/validation";

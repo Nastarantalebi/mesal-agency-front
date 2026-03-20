@@ -1,4 +1,4 @@
-import FormErrorModal from "@/components/FormErrorModal";
+import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
 import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";

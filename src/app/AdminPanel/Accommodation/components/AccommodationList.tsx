@@ -1,4 +1,4 @@
-import FormErrorModal from "@/components/FormErrorModal";
+import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
 import ListPagination from "@/components/list/ListPagination";
 import { useNavigate } from "@tanstack/react-router";

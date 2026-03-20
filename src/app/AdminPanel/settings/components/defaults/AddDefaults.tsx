@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import formTypes from "@/components/form/formInputTypes";
 import CustomButton from "@/components/form/CustomButton";
-import FormErrorModal from "@/components/FormErrorModal";
+import FormErrorModal from "@/components/form/FormErrorModal";
 import { useEffect, useState } from "react";
 import { useDefaults } from "../../services/useSetting";
 import type { TCreateDefaults } from "../../types";

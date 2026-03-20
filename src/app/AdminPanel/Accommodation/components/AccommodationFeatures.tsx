@@ -1,5 +1,5 @@
 import CustomButton from "@/components/form/CustomButton";
-import FormErrorModal from "@/components/FormErrorModal";
+import FormErrorModal from "@/components/form/FormErrorModal";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";

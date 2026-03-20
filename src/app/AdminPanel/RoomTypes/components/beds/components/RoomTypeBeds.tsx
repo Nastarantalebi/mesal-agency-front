@@ -9,7 +9,7 @@ import {
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import FormErrorModal from "@/components/FormErrorModal";
+import FormErrorModal from "@/components/form/FormErrorModal";
 import CustomButton from "@/components/form/CustomButton";
 import { badListInitialValues, bedListValidation, type TBedListForm } from "../../../fixtures/Validation";
 import { useRoomTypeBed } from "../../../services/useRoomType";

@@ -1,4 +1,4 @@
-import FormErrorModal from "@/components/FormErrorModal";
+import FormErrorModal from "@/components/form/FormErrorModal";
 import CustomButton from "@/components/form/CustomButton";
 import { shamsiToMiladi } from "@/components/form/DateConverter";
 import { Checkbox } from "@/components/ui/checkbox";
