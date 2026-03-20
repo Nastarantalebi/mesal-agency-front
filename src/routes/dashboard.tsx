@@ -1,5 +1,5 @@
-import AccommodationForm from "@/app/AdminPanel/AccommodationAdd/AccommodationForm";
-import AccommodationList from "@/app/AdminPanel/AccommodationLists/AccommodationList";
+import AccommodationForm from "@/app/AdminPanel/Accommodation/components/AccommodationForm";
+import AccommodationList from "@/app/AdminPanel/Accommodation/components/AccommodationList";
 import Header from "@/app/AdminPanel/AdminHeader";
 import AccommodationSettings from "@/app/AdminPanel/settings/components/setting/AccommodationSettings";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
