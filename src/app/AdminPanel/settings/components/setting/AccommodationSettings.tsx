@@ -21,7 +21,6 @@ const AccommodationSettings = () => {
           ))}
         </TabsList>
 
-        {/* Tab content — takes remaining space */}
         <div className="w-full">
           {settingTabs.map((item) => (
             <TabsContent key={item.title} value={item.title}>

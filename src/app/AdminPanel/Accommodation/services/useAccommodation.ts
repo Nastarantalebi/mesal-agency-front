@@ -3,17 +3,49 @@ import useDeleteData from "@/services/useDeleteData";
 import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
 import type { TPaginatedResponse } from "@/types";
-import type { TAccommodationFeatureResponse, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TFeatureResponse } from "../types";
+import type { AccommodationItem, TAccommodationFeatureResponse, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
+import usePutData from "@/services/usePutData";
 
-export const useAccommodation = (AccommodationId : number) => {
+export const useAccommodation = (AccommodationId : number, currentAccommodationPage?: number) => {
+
+  const key = [accommodation_key, String(AccommodationId)];
 
     const getAccommodation = useGetData<TAccommodationResponse>({
-        key: [accommodation_key, String(AccommodationId)],
+        key,
         url: `${accommodation_url}${AccommodationId}/`,
         enabled: !!AccommodationId,
     });
 
-    return getAccommodation
+    const postAccommodation = usePostData<
+        TCreateAccomodation,
+        TAccommodationResponse
+    >({
+        key: [accommodation_key],
+        url: accommodation_url,
+    });
+
+    const putAccommodation = usePutData<
+        TCreateAccomodation,
+        TAccommodationResponse
+    >({
+        key,
+        url: `${accommodation_url}${AccommodationId}`,
+    });
+
+    const deleteAccommodation = useDeleteData({
+      key: [accommodation_key],
+      url: `${accommodation_url}`,
+    });
+
+    const getAccommodations = useGetData<
+      TPaginatedResponse<AccommodationItem>
+    >({
+      key: [accommodation_key, String(currentAccommodationPage)],
+      url: `${accommodation_url}?page=${currentAccommodationPage}`,
+    });
+
+
+    return { getAccommodation, postAccommodation, putAccommodation, deleteAccommodation, getAccommodations}
 }
 
 // -----------------------------------------------------------------------------------------

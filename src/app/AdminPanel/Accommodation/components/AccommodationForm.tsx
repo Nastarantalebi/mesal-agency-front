@@ -9,19 +9,19 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import AccomodationFields from "../Accommodation/hooks/accomodationFields";
-import type { TCreateAccomodation } from "../Accommodation/types";
-import useAddAccommodation from "./services/useAddAccommodation";
-import useValidation from "../Accommodation/fixtures/useValidation";
+import useValidation from "../fixtures/useValidation";
+import AccomodationFields from "../hooks/accomodationFields";
+import { useAccommodation } from "../services/useAccommodation";
+import type { TCreateAccomodation } from "../types";
 
 const AccommodationForm = ({
-  accommodationId,
+  AccommodationId,
   buttonText,
 }: {
-  accommodationId?: number;
+  AccommodationId?: number;
   buttonText: string;
 }) => {
-  const {post, put, get } = useAddAccommodation(accommodationId);
+  const { getAccommodation, postAccommodation, putAccommodation} = useAccommodation(AccommodationId!);
   const {accommodationValidation, accommodationInitialValues} = useValidation()
 
   const form = useForm<TCreateAccomodation>({
@@ -30,15 +30,15 @@ const AccommodationForm = ({
   });
 
   useEffect(() => {
-    if (!get.data) return;
+    if (!getAccommodation.data) return;
     const transformedData = {
-      ...get.data,
-      manufacture_date: get.data.manufacture_date
-        ? miladiToShamsi(get.data.manufacture_date)
+      ...getAccommodation.data,
+      manufacture_date: getAccommodation.data.manufacture_date
+        ? miladiToShamsi(getAccommodation.data.manufacture_date)
         : undefined,
 
-      open_start: miladiToShamsi(get.data.open_start),
-      ope_end: miladiToShamsi(get.data.open_end),
+      open_start: miladiToShamsi(getAccommodation.data.open_start),
+      ope_end: miladiToShamsi(getAccommodation.data.open_end),
 
     };
     form.reset({
@@ -52,7 +52,7 @@ const AccommodationForm = ({
           : null,
       provience: transformedData.city?.province?.id ?? null,
     });
-  }, [get.data]);
+  }, [getAccommodation.data]);
 
   const province_id = form.watch("provience");
 
@@ -62,7 +62,7 @@ const AccommodationForm = ({
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handleSubmit = (value: TCreateAccomodation) => {
-    const isEdit = !!accommodationId;
+    const isEdit = !!AccommodationId;
 
     const transformedData = {
       ...accommodationInitialValues,
@@ -77,11 +77,11 @@ const AccommodationForm = ({
     };
 
     if (isEdit) {
-      put.mutateAsync(transformedData, {
+      putAccommodation.mutateAsync(transformedData, {
         onError: () => setErrorOpen(true),
       });
     } else {
-      post.mutateAsync(transformedData, {
+      postAccommodation.mutateAsync(transformedData, {
         onSuccess: () => {
           form.reset(accommodationInitialValues);
         },
@@ -90,7 +90,7 @@ const AccommodationForm = ({
     }
   };
 
-  if (get.isFetching) return <div className="p-4">Loading...</div>;
+  if (getAccommodation.isFetching) return <div className="p-4">Loading...</div>;
 
   return (
     <Form {...form}>

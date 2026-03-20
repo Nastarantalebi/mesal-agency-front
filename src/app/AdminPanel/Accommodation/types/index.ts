@@ -77,6 +77,23 @@ export type TAccommodationResponse = {
 
 };
 
+type City = {
+  id: number;
+  name: string;
+  province: { id: number; name: string }; 
+};
+
+type Type = {
+  id: number;
+  name: string;
+};
+
+export type AccommodationItem = {
+  id: number;
+  name: string;
+  type: Type | null;
+  city: City | null;
+};
 
 export interface Item {
   id?: number;
