@@ -10,27 +10,29 @@ import FormErrorModal from "@/components/FormErrorModal";
 import { FeaturesInitialValues, FeaturesValidation } from "../../fixtures/validation";
 import type { TCFeature, TFeatureResponse } from "../../types";
 import { FeaturesFields } from "../../fixtures/FeatuesField";
+import { useFeatures } from "../../services/useSetting";
 
 const AddFeaturesForm = () => {
   
+  const { postFeature } = useFeatures();
+
   const form = useForm<TCFeature>({
     resolver: zodResolver(FeaturesValidation),
     defaultValues: FeaturesInitialValues,
-  });
-
-  const createMutation = usePostData<TCFeature, TFeatureResponse>({
-    key: [features_key],
-    url: features_url,
   });
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handleSubmit = (value: TCFeature) => {
-    createMutation.mutateAsync(value, {
+    postFeature.mutateAsync(value, {
+      onSuccess: () => {
+        form.reset(FeaturesInitialValues);
+      },
       onError: () => setErrorOpen(true),
     });
   };
+  
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -6,15 +6,11 @@ import { useForm } from "react-hook-form";
 
 import formTypes from "@/components/form/formInputTypes";
 import FormErrorModal from "@/components/FormErrorModal";
-import {
-  beds_key,
-  beds_url
-} from "@/data/querykeys";
-import usePostData from "@/services/usePostData";
 import { useState } from "react";
 import { BedFields } from "../../fixtures/BedsField";
 import { bedInitialValues, bedValidation } from "../../fixtures/validation";
-import type { TBedResponse, TCreateBed } from "../../types";
+import { useBeds } from "../../services/useSetting";
+import type { TCreateBed } from "../../types";
 
 const AddBedsForm = () => {
   const form = useForm<TCreateBed>({
@@ -22,16 +18,16 @@ const AddBedsForm = () => {
     defaultValues: bedInitialValues,
   });
 
-  const createMutation = usePostData<TCreateBed, TBedResponse>({
-    key: [beds_key],
-    url: beds_url,
-  });
+  const { postBed } = useBeds();
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت تخت با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handleSubmit = (value: TCreateBed) => {
-    createMutation.mutateAsync(value, {
+    postBed.mutateAsync(value, {
+      onSuccess: () => {
+        form.reset(bedInitialValues);
+      },
       onError: () => setErrorOpen(true),
     });
   };

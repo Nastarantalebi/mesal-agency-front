@@ -7,7 +7,7 @@ interface Props {
   onPageChange: (page: number) => void;
 }
 
-const HandlePagination = ({ pageCount, currentPage, onPageChange }: Props) => {
+const CardPagination = ({ pageCount, currentPage, onPageChange }: Props) => {
   return (
     <div className="flex flex-row items-end justify-end ml-5 gap-0.5 ">
       <Button
@@ -38,4 +38,4 @@ const HandlePagination = ({ pageCount, currentPage, onPageChange }: Props) => {
   );
 };
 
-export default HandlePagination;
+export default CardPagination;

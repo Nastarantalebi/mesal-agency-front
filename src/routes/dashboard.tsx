@@ -1,7 +1,7 @@
 import AccommodationForm from "@/app/AdminPanel/AccommodationAdd/AccommodationForm";
 import AccommodationList from "@/app/AdminPanel/AccommodationLists/AccommodationList";
 import Header from "@/app/AdminPanel/AdminHeader";
-import AccommodationSettings from "@/app/AdminPanel/settings/components/AccommodationSettings";
+import AccommodationSettings from "@/app/AdminPanel/settings/components/setting/AccommodationSettings";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
 

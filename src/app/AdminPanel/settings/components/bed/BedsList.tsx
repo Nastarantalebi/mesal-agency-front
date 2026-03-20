@@ -1,28 +1,16 @@
 import { Badge } from "@/components/ui/badge";
-import { beds_key, beds_url } from "@/data/querykeys";
-import useGetData from "@/services/useGetData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { TPaginatedResponse } from "@/types";
 import { X } from "lucide-react";
-import useDeleteData from "@/services/useDeleteData";
-import type { TBedResponse } from "../../types";
-import HandlePagination from "../HandlePagination";
 import { useState } from "react";
+import { useBeds } from "../../services/useSetting";
+import CardPagination from "../../../../../components/card/CardPagination";
 
 const BedsList = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentBedPage, setCurrentBedPage] = useState(1);
 
-  const { data: bedsData } = useGetData<TPaginatedResponse<TBedResponse>>({
-    key: [beds_key, String(currentPage)],
-    url: `${beds_url}?page=${currentPage}`,
-  });
+  const { getBeds, deleteBed } = useBeds(currentBedPage)
 
-  const { mutateAsync } = useDeleteData({
-    key: [beds_key, String(currentPage)],
-    url: beds_url,
-  });
-
-  const PageCount = bedsData?.count ? Math.ceil(bedsData.count / 10) : 0;
+  const PageCount = getBeds.data?.count ? Math.ceil(getBeds.data.count / 10) : 0;
 
   return (
     <div className="flex flex-col gap-10">
@@ -30,10 +18,10 @@ const BedsList = () => {
         <CardHeader>
           <CardTitle className="text-secondary">نوع اتاق های اضافه شده</CardTitle>
         </CardHeader>
-        {bedsData ? (
+        {getBeds.data ? (
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {bedsData.results.map((bed) => (
+              {getBeds.data.results.map((bed) => (
                 <Badge
                   key={bed.id}
                   variant="outline"
@@ -41,7 +29,7 @@ const BedsList = () => {
                 >
                   {bed.name}
                   <button
-                    onClick={() => mutateAsync({ id: bed.id })}
+                    onClick={() => deleteBed.mutateAsync({ id: bed.id })}
                     className="absolute right-1 top-1/2 -translate-y-1/2 hover:bg-destructive/10 rounded-full p-1.5 cursor-pointer"
                   >
                     <X className="h-3 w-3" />
@@ -53,9 +41,9 @@ const BedsList = () => {
         ) : (
           <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
         )}
-        <HandlePagination
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
+        <CardPagination
+          currentPage={currentBedPage}
+          onPageChange={setCurrentBedPage}
           pageCount={PageCount}
         />
       </Card>

@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import type { Props, TCRoomTypeFeature, TRoomTypeFeatureListForm } from "../../types";
 import { roomTypeFeatureListInitialValues, roomTypeFeatureListValidation } from "../../fixtures/Validation";
 import { useRoomTypeFeatures } from "../../services/useRoomType";
-import HandlePagination from "@/app/AdminPanel/settings/components/HandlePagination";
+import CardPagination from "@/components/card/CardPagination";
 
 const RoomTypeFeatures = ({
   AccommodationId,
@@ -123,7 +123,7 @@ const RoomTypeFeatures = ({
                   ) : (
                     <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
                   )}
-                  <HandlePagination
+                  <CardPagination
                     currentPage={currentRoomTypeFeaturePage}
                     onPageChange={setCurrentRoomTypeFeaturePage}
                     pageCount={roomTypeFeaturesPageCount}

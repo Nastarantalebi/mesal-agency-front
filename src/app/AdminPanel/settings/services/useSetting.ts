@@ -1,9 +1,11 @@
-import { default_key, default_url } from "@/data/querykeys";
+import { beds_key, beds_url, default_key, default_url, features_key, features_url } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
-import type { TCreateDefaults, TResponseDefaults } from "../types";
+import type { TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse, TResponseDefaults } from "../types";
+import type { TPaginatedResponse } from "@/types";
+import useDeleteData from "@/services/useDeleteData";
 
-export const useAddDefaults = () => {
+export const useDefaults = () => {
   
   const getDefaults = useGetData<TCreateDefaults>({
     key: [default_key],
@@ -16,4 +18,54 @@ export const useAddDefaults = () => {
   });
 
   return {getDefaults, postDefaults}
+}
+
+export const useFeatures = (currentRoomPage?: number, currentAccommodationPage?: number) => {
+
+    const postFeature = usePostData<TCFeature, TFeatureResponse>({
+      key: [features_key],
+      url: features_url,
+    });
+
+    const getRoomTypeFeatures = useGetData<
+      TPaginatedResponse<TFeatureResponse>
+    >({
+      key: [features_key, "roomtype", String(currentRoomPage)],
+      url: `${features_url}?page=${currentRoomPage}&type=roomtype`,
+    });
+
+    const getAccommodationFeatures= useGetData<
+        TPaginatedResponse<TFeatureResponse>
+      >({
+        key: [features_key, "accommodation", String(currentAccommodationPage)],
+        url: `${features_url}?page=${currentAccommodationPage}&type=accommodation`,
+    });
+
+    const deleteFeature = useDeleteData({
+      key: [features_key],
+      url: features_url,
+    });
+
+    return { postFeature, getRoomTypeFeatures, getAccommodationFeatures, deleteFeature}
+
+}
+
+export const useBeds = (currentBedPage?: number) => {
+
+  const getBeds = useGetData<TPaginatedResponse<TBedResponse>>({
+    key: [beds_key, String(currentBedPage)],
+    url: `${beds_url}?page=${currentBedPage}`,
+  });
+
+  const deleteBed = useDeleteData({
+    key: [beds_key, String(currentBedPage)],
+    url: beds_url,
+  });
+
+  const postBed = usePostData<TCreateBed, TBedResponse>({
+    key: [beds_key],
+    url: beds_url,
+  });
+
+  return { getBeds, deleteBed, postBed }
 }

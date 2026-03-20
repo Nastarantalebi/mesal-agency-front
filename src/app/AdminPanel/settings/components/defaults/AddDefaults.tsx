@@ -5,7 +5,7 @@ import formTypes from "@/components/form/formInputTypes";
 import CustomButton from "@/components/form/CustomButton";
 import FormErrorModal from "@/components/FormErrorModal";
 import { useEffect, useState } from "react";
-import { useAddDefaults } from "../../services/useSetting";
+import { useDefaults } from "../../services/useSetting";
 import type { TCreateDefaults } from "../../types";
 import { DefaultsInitialValues, DefaultsValidation } from "../../fixtures/validation";
 import { DefaultFields } from "../../fixtures/DefaultFields";
@@ -13,7 +13,7 @@ import { DefaultFields } from "../../fixtures/DefaultFields";
 
 const DefaultsForm = () => {
   
-  const { getDefaults , postDefaults } = useAddDefaults();
+  const { getDefaults , postDefaults } = useDefaults();
 
   const form = useForm<TCreateDefaults>({
     resolver: zodResolver(DefaultsValidation),

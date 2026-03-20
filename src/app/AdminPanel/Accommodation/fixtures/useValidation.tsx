@@ -1,10 +1,10 @@
 import z from "zod"
 import type { TCreateAccomodation } from "../types";
-import { useAddDefaults } from "../../settings/services/useSetting";
+import { useDefaults } from "../../settings/services/useSetting";
 
 const useValidation = () => {
 
-  const { getDefaults } = useAddDefaults();
+  const { getDefaults } = useDefaults();
 
  const accommodationValidation = z.object({
     type: z.string().min(1, "نوع اقامتگاه الزامی است"),
