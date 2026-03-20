@@ -6,13 +6,14 @@ import type { TPaginatedResponse } from "@/types";
 import type { AccommodationItem, TAccommodationFeatureResponse, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
 import usePutData from "@/services/usePutData";
 
-export const useAccommodation = (AccommodationId : number, currentAccommodationPage?: number) => {
+export const useAccommodation = (AccommodationId?: number, currentAccommodationPage?: number) => {
 
   const key = [accommodation_key, String(AccommodationId)];
+  const url =  `${accommodation_url}${AccommodationId}/`
 
     const getAccommodation = useGetData<TAccommodationResponse>({
         key,
-        url: `${accommodation_url}${AccommodationId}/`,
+        url,
         enabled: !!AccommodationId,
     });
 
@@ -29,7 +30,7 @@ export const useAccommodation = (AccommodationId : number, currentAccommodationP
         TAccommodationResponse
     >({
         key,
-        url: `${accommodation_url}${AccommodationId}`,
+        url,
     });
 
     const deleteAccommodation = useDeleteData({

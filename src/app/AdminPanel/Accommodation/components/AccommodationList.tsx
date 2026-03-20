@@ -14,20 +14,16 @@ const AccommodationList = () => {
   const [selected, setSelected] = useState<AccommodationItem | null>(null);
   const [openD, setOpenDelete] = useState(false);
 
-  const { deleteAccommodation, getAccommodations } = useAccommodation(currentAccommodationPage)
-
+  const { deleteAccommodation, getAccommodations} = useAccommodation(undefined, currentAccommodationPage)
 
   const navigate = useNavigate();
 
   if (getAccommodations.isFetching) return <div>Loading...</div>;
-  if (getAccommodations.error) return <div className="text-red-600">{String(getAccommodations.error.message)}</div>;
+  if (getAccommodations.error) return <div className="text-red-600">{getAccommodations.error.message}</div>;
 
   const PageCount = getAccommodations.data?.count ? Math.ceil(getAccommodations.data.count / 10) : 0;
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
-  const handleDelete = async (id: number) => {
-    await deleteAccommodation.mutateAsync({ id });
-  };
 
   return (
     <>
@@ -62,7 +58,7 @@ const AccommodationList = () => {
         open={openD}
         onOpenChange={() => setOpenDelete(false)}
         message={deleteMessage}
-        onAcknowledge={() => handleDelete(Number(selected?.id))}
+        onAcknowledge={() => deleteAccommodation.mutateAsync({ id:selected?.id! })}
         buttonTitle="بله"
         dialogTitle="حذف"
       />
