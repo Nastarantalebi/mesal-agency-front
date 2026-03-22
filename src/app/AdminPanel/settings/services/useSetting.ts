@@ -32,6 +32,7 @@ export const useFeatures = (currentRoomPage?: number, currentAccommodationPage?:
     >({
       key: [features_key, "roomtype", String(currentRoomPage)],
       url: `${features_url}?page=${currentRoomPage}&type=roomtype`,
+      enabled: !!currentAccommodationPage,
     });
 
     const getAccommodationFeatures= useGetData<
@@ -39,6 +40,7 @@ export const useFeatures = (currentRoomPage?: number, currentAccommodationPage?:
       >({
         key: [features_key, "accommodation", String(currentAccommodationPage)],
         url: `${features_url}?page=${currentAccommodationPage}&type=accommodation`,
+        enabled: !!currentAccommodationPage,
     });
 
     const deleteFeature = useDeleteData({

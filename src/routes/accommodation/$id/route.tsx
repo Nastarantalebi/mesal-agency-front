@@ -14,7 +14,7 @@ export const Route = createFileRoute("/accommodation/$id")({
 
 function RouteComponent() {
   const { id } = Route.useParams();
-  const { getAccommodation } = useAccommodation(+id, undefined, undefined)
+  const { getAccommodation } = useAccommodation(+id)
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full overflow-hidden">
