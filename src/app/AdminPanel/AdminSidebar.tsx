@@ -39,11 +39,11 @@ export function AppSidebar({ sidebaritems }: Props) {
       collapsible="icon"
       className="border-primary-60 shadow-2xl transition-[width] duration-100"
     >
-      <SidebarHeader>
+      <SidebarHeader>   
         <MenuIcon
           onClick={toggleSidebar}
           className="h-7 w-7 mr-2 text-primary cursor-pointer"
-        />
+          />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

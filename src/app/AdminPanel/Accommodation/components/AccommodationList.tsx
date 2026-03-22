@@ -13,8 +13,9 @@ const AccommodationList = () => {
   const [currentAccommodationPage, setCurrentAccommodationPage] = useState(1);
   const [selected, setSelected] = useState<AccommodationItem | null>(null);
   const [openD, setOpenDelete] = useState(false);
+  // const [searchInput, setSearchInput] = useState("");
 
-  const { deleteAccommodation, getAccommodations} = useAccommodation(undefined, currentAccommodationPage)
+  const { deleteAccommodation, getAccommodations } = useAccommodation(undefined, currentAccommodationPage)
 
   const navigate = useNavigate();
 
@@ -23,10 +24,26 @@ const AccommodationList = () => {
 
   const PageCount = getAccommodations.data?.count ? Math.ceil(getAccommodations.data.count / 10) : 0;
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
+  
+  // console.log(`Accommodations: ${JSON.stringify(getAccommodations.data?.results)}`);
+  // console.log(`searchInput:${searchInput}`);
 
 
   return (
     <>
+      {/* <div className="relative mb-4 max-w-3xs">
+          <Input
+            placeholder="جست و جوی نام اقامتگاه"
+            // value={searchInput}
+            onChange={(event) => setSearchInput(event.target.value)}
+            className="pl-9"
+          />
+          <Button 
+              className=" cursor-pointer absolute left-6 top-1/3 -translate-y-1/2 h-2 w-2" 
+      >
+            <Search/>
+          </Button>   
+      </div> */}
       <CustomDataTable
         onRowClick={(rowData) => {
           navigate({
@@ -44,8 +61,7 @@ const AccommodationList = () => {
         )}
         showAction={true}
         columns={AccommodationListColumns}
-        data={getAccommodations.data?.results ?? []}
-        placeholder="جست و جوی نام اقامتگاه"
+        data={getAccommodations.data?.results!}
       />
       <div className="mt-7">
         <ListPagination

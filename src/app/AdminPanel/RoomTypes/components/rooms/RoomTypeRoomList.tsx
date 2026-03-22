@@ -45,7 +45,6 @@ const RoomTypeRoomList = ({ AccommodationId, RoomTypeId }: Props) => {
         columns={columns}
         showAction={true}
         data={getRooms.data?.results ?? []}
-        placeholder="جست و جوی نام اتاق"
         extraAction={(rowData) => (
           <ListDelete
             onClick={() => {

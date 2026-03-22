@@ -114,7 +114,6 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         showAction={true}
         columns={columns}
         data={getRoomTypeList.data?.results ?? []}
-        placeholder="جست و جوی نوع اتاق"
       />
 
       <RoomTypeForm

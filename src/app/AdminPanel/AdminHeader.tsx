@@ -8,8 +8,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "@tanstack/react-router";
 import { Bell, LogOut, User } from "lucide-react";
+import type { TAccommodationResponse } from "./Accommodation/types";
 
-const Header = () => {
+const Header = ({AccommodationData}: {AccommodationData?: TAccommodationResponse}) => {
   const navigate = useNavigate();
   return (
     <div className="w-full">
@@ -17,6 +18,7 @@ const Header = () => {
       <header className=" mx-5 my-2 rounded-xl top-0  right-0 z-10 flex h-14 justify-between items-center border px-4 bg-primary-10">
         <div className="flex items-center gap-5 mr-5 text-primary">
           <span>آژانس</span>
+          <span>{AccommodationData?.type.name} {AccommodationData?.name}</span>
         </div>
         <div className="flex items-center justify-center cursor-pointer gap-4 mx-2">
           {/* <span className="text-sm font-medium text-background">نسترن طالبی</span> */}
