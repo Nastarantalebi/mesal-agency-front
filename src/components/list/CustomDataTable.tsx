@@ -100,7 +100,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                     </TableCell>
                   ))}
                   <TableCell className="border-x border-primary">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                       {onRowClick && (
                         <Button
                           variant="outline"

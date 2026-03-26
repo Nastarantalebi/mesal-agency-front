@@ -89,6 +89,7 @@ function AccomodationFields(province_id?: number) {
       label: "تاریخ شروع قرارداد",
       isRequired: true,
       fieldType: "DatePicker",
+      className:"col-start-1"
     },
     {
       name: "open_end",
