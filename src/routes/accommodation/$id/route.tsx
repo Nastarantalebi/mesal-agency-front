@@ -21,7 +21,7 @@ function RouteComponent() {
         <AppSidebar sidebaritems={sidebarItems(id)} />
         <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
           <Header AccommodationData={getAccommodation.data!}/>
-          <main className="flex-1 overflow-y-auto p-10">
+          <main className="flex-1 overflow-y-auto p-5">
             <Outlet />
           </main>
         </div>
