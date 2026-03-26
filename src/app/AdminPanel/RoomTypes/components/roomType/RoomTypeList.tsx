@@ -18,6 +18,8 @@ import ListFeatures from "../roomTypeListIcons/ListFeatures";
 import ListImage from "../roomTypeListIcons/ListImage";
 import ListPrice from "../roomTypeListIcons/ListPrice";
 import ListRooms from "../roomTypeListIcons/ListRooms";
+import SearchInput from "@/components/list/SearchInput";
+import ListPagination from "@/components/list/ListPagination";
 
 export const columns: ColumnDef<RoomItem>[] = [
   {
@@ -30,11 +32,15 @@ export const columns: ColumnDef<RoomItem>[] = [
 
 
 const RoomTypeList = ({ AccommodationId }: Props) => {
+  const [searchInput, setSearchInput] = useState("");
+  const [ input, setInput ] = useState("");
+  const [ currentPage, setCurrentPage ] = useState(1)
 
-  const { getRoomTypeList, deleteRoomType } = useRoomTypeList(AccommodationId)
+  const { getRoomTypeList, deleteRoomType } = useRoomTypeList(AccommodationId, currentPage, searchInput)
 
   const [openEdit, setOpenEdit] = useState(false);
   const [selected, setSelected] = useState<RoomItem | null>(null);
+
 
   const [openAdd, setAddRoomType] = useState(false);
   const [openImg, setOpenImg] = useState(false);
@@ -48,6 +54,9 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   const handleDelete = async (id: number) => {
     await deleteRoomType.mutateAsync({ id });
   };
+
+  const PageCount = getRoomTypeList.data?.count ? Math.ceil(getRoomTypeList.data.count / 10) : 0;
+  
 
   if (getRoomTypeList.isFetching) return <div>Loading...</div>;
   if (getRoomTypeList.error) return <div className="text-red-600">{getRoomTypeList.error.message}</div>;
@@ -66,6 +75,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         <Plus className="" />
         افزودن نوع اتاق جدید
       </Button>
+      <SearchInput input={input} setInput={setInput} setSearchInput={setSearchInput}/>
       <CustomDataTable
         onEdit={(rowData) => {
           setSelected(rowData);
@@ -115,6 +125,13 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         columns={columns}
         data={getRoomTypeList.data?.results ?? []}
       />
+      <div className="mt-7">
+        <ListPagination
+          pageCount={PageCount}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
 
       <RoomTypeForm
         AccommodationId={AccommodationId}

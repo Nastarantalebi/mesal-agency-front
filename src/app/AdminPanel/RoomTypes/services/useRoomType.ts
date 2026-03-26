@@ -34,19 +34,16 @@ export const useRoomType = (AccommodationId: number | undefined, RoomTypeId: num
 
 // ----------------------------------------------------------------------------------------
 
-export const useRoomTypeList = (AccommodationId: number) => {
-
-    const key = ["RoomTypes", String(AccommodationId) || ""];
-    const url = `${accommodation_url}${AccommodationId}/room_types/`;
+export const useRoomTypeList = (AccommodationId: number, currentPage: number, searchInput?: string) => {
 
     const getRoomTypeList = useGetData<TPaginatedResponse<RoomItem>>({
-        key,
-        url,
+        key: ["RoomTypes", String(AccommodationId), String(currentPage), searchInput!],
+        url: `${accommodation_url}${AccommodationId}/room_types/${searchInput ? `?name__contains=${searchInput}` : `?page=${currentPage}`}`
     });
 
     const deleteRoomType = useDeleteData({
-        key,
-        url,
+        key: ["RoomTypes", String(AccommodationId)],
+        url: `${accommodation_url}${AccommodationId}/room_types/`,
     });
 
     return {getRoomTypeList, deleteRoomType}
@@ -133,18 +130,18 @@ export const useRooms = (AccommodationId: number, RoomTypeId: number) => {
 
 // ----------------------------------------------------------------------------------------
 
-export const useRoomList  = (AccommodationId: number, RoomTypeId: number, currentPage:number) => {
+export const useRoomList  = (AccommodationId: number, RoomTypeId: number, currentPage:number, searchInput?: string) => {
 
-  const key = ["RoomType-rooms", String(RoomTypeId) || "", String(currentPage)];
 
   const getRooms = useGetData<
     TPaginatedResponse<TRoomTypeRoomResponse>
   >({
-    key,
-    url:`${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/?page=${currentPage}`,
+    key: ["RoomType-rooms", String(RoomTypeId), String(currentPage), searchInput!],
+    url:`${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/${searchInput ? `?name__contains=${searchInput}` : `?page=${currentPage}`}`,
   });
+
   const deleteRoom = useDeleteData({
-    key,
+    key: ["RoomType-rooms", String(RoomTypeId), String(currentPage)],
     url: `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/`,
   });
 

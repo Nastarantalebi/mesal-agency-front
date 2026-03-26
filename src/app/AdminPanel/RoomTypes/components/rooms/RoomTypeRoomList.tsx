@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRoomList } from "../../services/useRoomType";
 import type { Props, TRoomTypeRoomResponse } from "../../types";
 import ListDelete from "../roomTypeListIcons/ListDelete";
+import SearchInput from "@/components/list/SearchInput";
 
 export const columns: ColumnDef<TRoomTypeRoomResponse>[] = [
   { accessorKey: "name", header: "نام اتاق" },
@@ -26,9 +27,12 @@ const RoomTypeRoomList = ({ AccommodationId, RoomTypeId }: Props) => {
   const [selected, setSelected] = useState<TRoomTypeRoomResponse | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchInput, setSearchInput] = useState("");
+  const [ input, setInput ] = useState("");
+
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
-  const { getRooms, deleteRoom } = useRoomList(AccommodationId, RoomTypeId!, currentPage);
+  const { getRooms, deleteRoom } = useRoomList(AccommodationId, RoomTypeId!, currentPage, searchInput);
 
   const handleDelete = async (id: number) => {
     await deleteRoom.mutateAsync({ id });
@@ -40,7 +44,8 @@ const RoomTypeRoomList = ({ AccommodationId, RoomTypeId }: Props) => {
   const PageCount = getRooms.data?.count ? Math.ceil(getRooms.data.count / 10) : 0;
 
   return (
-    <div className="">
+    <>
+      <SearchInput input={input} setInput={setInput} setSearchInput={setSearchInput}/>
       <CustomDataTable
         columns={columns}
         showAction={true}
@@ -69,7 +74,7 @@ const RoomTypeRoomList = ({ AccommodationId, RoomTypeId }: Props) => {
         dialogTitle="حذف"
         onAcknowledge={() => handleDelete(selected?.id!)}
       />
-    </div>
+    </>
   );
 };
 

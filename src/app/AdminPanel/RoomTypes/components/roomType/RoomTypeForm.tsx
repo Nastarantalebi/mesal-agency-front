@@ -110,7 +110,7 @@ const RoomTypeForm = ({
     return (
       <>
         <Dialog open={open} onOpenChange={onOpenchange}>
-          <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl">
+          <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl overflow-y-scroll">
             <DialogHeader>
               <DialogTitle className="mb-6">{title}</DialogTitle>
             </DialogHeader>

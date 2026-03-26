@@ -6,7 +6,7 @@ import type { TPaginatedResponse } from "@/types";
 import type { AccommodationItem, TAccommodationFeatureResponse, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
 import usePutData from "@/services/usePutData";
 
-export const useAccommodation = (AccommodationId?: number, currentAccommodationPage?: number) => {
+export const useAccommodation = (AccommodationId?: number, currentAccommodationPage?: number, searchInput?: string) => {
 
   const key = [accommodation_key, String(AccommodationId)];
   const url =  `${accommodation_url}${AccommodationId}/`
@@ -41,8 +41,9 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
     const getAccommodations = useGetData<
       TPaginatedResponse<AccommodationItem>
     >({
-      key: [accommodation_key, String(currentAccommodationPage)],
-      url: `${accommodation_url}?page=${currentAccommodationPage}`,
+      key: [accommodation_key, String(currentAccommodationPage), searchInput!],
+      url: `${accommodation_url}${searchInput ? `?name__contains= ${searchInput}`: `?page=${currentAccommodationPage}`}`,
+      // url: `${accommodation_url}?page=${currentAccommodationPage}`,
       enabled: !!currentAccommodationPage
     });
 
