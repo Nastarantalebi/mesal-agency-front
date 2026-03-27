@@ -1,5 +1,5 @@
 import CustomButton from "@/components/form/CustomButton";
-import formTypes from "@/components/form/formInputTypes";
+import formTypes from "@/components/form/FormInputTypes";
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";

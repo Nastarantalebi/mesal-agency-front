@@ -1,4 +1,4 @@
-import type { Items } from "@/components/form/formInputTypes";
+import type { Items } from "@/components/form/FormInputTypes";
 import type { TCRoomTypesRoom } from "../types";
 
 export const RoomFields: Items<TCRoomTypesRoom>[] = [

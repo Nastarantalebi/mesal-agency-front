@@ -4,7 +4,6 @@ import {
   miladiToShamsi,
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
-import formTypes from "@/components/form/formInputTypes";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import useValidation from "../fixtures/useValidation";
 import AccomodationFields from "../hooks/accomodationFields";
 import { useAccommodation } from "../services/useAccommodation";
 import type { TCreateAccomodation } from "../types";
+import formTypes from "@/components/form/FormInputTypes";
 
 const AccommodationForm = ({
   AccommodationId,

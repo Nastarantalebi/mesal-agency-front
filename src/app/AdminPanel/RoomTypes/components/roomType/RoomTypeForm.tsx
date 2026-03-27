@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import type { TCreateRoomType } from "../../types";
 import { useRoomType } from "../../services/useRoomType";
 import { roomTypeInitialValues, roomTypeValidation } from "../../fixtures/Validation";
-import formTypes from "@/components/form/formInputTypes";
+import formTypes from "@/components/form/FormInputTypes";
 import { RoomTypeFields } from "../../fixtures/RoomTypesFields";
 
 

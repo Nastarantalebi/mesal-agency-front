@@ -5,7 +5,7 @@ import {
   type provience,
   type TCreateAccomodation
 } from "@/app/AdminPanel/Accommodation/types/index";
-import type { Items } from "@/components/form/formInputTypes";
+import type { Items } from "@/components/form/FormInputTypes";
 import {
   accommodation_cities_key,
   accommodation_cities_url,

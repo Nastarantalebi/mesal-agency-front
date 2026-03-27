@@ -1,7 +1,7 @@
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import formTypes from "@/components/form/formInputTypes";
+import formTypes from "@/components/form/FormInputTypes";
 import CustomButton from "@/components/form/CustomButton";
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { useEffect, useState } from "react";

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 
-import formTypes from "@/components/form/formInputTypes";
+import formTypes from "@/components/form/FormInputTypes";
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { useState } from "react";
 import { BedFields } from "../../fixtures/BedsField";

@@ -4,7 +4,6 @@ import { AppSidebar } from "@/app/AdminPanel/AdminSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { sidebarItems } from "@/fixtures/sideBarData";
 import { useAccommodation } from "@/app/AdminPanel/Accommodation/services/useAccommodation";
-import { Menu } from "lucide-react";
 
 
 export const Route = createFileRoute("/accommodation/$id")({
