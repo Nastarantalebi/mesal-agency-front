@@ -1,19 +1,12 @@
 import { Calendar, DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import usePostData from "@/services/usePostData";
-import type {
-  TCreatePeakDate,
-  TPeakDateState,
-  TResponsePeakDate,
-} from "../settings/types";
 import { useEffect, useRef, useState } from "react";
-import useDeleteData from "@/services/useDeleteData";
-import useGetData from "@/services/useGetData";
-import { accommodation_url } from "@/data/querykeys";
+import usePeakDate from "./services/usePeakDate";
+import type { TPeakDateState } from "./types";
 
 interface Props {
-  accommodationId: string;
+  accommodationId: number;
 }
 
 function PeakDate({ accommodationId }: Props) {
@@ -24,6 +17,7 @@ function PeakDate({ accommodationId }: Props) {
 
   // Use ref to avoid stale closure in mutateAsync callbacks
   const selectedDatesRef = useRef<TPeakDateState[]>(selectedDates);
+  
   useEffect(() => {
     selectedDatesRef.current = selectedDates;
   }, [selectedDates]);
@@ -48,27 +42,12 @@ function PeakDate({ accommodationId }: Props) {
     .toISOString()
     .split("T")[0];
 
-  const url = `${accommodation_url}${accommodationId}/peak_dates/`;
-
-  const submitDate = usePostData<TCreatePeakDate, TResponsePeakDate>({
-    key: ["peakdate", startDate, endDate],
-    url,
-  });
-
-  const dateDelete = useDeleteData<TResponsePeakDate>({
-    key: ["peakdate", startDate, endDate],
-    url,
-  });
-
-  const { data: peakDates } = useGetData<TResponsePeakDate[]>({
-    key: ["peakdate", startDate, endDate],
-    url: `${url}?start_date=${startDate}&end_date=${endDate}`,
-  });
+  const { getPeakDates, postPeakDate, deletePeakDate } = usePeakDate(accommodationId, startDate, endDate);
 
   // Sync server data → local state on month change (fresh fetch)
   useEffect(() => {
-    if (peakDates) {
-      const mapped: TPeakDateState[] = peakDates.map((item) => ({
+    if (getPeakDates.data) {
+      const mapped: TPeakDateState[] = getPeakDates.data.map((item) => ({
         id: item.id,
         date: new DateObject({
           date: new Date(item.date),
@@ -81,7 +60,7 @@ function PeakDate({ accommodationId }: Props) {
       // Clear when switching to a month with no data yet
       setSelectedDates([]);
     }
-  }, [peakDates]);
+  }, [getPeakDates.data]);
 
   const handleChange = (dates: DateObject | DateObject[]) => {
     const dateArray = Array.isArray(dates) ? dates : [dates];
@@ -108,7 +87,7 @@ function PeakDate({ accommodationId }: Props) {
       const optimistic: TPeakDateState = { date: newDate, id: "" };
       setSelectedDates((prev) => [...prev, optimistic]);
 
-      submitDate.mutateAsync(
+      postPeakDate.mutateAsync(
         { date: formattedDate },
         {
           onSuccess: (response) => {
@@ -130,7 +109,7 @@ function PeakDate({ accommodationId }: Props) {
       // Optimistic removal
       setSelectedDates((prev) => prev.filter((d) => d.id !== removedDate.id));
 
-      dateDelete.mutateAsync(
+      deletePeakDate.mutateAsync(
         { id: removedDate.id },
         {
           onError: () => {
