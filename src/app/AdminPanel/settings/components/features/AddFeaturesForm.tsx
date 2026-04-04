@@ -1,5 +1,4 @@
 import CustomButton from "@/components/form/CustomButton";
-import formTypes from "@/components/form/FormInputTypes";
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +8,7 @@ import { FeaturesFields } from "../../fixtures/FeatuesField";
 import { FeaturesInitialValues, FeaturesValidation } from "../../fixtures/validation";
 import { useFeatures } from "../../services/useSetting";
 import type { TCFeature } from "../../types";
+import formTypes from "@/components/form/FormInputTypes";
 
 const AddFeaturesForm = () => {
   
