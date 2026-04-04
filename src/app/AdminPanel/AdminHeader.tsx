@@ -13,6 +13,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 
 interface Props {
   AccommodationData?: TAccommodationResponse;
+  
 }
 
 const Header = ({
