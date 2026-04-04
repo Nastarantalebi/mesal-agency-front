@@ -18,7 +18,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Link } from "@tanstack/react-router";
-import { ChevronDown, MenuIcon } from "lucide-react";
+import { ChevronDown, MenuIcon, X } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Items {
   title: string;
@@ -32,18 +33,23 @@ interface Props {
 }
 
 export function AppSidebar({ sidebaritems }: Props) {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, openMobile } = useSidebar(); // ← isOpen comes from the provider
+  const isMobile = useIsMobile(); // ← true when < 768 px
+  
+  const toggleIcon = openMobile && isMobile ? (
+    <X className="h-7 w-7 text-primary cursor-pointer" />
+  ) : (
+    <MenuIcon className="h-7 w-7 text-primary cursor-pointer" />
+  );
+  // const { toggleSidebar } = useSidebar();
 
   return (
     <Sidebar
       collapsible="icon"
-      className="border-primary-60 shadow-2xl transition-[width] duration-100"
+      className="md:relative absolute border-primary-60 shadow-2xl transition-[width] duration-100 z-40 "
     >
-      <SidebarHeader>   
-        <MenuIcon
-          onClick={toggleSidebar}
-          className="h-7 w-7 mr-2 text-primary cursor-pointer"
-          />
+      <SidebarHeader>  
+        <span onClick={toggleSidebar}>{toggleIcon}</span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

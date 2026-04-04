@@ -1,4 +1,4 @@
-import PeakDate from "@/app/AdminPanel/peakDates/PeakDate";
+import PeakDate from "@/app/AdminPanel/peakDates/components/PeakDate";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/accommodation/$id/peakDates")({
@@ -7,5 +7,5 @@ export const Route = createFileRoute("/accommodation/$id/peakDates")({
 
 function RouteComponent() {
   const { id } = Route.useParams();
-  return <PeakDate accommodationId={id} />;
+  return <PeakDate accommodationId={+id} />;
 }

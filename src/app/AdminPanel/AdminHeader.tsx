@@ -7,18 +7,31 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "@tanstack/react-router";
-import { Bell, LogOut, User } from "lucide-react";
+import { Bell, LogOut, Menu, User} from "lucide-react";
 import type { TAccommodationResponse } from "./Accommodation/types";
+import { useSidebar } from "@/components/ui/sidebar";
 
-const Header = ({AccommodationData}: {AccommodationData?: TAccommodationResponse}) => {
+interface Props {
+  AccommodationData?: TAccommodationResponse;
+}
+
+const Header = ({
+  AccommodationData,
+}: Props) => {
   const navigate = useNavigate();
+  const { setOpenMobile } = useSidebar()
   return (
     <div className="w-full">
-      <div className="top-0 left-0 right-0 backdrop-blur-sm z-[9] pointer-events-none " />
+      <div className="top-0 left-0 right-0 backdrop-blur-sm z-9 pointer-events-none " />
       <header className=" mx-5 my-2 rounded-xl top-0  right-0 z-10 flex h-14 justify-between items-center border px-4 bg-primary-10">
-        <div className="flex items-center gap-5 mr-5 text-primary">
+        <div className="flex items-center gap-5 text-primary">
+          <button className="md:hidden" onClick={() => setOpenMobile(true)}>
+            <Menu className="h-6 w-6" />
+          </button>
           <span>آژانس</span>
-          <span>{AccommodationData?.type.name} {AccommodationData?.name}</span>
+          <span>
+            {AccommodationData?.type.name} {AccommodationData?.name}
+          </span>
         </div>
         <div className="flex items-center justify-center cursor-pointer gap-4 mx-2">
           {/* <span className="text-sm font-medium text-background">نسترن طالبی</span> */}
