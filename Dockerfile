@@ -10,7 +10,7 @@ FROM deps AS builder
 WORKDIR /app
 ARG MODE=production
 COPY . .
-RUN NODE_ENV=${MODE} ./node_modules/.bin/vite build --mode ${MODE}
+RUN NODE_ENV=${MODE} ./node_modules/.bin/vite build -d --mode ${MODE}
 
 FROM artifacts.repo.mesal.ir/docker-proxy/library/nginx:${NGINX_VERSION}
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
