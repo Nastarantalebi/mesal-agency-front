@@ -9,26 +9,25 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { Bell, LogOut, Menu, User} from "lucide-react";
 import type { TAccommodationResponse } from "./Accommodation/types";
-import { useSidebar } from "@/components/ui/sidebar";
+import type { ReactNode } from "react";
 
 interface Props {
   AccommodationData?: TAccommodationResponse;
+  menuBtn?: ReactNode;
   
 }
 
 const Header = ({
   AccommodationData,
+  menuBtn,
 }: Props) => {
   const navigate = useNavigate();
-  const { setOpenMobile } = useSidebar()
   return (
     <div className="w-full">
       <div className="top-0 left-0 right-0 backdrop-blur-sm z-9 pointer-events-none " />
       <header className=" mx-5 my-2 rounded-xl top-0  right-0 z-10 flex h-14 justify-between items-center border px-4 bg-primary-10">
         <div className="flex items-center gap-5 text-primary">
-          <button className="md:hidden" onClick={() => setOpenMobile(true)}>
-            <Menu className="h-6 w-6" />
-          </button>
+          {menuBtn}
           <span>آژانس</span>
           <span>
             {AccommodationData?.type.name} {AccommodationData?.name}

@@ -2,7 +2,6 @@ import AccommodationForm from "@/app/AdminPanel/Accommodation/components/Accommo
 import AccommodationList from "@/app/AdminPanel/Accommodation/components/AccommodationList";
 import Header from "@/app/AdminPanel/AdminHeader";
 import AccommodationSettings from "@/app/AdminPanel/settings/components/setting/AccommodationSettings";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -28,10 +27,9 @@ function RouteComponent() {
   ];
 
   return (
-    <SidebarProvider>
       <div className="">
         <div className="flex-1 flex flex-col">
-          <Header />
+          <Header/>
           <div className="flex flex-row items-start justify-center gap-4 px-8">
             <Tabs defaultValue={tabsItems[0].title} className="w-full">
               <div className="flex items-center justify-center gap-5">
@@ -58,6 +56,5 @@ function RouteComponent() {
           </div>
         </div>
       </div>
-    </SidebarProvider>
   );
 }
