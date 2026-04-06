@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "@tanstack/react-router";
-import { Bell, LogOut, Menu, User} from "lucide-react";
+import { Bell, LogOut, User} from "lucide-react";
 import type { TAccommodationResponse } from "./Accommodation/types";
 import type { ReactNode } from "react";
 
