@@ -27,7 +27,7 @@ const ForgetPassword = ({ setForgetPassword }: Props) => {
   const [otp, setOtp] = useState<string>("");
   const {
     mutateAsync: requestOTP,
-    // isPending: isRequestingOTP,
+    isPending: isRequestingOTP,
     // error: requestOTPError,
     // reset: resetOTPRequest,
     data: otpResponse,
@@ -101,6 +101,7 @@ const ForgetPassword = ({ setForgetPassword }: Props) => {
         mobile={mobile}
         onSubmit={handleOtpSubmit}
         setStep={setStep}
+        sendingOTP={isRequestingOTP}
       />
     );
   }

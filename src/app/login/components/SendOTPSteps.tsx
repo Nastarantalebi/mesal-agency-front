@@ -28,6 +28,7 @@ interface otpProps {
   mobile: string;
   onSubmit: (data: ISendOTP) => void;
   setStep : Dispatch<SetStateAction<TOtpStep>>
+  sendingOTP: boolean;
 }
 
 const SendOTPSteps = ({ mobile, onSubmit, setStep }: otpProps) => {

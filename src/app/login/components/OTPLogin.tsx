@@ -23,9 +23,9 @@ const OTPLogin = () => {
 
   const {
     mutateAsync: requestOTP,
-    // isPending: isRequestingOTP,
-    // error: requestOTPError,
-    // reset: resetOTPRequest,
+    isPending: isRequestingOTP,
+    error: requestOTPError,
+    reset: resetOTPRequest,
     data: otpResponse,
   } = useRequestOTP();
 
@@ -88,6 +88,7 @@ const OTPLogin = () => {
       mobile={mobile}
       onSubmit={handleOtpSubmit}
       setStep={setStep}
+      sendingOTP={isRequestingOTP}
     />
   );
 };

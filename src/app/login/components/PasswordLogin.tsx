@@ -66,8 +66,9 @@ const PasswordLogin = () => {
               type="submit"
               variant={"outline"}
               className="w-full text-secondary-40 border-4 hover:text-white mt-10"
+              disabled={isLogingIn}
             >
-              ورود
+              {isLogingIn ? "در حال ورود..." : "ورود"}
             </CustomButton>
           </div>
           <div
