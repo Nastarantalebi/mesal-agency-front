@@ -17,7 +17,11 @@ const PasswordLogin = () => {
     resolver: zodResolver(loginvalidation),
     defaultValues: loginInitialValue,
   });
-  const { mutateAsync: passwordLogin } = usePasswordLogin();
+  const {
+    mutateAsync: passwordLogin,
+    isPending: isLogingIn,
+    error: loginError,
+  } = usePasswordLogin();
 
   const [forgetPassword, setForgetPassword] = useState(false);
 
@@ -40,6 +44,13 @@ const PasswordLogin = () => {
           </div>
         </AlertDescription>
       </Alert>
+      {loginError && (
+        <div className="col-span-full rounded-md bg-red-50 p-3 border border-red-200">
+          <p className="text-sm text-red-800">
+            {loginError.response.data.error || loginError.response.data.message}
+          </p>
+        </div>
+      )}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           {LoginPassWordFields.map((item) => (

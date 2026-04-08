@@ -5,7 +5,7 @@ import { useNavigate } from "@tanstack/react-router";
 
 export function useLogout() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const { isPending, mutateAsync } = useMutation({
     mutationFn: async () => {
       const response = await logout();
@@ -13,8 +13,8 @@ export function useLogout() {
     },
 
     onSuccess: (data) => {
-      queryClient.clear();
-      localStorage.clear();
+      // queryClient.clear();
+      // localStorage.clear();
       toast.success(data?.message || "خروج موفق");
       navigate({to: "/login"});
     },

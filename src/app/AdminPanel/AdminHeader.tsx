@@ -6,10 +6,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNavigate } from "@tanstack/react-router";
-import { Bell, LogOut, User} from "lucide-react";
-import type { TAccommodationResponse } from "./Accommodation/types";
+import { Bell, LogOut, User } from "lucide-react";
 import type { ReactNode } from "react";
+import { useLogout } from "../login/services/useLogout";
+import type { TAccommodationResponse } from "./Accommodation/types";
 
 interface Props {
   AccommodationData?: TAccommodationResponse;
@@ -21,7 +21,8 @@ const Header = ({
   AccommodationData,
   menuBtn,
 }: Props) => {
-  const navigate = useNavigate();
+  const { mutateAsync } = useLogout();
+  
   return (
     <div className="w-full">
       <div className="top-0 left-0 right-0 backdrop-blur-sm z-9 pointer-events-none " />
@@ -54,7 +55,7 @@ const Header = ({
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   className="cursor-pointer gap-2 focus:bg-primary/10"
-                  onClick={() => navigate({ to: "/" })}
+                  onClick={() => mutateAsync()}
                 >
                   <LogOut className="w-4 h-4" />
                   خروج
