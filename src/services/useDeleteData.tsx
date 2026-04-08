@@ -1,3 +1,4 @@
+import { Request } from "@/lib/httpService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
@@ -26,7 +27,7 @@ function useDeleteData<TResponse = DeleteResponse>({
     mutationKey: key,
     mutationFn: async ({ id }) => {
       const fullUrl = `${BASE_URL}${url}${id}/`;
-      const { data } = await axios.delete<TResponse>(fullUrl);
+      const { data } = await Request.delete(fullUrl);
       return data;
     },
     onSuccess: () => {

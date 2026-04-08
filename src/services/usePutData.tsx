@@ -2,9 +2,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import type { Props } from "./types";
 import { toast } from "sonner";
+import { Request } from "@/lib/httpService";
 
 
-function usePutData<TRequest, TResponse>({ key, url, onSuccess, onError }: Props) {
+function usePutData<TRequest extends object, TResponse>({ key, url, onSuccess, onError }: Props) {
   const queryClient = useQueryClient();
   const BASE_URL = import.meta.env.VITE_BASE_URL as string;
   
@@ -12,7 +13,7 @@ function usePutData<TRequest, TResponse>({ key, url, onSuccess, onError }: Props
     mutationKey: key,
     mutationFn: async (body: TRequest) => {
       const full_url =`${BASE_URL}${url}/`;
-      const { data } = await axios.put<TResponse>(full_url, body);
+      const { data } = await Request.put(full_url, body);
       return data;
     },
     onSuccess: () => {

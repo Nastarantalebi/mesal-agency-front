@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccommodationIndexRouteImport } from './routes/accommodation/index'
@@ -21,6 +22,11 @@ import { Route as AccommodationIdImagesRouteImport } from './routes/accommodatio
 import { Route as AccommodationIdFeaturesRouteImport } from './routes/accommodation/$id/features'
 import { Route as AccommodationIdAddRoomTypesRouteImport } from './routes/accommodation/$id/addRoomTypes'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -83,6 +89,7 @@ const AccommodationIdAddRoomTypesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
   '/accommodation/': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/accommodation': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
   '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
   '/accommodation/': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/login'
     | '/accommodation/$id'
     | '/accommodation/'
     | '/accommodation/$id/addRoomTypes'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dashboard'
+    | '/login'
     | '/accommodation'
     | '/accommodation/$id/addRoomTypes'
     | '/accommodation/$id/features'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/dashboard'
+    | '/login'
     | '/accommodation/$id'
     | '/accommodation/'
     | '/accommodation/$id/addRoomTypes'
@@ -163,12 +175,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  LoginRoute: typeof LoginRoute
   AccommodationIdRouteRoute: typeof AccommodationIdRouteRouteWithChildren
   AccommodationIndexRoute: typeof AccommodationIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -275,6 +295,7 @@ const AccommodationIdRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  LoginRoute: LoginRoute,
   AccommodationIdRouteRoute: AccommodationIdRouteRouteWithChildren,
   AccommodationIndexRoute: AccommodationIndexRoute,
 }
