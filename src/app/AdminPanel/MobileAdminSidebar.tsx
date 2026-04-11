@@ -4,7 +4,7 @@ import { Menu } from "lucide-react"
 import { useAccommodation } from "./Accommodation/services/useAccommodation"
 
 
-const mobileAdminSidebar = ({id}: {id: string}) => {
+const MobileAdminSidebar = ({id}: {id: string}) => {
     
   const { setOpenMobile } = useSidebar()
   const { getAccommodation } = useAccommodation(+id);
@@ -22,4 +22,4 @@ const mobileAdminSidebar = ({id}: {id: string}) => {
   )
 }
 
-export default mobileAdminSidebar
+export default MobileAdminSidebar

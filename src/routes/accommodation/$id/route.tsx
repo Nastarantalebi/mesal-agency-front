@@ -2,7 +2,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { AppSidebar } from "@/app/AdminPanel/AdminSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { sidebarItems } from "@/fixtures/sideBarData";
-import MobileAdminSidebar from "@/app/AdminPanel/mobileAdminSidebar";
+import MobileAdminSidebar from "@/app/AdminPanel/MobileAdminSidebar";
 
 export const Route = createFileRoute("/accommodation/$id")({
   component: RouteComponent,
