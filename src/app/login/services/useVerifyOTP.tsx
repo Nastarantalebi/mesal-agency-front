@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 // import useAthenticate from "./useAthenticate";
 import { verifyOTP } from "./authServices";
 import type { ISendOTP, LoginResponse } from "../types";

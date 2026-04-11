@@ -1,11 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import type { Props } from "./types";
 import { toast } from "sonner";
 import { Request } from "@/lib/httpService";
 
 
-function usePostData<TRequest extends object, TResponse>({ key, url, onSuccess, onError }: Props) {
+function usePostData<TRequest extends object>({ key, url, onSuccess, onError }: Props) {
   const BASE_URL = import.meta.env.VITE_BASE_URL as string;
   const queryClient = useQueryClient();
 

@@ -1,7 +1,7 @@
 import { beds_key, beds_url, default_key, default_url, features_key, features_url } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
-import type { TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse, TResponseDefaults } from "../types";
+import type { TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse } from "../types";
 import type { TPaginatedResponse } from "@/types";
 import useDeleteData from "@/services/useDeleteData";
 
@@ -12,7 +12,7 @@ export const useDefaults = () => {
     url: default_url,
   });
 
-  const postDefaults = usePostData<TCreateDefaults, TResponseDefaults>({
+  const postDefaults = usePostData<TCreateDefaults>({
     key: [default_key],
     url: default_url,
   });
@@ -22,7 +22,7 @@ export const useDefaults = () => {
 
 export const useFeatures = (currentRoomPage?: number, currentAccommodationPage?: number) => {
 
-    const postFeature = usePostData<TCFeature, TFeatureResponse>({
+    const postFeature = usePostData<TCFeature>({
       key: [features_key],
       url: features_url,
     });
@@ -64,7 +64,7 @@ export const useBeds = (currentBedPage?: number) => {
     url: beds_url,
   });
 
-  const postBed = usePostData<TCreateBed, TBedResponse>({
+  const postBed = usePostData<TCreateBed>({
     key: [beds_key],
     url: beds_url,
   });

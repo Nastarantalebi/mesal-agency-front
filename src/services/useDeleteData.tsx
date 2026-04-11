@@ -1,6 +1,6 @@
 import { Request } from "@/lib/httpService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 interface Props {

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import type { Props } from "./types";
 import { Request } from "@/lib/httpService";

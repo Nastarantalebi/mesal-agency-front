@@ -18,12 +18,12 @@ export const useRoomType = (AccommodationId: number | undefined, RoomTypeId: num
         enabled: !!RoomTypeId,
         });
   
-    const putRoomType = usePutData<TCreateRoomType, TRoomTypeResponse>({
+    const putRoomType = usePutData<TCreateRoomType>({
         key,
         url: `${url}${RoomTypeId}`,
     });
 
-    const postRoomType = usePostData<TCreateRoomType, TRoomTypeResponse>({
+    const postRoomType = usePostData<TCreateRoomType>({
         key,
         url,
     });
@@ -64,7 +64,7 @@ export const useRoomTypeImg = (AccommodationId: number, RoomTypeId: number) => {
     enabled: !!RoomTypeId,
   });
 
-  const postImg = usePostData<FormData, any>({
+  const postImg = usePostData<FormData>({
     key,
     url,
   });
@@ -98,8 +98,7 @@ export const useRoomTypeFeatures = (AccommodationId: number, RoomTypeId: number,
   });
 
   const postRoomTypeFeatures = usePostData<
-    TCRoomTypeFeature,
-    TRoomTypeFeatureResponse
+    TCRoomTypeFeature
   >({
     key,
     url,
@@ -120,7 +119,7 @@ export const useRooms = (AccommodationId: number, RoomTypeId: number) => {
     const key = ["RoomType-rooms", String(RoomTypeId) || ""];
     const url = `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/`;
     
-    const postRoom = usePostData<TCRoomTypesRoom, TRoomTypeRoomResponse>({
+    const postRoom = usePostData<TCRoomTypesRoom>({
       key,
       url,
     });
@@ -168,7 +167,7 @@ export const useRoomTypeBed = (AccommodationId: number, RoomTypeId: number) => {
         enabled: !!RoomTypeId,
       });
 
-    const postRoomTypeBeds = usePostData<TCRoomTypeBed, TRoomTypeBedResponse>({
+    const postRoomTypeBeds = usePostData<TCRoomTypeBed>({
       key,
       url,
     });
@@ -190,8 +189,7 @@ export const useRoomTypePrice = (AccommodationId: number, RoomTypeId: number, st
   });
   
   const postRoomTypePrices = usePostData<
-      TCRoomTypePrices,
-      TRoomTypePricesResponse
+      TCRoomTypePrices
     >({
       key,
       url,

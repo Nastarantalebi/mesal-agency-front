@@ -7,8 +7,6 @@ import type {
 import {
   useCallback,
   useState,
-  type Dispatch,
-  type SetStateAction,
 } from "react";
 import useRequestOTP from "../services/useRequestOTP";
 import SendMobileSteps from "./SendMobileSteps";
@@ -24,8 +22,8 @@ const OTPLogin = () => {
   const {
     mutateAsync: requestOTP,
     isPending: isRequestingOTP,
-    error: requestOTPError,
-    reset: resetOTPRequest,
+    // error: requestOTPError,
+    // reset: resetOTPRequest,
     data: otpResponse,
   } = useRequestOTP();
 

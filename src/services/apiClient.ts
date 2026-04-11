@@ -1,4 +1,4 @@
-import axios from  "axios"
+import axios from "@/lib/axios";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL as string;
 

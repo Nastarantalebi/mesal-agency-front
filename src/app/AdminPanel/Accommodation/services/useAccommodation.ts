@@ -18,16 +18,14 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
     });
 
     const postAccommodation = usePostData<
-        TCreateAccomodation,
-        TAccommodationResponse
+        TCreateAccomodation
     >({
         key: [accommodation_key],
         url: accommodation_url,
     });
 
     const putAccommodation = usePutData<
-        TCreateAccomodation,
-        TAccommodationResponse
+        TCreateAccomodation
     >({
         key,
         url,
@@ -46,6 +44,8 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
       // url: `${accommodation_url}?page=${currentAccommodationPage}`,
       enabled: !!currentAccommodationPage
     });
+
+    // const getAccommodationTypes =useGetData<accommodationTypes>
 
     return { getAccommodation, postAccommodation, putAccommodation, deleteAccommodation, getAccommodations}
 }
@@ -73,8 +73,7 @@ export const useAccommodationFeatures = (AccommodationId: number) => {
       });
     
       const postAccommodationFeatures = usePostData<
-        TCAccommodationFeature,
-        TAccommodationFeatureResponse
+        TCAccommodationFeature
       >({
         key,
         url,
@@ -103,7 +102,7 @@ export const useAccommodationImg = (AccommodationId: number) => {
         url,
     });
 
-    const postImg = usePostData<FormData, any>({
+    const postImg = usePostData<FormData>({
         key,
         url,
     });

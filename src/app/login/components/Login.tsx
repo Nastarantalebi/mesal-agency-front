@@ -1,6 +1,6 @@
 import CustomTab from "@/components/tabs/CustomTab";
 import { Separator } from "@/components/ui/separator";
-import { loginTabItems } from "../fixtures/loginTabItems";
+import { loginTabItems } from "../fixtures/LoginTabItems";
 
 const Login = () => {
  return (

@@ -4,7 +4,11 @@ import type { IForgotPassword, ILogingForm, ISendMobile, ISendOTP, } from "../ty
 const LOGIN_URL = import.meta.env.VITE_BACKEND_Login_URL;
 
 export async function refresh() {
-  const { data } = await Request.post(`${LOGIN_URL}/refresh/`);
+  const { data } = await Request.post(
+    `${LOGIN_URL}/refresh/`,
+    {},
+    { withCredentials: true }
+  );
   return data;
 }
 

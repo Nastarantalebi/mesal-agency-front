@@ -12,7 +12,7 @@ const usePeakDate = (AccommodationId: number | undefined, startDate: string, end
       url: `${url}?start_date=${startDate}&end_date=${endDate}`,
     });
   
-    const postPeakDate = usePostData<TCreatePeakDate, TResponsePeakDate>({
+    const postPeakDate = usePostData<TCreatePeakDate>({
       key: ["peakdate", startDate, endDate],
       url,
     });

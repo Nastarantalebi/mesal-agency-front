@@ -4,15 +4,22 @@ import { routeTree } from "./routeTree.gen";
 import "./index.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 // import { QueryClient } from "./lib/clientQuery";
-import 'leaflet/dist/leaflet.css'
+import "leaflet/dist/leaflet.css";
 import { queryClient } from "./lib/clientQuery";
-import 'leaflet/dist/leaflet.css'
-
+import "leaflet/dist/leaflet.css";
+import { QueryClient } from "@tanstack/react-query";
 // const queryClient = new QueryClient();
+
+export interface RouterContext {
+  queryClient: QueryClient;
+}
 
 // Set up a Router instance
 const router = createRouter({
   routeTree,
+  context: {
+    queryClient,
+  },
   defaultPreload: "intent",
   defaultStaleTime: 5000,
   scrollRestoration: true,
