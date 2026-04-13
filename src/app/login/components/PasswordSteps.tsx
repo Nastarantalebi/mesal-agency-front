@@ -8,7 +8,6 @@ import {
   Lightbulb,
   Loader2,
   Phone,
-  Lock,
   Clock,
 } from "lucide-react";
 import formTypes from "@/components/form/FormInputTypes";

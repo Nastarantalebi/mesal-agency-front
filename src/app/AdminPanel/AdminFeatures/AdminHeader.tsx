@@ -7,10 +7,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Bell, LogOut, User } from "lucide-react";
-import { type ReactNode } from "react";
-import { useLogout } from "../login/services/useLogout";
-import type { TAccommodationResponse } from "./Accommodation/types";
-import useMe from "../login/services/useMe";
+import { useState, type ReactNode } from "react";
+import { useLogout } from "../../login/services/useLogout";
+import type { TAccommodationResponse } from "../Accommodation/types";
+import useMe from "../../login/services/useMe";
+import UserProfile from "./hooks/UserProfile";
 
 interface Props {
   AccommodationData?: TAccommodationResponse;
@@ -19,12 +20,9 @@ interface Props {
 
 const Header = ({ AccommodationData, menuBtn }: Props) => {
   const { mutateAsync } = useLogout();
-  const {data} = useMe();
-  // const [open, setOpen] = useState(false);
+  const { data } = useMe();
+  const [open, setOpen] = useState(false);
 
-  // const handleClick = () => {
-  //   setOpen(true);
-  // };
   return (
     <div className="w-full">
       <div className="top-0 left-0 right-0 backdrop-blur-sm z-9 pointer-events-none " />
@@ -52,10 +50,10 @@ const Header = ({ AccommodationData, menuBtn }: Props) => {
               <div dir="rtl">
                 <DropdownMenuItem
                   className="cursor-pointer gap-2 focus:bg-primary/10"
-                  // onClick={handleClick}
+                  onClick={() => setOpen(true)}
                 >
                   <User className="w-4 h-4" />
-                {data?.mobile}
+                  {data?.mobile}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -70,11 +68,11 @@ const Header = ({ AccommodationData, menuBtn }: Props) => {
           </DropdownMenu>
         </div>
       </header>
-      {/* <UserProfile
+      <UserProfile
         title="پروفایل کاربری"
         open={open}
         onOpenChange={() => setOpen(false)}
-      /> */}
+      />
     </div>
   );
 };

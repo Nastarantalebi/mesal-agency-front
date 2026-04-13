@@ -4,7 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 const useLoginFields = () => {
-    const [showPass, setShowPass] = useState(false)
+  const [showPass, setShowPass] = useState(false);
   const LoginMobileFields: Items<ISendMobile>[] = [
     {
       name: "mobile",
@@ -32,9 +32,13 @@ const useLoginFields = () => {
       label: "رمز عبور",
       isRequired: false,
       fieldType: "input",
-      inputType: showPass ? "text": "password",
+      inputType: showPass ? "text" : "password",
       direction: "ltr",
-      icon: <button type="button" onClick={() => setShowPass(!showPass)}>{showPass ? <EyeOff/> : <Eye/>}</button>,
+      icon: (
+        <button type="button" onClick={() => setShowPass(!showPass)}>
+          {showPass ? <EyeOff /> : <Eye />}
+        </button>
+      ),
     },
   ];
 
@@ -44,14 +48,26 @@ const useLoginFields = () => {
       label: "رمز عبور",
       isRequired: false,
       fieldType: "input",
-      inputType: "text",
+      inputType: showPass ? "text" : "password",
+      direction: "ltr",
+      icon: (
+        <button type="button" onClick={() => setShowPass(!showPass)}>
+          {showPass ? <EyeOff /> : <Eye />}
+        </button>
+      ),
     },
     {
       name: "confirm_password",
       label: "تکرار رمز عبور",
       isRequired: false,
       fieldType: "input",
-      inputType: "text",
+      inputType: showPass ? "text" : "password",
+      direction: "ltr",
+      icon: (
+        <button type="button" onClick={() => setShowPass(!showPass)}>
+          {showPass ? <EyeOff /> : <Eye />}
+        </button>
+      ),
     },
   ];
   return { LoginMobileFields, LoginPassWordFields, LoginNewPasswordFields };

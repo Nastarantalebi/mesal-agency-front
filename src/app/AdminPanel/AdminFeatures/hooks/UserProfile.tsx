@@ -1,10 +1,10 @@
+import useMe from "@/app/login/services/useMe";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import useMe from "../login/services/useMe";
 
 interface Props {
   open?: boolean;

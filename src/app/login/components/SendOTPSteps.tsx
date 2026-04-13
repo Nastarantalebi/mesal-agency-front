@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useForm } from "react-hook-form";
 import { otpValidation } from "../fixtures/validation";
-import type { ISendOTP, TOtpStep } from "../types";
+import type { ISendOTP } from "../types";
 import {
   Form,
   FormControl,
