@@ -12,10 +12,10 @@ import type {
   TOtpStep,
 } from "../types";
 import useForgotPassWord from "../services/useForgetPassword";
-import { verifyOTP } from "../services/authServices";
 import SendMobileSteps from "./SendMobileSteps";
 import SendOTPSteps from "./SendOTPSteps";
 import PasswordSteps from "./PasswordSteps";
+import useOTPExpire from "../hooks/useOTPExpire";
 
 type Props = {
   setForgetPassword: Dispatch<SetStateAction<boolean>>;
@@ -28,15 +28,24 @@ const ForgetPassword = ({ setForgetPassword }: Props) => {
   const {
     mutateAsync: requestOTP,
     isPending: isRequestingOTP,
-    // error: requestOTPError,
-    // reset: resetOTPRequest,
-    data: otpResponse,
+    error: requestOTPError,
+    reset: resetOTPRequest,
   } = useRequestOTP();
 
   const {
+    canResend,
+    isExpired,
+    resetCountdowns,
+    formattedResendTime,
+    formattedExpireTime,
+    startExpireCountdownAt,
+    startResendCountdownAt,
+  } = useOTPExpire();
+
+  const {
     mutateAsync: changePassword,
-    // isPending: changing,
-    // error: changePasswordError,
+    isPending: changing,
+    error: changePasswordError,
   } = useForgotPassWord();
 
   const handleMobileSubmit = useCallback(
@@ -47,21 +56,23 @@ const ForgetPassword = ({ setForgetPassword }: Props) => {
           onSuccess: (responseData) => {
             setMobile(responseData.mobile);
             setStep("otp");
+
+            startExpireCountdownAt(responseData.otp_expire);
+            startResendCountdownAt(responseData.otp_expire);
           },
         },
       );
     },
-    [requestOTP],
+    [requestOTP, startResendCountdownAt, startExpireCountdownAt],
   );
 
   const handlePasswordSubmit = useCallback(
     async (data: IForgotPassword) => {
-      //   // Check if OTP is expired
-      //   if (isExpired) {
-      //     // console.error("OTP has expired");
-      //     return;
-      //   }
-      console.log(data)
+      // Check if OTP is expired
+      if (isExpired) {
+        // console.error("OTP has expired");
+        return;
+      }
 
       changePassword(
         {
@@ -77,22 +88,59 @@ const ForgetPassword = ({ setForgetPassword }: Props) => {
         },
       );
     },
-    [changePassword, setForgetPassword],
+    [changePassword, isExpired, setForgetPassword],
   );
 
   const handleOtpSubmit = useCallback(
-    (data: ISendOTP) => {
-      setOtp(data.otp);
-      const hasPassword = otpResponse?.has_password ?? true;
-      if (hasPassword) {
-        setStep("password");
+    async (data: ISendOTP) => {
+      // Check if OTP is expired
+      if (isExpired) {
+        // console.error("OTP has expired");
+        return;
       }
+
+      setOtp(data.otp);
+      setStep("password");
     },
-    [verifyOTP, otpResponse],
+    [isExpired],
   );
 
+  const handleResendOtp = useCallback(() => {
+    // Prevent resend if countdown is active or mobile is empty
+    if (!canResend || !mobile || isRequestingOTP) {
+      return;
+    }
+
+    requestOTP(
+      { mobile },
+      {
+        onSuccess: (responseData) => {
+          startExpireCountdownAt(responseData.otp_expire);
+          startResendCountdownAt(responseData.otp_expire);
+        },
+      },
+    );
+  }, [
+    mobile,
+    canResend,
+    isRequestingOTP,
+    requestOTP,
+    startResendCountdownAt,
+    startExpireCountdownAt,
+  ]);
+
+  const handleChangeMobile = useCallback(() => {
+    setStep("mobile");
+    setMobile("");
+    setOtp("");
+    resetCountdowns();
+    resetOTPRequest();
+  }, [resetCountdowns, resetOTPRequest]);
+
   if (step === "mobile") {
-    return <SendMobileSteps onSubmit={handleMobileSubmit} />;
+    return (
+      <SendMobileSteps onSubmit={handleMobileSubmit} error={requestOTPError} />
+    );
   }
 
   if (step === "otp") {
@@ -100,8 +148,15 @@ const ForgetPassword = ({ setForgetPassword }: Props) => {
       <SendOTPSteps
         mobile={mobile}
         onSubmit={handleOtpSubmit}
-        setStep={setStep}
-        sendingOTP={isRequestingOTP}
+        isSendingOTP={isRequestingOTP}
+        canResend={canResend}
+        isExpired={isExpired}
+        resendCountdown={formattedResendTime}
+        expireCountdown={formattedExpireTime}
+        onResend={handleResendOtp}
+        isLoading={changing}
+        error={changePasswordError}
+        onChangeMobile={handleChangeMobile}
       />
     );
   }
@@ -112,6 +167,11 @@ const ForgetPassword = ({ setForgetPassword }: Props) => {
         mobile={mobile}
         otp={otp}
         onSubmit={handlePasswordSubmit}
+        onChangeMobile={handleChangeMobile}
+        isLoading={changing}
+        isExpired={isExpired}
+        error={changePasswordError}
+        expireCountdown={formattedExpireTime}
       />
     );
   }

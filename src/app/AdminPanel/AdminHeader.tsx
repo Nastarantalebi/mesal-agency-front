@@ -7,22 +7,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Bell, LogOut, User } from "lucide-react";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { useLogout } from "../login/services/useLogout";
 import type { TAccommodationResponse } from "./Accommodation/types";
+import useMe from "../login/services/useMe";
 
 interface Props {
   AccommodationData?: TAccommodationResponse;
   menuBtn?: ReactNode;
-  
 }
 
-const Header = ({
-  AccommodationData,
-  menuBtn,
-}: Props) => {
+const Header = ({ AccommodationData, menuBtn }: Props) => {
   const { mutateAsync } = useLogout();
-  
+  const {data} = useMe();
+  // const [open, setOpen] = useState(false);
+
+  // const handleClick = () => {
+  //   setOpen(true);
+  // };
   return (
     <div className="w-full">
       <div className="top-0 left-0 right-0 backdrop-blur-sm z-9 pointer-events-none " />
@@ -48,9 +50,12 @@ const Header = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="items-end">
               <div dir="rtl">
-                <DropdownMenuItem className="cursor-pointer gap-2 focus:bg-primary/10">
+                <DropdownMenuItem
+                  className="cursor-pointer gap-2 focus:bg-primary/10"
+                  // onClick={handleClick}
+                >
                   <User className="w-4 h-4" />
-                  نسترن طالبی
+                {data?.mobile}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -65,6 +70,11 @@ const Header = ({
           </DropdownMenu>
         </div>
       </header>
+      {/* <UserProfile
+        title="پروفایل کاربری"
+        open={open}
+        onOpenChange={() => setOpen(false)}
+      /> */}
     </div>
   );
 };

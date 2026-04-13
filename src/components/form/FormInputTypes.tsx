@@ -7,6 +7,7 @@ import DateInput from "./DateInput";
 import CustomCheckbox from "./CustomCheckbox";
 import CustomMapPicker from "./Map";
 import TimeInput from "./TimeInput";
+import type { ReactNode } from "react";
 
 export interface Items<T> {
   name: Path<T>;
@@ -19,6 +20,9 @@ export interface Items<T> {
   onValueChange?: (value: string | number) => void;
   className?: string;
   page?: number;
+  maxLength?: number;
+  icon?: ReactNode;
+  direction?: string;
 }
 
 function formTypes<T extends FieldValues>(
@@ -30,6 +34,9 @@ function formTypes<T extends FieldValues>(
     options,
     inputType,
     onValueChange,
+    maxLength,
+    icon,
+    direction,
   }: Items<T>,
   control: Control<T>,
 ) {
@@ -56,6 +63,9 @@ function formTypes<T extends FieldValues>(
           isRequired={isRequired}
           inputType={inputType}
           control={control}
+          maxLength={maxLength}
+          icon={icon}
+          direction={direction}
         />
       );
 

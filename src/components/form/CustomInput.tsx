@@ -11,45 +11,56 @@ const CustomInput = <T extends FieldValues>({
   isRequired,
   inputType = "text",
   control,
+  maxLength,
+  icon,
+  direction,
 }: Props<T>) => {
+  // if (inputType === "number" || inputType === "tel") direction = "ltr";
+  
+  const dir = (inputType === "number" || inputType === "tel") ? "ltr" : direction
+  console.log(dir, direction)
+
   return (
-    <div className="min-w-0 w-full space-y-2">
-      <Label className="block">
+    <>
+      <Label className="block my-2">
         {label}
         {isRequired && <span className="text-red-600">*</span>}
       </Label>
-
-      <Controller
-        name={name}
-        control={control}
-        render={({ field, fieldState }) => (
-          <>
-            <Input
-              {...field}
-              type={inputType}
-              dir={inputType === "number" ? "ltr" : undefined}
-              onChange={(e) => {
-                if (inputType === "number") {
-                  if (e.target.value === null) {
-                    field.onChange(0);
-                  } else {
-                    field.onChange(e.target.valueAsNumber);
-                  }
-                } else {
-                  field.onChange(e.target.value);
-                }
-              }}
-              className={`${fieldState.error ? "border-red-600" : ""} ${inputType === "number" ? "text-left" : ""}`}
-            />
-            {fieldState.error?.message && (
-              <p className="text-[0.8rem] font-medium text-destructive">
-                {fieldState.error.message}
-              </p>
-            )}
-          </>
-        )}
-      />
-    </div>
+      <div className="min-w-0 w-full space-y-2" dir={dir}>
+        <Controller
+          name={name}
+          control={control}
+          render={({ field, fieldState }) => (
+            <>
+              <div className="relative">
+                <Input
+                  {...field}
+                  type={inputType}
+                  dir={dir}
+                  maxLength={maxLength}
+                  onChange={(e) => {
+                    if (inputType === "number") {
+                      field.onChange(e.target.valueAsNumber ?? 0);
+                    } else {
+                      field.onChange(e.target.value);
+                    }
+                  }}
+                  className={`pr-10 ${fieldState.error ? "border-red-600" : ""}`}
+                />
+                <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-700 items-center justify-center flex cursor-pointer">
+                  {icon}
+                </span>
+              </div>
+              {fieldState.error?.message && (
+                <p className="text-[0.8rem] font-medium text-destructive">
+                  {fieldState.error.message}
+                </p>
+              )}
+            </>
+          )}
+        />
+      </div>
+    </>
   );
 };
 

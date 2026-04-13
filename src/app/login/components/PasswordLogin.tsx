@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { type ILogingForm } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginInitialValue, loginvalidation } from "../fixtures/validation";
-import { LoginPassWordFields } from "../fixtures/LoginFields";
 import formTypes from "@/components/form/FormInputTypes";
 import CustomButton from "@/components/form/CustomButton";
 import { Form } from "@/components/ui/form";
@@ -11,6 +10,7 @@ import { useState } from "react";
 import ForgetPassword from "./ForgetPassword";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Lightbulb } from "lucide-react";
+import useLoginFields from "../hooks/useLoginFields";
 
 const PasswordLogin = () => {
   const form = useForm<ILogingForm>({
@@ -28,6 +28,8 @@ const PasswordLogin = () => {
   const handleSubmit = (data: ILogingForm) => {
     passwordLogin(data);
   };
+
+  const { LoginPassWordFields } = useLoginFields();
 
   return forgetPassword ? (
     <ForgetPassword setForgetPassword={setForgetPassword} />

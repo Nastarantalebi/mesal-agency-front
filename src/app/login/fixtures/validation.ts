@@ -1,7 +1,7 @@
 import z from "zod";
 import type { ILogingForm, ISendMobile } from "../types";
 
-export const mobileSchema = z.string().min(1, "شماره موبایل الزامی است").regex(/^09\d{9}$/, "شماره موبایل معتبر نیست")
+export const mobileSchema = z.string().regex(/^09\d{9}$/, "شماره موبایل معتبر نیست").length(11, "شماره موبایل باید ۱۱ رقم باشد")
 export const passwordSchema = z
       .string()
       .min(8, "رمز عبور باید حداقل 8 کاراکتر باشد")

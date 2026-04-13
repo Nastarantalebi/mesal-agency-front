@@ -1,6 +1,7 @@
 import type { Control, FieldValues, Path } from "react-hook-form";
 import type { InputType } from "./CustomInput";
 import type { Item } from "@/app/AdminPanel/Accommodation/types";
+import type { ReactNode } from "react";
 
 export interface Props<T extends FieldValues> {
   name: Path<T>;
@@ -11,4 +12,7 @@ export interface Props<T extends FieldValues> {
   inputType?: InputType;
   onValueChange?: (value: string | number) => void;
   control?: Control<T>;
+  maxLength?: number;
+  icon?:ReactNode;
+  direction?: string;
 }

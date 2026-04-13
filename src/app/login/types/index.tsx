@@ -58,3 +58,12 @@ export interface LoginTabsProps {
   step: TOtpStep;
   setStep: Dispatch<SetStateAction<TOtpStep>>
 }
+
+export type TChangePass = {
+  old_password: string;
+  new_password: string;
+  confirm_password: string;
+};
+export type TAvatar = {
+  avatar: File | null;
+};
