@@ -1,4 +1,5 @@
 import CustomButton from "@/components/form/CustomButton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { BedSingle } from "lucide-react";
 
 
@@ -12,9 +13,22 @@ const ListBeds = ({onClick} : Props) => {
 
   return (
     <div onClick={stopRowClick}>
-      <CustomButton className="bg-primary/20 hover:bg-primary/40" type="button" onClick={onClick}>
-        <BedSingle className="h-5 w-5 cursor-pointer" strokeWidth={1.5}  />
-      </CustomButton>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <CustomButton
+              className="bg-primary/20 hover:bg-primary/40"
+              type="button"
+              onClick={onClick}
+            >
+              <BedSingle className="h-5 w-5 cursor-pointer" strokeWidth={1.5} />
+            </CustomButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>مدیریت تخت‌ها</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   );
 };
