@@ -7,15 +7,22 @@ export const Route = createFileRoute("/useNotFound")({
 });
 
 function RouteComponent() {
-  const {mutateAsync} = useLogout()
+  const { mutateAsync } = useLogout();
+
   return (
-    <div className=" flex justify-center items-start">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 gap-8">
       <img
         src="./userNotFound.png"
         alt="userNotFound"
-        className="w-200  h-200"
+        className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl h-auto"
       />
-      <button onClick={() => mutateAsync()} className="w-30 h-15 bg-blue-400 text-2xl gap-2 mt-20 text-white flex flex-row justify-center items-center rounded-xl cursor-pointer">خروج <ArrowLeft/></button>
+
+      <button
+        onClick={() => mutateAsync()}
+        className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-400 text-white text-lg sm:text-xl rounded-xl cursor-pointer hover:bg-blue-500 transition"
+      >
+        خروج <ArrowLeft />
+      </button>
     </div>
   );
 }

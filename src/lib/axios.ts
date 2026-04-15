@@ -36,7 +36,7 @@ const attachRefreshInterceptor = (axiosInstance: AxiosInstance) => {
       const data = error.response.data as { code?: string };
       const code = data.code;
 
-      if (status === 403 && code === "permision-denied") {
+      if (status === 403 && code === "permission_denied") {
         window.location.replace("/notAdmin");
         return Promise.reject(error);
       }
