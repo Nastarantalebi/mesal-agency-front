@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UseNotFoundRouteImport } from './routes/useNotFound'
+import { Route as NotAdminRouteImport } from './routes/notAdmin'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
@@ -22,6 +24,16 @@ import { Route as AccommodationIdImagesRouteImport } from './routes/accommodatio
 import { Route as AccommodationIdFeaturesRouteImport } from './routes/accommodation/$id/features'
 import { Route as AccommodationIdAddRoomTypesRouteImport } from './routes/accommodation/$id/addRoomTypes'
 
+const UseNotFoundRoute = UseNotFoundRouteImport.update({
+  id: '/useNotFound',
+  path: '/useNotFound',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotAdminRoute = NotAdminRouteImport.update({
+  id: '/notAdmin',
+  path: '/notAdmin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -90,6 +102,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/notAdmin': typeof NotAdminRoute
+  '/useNotFound': typeof UseNotFoundRoute
   '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
   '/accommodation/': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
@@ -104,6 +118,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/notAdmin': typeof NotAdminRoute
+  '/useNotFound': typeof UseNotFoundRoute
   '/accommodation': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
   '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
@@ -118,6 +134,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/notAdmin': typeof NotAdminRoute
+  '/useNotFound': typeof UseNotFoundRoute
   '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
   '/accommodation/': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
@@ -134,6 +152,8 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/notAdmin'
+    | '/useNotFound'
     | '/accommodation/$id'
     | '/accommodation/'
     | '/accommodation/$id/addRoomTypes'
@@ -148,6 +168,8 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/notAdmin'
+    | '/useNotFound'
     | '/accommodation'
     | '/accommodation/$id/addRoomTypes'
     | '/accommodation/$id/features'
@@ -161,6 +183,8 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/notAdmin'
+    | '/useNotFound'
     | '/accommodation/$id'
     | '/accommodation/'
     | '/accommodation/$id/addRoomTypes'
@@ -176,12 +200,28 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
+  NotAdminRoute: typeof NotAdminRoute
+  UseNotFoundRoute: typeof UseNotFoundRoute
   AccommodationIdRouteRoute: typeof AccommodationIdRouteRouteWithChildren
   AccommodationIndexRoute: typeof AccommodationIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/useNotFound': {
+      id: '/useNotFound'
+      path: '/useNotFound'
+      fullPath: '/useNotFound'
+      preLoaderRoute: typeof UseNotFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notAdmin': {
+      id: '/notAdmin'
+      path: '/notAdmin'
+      fullPath: '/notAdmin'
+      preLoaderRoute: typeof NotAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -296,6 +336,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
+  NotAdminRoute: NotAdminRoute,
+  UseNotFoundRoute: UseNotFoundRoute,
   AccommodationIdRouteRoute: AccommodationIdRouteRouteWithChildren,
   AccommodationIndexRoute: AccommodationIndexRoute,
 }

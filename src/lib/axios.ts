@@ -5,7 +5,7 @@ import axios, {
 } from "axios";
 
 const LOGIN_URL = import.meta.env.VITE_BACKEND_Login_URL;
-const SUPPORT_URL = import.meta.env.VITE_SUPPORT_URL;
+// const SUPPORT_URL = import.meta.env.VITE_SUPPORT_URL;
 const BACKEND_URL = import.meta.env.VITE_BASE_URL;
 
 // وضعیت‌های مشترک برای مدیریت توکن
@@ -29,23 +29,30 @@ const attachRefreshInterceptor = (axiosInstance: AxiosInstance) => {
         _retry?: boolean;
       };
 
-      if (!error.response || error.response.status !== 401) {
+      if (!error.response) {
         return Promise.reject(error);
       }
       const status = error.response.status;
       const data = error.response.data as { code?: string };
       const code = data.code;
-      if (status === 401) {
-        if (code === "USER_NOT_FOUND") {
-          // await logout().catch(() => {});
-          window.location.replace("/user-not-found");
-          return Promise.reject(error);
-        }
+
+      if (status === 403 && code === "permision-denied") {
+        window.location.replace("/notAdmin");
+        return Promise.reject(error);
+      }
+      if (status === 401 && code === "USER_NOT_FOUND") {
+        window.location.replace("/userNotFound");
+        return Promise.reject(error);
       }
       // جلوگیری از رفرش در صفحه لاگین
       if (window.location.pathname.startsWith("/login")) {
         return Promise.reject(error);
       }
+
+
+      // if (status !== 401) {
+      //   return Promise.reject(error);
+      // }
 
       if (original._retry) return Promise.reject(error);
       original._retry = true;
@@ -87,12 +94,12 @@ export const instance = axios.create({
   headers: { Accept: "application/json" },
 });
 
-export const supportAxios = axios.create({
-  baseURL: SUPPORT_URL,
-  withCredentials: true,
-  timeout: 15000,
-  headers: { Accept: "application/json" },
-});
+// export const supportAxios = axios.create({
+//   baseURL: SUPPORT_URL,
+//   withCredentials: true,
+//   timeout: 15000,
+//   headers: { Accept: "application/json" },
+// });
 
 export const plainInstance = axios.create({
   baseURL: LOGIN_URL,
@@ -101,6 +108,6 @@ export const plainInstance = axios.create({
 
 // ---- اعمال اینترسپتور روی هر دو ----
 attachRefreshInterceptor(instance);
-attachRefreshInterceptor(supportAxios);
+// attachRefreshInterceptor(supportAxios);
 
 export default instance;
