@@ -69,8 +69,8 @@ export default function PhotoUploader({
           />
         ) : (
           <>
-            <ImageIcon className="h-6 w-6" />
-            <span className="text-sm">برای افزودن عکس کلیک کنید</span>
+            <ImageIcon className="h-6 w-6 flex justify-center items-center" />
+            <span className="text-sm flex justify-center items-center text-center">برای افزودن عکس کلیک کنید</span>
           </>
         )}
       </div>

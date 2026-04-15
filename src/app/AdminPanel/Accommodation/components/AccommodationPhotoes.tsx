@@ -29,7 +29,7 @@ const AccommodationPhotoes = ({AccommodationId}: Props) => {
   const sideImages = images.filter((img) => !img.main).slice(0, 4);
 
   return (
-    <main className="w-full flex flex-row gap-4 justify-center">
+    <main className="w-full flex flex-col lg:flex-row gap-4 justify-center">
       <div className="relative">
         {mainImage ? (
           <>
@@ -46,7 +46,7 @@ const AccommodationPhotoes = ({AccommodationId}: Props) => {
             </button>
           </>
         ) : (
-          <PhotoUploader size={530} onPick={onPick} />
+          <PhotoUploader size={330} onPick={onPick} />
         )}
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -69,7 +69,7 @@ const AccommodationPhotoes = ({AccommodationId}: Props) => {
                   </button>
                 </>
               ) : (
-                <PhotoUploader size={260} onPick={onPick} />
+                <PhotoUploader size={160} onPick={onPick} />
               )}
             </div>
           );

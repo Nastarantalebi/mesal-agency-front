@@ -20,6 +20,7 @@ import ListPrice from "../roomTypeListIcons/ListPrice";
 import ListRooms from "../roomTypeListIcons/ListRooms";
 import SearchInput from "@/components/list/SearchInput";
 import ListPagination from "@/components/list/ListPagination";
+import ListEdit from "@/components/list/ListEdit";
 
 export const columns: ColumnDef<RoomItem>[] = [
   {
@@ -30,17 +31,19 @@ export const columns: ColumnDef<RoomItem>[] = [
   },
 ];
 
-
 const RoomTypeList = ({ AccommodationId }: Props) => {
   const [searchInput, setSearchInput] = useState("");
-  const [ input, setInput ] = useState("");
-  const [ currentPage, setCurrentPage ] = useState(1)
+  const [input, setInput] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { getRoomTypeList, deleteRoomType } = useRoomTypeList(AccommodationId, currentPage, searchInput)
+  const { getRoomTypeList, deleteRoomType } = useRoomTypeList(
+    AccommodationId,
+    currentPage,
+    searchInput,
+  );
 
   const [openEdit, setOpenEdit] = useState(false);
   const [selected, setSelected] = useState<RoomItem | null>(null);
-
 
   const [openAdd, setAddRoomType] = useState(false);
   const [openImg, setOpenImg] = useState(false);
@@ -50,87 +53,102 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   const [openD, setopenD] = useState(false);
   const [openP, setopenP] = useState(false);
 
-
   const handleDelete = async (id: number) => {
     await deleteRoomType.mutateAsync({ id });
   };
 
-  const PageCount = getRoomTypeList.data?.count ? Math.ceil(getRoomTypeList.data.count / 10) : 0;
-  
+  const PageCount = getRoomTypeList.data?.count
+    ? Math.ceil(getRoomTypeList.data.count / 10)
+    : 0;
 
   if (getRoomTypeList.isFetching) return <div>Loading...</div>;
-  if (getRoomTypeList.error) return <div className="text-red-600">{getRoomTypeList.error.message}</div>;
+  if (getRoomTypeList.error)
+    return <div className="text-red-600">{getRoomTypeList.error.message}</div>;
 
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
   return (
     <>
-      <Button
-        variant={"outline"}
-        className="mb-5 border-green-600 text-green-600 hover:bg-green-50 hover:text-green-600"
-        onClick={() => {
-          setAddRoomType(true);
-        }}
-      >
-        <Plus className="" />
-        افزودن نوع اتاق جدید
-      </Button>
-      <SearchInput input={input} setInput={setInput} setSearchInput={setSearchInput}/>
-      <CustomDataTable
-        onEdit={(rowData) => {
-          setSelected(rowData);
-          setOpenEdit(true);
-        }}
-        extraAction={(rowData) => (
-          <>
-            <ListImage
-              onClick={() => {
-                setSelected(rowData);
-                setOpenImg(true);
-              }}
-            />
-            <ListFeatures
-              onClick={() => {
-                setSelected(rowData);
-                setOpenF(true);
-              }}
-            />
-            <ListBeds
-              onClick={() => {
-                setSelected(rowData);
-                setOpenB(true);
-              }}
-            />
-            <ListRooms
-              onClick={() => {
-                setSelected(rowData);
-                setopenR(true);
-              }}
-            />
-            <ListPrice
-              onClick={() => {
-                setSelected(rowData);
-                setopenP(true);
-              }}
-            />
-            <ListDelete
-              onClick={() => {
-                setSelected(rowData);
-                setopenD(true);
-              }}
-            />
-          </>
-        )}
-        showAction={true}
-        columns={columns}
-        data={getRoomTypeList.data?.results ?? []}
-      />
-      <div className="mt-7">
-        <ListPagination
-          pageCount={PageCount}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
+      <div className="px-2 sm:px-0">
+        <Button
+          variant={"outline"}
+          className="mb-5 border-green-600 text-green-600 hover:bg-green-50 hover:text-green-600 w-full sm:w-auto"
+          // ⭐ button full-width on mobile
+          onClick={() => {
+            setAddRoomType(true);
+          }}
+        >
+          <Plus />
+          افزودن نوع اتاق جدید
+        </Button>
+
+        <SearchInput
+          input={input}
+          setInput={setInput}
+          setSearchInput={setSearchInput}
         />
+
+        <div className="overflow-x-auto rounded-md mt-4">
+          <CustomDataTable
+            extraAction={(rowData) => (
+              <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
+                <ListEdit
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenEdit(true);
+                  }}
+                />
+                <ListImage
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenImg(true);
+                  }}
+                />
+                <ListFeatures
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenF(true);
+                  }}
+                />
+                <ListBeds
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenB(true);
+                  }}
+                />
+                <ListRooms
+                  onClick={() => {
+                    setSelected(rowData);
+                    setopenR(true);
+                  }}
+                />
+                <ListPrice
+                  onClick={() => {
+                    setSelected(rowData);
+                    setopenP(true);
+                  }}
+                />
+                <ListDelete
+                  onClick={() => {
+                    setSelected(rowData);
+                    setopenD(true);
+                  }}
+                />
+              </div>
+            )}
+            showAction={true}
+            columns={columns}
+            data={getRoomTypeList.data?.results ?? []}
+          />
+        </div>
+
+        <div className="mt-7 flex justify-center">
+          <ListPagination
+            pageCount={PageCount}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       </div>
 
       <RoomTypeForm
