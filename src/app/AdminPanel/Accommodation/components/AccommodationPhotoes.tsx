@@ -46,7 +46,7 @@ const AccommodationPhotoes = ({AccommodationId}: Props) => {
             </button>
           </>
         ) : (
-          <PhotoUploader size={330} onPick={onPick} />
+          <PhotoUploader size={530} onPick={onPick} />
         )}
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -69,7 +69,7 @@ const AccommodationPhotoes = ({AccommodationId}: Props) => {
                   </button>
                 </>
               ) : (
-                <PhotoUploader size={160} onPick={onPick} />
+                <PhotoUploader size={260} onPick={onPick} />
               )}
             </div>
           );
