@@ -1,5 +1,5 @@
 import z from "zod"
-import type { TCFeature, TCreateBed, TCreateDefaults } from "../types"
+import type { createUsersList, TCFeature, TCreateBed, TCreateDefaults } from "../types"
 
 
 export const bedValidation = z.object({
@@ -37,3 +37,15 @@ export const DefaultsInitialValues: TCreateDefaults = {
   check_in_time: "",
   check_out_time: "",
 };
+
+///////////////////////////////////////////////////////////////
+
+export const usersFilterValidation = z.object({
+  mobile: z.string(),
+  is_staff: z.boolean(),
+})
+
+export const usersFilterInitialValues: createUsersList = {
+  mobile: "",
+  is_staff: true,
+}

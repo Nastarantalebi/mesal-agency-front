@@ -45,7 +45,7 @@ const RoomTypeRoomList = ({ AccommodationId, RoomTypeId }: Props) => {
 
   return (
     <>
-      <SearchInput input={input} setInput={setInput} setSearchInput={setSearchInput}/>
+      <SearchInput input={input} setInput={setInput} setSearchInput={setSearchInput} placeholder="جست و جوی نام اتاق"/>
       <CustomDataTable
         columns={columns}
         showAction={true}

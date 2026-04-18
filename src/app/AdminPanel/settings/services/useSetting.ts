@@ -1,7 +1,7 @@
-import { beds_key, beds_url, default_key, default_url, features_key, features_url } from "@/data/querykeys";
+import { beds_key, beds_url, default_key, default_url, features_key, features_url, users_key, users_url } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
-import type { TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse } from "../types";
+import type { createUsersList, TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse, UsersListResponse } from "../types";
 import type { TPaginatedResponse } from "@/types";
 import useDeleteData from "@/services/useDeleteData";
 
@@ -57,6 +57,7 @@ export const useBeds = (currentBedPage?: number) => {
   const getBeds = useGetData<TPaginatedResponse<TBedResponse>>({
     key: [beds_key, String(currentBedPage)],
     url: `${beds_url}?page=${currentBedPage}`,
+    enabled: !!currentBedPage,
   });
 
   const deleteBed = useDeleteData({
@@ -70,4 +71,19 @@ export const useBeds = (currentBedPage?: number) => {
   });
 
   return { getBeds, deleteBed, postBed }
+}
+
+export const useUsers = (mobileInput?: string, staffInput?: boolean, currentPage?: number) => {
+
+  const getUsers = useGetData<TPaginatedResponse<UsersListResponse>>({
+  key: [users_key, mobileInput!, String(staffInput)],
+  url: `${users_url}${mobileInput || staffInput ? `?mobile__contains=${mobileInput}&is_staff=${staffInput}`: `?page=${currentPage}`}`,
+  })
+  
+  const postUsers = usePostData<createUsersList>({
+    key: [users_key],
+    url: users_url,
+  })
+
+  return { getUsers, postUsers }
 }

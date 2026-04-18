@@ -35,3 +35,15 @@ export type TResponseDefaults = {
     check_in_time: string;
     check_out_time: string;
 }
+
+/////////////////////////////////////////////////////
+
+export type UsersListResponse = {
+    id: number;  
+    mobile: string;
+    is_staff: boolean;
+};
+export type createUsersList = {
+    mobile: string;
+    is_staff: boolean;
+};

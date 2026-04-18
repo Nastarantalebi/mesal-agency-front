@@ -3,6 +3,7 @@ import BedsList from "../components/bed/BedsList";
 import DefaultsForm from "../components/defaults/AddDefaults";
 import AddFeaturesForm from "../components/features/AddFeaturesForm";
 import FeaturesList from "../components/features/FeaturesList";
+import UsersList from "../components/users/UsersList";
 
 
 export const settingTabs = [
@@ -27,6 +28,14 @@ export const settingTabs = [
       component: (
         <div className="flex flex-col gap-10">
           <DefaultsForm/>
+        </div>
+      ),
+    },
+    {
+      title: "لیست کاربران",
+      component: (
+        <div className="flex flex-col gap-10">
+          <UsersList/>
         </div>
       ),
     },

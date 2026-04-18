@@ -43,6 +43,7 @@ const AccommodationList = () => {
           input={input}
           setInput={setInput}
           setSearchInput={setSearchInput}
+          placeholder="جست و جوی نام اقامتگاه"
         />
 
         <div className="overflow-x-auto rounded-md mt-4">

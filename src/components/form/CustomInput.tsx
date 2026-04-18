@@ -18,7 +18,6 @@ const CustomInput = <T extends FieldValues>({
   // if (inputType === "number" || inputType === "tel") direction = "ltr";
   
   const dir = (inputType === "number" || inputType === "tel") ? "ltr" : direction
-  console.log(dir, direction)
 
   return (
     <>

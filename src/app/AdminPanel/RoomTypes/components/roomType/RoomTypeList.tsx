@@ -86,6 +86,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
           input={input}
           setInput={setInput}
           setSearchInput={setSearchInput}
+          placeholder="جست و جوی نوع اتاق"
         />
 
         <div className="overflow-x-auto rounded-md mt-4">

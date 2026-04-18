@@ -7,13 +7,14 @@ interface Props {
     input: string;
     setInput: (value: SetStateAction<string>) => void;
     setSearchInput: (value: SetStateAction<string>) => void;
+    placeholder: string;
 }
 
-const SearchInput = ({input, setInput, setSearchInput}: Props) => {
+const SearchInput = ({input, setInput, setSearchInput, placeholder}: Props) => {
     return (
         <div className="relative mb-4 max-w-3xs">
           <Input
-            placeholder="جست و جوی نام اقامتگاه"
+            placeholder={placeholder}
             value={input}
             onChange={(event) => setInput(event.target.value)}
             className="pl-9"
