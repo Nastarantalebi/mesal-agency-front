@@ -36,7 +36,7 @@ const FilterModal = <T extends FieldValues>({ open, onOpenchange, form, handleSu
                 ))}
               </FieldGroup>
               <div className="mt-10">
-                <CustomButton type="submit">ثبت</CustomButton>
+                <CustomButton type="submit">فیلتر</CustomButton>
               </div>
             </form>
           </Form>

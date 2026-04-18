@@ -5,7 +5,6 @@ import { useNavigate } from "@tanstack/react-router";
 // import useAthenticate from "./useAthenticate";
 
 function useRefresh() {
-  //   const { mutateAsync } = useAthenticate();
   const navigate = useNavigate();
 
   return useMutation<LoginResponse, any>({

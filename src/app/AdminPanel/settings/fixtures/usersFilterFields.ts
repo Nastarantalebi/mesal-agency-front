@@ -14,6 +14,6 @@ export const userFields: Items<createUsersList>[] = [
     name: "is_staff",
     label: "مدیر؟",
     isRequired: false,
-    fieldType: "",
+    fieldType: "yesNoInput",
   },
 ]
