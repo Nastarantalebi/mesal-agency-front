@@ -74,7 +74,7 @@ const AccommodationFeatures = ({ AccommodationId }: Props) => {
             {accommodationFeatures.data ? (
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {accommodationFeatures.data.results?.map((f, index) => {
+                  {accommodationFeatures.data.results?.map((f) => {
                     const isAdded = allAddedFeaturesIds?.includes(f.id);
                     const selected = selectedIds.includes(f.id) && !isAdded;
                     return (
