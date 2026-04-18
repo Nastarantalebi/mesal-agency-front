@@ -3,21 +3,26 @@ import type { Props } from "./types";
 import { toast } from "sonner";
 import { Request } from "@/lib/httpService";
 
-
-function usePutData<TRequest extends object>({ key, url, onSuccess, onError }: Props) {
+function usePutData<TRequest extends object>({
+  key,
+  url,
+  onSuccess,
+  onError,
+}: Props) {
   const queryClient = useQueryClient();
   const BASE_URL = import.meta.env.VITE_BASE_URL as string;
-  
+
   return useMutation({
     mutationKey: key,
     mutationFn: async (body: TRequest) => {
-      const full_url =`${BASE_URL}${url}/`;
+      const full_url = `${BASE_URL}${url}/`;
+      // console.log("full_url", full_url)
       const { data } = await Request.put(full_url, body);
       return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: key });
-      
+
       if (onSuccess) {
         onSuccess();
       } else {
@@ -30,7 +35,6 @@ function usePutData<TRequest extends object>({ key, url, onSuccess, onError }: P
       } else {
         toast.error("خطا در ویرایش آیتم");
       }
-      
     },
   });
 }

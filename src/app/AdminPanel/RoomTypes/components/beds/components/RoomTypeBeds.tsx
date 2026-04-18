@@ -50,7 +50,6 @@ const RoomTypeBeds = ({
   }, [getRoomTypeBeds.data, open]);
 
   const handleSubmit = (values: TCRoomTypeBed) => {
-    console.log(values);
     postRoomTypeBeds.mutateAsync(
       { beds: values.beds },
       {

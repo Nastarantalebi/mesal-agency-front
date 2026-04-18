@@ -56,8 +56,6 @@ const RoomTypeFeatures = ({
       const resultSelection = Array.from(new Set([...newSelection, ...(allAddedFeaturesIds || [])]));
 
       form.setValue("feature", resultSelection, { shouldValidate: true });
-      console.log(`new selection: ${newSelection}`);
-      console.log(`result selection: ${resultSelection}`);
       return resultSelection;
     });
   };

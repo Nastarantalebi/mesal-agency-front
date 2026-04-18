@@ -76,10 +76,7 @@ const AccommodationFeatures = ({ AccommodationId }: Props) => {
                 <div className="flex flex-wrap gap-2">
                   {accommodationFeatures.data.results?.map((f, index) => {
                     const isAdded = allAddedFeaturesIds?.includes(f.id);
-                    console.log(`index=${index}`);
-                    console.log(`isAdded items: ${isAdded}`);
                     const selected = selectedIds.includes(f.id) && !isAdded;
-                    console.log(`selected items: ${selected}`);
                     return (
                       <Badge
                         key={f.id}

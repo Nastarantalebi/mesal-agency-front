@@ -70,7 +70,6 @@ const ForgetPassword = ({ setForgetPassword }: Props) => {
     async (data: IForgotPassword) => {
       // Check if OTP is expired
       if (isExpired) {
-        // console.error("OTP has expired");
         return;
       }
 
@@ -95,7 +94,6 @@ const ForgetPassword = ({ setForgetPassword }: Props) => {
     async (data: ISendOTP) => {
       // Check if OTP is expired
       if (isExpired) {
-        // console.error("OTP has expired");
         return;
       }
 

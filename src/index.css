@@ -6,6 +6,10 @@
 @theme{
 
     --color-white: var(--white);
+    --color-creamy-100: var(--creamy-100);
+    --color-creamy-200: var(--creamy--200);
+    --color-creamy-300: var(--creamy--300);
+    --color-creamy-400: var(--creamy--400);
 
     --color-secondary:var(--secondary);
 
@@ -87,6 +91,11 @@
   :root {
 
     --white: #ffffff;
+    --creamy-100: #E4D2C3;
+    --creamy-200: #D8C2AF;
+    --creamy-300: #CDB29C;
+    --creamy-400: #C2A38A;
+
     
     --primary: #5d84a2;
     --primary-foreground:oklch(1 0 0);

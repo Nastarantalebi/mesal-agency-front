@@ -90,10 +90,7 @@ export default function useOTPExpire(): UseOTPExpireReturn {
 
       const deadlineMs = toMs(expireAtUtc);
       if (!Number.isFinite(deadlineMs)) {
-        // console.error(
-        //   "Invalid expireAtUtc received from backend:",
-        //   expireAtUtc,
-        // );
+
         setOtpExpireCountdown(0);
         return;
       }
@@ -123,10 +120,7 @@ export default function useOTPExpire(): UseOTPExpireReturn {
 
       const deadlineMs = toMs(resendAtUtc);
       if (!Number.isFinite(deadlineMs)) {
-        // console.error(
-        //   "Invalid resendAtUtc received from backend:",
-        //   resendAtUtc,
-        // );
+
         setResendCountdown(0);
         return;
       }
@@ -153,7 +147,6 @@ export default function useOTPExpire(): UseOTPExpireReturn {
   const startResendCountdownSeconds = useCallback(
     (seconds: number) => {
       if (!Number.isInteger(seconds) || seconds < 0) {
-        // console.error("Invalid resend seconds:", seconds);
         return;
       }
       const deadlineMs = nowCorrectedMs() + seconds * 1000;

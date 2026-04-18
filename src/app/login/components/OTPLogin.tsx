@@ -9,7 +9,6 @@ import useRequestOTP from "../services/useRequestOTP";
 import SendMobileSteps from "./SendMobileSteps";
 import SendOTPSteps from "./SendOTPSteps";
 import PasswordSteps from "./PasswordSteps";
-import { useNavigate } from "@tanstack/react-router";
 import useOTPExpire from "../hooks/useOTPExpire";
 import useVerifyOTP from "../services/useVerifyOTP";
 
@@ -17,7 +16,6 @@ const OTPLogin = () => {
   const [step, setStep] = useState<TOtpStep>("mobile");
   const [mobile, setMobile] = useState<string>("");
   const [otp, setOtp] = useState<string>("");
-  const navigate = useNavigate();
 
   const {
     mutateAsync: requestOTP,
@@ -85,7 +83,6 @@ const OTPLogin = () => {
       const hasPassword = otpResponse?.has_password ?? true;
       if (hasPassword) {
         verifyOTP({ mobile: data.mobile, otp: data.otp });
-        navigate({ to: "/dashboard" });
       } else {
         setStep("password");
       }

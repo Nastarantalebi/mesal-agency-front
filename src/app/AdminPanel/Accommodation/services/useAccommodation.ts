@@ -28,7 +28,7 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
         TCreateAccomodation
     >({
         key,
-        url,
+        url: `${accommodation_url}${AccommodationId}`,
     });
 
     const deleteAccommodation = useDeleteData({
@@ -41,11 +41,9 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
     >({
       key: [accommodation_key, String(currentAccommodationPage), searchInput!],
       url: `${accommodation_url}${searchInput ? `?name__contains= ${searchInput}`: `?page=${currentAccommodationPage}`}`,
-      // url: `${accommodation_url}?page=${currentAccommodationPage}`,
       enabled: !!currentAccommodationPage
     });
 
-    // const getAccommodationTypes =useGetData<accommodationTypes>
 
     return { getAccommodation, postAccommodation, putAccommodation, deleteAccommodation, getAccommodations}
 }
