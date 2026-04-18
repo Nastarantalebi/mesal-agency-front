@@ -11,7 +11,7 @@ import type { ReactNode } from "react";
 
 export interface Items<T> {
   name: Path<T>;
-  label: string;
+  label?: string;
   fieldType?: string;
   isRequired: boolean;
   options?: Item[];
@@ -23,6 +23,7 @@ export interface Items<T> {
   maxLength?: number;
   icon?: ReactNode;
   direction?: string;
+  placeholder?: string;
 }
 
 function formTypes<T extends FieldValues>(
@@ -37,6 +38,7 @@ function formTypes<T extends FieldValues>(
     maxLength,
     icon,
     direction,
+    placeholder
   }: Items<T>,
   control: Control<T>,
 ) {
@@ -45,7 +47,7 @@ function formTypes<T extends FieldValues>(
       return (
         <CustomCombobox<T>
           name={name}
-          placeholder={label}
+          placeholder={placeholder}
           label={label}
           items={options}
           isRequired={isRequired}
@@ -58,7 +60,7 @@ function formTypes<T extends FieldValues>(
       return (
         <CustomInput
           name={name}
-          placeholder={label}
+          placeholder={placeholder}
           label={label}
           isRequired={isRequired}
           inputType={inputType}
@@ -84,6 +86,7 @@ function formTypes<T extends FieldValues>(
         <DateInput
           name={name}
           label={label}
+          placeholder={placeholder}
           isRequired={isRequired}
           control={control}
         />

@@ -14,6 +14,7 @@ export const RoomFields: Items<TCRoomTypesRoom>[] = [
     label: "طبقه",
     isRequired: false,
     fieldType: "input",
+      direction:"ltr",
     inputType: "number",
   },
   {

@@ -8,6 +8,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 const DateInput = <T extends FieldValues>({
   name,
   label,
+  placeholder,
   isRequired,
   control,
 }: Props<T>) => {
@@ -24,6 +25,7 @@ const DateInput = <T extends FieldValues>({
           <>
             <DatePicker
               value={field.value}
+              placeholder={placeholder}
               onChange={(date: DateObject | null) => {
                 if (date) {
                   field.onChange(date.format("YYYY/MM/DD"));

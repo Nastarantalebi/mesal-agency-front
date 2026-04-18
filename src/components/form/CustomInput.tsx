@@ -14,10 +14,10 @@ const CustomInput = <T extends FieldValues>({
   maxLength,
   icon,
   direction,
+  placeholder,
 }: Props<T>) => {
   // if (inputType === "number" || inputType === "tel") direction = "ltr";
   
-  const dir = (inputType === "number" || inputType === "tel") ? "ltr" : direction
 
   return (
     <>
@@ -25,7 +25,7 @@ const CustomInput = <T extends FieldValues>({
         {label}
         {isRequired && <span className="text-red-600">*</span>}
       </Label>
-      <div className="min-w-0 w-full space-y-2" dir={dir}>
+      <div className="min-w-0 w-full space-y-2" dir={direction}>
         <Controller
           name={name}
           control={control}
@@ -35,8 +35,9 @@ const CustomInput = <T extends FieldValues>({
                 <Input
                   {...field}
                   type={inputType}
-                  dir={dir}
+                  dir={direction}
                   maxLength={maxLength}
+                  placeholder={placeholder}
                   onChange={(e) => {
                     if (inputType === "number") {
                       field.onChange(e.target.valueAsNumber ?? 0);

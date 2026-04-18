@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useValidation from "../fixtures/useValidation";
-import AccomodationFields from "../hooks/accomodationFields";
+import useAccomodationFields from "../hooks/useAccomodationFields";
 import { useAccommodation } from "../services/useAccommodation";
 import type { TCreateAccomodation } from "../types";
 import formTypes from "@/components/form/FormInputTypes";
@@ -21,8 +21,10 @@ const AccommodationForm = ({
   AccommodationId?: number;
   buttonText: string;
 }) => {
-  const { getAccommodation, postAccommodation, putAccommodation} = useAccommodation(AccommodationId!);
-  const {accommodationValidation, accommodationInitialValues} = useValidation()
+  const { getAccommodation, postAccommodation, putAccommodation } =
+    useAccommodation(AccommodationId!);
+  const { accommodationValidation, accommodationInitialValues } =
+    useValidation();
 
   const form = useForm<TCreateAccomodation>({
     resolver: zodResolver(accommodationValidation),
@@ -39,7 +41,6 @@ const AccommodationForm = ({
 
       open_start: miladiToShamsi(getAccommodation.data.open_start),
       ope_end: miladiToShamsi(getAccommodation.data.open_end),
-
     };
     form.reset({
       ...accommodationInitialValues,
@@ -56,7 +57,7 @@ const AccommodationForm = ({
 
   const province_id = form.watch("provience");
 
-  const accommodationFields = AccomodationFields(Number(province_id));
+  const accommodationFields = useAccomodationFields(Number(province_id));
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
@@ -73,7 +74,6 @@ const AccommodationForm = ({
 
       open_start: shamsiToMiladi(value.open_start),
       open_end: shamsiToMiladi(value.open_end),
-
     };
 
     if (isEdit) {

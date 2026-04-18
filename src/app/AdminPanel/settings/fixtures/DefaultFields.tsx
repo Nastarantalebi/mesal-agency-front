@@ -7,6 +7,7 @@ export const DefaultFields: Items<TCreateDefaults>[] = [
     label: "حداقل سن کودک",
     isRequired: true,
     fieldType: "input",
+      direction:"ltr",
     inputType: "number",
   },
   {
@@ -14,6 +15,7 @@ export const DefaultFields: Items<TCreateDefaults>[] = [
     label: "حداکثر سن کودک",
     isRequired: true,
     fieldType: "input",
+      direction:"ltr",
     inputType: "number",
   },
   {

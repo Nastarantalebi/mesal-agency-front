@@ -1,3 +1,4 @@
+import SearchForm from "@/app/usersPanel/components/SearchForm";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/accommodation/")({
@@ -19,6 +20,7 @@ function RouteComponent() {
         <h3 className="text-white text-xl font-bold">
         رزرو اقامتگاه در سراسر ایران
         </h3>
+      <SearchForm/>
       </div>
     </section>
   );

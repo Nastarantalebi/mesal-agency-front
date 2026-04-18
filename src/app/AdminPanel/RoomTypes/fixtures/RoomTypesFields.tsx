@@ -14,6 +14,7 @@ export const RoomTypeFields: Items<TCreateRoomType>[] = [
     label: "ظرفیت",
     isRequired: false,
     fieldType: "input",
+      direction:"ltr",
     inputType: "number",
   },
   {
@@ -21,6 +22,7 @@ export const RoomTypeFields: Items<TCreateRoomType>[] = [
     label: "ظرفیت نفر اضافه",
     isRequired: false,
     fieldType: "input",
+      direction:"ltr",
     inputType: "number",
   },
   {

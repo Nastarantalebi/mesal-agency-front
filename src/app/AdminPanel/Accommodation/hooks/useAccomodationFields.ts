@@ -17,7 +17,7 @@ import {
 import APIClient from "@/services/apiClient";
 import { useQuery } from '@tanstack/react-query';
 
-function AccomodationFields(province_id?: number) {
+function useAccomodationFields(province_id?: number) {
 
   const apiClientTypes = new APIClient<accommodationTypes>(accommodation_types_url)
   const apiClientProvience = new APIClient<provience>(accommodation_proviences_url)
@@ -103,6 +103,7 @@ function AccomodationFields(province_id?: number) {
       isRequired: true,
       fieldType: "input",
       inputType:"number",
+      direction:"ltr",
     },
     {
       name: "max_child_age",
@@ -110,6 +111,7 @@ function AccomodationFields(province_id?: number) {
       isRequired: true,
       fieldType: "input",
       inputType:"number",
+      direction:"ltr",
     },
     {
       name: "manufacture_date",
@@ -122,6 +124,7 @@ function AccomodationFields(province_id?: number) {
       label: "تعداد طبقات",
       isRequired: false,
       fieldType: "input",
+      direction:"ltr",
       inputType: "number",
     },
     {
@@ -129,6 +132,7 @@ function AccomodationFields(province_id?: number) {
       label: "تعداد کل اتاق ها",
       isRequired: false,
       fieldType: "input",
+      direction:"ltr",
       inputType: "number",
     },
     {
@@ -136,6 +140,7 @@ function AccomodationFields(province_id?: number) {
       label: "ماکزیمم تعداد مهمانان",
       isRequired: false,
       fieldType: "input",
+      direction:"ltr",
       inputType: "number",
     },
     {
@@ -156,6 +161,7 @@ function AccomodationFields(province_id?: number) {
       label: "مساحت",
       isRequired: false,
       fieldType: "input",
+      direction:"ltr",
       inputType: "number",
     },
     {
@@ -163,6 +169,7 @@ function AccomodationFields(province_id?: number) {
       label: "چند ستاره",
       isRequired: false,
       fieldType: "input",
+      direction:"ltr",
       inputType: "number",
       className: "col-start-1"
     },
@@ -218,7 +225,7 @@ function AccomodationFields(province_id?: number) {
       className: "col-span-full",
     },
   ];
-  return accommodationFields;
+  return {accommodationFields, provinces};
 }
 
-export default AccomodationFields;
+export default useAccomodationFields;
