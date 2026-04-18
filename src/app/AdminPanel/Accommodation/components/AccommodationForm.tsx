@@ -57,7 +57,7 @@ const AccommodationForm = ({
 
   const province_id = form.watch("provience");
 
-  const accommodationFields = useAccomodationFields(Number(province_id));
+  const {accommodationFields} = useAccomodationFields(Number(province_id));
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";

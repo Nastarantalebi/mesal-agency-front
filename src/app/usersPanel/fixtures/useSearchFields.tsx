@@ -1,10 +1,5 @@
 import type { Items } from "@/components/form/FormInputTypes";
 import type { accommodationSearch } from "../types";
-import useLocation from "../services/useLocation";
-import {
-  useAccommodation,
-  useAccommodationFeatures,
-} from "@/app/AdminPanel/Accommodation/services/useAccommodation";
 import useAccomodationFields from "@/app/AdminPanel/Accommodation/hooks/useAccomodationFields";
 
 const useSearchFields = () => {

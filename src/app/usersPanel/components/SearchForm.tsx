@@ -1,4 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import type { accommodationSearch } from "../types";
 import { Form } from "@/components/ui/form";
