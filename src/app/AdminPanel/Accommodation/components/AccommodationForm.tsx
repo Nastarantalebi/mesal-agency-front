@@ -40,7 +40,7 @@ const AccommodationForm = ({
         : undefined,
 
       open_start: miladiToShamsi(getAccommodation.data.open_start),
-      ope_end: miladiToShamsi(getAccommodation.data.open_end),
+      open_end: miladiToShamsi(getAccommodation.data.open_end),
     };
     form.reset({
       ...accommodationInitialValues,
@@ -53,6 +53,7 @@ const AccommodationForm = ({
           : null,
       provience: transformedData.city?.province?.id ?? null,
     });
+    console.log(transformedData)
   }, [getAccommodation.data]);
 
   const province_id = form.watch("provience");
@@ -75,6 +76,7 @@ const AccommodationForm = ({
       open_start: shamsiToMiladi(value.open_start),
       open_end: shamsiToMiladi(value.open_end),
     };
+
 
     if (isEdit) {
       putAccommodation.mutateAsync(transformedData, {
