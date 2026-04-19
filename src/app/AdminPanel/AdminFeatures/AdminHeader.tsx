@@ -12,6 +12,7 @@ import { useLogout } from "../../login/services/useLogout";
 import type { TAccommodationResponse } from "../Accommodation/types";
 import useMe from "../../login/services/useMe";
 import UserProfile from "./hooks/UserProfile";
+import { useNavigate } from "@tanstack/react-router";
 
 interface Props {
   AccommodationData?: TAccommodationResponse;
@@ -22,6 +23,7 @@ const Header = ({ AccommodationData, menuBtn }: Props) => {
   const { mutateAsync } = useLogout();
   const { data } = useMe();
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="w-full">
@@ -29,7 +31,7 @@ const Header = ({ AccommodationData, menuBtn }: Props) => {
       <header className=" mx-5 my-2 rounded-xl top-0  right-0 z-10 flex h-14 justify-between items-center border px-4 bg-primary-10">
         <div className="flex items-center gap-5 text-primary">
           {menuBtn}
-          <span>آژانس</span>
+          <span onClick={() => navigate({to: "/accommodation"})} className="cursor-pointer">آژانس</span>
           <span>
             {AccommodationData?.type.name} {AccommodationData?.name}
           </span>

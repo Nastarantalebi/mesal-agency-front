@@ -37,7 +37,7 @@ const usersList = () => {
 
   const handleFilter = (values: createUsersList) => {
     setMobileInput(values.mobile);
-    console.log("is_sataff", values.is_staff)
+    // console.log("is_sataff", values.is_staff)
     setStaffInput(values.is_staff);
     setCurrentPage(1);
     setOpen(false)

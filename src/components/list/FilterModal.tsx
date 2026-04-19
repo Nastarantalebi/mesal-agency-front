@@ -14,8 +14,6 @@ interface Props<T extends FieldValues> {
   fields: Items<T>[]
 }
 const FilterModal = <T extends FieldValues>({ open, onOpenchange, form, handleSubmit, fields }: Props<T>) => {
-  console.log(fields)
-  console.log(form)
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenchange}>

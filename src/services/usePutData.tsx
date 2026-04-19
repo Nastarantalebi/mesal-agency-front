@@ -16,7 +16,6 @@ function usePutData<TRequest extends object>({
     mutationKey: key,
     mutationFn: async (body: TRequest) => {
       const full_url = `${BASE_URL}${url}/`;
-      // console.log("full_url", full_url)
       const { data } = await Request.put(full_url, body);
       return data;
     },
