@@ -22,6 +22,17 @@ export const default_url = "admin/defaults/"
 export const users_key = "users"
 export const users_url = "admin/users/"
 
+export const search_key = "searchAccommodations"
+export const search_url = "search/"
+
+export const homePageFeatures_key = "homePageFeatures"
+export const homePageFeatures_url = "home_page_feature/"
+
+export const province_key = "allProvinces"
+export const province_url = "provinces/"
+
+export const cities_key = "allCities"
+export const cities_url = "cities/"
 
 
 

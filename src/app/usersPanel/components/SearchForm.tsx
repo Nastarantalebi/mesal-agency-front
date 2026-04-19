@@ -4,13 +4,33 @@ import { Form } from "@/components/ui/form";
 import formTypes from "@/components/form/FormInputTypes";
 import CustomButton from "@/components/form/CustomButton";
 import useSearchFields from "../fixtures/useSearchFields";
+import { useState } from "react";
+// import useSearch from "../services/useSearch";
+import { shamsiToMiladi } from "@/components/form/DateConverter";
 
 export default function SearchForm() {
+
   const form = useForm<accommodationSearch>();
-
-  const handleSubmit = () => {};
-
   const { searchFields } = useSearchFields();
+  const [filters, setFilters] = useState({
+    start: "",
+    end: "",
+    num_adults: "",
+    province: "",
+  });
+  // const { getSearch } = useSearch(filters);
+
+  const handleSubmit = (formData: accommodationSearch) => {
+    
+    setFilters({
+      start: shamsiToMiladi(formData.start ?? ""),
+      end: shamsiToMiladi(formData.end ?? ""),
+      num_adults: formData.num_adults ?? "",
+      province: formData.province ?? "",
+    });
+
+    console.log("Filters", filters)
+  };
 
   return (
     <div className="bg-white rounded-full px-10 py-5">
@@ -27,16 +47,10 @@ export default function SearchForm() {
               {formTypes<accommodationSearch>(item, form.control)}
             </div>
           ))}
-          <CustomButton className="rounded-full" type="submit">
+          <CustomButton className="rounded-full mt-1" type="submit">
             جست و جو
           </CustomButton>
         </form>
-        {/* <FormErrorModal
-          open={errorOpen}
-          message={errmessage}
-          onOpenChange={setErrorOpen}
-          onAcknowledge={() => setErrorOpen(false)}
-        /> */}
       </Form>
     </div>
   );

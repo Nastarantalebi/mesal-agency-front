@@ -1,12 +1,10 @@
 import type { Items } from "@/components/form/FormInputTypes";
 import type { accommodationSearch } from "../types";
-import useAccomodationFields from "@/app/AdminPanel/Accommodation/hooks/useAccomodationFields";
+import useLocation from "../services/useLocation";
 
 const useSearchFields = () => {
-  // const {getProviences, getCities} = useLocation();
-  const { provinces } = useAccomodationFields();
-
-  console.log(provinces);
+  const { getProviences } = useLocation();
+  console.log(getProviences.data)
 
   const searchFields: Items<accommodationSearch>[] = [
     {
@@ -14,19 +12,22 @@ const useSearchFields = () => {
       isRequired: false,
       fieldType: "dropdown",
       placeholder: "استان",
-      options: provinces,
+      options: getProviences.data,
+      className: "border-gray-200 placeholder:text-red-500!",
     },
     {
       name: "start",
       isRequired: false,
       fieldType: "DatePicker",
       placeholder: "تاریخ رفت",
+      className: "border-gray-200",
     },
     {
       name: "end",
       isRequired: false,
       fieldType: "DatePicker",
       placeholder: "تاریخ برگشت",
+      className: "border-gray-200",
     },
     {
       name: "num_adults",
@@ -35,8 +36,8 @@ const useSearchFields = () => {
       inputType: "number",
       placeholder: "تعداد نفرات",
       direction: "rtl",
+      className: "border-gray-200 placeholder:text-gray-500!",
     },
-
   ];
   return { searchFields };
 };
