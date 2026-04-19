@@ -15,11 +15,13 @@ export const bedInitialValues: TCreateBed = {
 export const FeaturesValidation = z.object({
   title: z.string().min(1, "نام ویژگی الزامی است"),
   type: z.string().min(1, "نوع الزامی است"),
+  show_in_home_page: z.boolean()
 });
 
 export const FeaturesInitialValues: TCFeature = {
   title: "",
   type: "",
+  show_in_home_page: false,
 };
 
 /////////////////////////////////////////////////////////////

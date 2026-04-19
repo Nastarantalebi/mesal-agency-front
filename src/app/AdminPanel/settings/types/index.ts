@@ -12,12 +12,14 @@ export type TBedResponse = {
 export type TCFeature = {
     title: string;
     type: string;
+    show_in_home_page: boolean;
 }
 
 export type TFeatureResponse = {
     id: number;
     title: string;
     type: string;
+    show_in_home_page: boolean;
 }
 
 //////////////////////////////////////////////////////////

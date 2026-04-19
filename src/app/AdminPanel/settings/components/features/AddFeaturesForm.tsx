@@ -33,7 +33,7 @@ const AddFeaturesForm = () => {
   
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8  items-end gap-7">
         {FeaturesFields.map((item) => (
           <div
             key={String(item.name)}
@@ -42,7 +42,7 @@ const AddFeaturesForm = () => {
             {formTypes<TCFeature>(item, form.control)}
           </div>
         ))}
-        <div className="col-span-1 md:col-span-2 lg:grid-cols-4 flex justify-start gap-3 mt-6">
+        <div className="my-1">
           <CustomButton type="submit">افزودن</CustomButton>
         </div>
       </form>

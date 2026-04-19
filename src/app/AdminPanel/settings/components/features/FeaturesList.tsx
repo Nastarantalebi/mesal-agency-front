@@ -33,7 +33,7 @@ const FeaturesList = () => {
                 <Badge
                   key={feature.id}
                   variant="outline"
-                  className="px-6 py-2 border-primary relative pr-10"
+                    className={`px-6 py-2 relative pr-10 ${feature.show_in_home_page ? "border-accent bg-accent/20" : "border-primary"}`}
                 >
                   {feature.title}
                   <button
