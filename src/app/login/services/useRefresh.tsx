@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 import { refresh } from "./authServices";
 import type { LoginResponse } from "../types";
 import { useNavigate } from "@tanstack/react-router";
-// import useAthenticate from "./useAthenticate";
 
 function useRefresh() {
   const navigate = useNavigate();

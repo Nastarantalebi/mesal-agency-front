@@ -5,6 +5,7 @@ import type {
   UnhandledException,
   ValidationError,
 } from "@/types/http-errors.interface";
+import { toast } from "sonner";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleHttpError = (error: any) => {
@@ -29,6 +30,7 @@ const handleHttpError = (error: any) => {
          }`;
 
   if (error.code === "ECONNABORTED" || error.message.includes("timeout")) {
+    toast.error("پاسخی از سرور دریافت نشد.لطفا دوباره تلاش کنید")
     // showToastify({
     //   message: "پاسخی از سرور دریافت نشد.لطفا دوباره تلاش کنید",
     //   type: "error",
@@ -36,6 +38,7 @@ const handleHttpError = (error: any) => {
     return;
   }
   if (!error.response) {
+    toast.error("خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید.")
     // showToastify({
     //   message: "خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید.",
     //   type: "error",
@@ -47,14 +50,14 @@ const handleHttpError = (error: any) => {
       if (error.errors) throw error as ValidationError;
       throw error as BadRequestError;
 
-    // case 401:
-    //   // Refresh قبلاً در sendRequest امتحان شده
-    //   // اینجا فقط redirect می‌کنیم
-    //   window.location.href = "/login";
-    //   throw {
-    //     ...error,
-    //     detail: "احراز هویت منقضی شده است، لطفا مجددا وارد شوید",
-    //   } as UnauthorizedError;
+    case 401:
+      // Refresh قبلاً در sendRequest امتحان شده
+      // اینجا فقط redirect می‌کنیم
+      window.location.href = "/login";
+      throw {
+        ...error,
+        detail: "احراز هویت منقضی شده است، لطفا مجددا وارد شوید",
+      } as UnauthorizedError;
 
     case 403:
       throw {

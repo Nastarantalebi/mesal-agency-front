@@ -7,7 +7,6 @@ export async function refresh() {
   const { data } = await Request.post(
     `${LOGIN_URL}/refresh/`,
     {},
-    { withCredentials: true }
   );
   return data;
 }
