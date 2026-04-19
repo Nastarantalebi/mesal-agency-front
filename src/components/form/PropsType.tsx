@@ -15,4 +15,5 @@ export interface Props<T extends FieldValues> {
   maxLength?: number;
   icon?:ReactNode;
   direction?: string;
+  className?: string;
 }

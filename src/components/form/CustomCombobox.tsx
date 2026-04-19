@@ -17,6 +17,7 @@ const CustomCombobox = <T extends FieldValues>({
   onValueChange,
   control,
   placeholder,
+  className,
 }: Props<T>) => {
   return (
     <div className="w-full min-w-0">
@@ -47,7 +48,7 @@ const CustomCombobox = <T extends FieldValues>({
                 value={selectedText}
                 readOnly
                 placeholder={placeholder}
-                className={`${fieldState.error ? "border-red-600" : "border border-primary/50 "}`}
+                className={`${fieldState.error ? "border-red-600" : `${className}`}`}
               />
 
               <ComboboxContent>

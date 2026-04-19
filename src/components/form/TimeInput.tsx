@@ -12,6 +12,7 @@ const TimeInput = <T extends FieldValues>({
   label,
   isRequired,
   control,
+  className,
 }: Props<T>) => {
   return (
     <div className="min-w-0 w-full space-y-2">
@@ -43,7 +44,7 @@ const TimeInput = <T extends FieldValues>({
                   readOnly
                   className={
                     `w-full rounded-md border p-2 h-9 bg-background cursor-pointer ` +
-                    `${fieldState.error ? "border-red-600" : "border-input"}`
+                    `${fieldState.error ? "border-red-600" : `${className}`}`
                   }
                 />
               )}

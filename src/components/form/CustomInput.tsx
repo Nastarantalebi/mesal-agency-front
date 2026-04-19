@@ -15,9 +15,9 @@ const CustomInput = <T extends FieldValues>({
   icon,
   direction,
   placeholder,
+  className,
 }: Props<T>) => {
   // if (inputType === "number" || inputType === "tel") direction = "ltr";
-  
 
   return (
     <>
@@ -45,7 +45,7 @@ const CustomInput = <T extends FieldValues>({
                       field.onChange(e.target.value);
                     }
                   }}
-                  className={`pr-10 ${fieldState.error ? "border-red-600" : ""}`}
+                  className={`pr-10 ${fieldState.error ? "border-red-600" : `${className}`}`}
                 />
                 <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-700 items-center justify-center flex cursor-pointer">
                   {icon}

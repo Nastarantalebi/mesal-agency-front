@@ -11,6 +11,7 @@ const DateInput = <T extends FieldValues>({
   placeholder,
   isRequired,
   control,
+  className,
 }: Props<T>) => {
   return (
     <div className="min-w-0 w-full">
@@ -39,7 +40,7 @@ const DateInput = <T extends FieldValues>({
               containerClassName="w-full"
               inputClass={
                 `w-full rounded-md border p-2 h-9 ` +
-                `${fieldState.error ? "border-red-600" : "border-input"}`
+                `${fieldState.error ? "border-red-600" : `${className}`}`
               }
             />
             {fieldState.error && (

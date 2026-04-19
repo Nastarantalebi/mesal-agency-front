@@ -8,6 +8,7 @@ function YesNoInput<T extends FieldValues>({
   label,
   isRequired,
   control,
+  className,
 }: Props<T>) {
   return (
     <div className="w-full min-w-0">
@@ -28,7 +29,7 @@ function YesNoInput<T extends FieldValues>({
                 field.onChange(value === "true");
               }}
               className={`w-fit flex flex-wrap justify-around items-center gap-4 rounded-md border p-2 min-h-5 ${
-                fieldState.error ? "border-red-600" : "border-input"
+                fieldState.error ? "border-red-600" : `${className}`
               }`}
             >
               <div className="flex items-center gap-3">

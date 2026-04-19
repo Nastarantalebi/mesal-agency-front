@@ -9,10 +9,12 @@ import CustomMapPicker from "./Map";
 import TimeInput from "./TimeInput";
 import type { ReactNode } from "react";
 
+
+type fieldTypes = "dropdown" | "input" | "yesNoInput" | "DatePicker" | "checkBox" | "Map" | "Time";
 export interface Items<T> {
   name: Path<T>;
   label?: string;
-  fieldType?: string;
+  fieldType?: fieldTypes;
   isRequired: boolean;
   options?: Item[];
   inputType?: InputType;
@@ -38,7 +40,8 @@ function formTypes<T extends FieldValues>(
     maxLength,
     icon,
     direction,
-    placeholder
+    placeholder,
+    className,
   }: Items<T>,
   control: Control<T>,
 ) {
@@ -53,6 +56,7 @@ function formTypes<T extends FieldValues>(
           isRequired={isRequired}
           onValueChange={onValueChange}
           control={control}
+          className= {className}
         />
       );
 
@@ -68,6 +72,7 @@ function formTypes<T extends FieldValues>(
           maxLength={maxLength}
           icon={icon}
           direction={direction}
+          className={className}
         />
       );
 
@@ -78,6 +83,7 @@ function formTypes<T extends FieldValues>(
           label={label}
           isRequired={isRequired}
           control={control}
+          className={className}
         />
       );
 
@@ -89,6 +95,7 @@ function formTypes<T extends FieldValues>(
           placeholder={placeholder}
           isRequired={isRequired}
           control={control}
+          className={className}
         />
       );
 
@@ -99,6 +106,7 @@ function formTypes<T extends FieldValues>(
           label={label}
           isRequired={isRequired}
           control={control}
+          className={className}
         />
       );
 
@@ -117,6 +125,7 @@ function formTypes<T extends FieldValues>(
           isRequired={isRequired}
           inputType={inputType}
           control={control}
+          className={className}
         />
       );
   }
