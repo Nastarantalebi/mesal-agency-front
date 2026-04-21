@@ -73,11 +73,14 @@ export const useBeds = (currentBedPage?: number) => {
   return { getBeds, deleteBed, postBed }
 }
 
-export const useUsers = (mobileInput?: string, staffInput?: boolean, currentPage?: number) => {
+export const useUsers = (filters?: createUsersList, currentPage?: number) => {
+  
+  const url = `${users_url}?page=${currentPage}${filters?.is_staff === "" ?'' : `&is_staff=${filters?.is_staff}`}${filters?.mobile ? `&mobile__contains=${filters.mobile}` : ''}`
+  console.log(url)
 
   const getUsers = useGetData<TPaginatedResponse<UsersListResponse>>({
-  key: [users_key, mobileInput!, String(staffInput)],
-  url: `${users_url}${mobileInput || staffInput ? `?mobile__contains=${mobileInput}&is_staff=${staffInput}`: `?page=${currentPage}`}`,
+  key: [users_key, String(filters?.is_staff), filters?.mobile!],
+  url,
   })
   
   const postUsers = usePostData<createUsersList>({

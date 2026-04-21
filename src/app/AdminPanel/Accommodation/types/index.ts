@@ -83,40 +83,40 @@ type City = {
   province: { id: number; name: string }; 
 };
 
-type Type = {
+export type Type = {
   id: number;
   name: string;
-};
+} | {label: string, value: string};
 
 export type AccommodationItem = {
   id: number;
   name: string;
-  type: Type | null;
+  type: {id: number, name: string} | null;
   city: City | null;
 };
 
 export interface Item {
   id?: number;
   name?: string;
-  value?: string;
   label?: string;
+  value?: string | boolean;
 }
 
 export interface accommodationTypes{
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
 }
 export interface provience{
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
 }
 
 export interface cities{
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
 }
 
-export const YES_NO_OPTIONS: Item[] = [
+export const YES_NO_OPTIONS = [
   { label: "بله", value: "true" },
   { label: "خیر", value: "false" },
 ];

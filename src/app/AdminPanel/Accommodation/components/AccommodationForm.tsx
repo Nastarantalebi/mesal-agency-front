@@ -53,12 +53,12 @@ const AccommodationForm = ({
           : null,
       provience: transformedData.city?.province?.id ?? null,
     });
-    console.log(transformedData)
+    console.log(transformedData);
   }, [getAccommodation.data]);
 
   const province_id = form.watch("provience");
 
-  const {accommodationFields} = useAccomodationFields(Number(province_id));
+  const { accommodationFields } = useAccomodationFields(Number(province_id));
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
@@ -76,7 +76,6 @@ const AccommodationForm = ({
       open_start: shamsiToMiladi(value.open_start),
       open_end: shamsiToMiladi(value.open_end),
     };
-
 
     if (isEdit) {
       putAccommodation.mutateAsync(transformedData, {

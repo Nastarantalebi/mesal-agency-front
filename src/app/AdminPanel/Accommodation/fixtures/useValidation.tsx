@@ -1,12 +1,11 @@
-import z from "zod"
+import z from "zod";
 import type { TCreateAccomodation } from "../types";
 import { useDefaults } from "../../settings/services/useSetting";
 
 const useValidation = () => {
-
   const { getDefaults } = useDefaults();
 
- const accommodationValidation = z.object({
+  const accommodationValidation = z.object({
     type: z.string().min(1, "نوع اقامتگاه الزامی است"),
     name: z.string().min(1, "نام اقامتگاه الزامی است"),
     description: z.string().nullable(),
@@ -15,10 +14,20 @@ const useValidation = () => {
     manufacture_date: z.string().nullable(),
     latitude: z.string().nullable(),
     longitude: z.string().nullable(),
-    max_guests: z.number().min(0, "تعداد مهمانان نمیتواند منفی باشد").nullable(),
+    max_guests: z
+      .number()
+      .min(0, "تعداد مهمانان نمیتواند منفی باشد")
+      .nullable(),
     floors: z.number().min(0, "تعداد طبقات منفی نمیتواند باشد").nullable(),
-    area_sqm: z.number().max(32767, "این عدد باید کم تر از 32767 باشد").nullable(),
-    stars: z.number().min(1, "تعداد ستاره ها حداقل 1 است").max(5, "تعداد ستاره ها حداکثر ۵ است").nullable(),
+    area_sqm: z
+      .number()
+      .max(32767, "این عدد باید کم تر از 32767 باشد")
+      .nullable(),
+    stars: z
+      .number()
+      .min(1, "تعداد ستاره ها حداقل 1 است")
+      .max(5, "تعداد ستاره ها حداکثر ۵ است")
+      .nullable(),
     top: z.boolean(),
     total_rooms: z.number().nullable(),
     has_reception_24h: z.boolean(),
@@ -33,8 +42,8 @@ const useValidation = () => {
     max_child_age: z.number().max(20, "سن کودک حداکثر میتواند 20 باشد"),
     is_active: z.boolean(),
   });
-  
- const accommodationInitialValues: TCreateAccomodation = {
+
+  const accommodationInitialValues: TCreateAccomodation = {
     type: "",
     name: "",
     description: "",
@@ -59,14 +68,10 @@ const useValidation = () => {
     open_end: "",
     min_child_age: getDefaults.data?.min_child_age || 0,
     max_child_age: getDefaults.data?.max_child_age || 0,
-    is_active: false,
+    is_active: true,
   };
 
-  return {accommodationValidation, accommodationInitialValues}
+  return { accommodationValidation, accommodationInitialValues };
+};
 
-}
-
-export default useValidation
-
-
-
+export default useValidation;

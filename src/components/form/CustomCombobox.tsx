@@ -30,17 +30,24 @@ const CustomCombobox = <T extends FieldValues>({
         name={name}
         control={control}
         render={({ field, fieldState }) => {
+          
+          // ----- FIND THE SELECTED ITEM -----
           const selectedItem = items?.find((item) => {
-            if (typeof item === "string") {
-              return item === String(field.value ?? "");
+            if ("value" in item) {
+              // type: { label, value }
+              return String(item.value) === String(field.value ?? "");
             }
-            return String(item.value ?? item.id) === String(field.value ?? "");
+            // type: { id, name }
+            return String(item.id) === String(field.value ?? "");
           });
 
+          // ----- TEXT TO SHOW IN THE INPUT -----
           const selectedText =
-            typeof selectedItem === "string"
-              ? selectedItem
-              : (selectedItem?.label ?? selectedItem?.name ?? "");
+            selectedItem
+              ? ("label" in selectedItem
+                  ? selectedItem.label
+                  : selectedItem.name)
+              : "";
 
           return (
             <Combobox value={String(field.value ?? "")}>
@@ -54,35 +61,35 @@ const CustomCombobox = <T extends FieldValues>({
               <ComboboxContent>
                 <ComboboxList>
                   {items?.map((item) => {
-                    // Type guard: check if item is a string
-                    if (typeof item === "string") {
-                      return (
-                        <ComboboxItem
-                          key={item}
-                          value={item}
-                        >
-                          {item}
-                        </ComboboxItem>
-                      );
-                    }
+                    
+                    // The value of the item depending on its shape
+                    const value =
+                      "value" in item
+                        ? String(item.value)
+                        : String(item.id);
 
-                    // Now TypeScript knows item is an Item object
-                    const v = String(item.value ?? item.id);
+                    // Text shown inside the list
+                    const label =
+                      "label" in item
+                        ? item.label
+                        : item.name;
+
                     return (
                       <ComboboxItem
-                        key={v}
-                        value={v}
+                        key={value}
+                        value={value}
                         onClick={() => {
-                          field.onChange(v);
-                          onValueChange?.(v);
+                          field.onChange(value);
+                          onValueChange?.(value);
                         }}
                       >
-                        {item.label ?? item.name}
+                        {label}
                       </ComboboxItem>
                     );
                   })}
                 </ComboboxList>
               </ComboboxContent>
+
               {fieldState.error && (
                 <p className="text-sm font-medium text-destructive mt-1">
                   {fieldState.error.message}

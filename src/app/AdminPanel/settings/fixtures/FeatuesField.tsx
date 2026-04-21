@@ -21,7 +21,7 @@ export const FeaturesFields: Items<TCFeature>[] = [
     isRequired: false,
     fieldType: "dropdown",
     className:"col-span-2",
-    options:typeOptions
+    items:typeOptions
   },
   {
     name: "show_in_home_page",

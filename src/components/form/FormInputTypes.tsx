@@ -1,4 +1,3 @@
-import { type Item } from "@/app/AdminPanel/Accommodation/types/index";
 import CustomInput, { type InputType } from "./CustomInput";
 import CustomCombobox from "./CustomCombobox";
 import type { Control, FieldValues, Path } from "react-hook-form";
@@ -8,15 +7,26 @@ import CustomCheckbox from "./CustomCheckbox";
 import CustomMapPicker from "./Map";
 import TimeInput from "./TimeInput";
 import type { ReactNode } from "react";
+import Radio from "./RadioInputs";
+import type { Type } from "@/app/AdminPanel/Accommodation/types";
 
+//options is for static data which I like to see in for: label&value
+//items coms from backend
 
-type fieldTypes = "dropdown" | "input" | "yesNoInput" | "DatePicker" | "checkBox" | "Map" | "Time";
+type fieldTypes =
+  | "dropdown"
+  | "input"
+  | "yesNoInput"
+  | "DatePicker"
+  | "checkBox"
+  | "Map"
+  | "Time"
+  | "radio";
 export interface Items<T> {
   name: Path<T>;
   label?: string;
   fieldType?: fieldTypes;
   isRequired: boolean;
-  options?: Item[];
   inputType?: InputType;
   valueAsNumber?: boolean;
   onValueChange?: (value: string | number) => void;
@@ -26,6 +36,7 @@ export interface Items<T> {
   icon?: ReactNode;
   direction?: string;
   placeholder?: string;
+  items?: Type[];
 }
 
 function formTypes<T extends FieldValues>(
@@ -34,7 +45,6 @@ function formTypes<T extends FieldValues>(
     label,
     fieldType,
     isRequired,
-    options,
     inputType,
     onValueChange,
     maxLength,
@@ -42,6 +52,7 @@ function formTypes<T extends FieldValues>(
     direction,
     placeholder,
     className,
+    items,
   }: Items<T>,
   control: Control<T>,
 ) {
@@ -52,11 +63,11 @@ function formTypes<T extends FieldValues>(
           name={name}
           placeholder={placeholder}
           label={label}
-          items={options}
+          items={items}
           isRequired={isRequired}
           onValueChange={onValueChange}
           control={control}
-          className= {className}
+          className={className}
         />
       );
 
@@ -84,6 +95,17 @@ function formTypes<T extends FieldValues>(
           isRequired={isRequired}
           control={control}
           className={className}
+        />
+      );
+    case "radio":
+      return (
+        <Radio
+          name={name}
+          label={label}
+          isRequired={isRequired}
+          control={control}
+          className={className}
+          items={items}
         />
       );
 
@@ -114,7 +136,14 @@ function formTypes<T extends FieldValues>(
       return <CustomMapPicker label="موقعیت مکانی" isRequired />;
 
     case "Time":
-      return <TimeInput name={name} label={label} isRequired={isRequired} control={control}/>
+      return (
+        <TimeInput
+          name={name}
+          label={label}
+          isRequired={isRequired}
+          control={control}
+        />
+      );
 
     default:
       return (

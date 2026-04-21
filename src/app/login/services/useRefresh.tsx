@@ -8,10 +8,13 @@ function useRefresh() {
 
   return useMutation<LoginResponse, any>({
     mutationFn: async () => {
+      console.log("object");
       const response = await refresh();
       return response;
     },
-    onSuccess: () => {navigate({to: "/dashboard"})},
+    onSuccess: () => {
+      navigate({ to: "/dashboard" });
+    },
     onError: (e) => {
       throw new Error(
         e.response.error ?? e.response.data.message ?? "ورود ناموفق بود",

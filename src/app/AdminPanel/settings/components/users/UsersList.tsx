@@ -14,14 +14,14 @@ import {
   usersFilterValidation,
 } from "../../fixtures/validation";
 import type { createUsersList } from "../../types";
+import ReloadList from "@/components/list/ReloadList";
 
 const usersList = () => {
-  const [mobileInput, setMobileInput] = useState("");
-  const [staffInput, setStaffInput] = useState(false);
+  const [filters, setFilters] = useState<createUsersList>();
   // const [input, setInput] = useState("");
   const [openD, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const { getUsers } = useUsers(mobileInput, staffInput, currentPage);
+  const { getUsers } = useUsers(filters, currentPage);
   // const [filters, setFilters] = useState<createUsersList>(usersFilterInitialValues);
 
   const PageCount = getUsers.data?.count
@@ -36,11 +36,9 @@ const usersList = () => {
   // const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
   const handleFilter = (values: createUsersList) => {
-    setMobileInput(values.mobile);
-    // console.log("is_sataff", values.is_staff)
-    setStaffInput(values.is_staff);
+    setFilters(values);
     setCurrentPage(1);
-    setOpen(false)
+    setOpen(false);
   };
 
   return (
@@ -54,7 +52,15 @@ const usersList = () => {
         /> */}
 
         <div className="overflow-x-auto rounded-md mt-4 space-y-2">
-          <FilterList onClick={() => setOpen(true)} />
+          <div className="flex flex-row gap-1 justify-end">
+            <FilterList onClick={() => setOpen(true)} />
+            <ReloadList
+              onClick={() => {
+                form.reset();
+                handleFilter(form.getValues());
+              }}
+            />
+          </div>
           <CustomDataTable
             showAction={true}
             columns={UserListColumns}
@@ -76,6 +82,7 @@ const usersList = () => {
         </div>
         <FilterModal<createUsersList>
           open={openD}
+          setOpen={setOpen}
           onOpenchange={setOpen}
           fields={userFields}
           form={form}

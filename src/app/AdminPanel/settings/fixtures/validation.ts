@@ -44,10 +44,10 @@ export const DefaultsInitialValues: TCreateDefaults = {
 
 export const usersFilterValidation = z.object({
   mobile: z.string(),
-  is_staff: z.boolean(),
+  is_staff: z.string(),
 })
 
 export const usersFilterInitialValues: createUsersList = {
   mobile: "",
-  is_staff: true,
+  is_staff: "",
 }

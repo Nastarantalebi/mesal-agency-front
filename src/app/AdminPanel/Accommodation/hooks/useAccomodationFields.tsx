@@ -1,43 +1,16 @@
 import {
   YES_NO_OPTIONS,
-  type accommodationTypes,
-  type cities,
-  type provience,
   type TCreateAccomodation
 } from "@/app/AdminPanel/Accommodation/types/index";
 import type { Items } from "@/components/form/FormInputTypes";
-import {
-  accommodation_cities_key,
-  accommodation_cities_url,
-  accommodation_proviences_key,
-  accommodation_proviences_url,
-  accommodation_types_key,
-  accommodation_types_url,
-} from "@/data/querykeys";
-import APIClient from "@/services/apiClient";
-import { useQuery } from '@tanstack/react-query';
 
-function useAccomodationFields(province_id?: number) {
+import useAdminLocation from "../services/useAdminLocation";
+import { useAccommodation } from "../services/useAccommodation";
 
-  const apiClientTypes = new APIClient<accommodationTypes>(accommodation_types_url)
-  const apiClientProvience = new APIClient<provience>(accommodation_proviences_url)
-  const apiClientCities = new APIClient<cities>(`${accommodation_cities_url}?province_id=${province_id}`)
+function useAccomodationFields(province_id: number) {
 
-  const {data : accommodationTypes} = useQuery<accommodationTypes[], Error>({
-    queryKey: [accommodation_types_key],
-    queryFn: apiClientTypes.getAll,
-  })
-
-  const { data: provinces } = useQuery<accommodationTypes[], Error>({
-    queryKey: [accommodation_proviences_key],
-    queryFn: apiClientProvience.getAll,
-  })
-
-  const { data: cities } = useQuery<accommodationTypes[], Error>({
-    queryKey: [accommodation_cities_key, String(province_id) ?? ""],
-    queryFn: apiClientCities.getAll,
-    enabled: !!province_id
-  })
+  const {getAccommodationTypes} = useAccommodation()
+  const { getAdminProviences, getAdminCities } = useAdminLocation(province_id)
 
   const accommodationFields: Items<TCreateAccomodation>[] = [
     {
@@ -45,7 +18,7 @@ function useAccomodationFields(province_id?: number) {
       label: "نوع اقامتگاه",
       isRequired: true,
       fieldType: "dropdown",
-      options: accommodationTypes,
+      items: getAccommodationTypes.data,
     },
     {
       name: "name",
@@ -59,14 +32,14 @@ function useAccomodationFields(province_id?: number) {
       label: "استان",
       isRequired: false,
       fieldType: "dropdown",
-      options: provinces,
+      items: getAdminProviences.data,
     },
     {
       name: "city",
       label: "شهر",
       isRequired: false,
       fieldType: "dropdown",
-      options: cities,
+      items: getAdminCities.data,
     },
     {
       name: "address",
@@ -178,14 +151,14 @@ function useAccomodationFields(province_id?: number) {
       label: "ستاره برتر؟",
       isRequired: false,
       fieldType: "yesNoInput",
-      options: YES_NO_OPTIONS,
+      items: YES_NO_OPTIONS,
     },
     {
       name: "has_reception_24h",
       label: "پذیرش ۲۴ ساعته ",
       isRequired: false,
       fieldType: "yesNoInput",
-      options: YES_NO_OPTIONS,
+      items: YES_NO_OPTIONS,
       className: "col-start-1"
     },
     {
@@ -193,21 +166,21 @@ function useAccomodationFields(province_id?: number) {
       label: "آسانسور",
       isRequired: false,
       fieldType: "yesNoInput",
-      options: YES_NO_OPTIONS,
+      items: YES_NO_OPTIONS,
     },
     {
       name: "built_with_local_materials",
       label: "ساخته شده با مصالح محلی",
       isRequired: false,
       fieldType: "yesNoInput",
-      options: YES_NO_OPTIONS,
+      items: YES_NO_OPTIONS,
     },
     {
       name: "allows_local_food_experience",
       label: "اجازه تجربه غذای محلی",
       isRequired: false,
       fieldType: "yesNoInput",
-      options: YES_NO_OPTIONS,
+      items: YES_NO_OPTIONS,
       className: "col-start-1"
     },
     {
@@ -215,7 +188,7 @@ function useAccomodationFields(province_id?: number) {
       label: "فعال",
       isRequired: false,
       fieldType: "yesNoInput",
-      options: YES_NO_OPTIONS,
+      items: YES_NO_OPTIONS,
     },
         {
       name: "latitude", 
@@ -225,7 +198,7 @@ function useAccomodationFields(province_id?: number) {
       className: "col-span-full",
     },
   ];
-  return {accommodationFields, provinces};
+  return {accommodationFields};
 }
 
 export default useAccomodationFields;

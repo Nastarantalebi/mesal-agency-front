@@ -5,19 +5,34 @@ import formTypes from "../form/FormInputTypes";
 import type { FieldValues, UseFormReturn } from "react-hook-form";
 import CustomButton from "../form/CustomButton";
 import { Form } from "../ui/form";
+import type { Dispatch, SetStateAction } from "react";
 
 interface Props<T extends FieldValues> {
   open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
   onOpenchange: (open: boolean) => void;
   form: UseFormReturn<T>;
   handleSubmit: (data: T) => void;
-  fields: Items<T>[]
+  fields: Items<T>[];
 }
-const FilterModal = <T extends FieldValues>({ open, onOpenchange, form, handleSubmit, fields }: Props<T>) => {
+
+const FilterModal = <T extends FieldValues>({
+  open,
+  setOpen,
+  onOpenchange,
+  form,
+  handleSubmit,
+  fields,
+}: Props<T>) => {
+  const hadleDeleteFilters = () => {
+    form.reset();
+    handleSubmit(form.getValues());
+    setOpen(false);
+  };
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenchange}>
-        <DialogContent className="max-w-xs overflow-y-scroll">
+        <DialogContent className="">
           <DialogHeader>
             <DialogTitle className="mb-6">فیلتر بر اساس:</DialogTitle>
           </DialogHeader>
@@ -27,14 +42,23 @@ const FilterModal = <T extends FieldValues>({ open, onOpenchange, form, handleSu
                 {fields.map((item) => (
                   <div
                     key={String(item.name)}
-                    className={item.className || "col-span-1"}
+                    className={item.className || "col-span-full"}
                   >
                     {formTypes<T>(item, form.control)}
                   </div>
                 ))}
               </FieldGroup>
               <div className="mt-10">
-                <CustomButton type="submit">فیلتر</CustomButton>
+                <CustomButton type="submit" className="bg-primary text-white">
+                  فیلتر
+                </CustomButton>
+                <CustomButton
+                  type="button"
+                  className="mr-1 bg-destructive/80 text-white"
+                  onClick={hadleDeleteFilters}
+                >
+                  حذف فیلتر
+                </CustomButton>
               </div>
             </form>
           </Form>

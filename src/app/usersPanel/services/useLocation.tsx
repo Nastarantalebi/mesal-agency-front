@@ -19,6 +19,7 @@ const useLocation = (province_id?: number) => {
   const getCities = useGetData<cities[]>({
     key: [cities_key, String(province_id)],
     url: `${cities_url}?province_id=${province_id}`,
+    enabled: !!province_id,
   });
 
   return { getProviences, getCities };

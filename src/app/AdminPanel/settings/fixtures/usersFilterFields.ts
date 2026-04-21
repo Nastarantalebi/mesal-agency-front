@@ -8,12 +8,13 @@ export const userFields: Items<createUsersList>[] = [
     isRequired: false,
     fieldType: "input",
     inputType: "text",
-    className:"max-w-50"
+    // className:"w-fit"
   },
  {
     name: "is_staff",
     label: "مدیر؟",
     isRequired: false,
-    fieldType: "yesNoInput",
+    fieldType: "radio",
+    items: [{label: "هیچکدام", value:''}, {label: "خیر", value: "false"}, {label: "بله", value: "true"}, ]
   },
 ]

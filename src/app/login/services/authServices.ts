@@ -5,8 +5,7 @@ const LOGIN_URL = import.meta.env.VITE_BACKEND_Login_URL;
 
 export async function refresh() {
   const { data } = await Request.post(
-    `${LOGIN_URL}/refresh/`,
-    {},
+    `${LOGIN_URL}/refresh/`
   );
   return data;
 }

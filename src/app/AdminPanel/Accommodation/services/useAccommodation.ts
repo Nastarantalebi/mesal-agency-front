@@ -1,9 +1,9 @@
-import { accommodation_key, accommodation_url, features_key, features_url } from "@/data/querykeys";
+import { accommodation_key, accommodation_types_key, accommodation_types_url, accommodation_url, features_key, features_url } from "@/data/querykeys";
 import useDeleteData from "@/services/useDeleteData";
 import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
 import type { TPaginatedResponse } from "@/types";
-import type { AccommodationItem, TAccommodationFeatureResponse, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
+import type { AccommodationItem, accommodationTypes, TAccommodationFeatureResponse, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
 import usePutData from "@/services/usePutData";
 
 export const useAccommodation = (AccommodationId?: number, currentAccommodationPage?: number, searchInput?: string) => {
@@ -44,8 +44,13 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
       enabled: !!currentAccommodationPage
     });
 
+    const getAccommodationTypes = useGetData<accommodationTypes[]>({
+      key: [accommodation_types_key],
+      url: accommodation_types_url,
+    })
 
-    return { getAccommodation, postAccommodation, putAccommodation, deleteAccommodation, getAccommodations}
+
+    return { getAccommodation, postAccommodation, putAccommodation, deleteAccommodation, getAccommodations, getAccommodationTypes}
 }
 
 // -----------------------------------------------------------------------------------------

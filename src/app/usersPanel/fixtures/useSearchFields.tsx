@@ -4,7 +4,6 @@ import useLocation from "../services/useLocation";
 
 const useSearchFields = () => {
   const { getProviences } = useLocation();
-  console.log(getProviences.data)
 
   const searchFields: Items<accommodationSearch>[] = [
     {
@@ -12,7 +11,7 @@ const useSearchFields = () => {
       isRequired: false,
       fieldType: "dropdown",
       placeholder: "استان",
-      options: getProviences.data,
+      items: getProviences.data,
       className: "border-gray-200 placeholder:text-red-500!",
     },
     {

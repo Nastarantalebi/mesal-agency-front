@@ -47,5 +47,5 @@ export type UsersListResponse = {
 };
 export type createUsersList = {
     mobile: string;
-    is_staff: boolean;
+    is_staff: string;
 };

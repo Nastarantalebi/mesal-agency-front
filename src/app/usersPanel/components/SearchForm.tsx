@@ -33,7 +33,7 @@ export default function SearchForm() {
   };
 
   return (
-    <div className="bg-white rounded-full px-10 py-5">
+    <div className="bg-white rounded-full px-10 py-5 transition-transform duration-300 hover:scale-101">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit)}

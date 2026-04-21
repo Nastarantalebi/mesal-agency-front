@@ -7,7 +7,7 @@ const useProvinceBasedAccommodationList = () => {
     end: "",
     num_adults: "",
     province: "109",
-    city: "10900016",
+    city: "",
   });
 
   const tehran = useSearch({
@@ -15,7 +15,7 @@ const useProvinceBasedAccommodationList = () => {
     end: "",
     num_adults: "",
     province: "123",
-    city: "1230001",
+    city: "",
   });
 
   const esfahan = useSearch({
@@ -23,7 +23,7 @@ const useProvinceBasedAccommodationList = () => {
     end: "",
     num_adults: "",
     province: "110",
-    city: "1100002",
+    city: "",
   });
     const provinceBasedAccommodationList: TprovinceBasedAccommodationList[] = [
         {
