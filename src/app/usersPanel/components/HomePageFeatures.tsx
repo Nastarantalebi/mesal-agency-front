@@ -16,11 +16,11 @@ const HomePageFeatures = () => {
   }, [getHomePageFeatures.data]);
 
   return (
-    <div className="flex flex-row justify-center items-center mt-10 gap-10">
+    <div className="flex flex-row justify-center items-center mt-7 gap-10 bg-gray-100/80 py-5">
       {getHomePageFeatures.data?.map((feature, index) => (
         <div
           key={feature.id}
-          className={`transform transition-all duration-700 ease-out
+          className={`transform transition-all duration-700 ease-out cursor-pointer
             ${animate ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-40"}
           `}
           style={{ transitionDelay: `${index * 150}ms` }}

@@ -1,4 +1,4 @@
-import { accommodation_key, accommodation_types_key, accommodation_types_url, accommodation_url, features_key, features_url } from "@/data/querykeys";
+import { admin_accommodation_key, accommodation_types_key, accommodation_types_url, admin_accommodation_url, features_key, features_url } from "@/data/querykeys";
 import useDeleteData from "@/services/useDeleteData";
 import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
@@ -8,8 +8,8 @@ import usePutData from "@/services/usePutData";
 
 export const useAccommodation = (AccommodationId?: number, currentAccommodationPage?: number, searchInput?: string) => {
 
-  const key = [accommodation_key, String(AccommodationId)];
-  const url =  `${accommodation_url}${AccommodationId}/`
+  const key = [admin_accommodation_key, String(AccommodationId)];
+  const url =  `${admin_accommodation_url}${AccommodationId}/`
 
     const getAccommodation = useGetData<TAccommodationResponse>({
         key,
@@ -20,27 +20,27 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
     const postAccommodation = usePostData<
         TCreateAccomodation
     >({
-        key: [accommodation_key],
-        url: accommodation_url,
+        key: [admin_accommodation_key],
+        url: admin_accommodation_url,
     });
 
     const putAccommodation = usePutData<
         TCreateAccomodation
     >({
         key,
-        url: `${accommodation_url}${AccommodationId}`,
+        url: `${admin_accommodation_url}${AccommodationId}`,
     });
 
     const deleteAccommodation = useDeleteData({
-      key: [accommodation_key],
-      url: `${accommodation_url}`,
+      key: [admin_accommodation_key],
+      url: `${admin_accommodation_url}`,
     });
 
     const getAccommodations = useGetData<
       TPaginatedResponse<AccommodationItem>
     >({
-      key: [accommodation_key, String(currentAccommodationPage), searchInput!],
-      url: `${accommodation_url}${searchInput ? `?name__contains= ${searchInput}`: `?page=${currentAccommodationPage}`}`,
+      key: [admin_accommodation_key, String(currentAccommodationPage), searchInput!],
+      url: `${admin_accommodation_url}${searchInput ? `?name__contains= ${searchInput}`: `?page=${currentAccommodationPage}`}`,
       enabled: !!currentAccommodationPage
     });
 
@@ -58,7 +58,7 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
 export const useAccommodationFeatures = (AccommodationId: number) => {
 
     const key = ["accommodation-features", String(AccommodationId)];
-      const url = `${accommodation_url}${AccommodationId}/features/`;
+      const url = `${admin_accommodation_url}${AccommodationId}/features/`;
     
       const accommodationFeatures = useGetData<
         TPaginatedResponse<TFeatureResponse>
@@ -96,7 +96,7 @@ export const useAccommodationFeatures = (AccommodationId: number) => {
 export const useAccommodationImg = (AccommodationId: number) => {
 
     const key = ["accommodation-image", String(AccommodationId)];
-    const url = `${accommodation_url}${AccommodationId}/images/`;
+    const url = `${admin_accommodation_url}${AccommodationId}/images/`;
     
     const getImgs = useGetData<
         TPaginatedResponse<TAccommodationImageResponse>

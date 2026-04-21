@@ -1,4 +1,4 @@
-import { accommodation_url, beds_key, beds_url, features_key, features_url } from "@/data/querykeys";
+import { admin_accommodation_url, beds_key, beds_url, features_key, features_url } from "@/data/querykeys";
 import useDeleteData from "@/services/useDeleteData";
 import useGetData from "@/services/useGetData";
 import type { TPaginatedResponse } from "@/types";
@@ -10,7 +10,7 @@ import type { TBedResponse, TFeatureResponse } from "../../settings/types";
 export const useRoomType = (AccommodationId: number | undefined, RoomTypeId: number) => {
 
     const key = ["RoomTypes", String(AccommodationId) || ""];
-    const url = `${accommodation_url}${AccommodationId}/room_types/`;
+    const url = `${admin_accommodation_url}${AccommodationId}/room_types/`;
 
     const getRoomType = useGetData<TRoomTypeResponse>({
         key: [...key, String(RoomTypeId) || ""],
@@ -38,12 +38,12 @@ export const useRoomTypeList = (AccommodationId: number, currentPage: number, se
 
     const getRoomTypeList = useGetData<TPaginatedResponse<RoomItem>>({
         key: ["RoomTypes", String(AccommodationId), String(currentPage), searchInput!],
-        url: `${accommodation_url}${AccommodationId}/room_types/${searchInput ? `?name__contains=${searchInput}` : `?page=${currentPage}`}`
+        url: `${admin_accommodation_url}${AccommodationId}/room_types/${searchInput ? `?name__contains=${searchInput}` : `?page=${currentPage}`}`
     });
 
     const deleteRoomType = useDeleteData({
         key: ["RoomTypes", String(AccommodationId)],
-        url: `${accommodation_url}${AccommodationId}/room_types/`,
+        url: `${admin_accommodation_url}${AccommodationId}/room_types/`,
     });
 
     return {getRoomTypeList, deleteRoomType}
@@ -54,7 +54,7 @@ export const useRoomTypeList = (AccommodationId: number, currentPage: number, se
 export const useRoomTypeImg = (AccommodationId: number, RoomTypeId: number) => {
 
   const key = ["RoomType-image", String(RoomTypeId) || ""];
-  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/images/`;
+  const url = `${admin_accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/images/`;
 
   const getImgs = useGetData<
     TPaginatedResponse<TRoomTypeImageResponse>
@@ -82,7 +82,7 @@ export const useRoomTypeImg = (AccommodationId: number, RoomTypeId: number) => {
 export const useRoomTypeFeatures = (AccommodationId: number, RoomTypeId: number, currentRoomTypeFeaturePage: number) => {
 
     const key = [features_key, String(AccommodationId), String(RoomTypeId)];
-    const url = `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/features/`;
+    const url = `${admin_accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/features/`;
 
     const getFeatures = useGetData<
     TPaginatedResponse<TFeatureResponse>
@@ -117,7 +117,7 @@ export const useRoomTypeFeatures = (AccommodationId: number, RoomTypeId: number,
 export const useRooms = (AccommodationId: number, RoomTypeId: number) => {
 
     const key = ["RoomType-rooms", String(RoomTypeId) || ""];
-    const url = `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/`;
+    const url = `${admin_accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/`;
     
     const postRoom = usePostData<TCRoomTypesRoom>({
       key,
@@ -136,12 +136,12 @@ export const useRoomList  = (AccommodationId: number, RoomTypeId: number, curren
     TPaginatedResponse<TRoomTypeRoomResponse>
   >({
     key: ["RoomType-rooms", String(RoomTypeId), String(currentPage), searchInput!],
-    url:`${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/${searchInput ? `?name__contains=${searchInput}` : `?page=${currentPage}`}`,
+    url:`${admin_accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/${searchInput ? `?name__contains=${searchInput}` : `?page=${currentPage}`}`,
   });
 
   const deleteRoom = useDeleteData({
     key: ["RoomType-rooms", String(RoomTypeId), String(currentPage)],
-    url: `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/`,
+    url: `${admin_accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/`,
   });
 
   return { getRooms, deleteRoom }
@@ -153,7 +153,7 @@ export const useRoomList  = (AccommodationId: number, RoomTypeId: number, curren
 export const useRoomTypeBed = (AccommodationId: number, RoomTypeId: number) => {
   
   const key = [beds_key, String(AccommodationId), String(RoomTypeId)];
-    const url = `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/beds/`;
+    const url = `${admin_accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/beds/`;
 
     const getbeds = useGetData<TPaginatedResponse<TBedResponse>>({
       key: [beds_key],
@@ -180,7 +180,7 @@ export const useRoomTypeBed = (AccommodationId: number, RoomTypeId: number) => {
 export const useRoomTypePrice = (AccommodationId: number, RoomTypeId: number, startDate: string, endDate: string) => {
 
   const key = ["roomTypePrices", startDate, endDate];
-  const url = `${accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/prices/?start_date=${startDate}&end_date=${endDate}`
+  const url = `${admin_accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/prices/?start_date=${startDate}&end_date=${endDate}`
   
   const getRoomTypePrices = useGetData<TRoomTypePricesResponse>({
     key,
