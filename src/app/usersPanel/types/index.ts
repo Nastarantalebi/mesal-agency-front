@@ -44,8 +44,17 @@ export type accommodationsResponse = {
     type: string;
     name: string;
     stars: number;
-    images: string[];
+    images: {id: number, image:string, main:boolean}[];
     top: boolean;
+    city: {
+    id: number,
+    name: string,
+    province: {
+        id: 0,
+        name: string,
+    }
+    }
+    price_from: number,
 }
 
 export type TprovinceBasedAccommodationList = {

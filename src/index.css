@@ -341,3 +341,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+

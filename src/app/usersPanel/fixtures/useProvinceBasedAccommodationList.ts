@@ -11,13 +11,11 @@ const useProvinceBasedAccommodationList = () => {
     city__id: 10900016,
   }, currentPage);
 
-  console.log(mashhad.getAccommodations.data)
 
   const tehran = useAccommoation({
     city__province__id: 123,
   }, currentPage);
 
-  console.log(tehran.getAccommodations.data)
 
   const esfahan = useAccommoation({
     city__province__id: 110,
@@ -41,12 +39,12 @@ const emptyPaginated: TPaginatedResponse<accommodationsResponse> = {
       },
       {
           title: "اقامتگاه های شهر اصفهان",
-          city__province__id: 123,
+          city__province__id: 110,
           accommodations: esfahan.getAccommodations.data ?? emptyPaginated,
       },
       {
           title: "اقامتگاه های شهر تهران",
-          city__province__id: 110,
+          city__province__id: 123,
           accommodations: tehran.getAccommodations.data ?? emptyPaginated,
       },
   ]

@@ -31,7 +31,7 @@ const Header = ({ AccommodationData, menuBtn }: Props) => {
       <header className=" mx-5 my-2 rounded-xl top-0  right-0 z-10 flex h-14 justify-between items-center border px-4 bg-primary-10">
         <div className="flex items-center gap-5 text-primary">
           {menuBtn}
-          <span onClick={() => navigate({to: "/accommodation"})} className="cursor-pointer">آژانس</span>
+          <span onClick={() => navigate({to: "/"})} className="cursor-pointer">آژانس</span>
           <span>
             {AccommodationData?.type.name} {AccommodationData?.name}
           </span>

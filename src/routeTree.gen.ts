@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UseNotFoundRouteImport } from './routes/useNotFound'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as NotAdminRouteImport } from './routes/notAdmin'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -27,6 +28,11 @@ import { Route as AccommodationIdAddRoomTypesRouteImport } from './routes/accomm
 const UseNotFoundRoute = UseNotFoundRouteImport.update({
   id: '/useNotFound',
   path: '/useNotFound',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NotAdminRoute = NotAdminRouteImport.update({
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/notAdmin': typeof NotAdminRoute
+  '/search': typeof SearchRoute
   '/useNotFound': typeof UseNotFoundRoute
   '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
   '/accommodation/': typeof AccommodationIndexRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/notAdmin': typeof NotAdminRoute
+  '/search': typeof SearchRoute
   '/useNotFound': typeof UseNotFoundRoute
   '/accommodation': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/notAdmin': typeof NotAdminRoute
+  '/search': typeof SearchRoute
   '/useNotFound': typeof UseNotFoundRoute
   '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
   '/accommodation/': typeof AccommodationIndexRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/notAdmin'
+    | '/search'
     | '/useNotFound'
     | '/accommodation/$id'
     | '/accommodation/'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/notAdmin'
+    | '/search'
     | '/useNotFound'
     | '/accommodation'
     | '/accommodation/$id/addRoomTypes'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/notAdmin'
+    | '/search'
     | '/useNotFound'
     | '/accommodation/$id'
     | '/accommodation/'
@@ -201,6 +213,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   NotAdminRoute: typeof NotAdminRoute
+  SearchRoute: typeof SearchRoute
   UseNotFoundRoute: typeof UseNotFoundRoute
   AccommodationIdRouteRoute: typeof AccommodationIdRouteRouteWithChildren
   AccommodationIndexRoute: typeof AccommodationIndexRoute
@@ -213,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/useNotFound'
       fullPath: '/useNotFound'
       preLoaderRoute: typeof UseNotFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notAdmin': {
@@ -337,6 +357,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   NotAdminRoute: NotAdminRoute,
+  SearchRoute: SearchRoute,
   UseNotFoundRoute: UseNotFoundRoute,
   AccommodationIdRouteRoute: AccommodationIdRouteRouteWithChildren,
   AccommodationIndexRoute: AccommodationIndexRoute,
