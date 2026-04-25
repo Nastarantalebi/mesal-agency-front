@@ -53,7 +53,7 @@ const handleHttpError = (error: any) => {
     case 401:
       // Refresh قبلاً در sendRequest امتحان شده
       // اینجا فقط redirect می‌کنیم
-      window.location.href = "/login";
+      // window.location.href = "/login";
       throw {
         ...error,
         detail: "احراز هویت منقضی شده است، لطفا مجددا وارد شوید",

@@ -8,7 +8,6 @@ export const Route = createFileRoute("/login")({
 });
 
 function RouteComponent() {
-  
   const { mutateAsync: refresh, isPending } = useRefresh();
 
   useEffect(() => {

@@ -16,6 +16,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccommodationIndexRouteImport } from './routes/accommodation/index'
+import { Route as AccommodationSearchRouteImport } from './routes/accommodation/search'
 import { Route as AccommodationIdRouteRouteImport } from './routes/accommodation/$id/route'
 import { Route as AccommodationIdIndexRouteImport } from './routes/accommodation/$id/index'
 import { Route as AccommodationIdPeakDatesRouteImport } from './routes/accommodation/$id/peakDates'
@@ -58,6 +59,11 @@ const IndexRoute = IndexRouteImport.update({
 const AccommodationIndexRoute = AccommodationIndexRouteImport.update({
   id: '/accommodation/',
   path: '/accommodation/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccommodationSearchRoute = AccommodationSearchRouteImport.update({
+  id: '/accommodation/search',
+  path: '/accommodation/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccommodationIdRouteRoute = AccommodationIdRouteRouteImport.update({
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/useNotFound': typeof UseNotFoundRoute
   '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
+  '/accommodation/search': typeof AccommodationSearchRoute
   '/accommodation/': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
   '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
@@ -128,6 +135,7 @@ export interface FileRoutesByTo {
   '/notAdmin': typeof NotAdminRoute
   '/search': typeof SearchRoute
   '/useNotFound': typeof UseNotFoundRoute
+  '/accommodation/search': typeof AccommodationSearchRoute
   '/accommodation': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
   '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
@@ -146,6 +154,7 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/useNotFound': typeof UseNotFoundRoute
   '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
+  '/accommodation/search': typeof AccommodationSearchRoute
   '/accommodation/': typeof AccommodationIndexRoute
   '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
   '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/useNotFound'
     | '/accommodation/$id'
+    | '/accommodation/search'
     | '/accommodation/'
     | '/accommodation/$id/addRoomTypes'
     | '/accommodation/$id/features'
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/notAdmin'
     | '/search'
     | '/useNotFound'
+    | '/accommodation/search'
     | '/accommodation'
     | '/accommodation/$id/addRoomTypes'
     | '/accommodation/$id/features'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/useNotFound'
     | '/accommodation/$id'
+    | '/accommodation/search'
     | '/accommodation/'
     | '/accommodation/$id/addRoomTypes'
     | '/accommodation/$id/features'
@@ -216,6 +228,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   UseNotFoundRoute: typeof UseNotFoundRoute
   AccommodationIdRouteRoute: typeof AccommodationIdRouteRouteWithChildren
+  AccommodationSearchRoute: typeof AccommodationSearchRoute
   AccommodationIndexRoute: typeof AccommodationIndexRoute
 }
 
@@ -268,6 +281,13 @@ declare module '@tanstack/react-router' {
       path: '/accommodation'
       fullPath: '/accommodation/'
       preLoaderRoute: typeof AccommodationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accommodation/search': {
+      id: '/accommodation/search'
+      path: '/accommodation/search'
+      fullPath: '/accommodation/search'
+      preLoaderRoute: typeof AccommodationSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/accommodation/$id': {
@@ -360,6 +380,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   UseNotFoundRoute: UseNotFoundRoute,
   AccommodationIdRouteRoute: AccommodationIdRouteRouteWithChildren,
+  AccommodationSearchRoute: AccommodationSearchRoute,
   AccommodationIndexRoute: AccommodationIndexRoute,
 }
 export const routeTree = rootRouteImport

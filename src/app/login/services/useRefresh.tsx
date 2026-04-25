@@ -8,7 +8,6 @@ function useRefresh() {
 
   return useMutation<LoginResponse, any>({
     mutationFn: async () => {
-      console.log("object");
       const response = await refresh();
       return response;
     },
