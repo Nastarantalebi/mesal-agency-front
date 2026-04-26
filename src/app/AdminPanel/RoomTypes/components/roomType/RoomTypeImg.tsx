@@ -1,4 +1,3 @@
-import PhotoUploader from "@/components/form/PhotoUploader";
 import { X } from "lucide-react";
 import { useRoomTypeImg } from "../../services/useRoomType";
 import type { Props, TCRoomTypeImage } from "../../types";

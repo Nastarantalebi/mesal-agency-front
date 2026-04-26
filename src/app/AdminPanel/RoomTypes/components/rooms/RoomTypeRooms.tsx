@@ -1,12 +1,4 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-
 import RoomTypeRoomForm from "./RoomTypeRoomForm";
 import RoomTypeRoomList from "./RoomTypeRoomList";
 import type { Props } from "../../types";
