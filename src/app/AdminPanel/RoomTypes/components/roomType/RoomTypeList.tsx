@@ -21,6 +21,7 @@ import ListRooms from "../roomTypeListIcons/ListRooms";
 import SearchInput from "@/components/list/SearchInput";
 import ListPagination from "@/components/list/ListPagination";
 import ListEdit from "@/components/list/ListEdit";
+import { useNavigate } from "@tanstack/react-router";
 
 export const columns: ColumnDef<RoomItem>[] = [
   {
@@ -52,6 +53,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   const [openR, setopenR] = useState(false);
   const [openD, setopenD] = useState(false);
   const [openP, setopenP] = useState(false);
+  const navigate = useNavigate();
 
   const handleDelete = async (id: number) => {
     await deleteRoomType.mutateAsync({ id });
@@ -91,6 +93,12 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
 
         <div className="overflow-x-auto rounded-md mt-4">
           <CustomDataTable
+            onRowClick={(rowData) => {
+              navigate({
+                to: "/accommodation/$id/listRoomTypes/$roomTypeId",
+                params: { id: String(AccommodationId), roomTypeId: String(rowData.id) },
+              });
+            }}
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
                 <ListEdit
