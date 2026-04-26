@@ -6,4 +6,8 @@ export type Props = {
   enabled?: boolean;
   onSuccess?: () => void;
   onError?: () => void;
+  gcTime?: number;
+  staleTime?: number;
+  refetchOnWindowFocus?: boolean;
+  refetchOnMount?: boolean,
 };

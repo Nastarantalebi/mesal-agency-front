@@ -133,7 +133,7 @@ export type TAccommodationFeatureResponse = {
 
 
 export type TAccommodationImage = {
-  image: string;
+  image: File;
   main: boolean
 }
 

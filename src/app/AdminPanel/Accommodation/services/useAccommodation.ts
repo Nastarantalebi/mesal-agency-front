@@ -3,7 +3,7 @@ import useDeleteData from "@/services/useDeleteData";
 import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
 import type { TPaginatedResponse } from "@/types";
-import type { AccommodationItem, accommodationTypes, TAccommodationFeatureResponse, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
+import type { AccommodationItem, accommodationTypes, TAccommodationFeatureResponse, TAccommodationImage, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
 import usePutData from "@/services/usePutData";
 
 export const useAccommodation = (AccommodationId?: number, currentAccommodationPage?: number, searchInput?: string) => {
@@ -103,9 +103,13 @@ export const useAccommodationImg = (AccommodationId: number) => {
     >({
         key,
         url,
+        gcTime: 30 * 60 * 1000, // 30 دقیقه (قبلاً cacheTime بود)
+        staleTime: 5 * 60 * 1000, // 5 دقیقه - داده fresh باقی بمونه
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
     });
 
-    const postImg = usePostData<FormData>({
+    const postImg = usePostData<TAccommodationImage>({
         key,
         url,
     });

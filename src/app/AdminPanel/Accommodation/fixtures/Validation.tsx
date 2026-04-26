@@ -7,3 +7,13 @@ export const accommodationFeatureListValidation = z.object({
 export const accommodationFeatureListInitialValues = {
   feature: [],
 };
+
+export const accommodationImageValidation = z.object({
+  image: z.file(),
+  main: z.boolean()
+})
+
+export const accommodationImageInitialValues = {
+  image: undefined,
+  main: false,
+}
