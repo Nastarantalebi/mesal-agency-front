@@ -9,6 +9,7 @@ import TimeInput from "./TimeInput";
 import type { ReactNode } from "react";
 import Radio from "./RadioInputs";
 import type { Type } from "@/app/AdminPanel/Accommodation/types";
+import CustomImageInput from "./CustomImageInput";
 
 //options is for static data which I like to see in for: label&value
 //items coms from backend
@@ -21,12 +22,13 @@ type fieldTypes =
   | "checkBox"
   | "Map"
   | "Time"
-  | "radio";
+  | "radio"
+  | "image";
 export interface Items<T> {
   name: Path<T>;
   label?: string;
   fieldType?: fieldTypes;
-  isRequired: boolean;
+  isRequired?: boolean;
   inputType?: InputType;
   valueAsNumber?: boolean;
   onValueChange?: (value: string | number) => void;
@@ -144,6 +146,9 @@ function formTypes<T extends FieldValues>(
           control={control}
         />
       );
+
+    case "image":
+      return <CustomImageInput name={name} label={label} control={control} />;
 
     default:
       return (

@@ -42,7 +42,7 @@ export type TRoomTypeFeatureResponse = {
 
 
 export type TCRoomTypeImage = {
-  image: string;
+  image: File;
   main: boolean
 }
 

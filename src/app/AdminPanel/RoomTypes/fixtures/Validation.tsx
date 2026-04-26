@@ -44,8 +44,7 @@ export const roomTypePriceValidation = z.object({
       normal_child_price: z.number().min(0, "قیمت باید مثبت باشد"),
       peak_price: z.number().min(0, "قیمت باید مثبت باشد"),
       peak_child_price: z.number().min(0, "قیمت باید مثبت باشد"),
-      phone_call_price: z.boolean()
-
+      phone_call_price: z.boolean(),
     }),
   ),
 });
@@ -67,7 +66,7 @@ export const bedListValidation = z.object({
     z.object({
       bed: z.number(),
       number: z.number().min(1),
-    })
+    }),
   ),
 });
 
@@ -76,3 +75,8 @@ export const badListInitialValues = {
 };
 
 export type TBedListForm = z.infer<typeof bedListValidation>;
+
+export const roomTypeImgValidation = z.object({
+  image: z.instanceof(File),
+  main: z.boolean(),
+});

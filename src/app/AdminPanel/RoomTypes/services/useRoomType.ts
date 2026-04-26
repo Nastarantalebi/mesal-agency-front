@@ -2,7 +2,7 @@ import { admin_accommodation_url, beds_key, beds_url, features_key, features_url
 import useDeleteData from "@/services/useDeleteData";
 import useGetData from "@/services/useGetData";
 import type { TPaginatedResponse } from "@/types";
-import type { RoomItem, TCreateRoomType, TCRoomTypeBed, TCRoomTypeFeature, TCRoomTypePrices, TCRoomTypesRoom, TRoomTypeBedResponse, TRoomTypeFeatureResponse, TRoomTypeImageResponse, TRoomTypePricesResponse, TRoomTypeResponse, TRoomTypeRoomResponse } from "../types";
+import type { RoomItem, TCreateRoomType, TCRoomTypeBed, TCRoomTypeFeature, TCRoomTypeImage, TCRoomTypePrices, TCRoomTypesRoom, TRoomTypeBedResponse, TRoomTypeFeatureResponse, TRoomTypeImageResponse, TRoomTypePricesResponse, TRoomTypeResponse, TRoomTypeRoomResponse } from "../types";
 import usePutData from "@/services/usePutData";
 import usePostData from "@/services/usePostData";
 import type { TBedResponse, TFeatureResponse } from "../../settings/types";

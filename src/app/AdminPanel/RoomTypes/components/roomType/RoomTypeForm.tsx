@@ -82,7 +82,7 @@ const RoomTypeForm = ({
 
   const formContent = (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="max-w-2xl">
         <FieldGroup>
           {RoomTypeFields.map((item) => (
             <div
