@@ -12,37 +12,30 @@ import RoomTypeRoomList from "./RoomTypeRoomList";
 import type { Props } from "../../types";
 
 const RoomTypeRooms = ({
-  open,
-  onOpenChange,
-  title,
   AccommodationId,
   RoomTypeId,
-  RoomTypeName,
 }: Props) => {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl  h-screen overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="mb-6">{title}</DialogTitle>
-        </DialogHeader>
-        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomTypeName}`}</div>
-        <RoomTypeRoomForm AccommodationId={AccommodationId} RoomTypeId={RoomTypeId} />
+    <div className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl  h-screen">
+      <RoomTypeRoomForm
+        AccommodationId={AccommodationId}
+        RoomTypeId={RoomTypeId}
+      />
 
-        <div className="m-5">
-          <Card className="shadow-lg shadow-primary/50 ">
-            <CardTitle className="text-start pr-7 text-primary">
-              لیست اتاق های تعریف شده
-            </CardTitle>
-            <CardContent className="flex flex-wrap gap-2">
-              <RoomTypeRoomList
-                AccommodationId={AccommodationId}
-                RoomTypeId={RoomTypeId}
-              />
-            </CardContent>
-          </Card>
-        </div>
-      </DialogContent>
-    </Dialog>
+      <div className="m-5">
+        <Card className="shadow-lg shadow-primary/50 ">
+          <CardTitle className="text-start pr-7 text-primary">
+            لیست اتاق های تعریف شده
+          </CardTitle>
+          <CardContent className="flex flex-wrap gap-2">
+            <RoomTypeRoomList
+              AccommodationId={AccommodationId}
+              RoomTypeId={RoomTypeId}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 };
 

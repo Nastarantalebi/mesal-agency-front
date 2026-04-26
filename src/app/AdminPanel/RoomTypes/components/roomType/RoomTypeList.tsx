@@ -6,21 +6,10 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useRoomTypeList } from "../../services/useRoomType";
 import type { Props, RoomItem } from "../../types/index";
-import RoomTypeBeds from "../beds/components/RoomTypeBeds";
-import RoomTypePriceForm from "../price/RoomTypePriceForm";
-import RoomTypeRooms from "../rooms/RoomTypeRooms";
-import RoomTypeFeatures from "./RoomTypeFeatures";
 import RoomTypeForm from "./RoomTypeForm";
-import RoomTypeImg from "./RoomTypeImg";
-import ListBeds from "../roomTypeListIcons/ListBeds";
 import ListDelete from "../roomTypeListIcons/ListDelete";
-import ListFeatures from "../roomTypeListIcons/ListFeatures";
-import ListImage from "../roomTypeListIcons/ListImage";
-import ListPrice from "../roomTypeListIcons/ListPrice";
-import ListRooms from "../roomTypeListIcons/ListRooms";
 import SearchInput from "@/components/list/SearchInput";
 import ListPagination from "@/components/list/ListPagination";
-import ListEdit from "@/components/list/ListEdit";
 import { useNavigate } from "@tanstack/react-router";
 
 export const columns: ColumnDef<RoomItem>[] = [
@@ -43,16 +32,10 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
     searchInput,
   );
 
-  const [openEdit, setOpenEdit] = useState(false);
   const [selected, setSelected] = useState<RoomItem | null>(null);
 
   const [openAdd, setAddRoomType] = useState(false);
-  const [openImg, setOpenImg] = useState(false);
-  const [openF, setOpenF] = useState(false);
-  const [openB, setOpenB] = useState(false);
-  const [openR, setopenR] = useState(false);
   const [openD, setopenD] = useState(false);
-  const [openP, setopenP] = useState(false);
   const navigate = useNavigate();
 
   const handleDelete = async (id: number) => {
@@ -96,47 +79,14 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
             onRowClick={(rowData) => {
               navigate({
                 to: "/accommodation/$id/listRoomTypes/$roomTypeId",
-                params: { id: String(AccommodationId), roomTypeId: String(rowData.id) },
+                params: {
+                  id: String(AccommodationId),
+                  roomTypeId: String(rowData.id),
+                },
               });
             }}
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
-                <ListEdit
-                  onClick={() => {
-                    setSelected(rowData);
-                    setOpenEdit(true);
-                  }}
-                />
-                <ListImage
-                  onClick={() => {
-                    setSelected(rowData);
-                    setOpenImg(true);
-                  }}
-                />
-                <ListFeatures
-                  onClick={() => {
-                    setSelected(rowData);
-                    setOpenF(true);
-                  }}
-                />
-                <ListBeds
-                  onClick={() => {
-                    setSelected(rowData);
-                    setOpenB(true);
-                  }}
-                />
-                <ListRooms
-                  onClick={() => {
-                    setSelected(rowData);
-                    setopenR(true);
-                  }}
-                />
-                <ListPrice
-                  onClick={() => {
-                    setSelected(rowData);
-                    setopenP(true);
-                  }}
-                />
                 <ListDelete
                   onClick={() => {
                     setSelected(rowData);
@@ -167,56 +117,6 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         title="افزودن نوع اتاق جدید"
         buttonTitle="ثبت"
         asModal={true}
-      />
-
-      <RoomTypeForm
-        AccommodationId={AccommodationId}
-        RoomTypeId={selected?.id}
-        open={openEdit}
-        onOpenChange={() => setOpenEdit(false)}
-        title="اطلاعات نوع اتاق"
-        buttonTitle="ویرایش"
-        asModal={true}
-      />
-      <RoomTypeImg
-        RoomTypeName={selected?.name}
-        RoomTypeId={selected?.id}
-        AccommodationId={AccommodationId}
-        open={openImg}
-        onOpenChange={() => setOpenImg(false)}
-        title="افزودن عکس"
-      />
-      <RoomTypeFeatures
-        RoomTypeName={selected?.name}
-        RoomTypeId={selected?.id}
-        AccommodationId={AccommodationId}
-        open={openF}
-        onOpenChange={() => setOpenF(false)}
-        title="افزودن ویژگی"
-      />
-      <RoomTypeBeds
-        RoomTypeName={selected?.name}
-        RoomTypeId={selected?.id}
-        AccommodationId={AccommodationId}
-        open={openB}
-        onOpenChange={() => setOpenB(false)}
-        title="افزودن تخت"
-      />
-      <RoomTypeRooms
-        RoomTypeName={selected?.name}
-        RoomTypeId={selected?.id}
-        AccommodationId={AccommodationId}
-        open={openR}
-        onOpenChange={() => setopenR(false)}
-        title="افزودن اتاق"
-      />
-      <RoomTypePriceForm
-        RoomTypeName={selected?.name}
-        RoomTypeId={selected?.id}
-        AccommodationId={AccommodationId}
-        open={openP}
-        onOpenChange={() => setopenP(false)}
-        title="تعیین قیمت"
       />
       <FormErrorModal
         open={openD}

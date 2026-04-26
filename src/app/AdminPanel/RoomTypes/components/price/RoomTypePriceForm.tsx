@@ -2,12 +2,6 @@ import FormErrorModal from "@/components/form/FormErrorModal";
 import CustomButton from "@/components/form/CustomButton";
 import { shamsiToMiladi } from "@/components/form/DateConverter";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -37,12 +31,9 @@ import useMonthStores from "./monthStore";
 
 
 const RoomTypePriceForm = ({
-  open,
   onOpenChange,
-  title,
   AccommodationId,
   RoomTypeId,
-  RoomTypeName,
 }: Props) => {
 
   const { selectedMonth, setSelectedMonth } = useMonthStores();
@@ -136,22 +127,17 @@ const RoomTypePriceForm = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        <div className="bg-primary/20 p-2 rounded mb-3 text-center">{`نوع اتاق ${RoomTypeName}`}</div>
-        <div className="">
-          <div className="flex items-center justify-center">
-            <Calendar
-              value={selectedMonth}
-              onChange={handleMonthChange}
-              onlyMonthPicker
-              calendar={persian}
-              locale={persian_fa}
-            />
-          </div>
+      <div className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl max-h-[90vh]">
+        <div className="flex flex-row gap-50">
+            <div>
+              <Calendar
+                value={selectedMonth}
+                onChange={handleMonthChange}
+                onlyMonthPicker
+                calendar={persian}
+                locale={persian_fa}
+              />
+            </div>
 
           <div className="mt-10">
             {selectedMonth && (
@@ -302,8 +288,7 @@ const RoomTypePriceForm = ({
             )}
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
   );
 };
 

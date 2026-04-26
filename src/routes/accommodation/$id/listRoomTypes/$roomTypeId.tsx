@@ -1,3 +1,5 @@
+import useRoomTypeTabItems from "@/app/AdminPanel/RoomTypes/hooks/useRoomTypeTabItems";
+import CustomTab from "@/components/tabs/CustomTab";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute(
@@ -8,17 +10,14 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const { id, roomTypeId } = Route.useParams();
+const { roomTypeTabItems } = useRoomTypeTabItems({
+  AccommodationId: +id,
+  roomTypeId: +roomTypeId,
+});
 
-  // اینجا هر چیزی که قرار است در outlet نمایش داده شود:
-  // مثلا جزییات نوع اتاق، فرم، تب‌ها و ...
   return (
     <div className="p-4">
-      <h2 className="font-bold text-lg">اطلاعات نوع اتاق</h2>
-      <p>AccommodationId: {id}</p>
-      <p>RoomTypeId: {roomTypeId}</p>
-
-      {/* می‌تونی اینجا کامپوننت واقعی‌ات رو رندر کنی */}
-      {/* <RoomTypeDetails accommodationId={id} roomTypeId={roomTypeId} /> */}
+        <CustomTab tabItems={roomTypeTabItems}/>
     </div>
   );
 }
