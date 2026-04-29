@@ -13,10 +13,12 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { TCreateRoomType } from "../../types";
 import { useRoomType } from "../../services/useRoomType";
-import { roomTypeInitialValues, roomTypeValidation } from "../../fixtures/Validation";
+import {
+  roomTypeInitialValues,
+  roomTypeValidation,
+} from "../../fixtures/Validation";
 import formTypes from "@/components/form/FormInputTypes";
 import { RoomTypeFields } from "../../fixtures/RoomTypesFields";
-
 
 interface Props {
   AccommodationId?: number;
@@ -37,14 +39,15 @@ const RoomTypeForm = ({
   title,
   buttonTitle,
 }: Props) => {
-  
-  const { getRoomType, putRoomType, postRoomType } = useRoomType(AccommodationId, RoomTypeId!)
+  const { getRoomType, putRoomType, postRoomType } = useRoomType(
+    AccommodationId,
+    RoomTypeId!,
+  );
 
   const form = useForm<TCreateRoomType>({
     resolver: zodResolver(roomTypeValidation),
     defaultValues: roomTypeInitialValues,
   });
-
 
   useEffect(() => {
     if (!getRoomType.data) return;
@@ -61,12 +64,15 @@ const RoomTypeForm = ({
     const isEdit = !!RoomTypeId;
 
     if (isEdit) {
-      putRoomType.mutateAsync(value, {
-        onSuccess: () => {
-          onOpenchange?.(false);
+      putRoomType.mutateAsync(
+        { data: value, id: RoomTypeId },
+        {
+          onSuccess: () => {
+            onOpenchange?.(false);
+          },
+          onError: () => setErrorOpen(true),
         },
-        onError: () => setErrorOpen(true),
-      });
+      );
     } else {
       postRoomType.mutateAsync(value, {
         onSuccess: () => {

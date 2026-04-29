@@ -4,6 +4,7 @@ import usePostData from "@/services/usePostData";
 import type { createUsersList, TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse, UsersListResponse } from "../types";
 import type { TPaginatedResponse } from "@/types";
 import useDeleteData from "@/services/useDeleteData";
+import usePutData from "@/services/usePutData";
 
 export const useDefaults = () => {
   
@@ -20,7 +21,13 @@ export const useDefaults = () => {
   return {getDefaults, postDefaults}
 }
 
-export const useFeatures = (currentRoomPage?: number, currentAccommodationPage?: number) => {
+interface useFeatureProps {
+  currentRoomPage?: number;
+  currentAccommodationPage?: number;
+  feature_id?: number | null;
+}
+
+export const useFeatures = ({currentRoomPage, currentAccommodationPage, feature_id}: useFeatureProps) => {
 
     const postFeature = usePostData<TCFeature>({
       key: [features_key],
@@ -43,16 +50,27 @@ export const useFeatures = (currentRoomPage?: number, currentAccommodationPage?:
         enabled: !!currentAccommodationPage,
     });
 
+    const getfeatureData = useGetData({
+      key: [features_key],
+      url: `${features_url}${feature_id}`,
+      enabled: !!feature_id,
+    })
+
     const deleteFeature = useDeleteData({
       key: [features_key],
       url: features_url,
     });
 
-    return { postFeature, getRoomTypeFeatures, getAccommodationFeatures, deleteFeature}
+    const putFeature = usePutData({
+      key: [features_key],
+      url: features_url,
+    });
+
+    return { postFeature, getRoomTypeFeatures, getAccommodationFeatures, getfeatureData, deleteFeature, putFeature}
 
 }
 
-export const useBeds = (currentBedPage?: number) => {
+export const useBeds = ({currentBedPage, bedId}: {currentBedPage?: number, bedId?: number| null}) => {
 
   const getBeds = useGetData<TPaginatedResponse<TBedResponse>>({
     key: [beds_key, String(currentBedPage)],
@@ -65,12 +83,25 @@ export const useBeds = (currentBedPage?: number) => {
     url: beds_url,
   });
 
+  const getBed = useGetData
+  ({
+    key: [beds_key],
+    url: `${beds_url}${bedId}`,
+    enabled: !!bedId,
+  })
+
   const postBed = usePostData<TCreateBed>({
     key: [beds_key],
     url: beds_url,
   });
 
-  return { getBeds, deleteBed, postBed }
+  const putBed = usePutData<TCreateBed>({
+    key: [beds_key],
+    url: `${beds_url}`,
+    enabled: !!bedId,
+  })
+
+  return { getBeds, deleteBed, getBed, postBed, putBed }
 }
 
 export const useUsers = (filters?: createUsersList, currentPage?: number) => {

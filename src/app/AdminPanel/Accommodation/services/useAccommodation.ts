@@ -28,12 +28,12 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
         TCreateAccomodation
     >({
         key,
-        url: `${admin_accommodation_url}${AccommodationId}`,
+        url: admin_accommodation_url,
     });
 
     const deleteAccommodation = useDeleteData({
       key: [admin_accommodation_key],
-      url: `${admin_accommodation_url}`,
+      url: admin_accommodation_url,
     });
 
     const getAccommodations = useGetData<

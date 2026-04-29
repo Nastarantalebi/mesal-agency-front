@@ -78,7 +78,7 @@ const AccommodationForm = ({
     };
 
     if (isEdit) {
-      putAccommodation.mutateAsync(transformedData, {
+      putAccommodation.mutateAsync({data: transformedData, id: AccommodationId}, {
         onError: () => setErrorOpen(true),
       });
     } else {

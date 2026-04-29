@@ -20,7 +20,7 @@ export const useRoomType = (AccommodationId: number | undefined, RoomTypeId: num
   
     const putRoomType = usePutData<TCreateRoomType>({
         key,
-        url: `${url}${RoomTypeId}`,
+        url,
     });
 
     const postRoomType = usePostData<TCreateRoomType>({

@@ -8,10 +8,10 @@ import UsersList from "../components/users/UsersList";
 
 export const settingTabs = [
     {
-      title: "ویژگی های اقامتگاه",
+      title: "ویژگی ها",
       component: (
         <div className="flex flex-col gap-10">
-          <AddFeaturesForm /> <FeaturesList />
+          <AddFeaturesForm asModal={false} buttonTitle="ثبت"  /> <FeaturesList />
         </div>
       ),
     },
@@ -19,7 +19,7 @@ export const settingTabs = [
       title: "نوع تخت",
       component: (
         <div className="flex flex-col gap-10">
-          <AddBedForm /> <BedsList />
+          <AddBedForm asModal={false} buttonTitle="ثبت" /> <BedsList />
         </div>
       ),
     },
