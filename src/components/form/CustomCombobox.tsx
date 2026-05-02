@@ -58,7 +58,7 @@ const CustomCombobox = <T extends FieldValues>({
                 className={`${fieldState.error ? "border-red-600" : `${className}`}`}
               />
 
-              <ComboboxContent>
+              <ComboboxContent className="pointer-events-auto">
                 <ComboboxList>
                   {items?.map((item) => {
                     

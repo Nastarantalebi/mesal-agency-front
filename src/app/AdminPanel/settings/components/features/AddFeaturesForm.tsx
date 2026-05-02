@@ -42,6 +42,8 @@ const AddFeaturesForm = ({
     feature_id,
   });
 
+  // console.log(getfeatureData.data)
+
   const form = useForm<TCFeature>({
     resolver: zodResolver(FeaturesValidation),
     defaultValues: FeaturesInitialValues,
@@ -63,6 +65,7 @@ const AddFeaturesForm = ({
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handleSubmit = (value: TCFeature) => {
+    // console.log("values=", value)
     const isEdit = !!feature_id;
     if (isEdit) {
       putFeature.mutateAsync(
@@ -89,7 +92,7 @@ const AddFeaturesForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8  items-end gap-7"
+        className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8  items-start gap-7"
       >
         {FeaturesFields.map((item) => (
           <div

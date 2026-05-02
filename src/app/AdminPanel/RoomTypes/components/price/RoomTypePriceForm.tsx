@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Calendar, DateObject } from "react-multi-date-picker";
 import { toast } from "sonner";
 import {
@@ -29,16 +29,24 @@ import type { Props, TCRoomTypePrices } from "../../types";
 import PriceTabs from "./PriceTabs";
 import useMonthStores from "./monthStore";
 
-
 const RoomTypePriceForm = ({
   onOpenChange,
   AccommodationId,
   RoomTypeId,
 }: Props) => {
-
   const { selectedMonth, setSelectedMonth } = useMonthStores();
 
   const [errorOpen, setErrorOpen] = useState(false);
+
+  const form = useForm<TCRoomTypePrices>({
+    resolver: zodResolver(roomTypePriceValidation),
+    defaultValues: roomTypePriceInitialValues,
+  });
+
+  const { fields } = useFieldArray({
+    control: form.control,
+    name: "prices",
+  });
 
   const dayNames = [
     "شنبه",
@@ -49,7 +57,6 @@ const RoomTypePriceForm = ({
     "پنجشنبه",
     "جمعه",
   ];
-
 
   const getDayName = (shamsi: string) => {
     const miladi = shamsiToMiladi(shamsi); // تابعی که داری import کردی
@@ -70,15 +77,14 @@ const RoomTypePriceForm = ({
     "-",
   );
 
-  const { getRoomTypePrices, postRoomTypePrices } = useRoomTypePrice( AccommodationId, RoomTypeId!, startDate, endDate);
-
-  const form = useForm<TCRoomTypePrices>({
-    resolver: zodResolver(roomTypePriceValidation),
-    defaultValues: roomTypePriceInitialValues,
-  });
+  const { getRoomTypePrices, postRoomTypePrices } = useRoomTypePrice(
+    AccommodationId,
+    RoomTypeId!,
+    startDate,
+    endDate,
+  );
 
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-  
 
   // const normalizeKey = (persianDate: string): string => {
   //   return persianDate
@@ -87,10 +93,11 @@ const RoomTypePriceForm = ({
   // };
 
   useEffect(() => {
-
     form.reset({
       prices: days.map((day) => {
-        const item = getRoomTypePrices.data?.find((p) => p.date === shamsiToMiladi(day.shamsi),);
+        const item = getRoomTypePrices.data?.find(
+          (p) => p.date === shamsiToMiladi(day.shamsi),
+        );
         return {
           date: day.shamsi,
           normal_price: item?.normal_price ?? 0,
@@ -126,55 +133,78 @@ const RoomTypePriceForm = ({
     });
   };
 
-  return (
-      <div className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl max-h-[90vh]">
-        <div className="flex flex-row gap-50">
-            <div>
-              <Calendar
-                value={selectedMonth}
-                onChange={handleMonthChange}
-                onlyMonthPicker
-                calendar={persian}
-                locale={persian_fa}
-              />
-            </div>
+  const handleSelectAllPhone = (checked: boolean) => {
+    fields.forEach((_, index) => {
+      form.setValue(`prices.${index}.phone_call_price`, checked, {
+        shouldValidate: false,
+      });
+    });
+  };
 
-          <div className="mt-10">
-            {selectedMonth && (
-              <>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(handleSubmit)}>
-                    <PriceTabs form={form} />
+  return (
+    <div className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl max-h-[90vh]">
+      <div className="flex flex-row gap-50">
+        <div>
+          <Calendar
+            value={selectedMonth}
+            onChange={handleMonthChange}
+            onlyMonthPicker
+            calendar={persian}
+            locale={persian_fa}
+          />
+        </div>
+
+        <div className="mt-10">
+          {selectedMonth && (
+            <>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(handleSubmit)}>
+                  <PriceTabs form={form} />
+                  <div className="w-full overflow-hidden rounded-lg border border-border">
                     <Table>
-                      <TableHeader>
+                      <TableHeader className="bg-muted/50">
                         <TableRow>
                           <TableHead>روز</TableHead>
-                          <TableHead>تاریخ</TableHead>
-                          <TableHead>قیمت نرمال بزرگسال</TableHead>
-                          <TableHead>قیمت پیک بزرگسال</TableHead>
-                          <TableHead>قیمت نرمال کودک</TableHead>
-                          <TableHead>قیمت پیک کودک</TableHead>
-                          <TableHead>اطلاع قیمت به صورت تلفنی</TableHead>
+                          <TableHead className="border-r border-gray-300 last:border-r-0">
+                            تاریخ
+                          </TableHead>
+                          <TableHead className="border-r border-gray-300 last:border-r-0">
+                            قیمت نرمال بزرگسال
+                          </TableHead>
+                          <TableHead className="border-r border-gray-300 last:border-r-0">
+                            قیمت پیک بزرگسال
+                          </TableHead>
+                          <TableHead className="border-r border-gray-300 last:border-r-0">
+                            قیمت نرمال کودک
+                          </TableHead>
+                          <TableHead className="border-r border-l border-gray-300 last:border-r-0">
+                            قیمت پیک کودک
+                          </TableHead>
+                          <TableHead className="">
+                            <Checkbox
+                              className="mx-2"
+                              // onChange={(checked) => handleSelectAllPhone(checked)}
+                              // checked={selectAllPhone}
+                              onCheckedChange={handleSelectAllPhone}
+                            />
+                            اطلاع قیمت به صورت تلفنی
+                          </TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {days.map((item, index) => (
                           <TableRow key={item.shamsi}>
                             <TableCell
-                              className={
-                                isFriday(item.shamsi) ? "text-red-500" : ""
-                              }
+                              className={`${isFriday(item.shamsi) ? "text-red-500" : ""}`}
                             >
                               {getDayName(item.shamsi)}
                             </TableCell>
                             <TableCell
-                              className={
-                                isFriday(item.shamsi) ? "text-red-500" : ""
-                              }
+                              className={`border-r border-gray-200 last:border-r-0 ${isFriday(item.shamsi) ? "text-red-500" : ""}`}
                             >
                               {item.shamsi}
                             </TableCell>
-                            <TableCell>
+                            <TableCell className="border-r border-gray-200 last:border-r-0">
                               <Controller
                                 name={`prices.${index}.normal_price`}
                                 control={form.control}
@@ -193,7 +223,7 @@ const RoomTypePriceForm = ({
                                 )}
                               />
                             </TableCell>
-                            <TableCell>
+                            <TableCell className="border-r border-gray-200 last:border-r-0">
                               <Controller
                                 name={`prices.${index}.peak_price`}
                                 control={form.control}
@@ -212,7 +242,7 @@ const RoomTypePriceForm = ({
                                 )}
                               />
                             </TableCell>
-                            <TableCell>
+                            <TableCell className="border-r border-gray-200 last:border-r-0">
                               <Controller
                                 name={`prices.${index}.normal_child_price`}
                                 control={form.control}
@@ -231,7 +261,7 @@ const RoomTypePriceForm = ({
                                 )}
                               />
                             </TableCell>
-                            <TableCell>
+                            <TableCell className="border-r border-l border-gray-200 last:border-r-0">
                               <Controller
                                 name={`prices.${index}.peak_child_price`}
                                 control={form.control}
@@ -250,7 +280,7 @@ const RoomTypePriceForm = ({
                                 )}
                               />
                             </TableCell>
-                            <TableCell>
+                            <TableCell className="border-r border-gray-200 last:border-r-0">
                               <div className="pr-10">
                                 <Controller
                                   name={`prices.${index}.phone_call_price`}
@@ -259,6 +289,7 @@ const RoomTypePriceForm = ({
                                     <>
                                       <Checkbox
                                         // {...field}
+                                        // value={field.value}
                                         checked={field.value}
                                         onCheckedChange={(check) => {
                                           field.onChange(check);
@@ -273,22 +304,23 @@ const RoomTypePriceForm = ({
                         ))}
                       </TableBody>
                     </Table>
-                    <CustomButton className="mt-5" type="submit">
-                      ثبت
-                    </CustomButton>
-                  </form>
-                  <FormErrorModal
-                    open={errorOpen}
-                    message={errmessage}
-                    onOpenChange={setErrorOpen}
-                    onAcknowledge={() => setErrorOpen(false)}
-                  />
-                </Form>
-              </>
-            )}
-          </div>
+                  </div>
+                  <CustomButton className="mt-5 mb-20 " type="submit">
+                    ثبت
+                  </CustomButton>
+                </form>
+                <FormErrorModal
+                  open={errorOpen}
+                  message={errmessage}
+                  onOpenChange={setErrorOpen}
+                  onAcknowledge={() => setErrorOpen(false)}
+                />
+              </Form>
+            </>
+          )}
         </div>
       </div>
+    </div>
   );
 };
 

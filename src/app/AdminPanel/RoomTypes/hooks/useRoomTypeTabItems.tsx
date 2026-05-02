@@ -61,10 +61,10 @@ const useRoomTypeTabItems = ({ AccommodationId, roomTypeId }: Props) => {
     {
       title: "قیمت",
       component: (
-      <RoomTypePriceForm
-        RoomTypeId={roomTypeId}
-        AccommodationId={AccommodationId}
-      />
+        <RoomTypePriceForm
+          RoomTypeId={roomTypeId}
+          AccommodationId={AccommodationId}
+        />
       ),
     },
   ];

@@ -123,12 +123,15 @@ const FeaturesList = () => {
       </Card>
       {openDialog && (
         <AddFeaturesForm
+          key={fetureId ?? "new"}
           feature_id={fetureId}
           asModal={true}
           title="ویرایش"
           open={openDialog}
           onCloseModal={onCloseModal}
-          onOpenChange={() => setOpenDialog(false)}
+          onOpenChange={(open) => {
+            if (!open) onCloseModal();
+          }}
           buttonTitle="ویرایش"
         />
       )}

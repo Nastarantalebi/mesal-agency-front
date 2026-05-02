@@ -51,7 +51,7 @@ export const useFeatures = ({currentRoomPage, currentAccommodationPage, feature_
     });
 
     const getfeatureData = useGetData({
-      key: [features_key],
+      key: [features_key, String(feature_id)],
       url: `${features_url}${feature_id}`,
       enabled: !!feature_id,
     })
