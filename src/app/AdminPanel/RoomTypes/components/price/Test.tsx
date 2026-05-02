@@ -59,11 +59,11 @@ const Test = () => {
         <TableBody>
           {rows.map((_, rowIndex) => (
             <TableRow key={rowIndex} className="hover:bg-transparent">
-              {days.map((item, colIndex) => (
+              {days.map((_, colIndex) => (
                 <TableCell
                   key={colIndex}
                   className=" border-l border-b border-border last:border-l-0"
-                  style={{ width: "120px", minWidth: "120px" }} 
+                  style={{ width: "120px", minWidth: "120px" }}
                 >
                   {rowIndex === 0 &&
                     colIndex === 0 &&
