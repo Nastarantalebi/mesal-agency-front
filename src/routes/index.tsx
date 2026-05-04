@@ -1,6 +1,8 @@
 import HeroSection from "@/app/usersPanel/components/HeroSection";
 import HomePageFeatures from "@/app/usersPanel/components/HomePageFeatures";
 import PropvinceBasedAccommodation from "@/app/usersPanel/components/PropvinceBasedAccommodation";
+import IranPattern from "@/app/usersPanel/Landing/popularCities/components/IranPattern";
+import Services from "@/app/usersPanel/Landing/services/components/Services";
 import { createFileRoute } from "@tanstack/react-router";
 
 // const queryClient = new QueryClient();
@@ -26,10 +28,12 @@ export const Route = createFileRoute("/")({
 function HomeComponent() {
   // const navigate = useNavigate();
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden flex flex-col items-center">
       <HeroSection />
-      <HomePageFeatures />
-      <PropvinceBasedAccommodation />
+      <Services/>
+      {/* <HomePageFeatures />
+      <PropvinceBasedAccommodation /> */}
+      <IranPattern/>
     </div>
   );
 }

@@ -36,12 +36,13 @@
     --color-primary-20: var(--primary-20);
     --color-primary-10: var(--primary-10);
   
-    --color-accent-40: var(--primary-40);
-    --color-accent-30: var(--primary-30);
-    --color-accent-20: var(--primary-20);
-    --color-accent-10: var(--primary-10);
+    --color-accent-40: var(--accent-40);
+    --color-accent-30: var(--accent-30);
+    --color-accent-20: var(--accent-20);
+    --color-accent-10: var(--accent-10);
   
     --color-lightground: var(--lightground);
+    --color-orange: var(--color-orange-600);
     
     --font-display: "Vazirmatn FD",  sans-serif;
   }
@@ -133,6 +134,8 @@
     --accent-10: #fcd9a5;
   
     --lightground: #e8e2db;
+
+    --orange: oklch(64.6% 0.222 41.116);
   
 
     --radius: 0.625rem;
