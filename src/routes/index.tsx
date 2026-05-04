@@ -1,6 +1,4 @@
 import HeroSection from "@/app/usersPanel/components/HeroSection";
-import HomePageFeatures from "@/app/usersPanel/components/HomePageFeatures";
-import PropvinceBasedAccommodation from "@/app/usersPanel/components/PropvinceBasedAccommodation";
 import IranPattern from "@/app/usersPanel/Landing/popularCities/components/IranPattern";
 import Services from "@/app/usersPanel/Landing/services/components/Services";
 import { createFileRoute } from "@tanstack/react-router";

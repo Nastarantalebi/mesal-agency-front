@@ -1,4 +1,3 @@
-import { positive } from "zod";
 
 export const popularCities = [
   {

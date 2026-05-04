@@ -1,13 +1,4 @@
-import { type ReactNode } from "react";
 import { data } from "../../fixtures";
-interface Props {
-  data: {
-    subject: string;
-    title: string;
-    details: string;
-    data: { name: string; icon: ReactNode; className?: string }[];
-  };
-}
 
 const Services = () => {
   return (

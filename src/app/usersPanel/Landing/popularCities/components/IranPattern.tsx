@@ -1,7 +1,6 @@
 import CustomButton from "@/components/form/CustomButton";
 import { popularCities } from "../fixtures";
 import PopularCities from "./PopularCities";
-import { Button } from "@/components/ui/button";
 
 const IranPattern = () => {
   return (
