@@ -1,4 +1,5 @@
 import HeroSection from "@/app/usersPanel/components/HeroSection";
+import Tours from "@/app/usersPanel/Landing/foreignTours/Tours";
 import IranPattern from "@/app/usersPanel/Landing/popularCities/components/IranPattern";
 import Services from "@/app/usersPanel/Landing/services/components/Services";
 import { createFileRoute } from "@tanstack/react-router";
@@ -32,6 +33,7 @@ function HomeComponent() {
       {/* <HomePageFeatures />
       <PropvinceBasedAccommodation /> */}
       <IranPattern/>
+      <Tours/>
     </div>
   );
 }
