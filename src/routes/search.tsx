@@ -1,6 +1,6 @@
-import AccommodationCardsDetails from "@/app/usersPanel/components/AccommodationCardsDetails";
-import useAccommoation from "@/app/usersPanel/services/useAccommoation";
-import { createFileRoute, useSearch } from "@tanstack/react-router";
+import UserHeader from "@/app/usersPanel/components/UserHeader";
+import { createFileRoute, Outlet, useSearch } from "@tanstack/react-router";
+import { Toaster } from "sonner";
 import z from "zod";
 
 export const Route = createFileRoute("/search")({
@@ -22,18 +22,21 @@ export const Route = createFileRoute("/search")({
 function RouteComponent() {
   const search = useSearch({ from: "/search" });
   const provinceId = search.city__province__id as string | undefined;
-  console.log(provinceId)
-  
-  const { getAccommodations } = useAccommoation({
-    city__province__id: Number(provinceId),
-  });
-  console.log(getAccommodations.data)
-  // console.log(getAccommodations.data)
+  console.log(provinceId);
+
+  // const { getAccommodations } = useAccommoation({
+  //   city__province__id: Number(provinceId),
+  // });
   return (
-    <div className="flex justify-center">
-      <AccommodationCardsDetails
-        accommodations={getAccommodations?.data?.results}
-      />
+    <div className="font-display!">
+      <Toaster richColors position="top-right" />
+      <UserHeader/>
+      <Outlet />
     </div>
+    // <div className="flex justify-center">
+    //   <AccommodationCardsDetails
+    //     accommodations={getAccommodations?.data?.results}
+    //   />
+    // </div>
   );
 }
