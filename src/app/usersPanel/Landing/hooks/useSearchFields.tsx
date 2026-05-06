@@ -1,6 +1,6 @@
 import type { Items } from "@/components/form/FormInputTypes";
-import type { accommodationSearch } from "../types";
-import useLocation from "../services/useLocation";
+import type { accommodationSearch } from "../../types";
+import useLocation from "../../services/useLocation";
 
 const useSearchFields = () => {
   const { getProviences } = useLocation();

@@ -6,13 +6,12 @@ import { useForm } from "react-hook-form";
 import FormErrorModal from "@/components/form/FormErrorModal";
 import CustomButton from "@/components/form/CustomButton";
 import {
-  badListInitialValues,
   bedListValidation,
   type TBedListForm,
 } from "../../../fixtures/Validation";
 import { useRoomTypeBed } from "../../../services/useRoomType";
 import type { Props, TCRoomTypeBed } from "../../../types";
-import BedButtonTemplate from "./BedButtonTemplate";
+import AddRemoveButtonTemplate from "../../../../../../components/form/AddRemoveButtonTemplate";
 
 const RoomTypeBeds = ({
   AccommodationId,
@@ -20,77 +19,60 @@ const RoomTypeBeds = ({
   open,
   onOpenChange,
 }: Props) => {
-  const form = useForm<TBedListForm>({
-    resolver: zodResolver(bedListValidation),
-    defaultValues: badListInitialValues,
-  });
-
-  const [errorOpen, setErrorOpen] = useState(false);
-  const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-
-  const [bedCounts, setBedCounts] = useState<Record<number, number>>({});
 
   const { getbeds, getRoomTypeBeds, postRoomTypeBeds } = useRoomTypeBed(
     AccommodationId,
     RoomTypeId!,
   );
 
+  console.log(getRoomTypeBeds.data)
+
+  const form = useForm<TBedListForm>({
+    resolver: zodResolver(bedListValidation),
+    defaultValues: {
+      beds: getbeds.data?.results.map((item) => ({ bed: item.id, number: 0 })),
+    },
+  });
+
+  const [errorOpen, setErrorOpen] = useState(false);
+  const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
+
   useEffect(() => {
-    if (!getRoomTypeBeds.data || !open) return;
+  if (getbeds.data?.results && getRoomTypeBeds.data) {
+    const bedsWithNumbers = getbeds.data.results.map((bed) => ({
+      bed: bed.id,
+      number: getRoomTypeBeds.data.find(
+        (item) => Number(item.bed.id) === bed.id
+      )?.number || 0,
+    }));
+    
+    form.reset({ beds: bedsWithNumbers });
+  }
+}, [getbeds.data, getRoomTypeBeds.data, form]);
 
-    const counts: Record<number, number> = {};
-    getRoomTypeBeds.data.forEach((item) => {
-      counts[Number(item.bed.id)] = item.number; // 👈 convert string to number
-    });
-
-    setBedCounts(counts);
-    form.setValue("beds", buildBedPayload(counts), { shouldValidate: true });
-  }, [getRoomTypeBeds.data, open]);
 
   const handleSubmit = (values: TCRoomTypeBed) => {
+    const filteredData = {
+      beds: values.beds.filter((bed) => bed.number !== 0),
+    };
+
     postRoomTypeBeds.mutateAsync(
-      { beds: values.beds },
+      { beds: filteredData.beds },
       {
         onSuccess: () => {
           onOpenChange?.(false);
           form.reset();
-          setBedCounts([]);
         },
         onError: () => setErrorOpen(true),
       },
     );
   };
 
-  // Reset state when dialog closes
   useEffect(() => {
     if (!open) {
       form.reset();
-      setBedCounts({});
     }
   }, [open, form]);
-
-  const buildBedPayload = (counts: Record<number, number>) => {
-    return Object.entries(counts)
-      .filter(([, count]) => count > 0)
-      .map(([id, count]) => ({ bed: Number(id), number: count }));
-  };
-
-  const handleAdd = (id: number) => {
-    setBedCounts((prev) => {
-      const updated = { ...prev, [id]: (prev[id] ?? 0) + 1 };
-      form.setValue("beds", buildBedPayload(updated), { shouldValidate: true });
-      return updated;
-    });
-  };
-
-  const handleRemove = (id: number) => {
-    setBedCounts((prev) => {
-      const newCount = Math.max(0, (prev[id] ?? 0) - 1);
-      const updated = { ...prev, [id]: newCount };
-      form.setValue("beds", buildBedPayload(updated), { shouldValidate: true });
-      return updated;
-    });
-  };
 
   return (
     <div className="w-full">
@@ -103,13 +85,12 @@ const RoomTypeBeds = ({
                   <CardContent>در حال بارگذاری...</CardContent>
                 ) : getbeds.data ? (
                   <CardContent>
-                    {getbeds.data.results?.map((f) => (
-                      <BedButtonTemplate
+                    {getbeds.data.results?.map((f, index) => (
+                      <AddRemoveButtonTemplate
                         key={f.id}
-                        buttonName={f.name}
-                        count={bedCounts[f.id] ?? 0}
-                        onAdd={() => handleAdd(f.id)}
-                        onRemove={() => handleRemove(f.id)}
+                        label={f.name}
+                        name={`beds.${index}.number`}
+                        control={form.control}
                       />
                     ))}
                   </CardContent>

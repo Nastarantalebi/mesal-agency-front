@@ -2,6 +2,7 @@ import UserHeader from "@/app/usersPanel/components/UserHeader";
 import { createFileRoute, Outlet, useSearch } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import z from "zod";
+import FilterModal from "@/app/usersPanel/components/filter/filterModal";
 
 export const Route = createFileRoute("/search")({
   component: RouteComponent,
@@ -15,6 +16,10 @@ export const Route = createFileRoute("/search")({
         stars__gte: z.number().optional(),
         stars__lte: z.number().optional(),
         feature__id: z.number().optional(),
+        num_adults: z.number().optional(),
+        num_children: z.number().optional(),
+        start: z.date().optional(),
+        end: z.date().optional(),
       })
       .parse(search),
 });
@@ -30,7 +35,8 @@ function RouteComponent() {
   return (
     <div className="font-display!">
       <Toaster richColors position="top-right" />
-      <UserHeader/>
+      <UserHeader />
+      <FilterModal/>
       <Outlet />
     </div>
     // <div className="flex justify-center">

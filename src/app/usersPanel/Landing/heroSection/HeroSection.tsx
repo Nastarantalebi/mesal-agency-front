@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import SearchForm from "./SearchForm";
+import SearchForm from "../Landing/search/SearchForm";
 import CustomButton from "@/components/form/CustomButton";
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 
 const HeroSection = () => {
   const [animate, setAnimate] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     // یک تیک تأخیر برای اینکه CSS transition درست کار کند
@@ -24,7 +24,10 @@ const HeroSection = () => {
       }}
     >
       <div className="absolute top-5 right-5 flex items-center gap-2">
-        <CustomButton onClick={() => navigate({to: "/login"})} className="bg-white text-black font-semibold shadow-md hover:bg-gray-100">
+        <CustomButton
+          onClick={() => navigate({ to: "/login" })}
+          className="bg-white text-black font-semibold shadow-md hover:bg-gray-100"
+        >
           <div className="flex flex-row items-center gap-2">
             <ArrowUpRight className="w-4 h-4" />
             <span>پنل ادمین</span>

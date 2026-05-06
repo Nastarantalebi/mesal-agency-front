@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import useProvinceBasedAccommodationList from "../fixtures/useProvinceBasedAccommodationList";
+import useProvinceBasedAccommodationList from "../Landing/hooks/useProvinceBasedAccommodationList";
 import AccommodationCards from "./AccommodationCards";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -31,7 +31,7 @@ const PropvinceBasedAccommodation = () => {
               >
                 مشاهده همه
               </p>
-              <ArrowLeft size={15} className=""/>
+              <ArrowLeft size={15} className="" />
             </div>
           </div>
           <AccommodationCards accommodation={item.accommodations} />

@@ -1,15 +1,14 @@
 import { useForm } from "react-hook-form";
-import type { accommodationSearch } from "../types";
+import type { accommodationSearch } from "../../types";
 import { Form } from "@/components/ui/form";
 import formTypes from "@/components/form/FormInputTypes";
 import CustomButton from "@/components/form/CustomButton";
-import useSearchFields from "../fixtures/useSearchFields";
+import useSearchFields from "../hooks/useSearchFields";
 import { useState } from "react";
 // import useSearch from "../services/useSearch";
 import { shamsiToMiladi } from "@/components/form/DateConverter";
 
 export default function SearchForm() {
-
   const form = useForm<accommodationSearch>();
   const { searchFields } = useSearchFields();
   const [filters, setFilters] = useState({
@@ -21,7 +20,6 @@ export default function SearchForm() {
   // const { getSearch } = useSearch(filters);
 
   const handleSubmit = (formData: accommodationSearch) => {
-    
     setFilters({
       start: shamsiToMiladi(formData.start ?? ""),
       end: shamsiToMiladi(formData.end ?? ""),
@@ -29,7 +27,7 @@ export default function SearchForm() {
       province: formData.province ?? "",
     });
 
-    console.log("Filters", filters)
+    console.log("Filters", filters);
   };
 
   return (

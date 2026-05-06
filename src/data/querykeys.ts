@@ -1,7 +1,7 @@
 export const admin_accommodation_key = "admin_accommodations"
 export const admin_accommodation_url = "admin/accommodations/"
 
-export const accommodation_types_key = "accommodationType"
+export const accommodation_types_key = "AdminAccommodationType"
 export const accommodation_types_url = "admin/accommodation_types/"
 
 export const accommodation_proviences_key = "provience"
@@ -38,6 +38,9 @@ export const cities_url = "cities/"
 
 export const accommodation_key = "accommodations"
 export const accommodation_url = "accommodations"
+
+export const accommodationTypes_key = "accommodationTypes" 
+export const accommodationTypes_url = "accommodation_types/" 
 
 
 

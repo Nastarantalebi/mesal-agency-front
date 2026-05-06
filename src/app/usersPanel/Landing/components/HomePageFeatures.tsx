@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Trees } from "lucide-react";
-import useHomePageFeatues from "../services/useHomePageFeatues";
+import useHomePageFeatues from "../../services/useHomePageFeatues";
 
 const HomePageFeatures = () => {
   const { getHomePageFeatures } = useHomePageFeatues();

@@ -11,8 +11,6 @@ import Radio from "./RadioInputs";
 import type { Type } from "@/app/AdminPanel/Accommodation/types";
 import CustomImageInput from "./CustomImageInput";
 
-//options is for static data which I like to see in for: label&value
-//items coms from backend
 
 type fieldTypes =
   | "dropdown"
@@ -88,6 +86,7 @@ function formTypes<T extends FieldValues>(
           className={className}
         />
       );
+
 
     case "yesNoInput":
       return (

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { number, z } from "zod";
 import type {
   TCreateRoomType,
   TCRoomTypePrices,
@@ -65,14 +65,11 @@ export const bedListValidation = z.object({
   beds: z.array(
     z.object({
       bed: z.number(),
-      number: z.number().min(1),
+      number: z.number().min(0),
     }),
   ),
 });
 
-export const badListInitialValues = {
-  beds: [],
-};
 
 export type TBedListForm = z.infer<typeof bedListValidation>;
 
