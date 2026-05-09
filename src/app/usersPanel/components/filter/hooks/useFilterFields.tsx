@@ -1,8 +1,9 @@
 import { CustomCollapsible } from "@/components/form/CustomCollapsible";
 import type { filter, filterdata } from "../types/types";
 import type { UseFormReturn } from "react-hook-form";
-import CustomCheckbox from "@/components/form/CustomCheckbox";
-import useAccommodationType from "../services/useAccommodationtype";
+// import CustomCheckbox from "@/components/form/CustomCheckbox";
+import useAccommodationType from "../services/useAccommodationType";
+import CustomCheckBoxList from "@/components/form/CustomCheckBoxList";
 
 interface Props {
   form: UseFormReturn<filterdata>;
@@ -11,7 +12,6 @@ interface Props {
 const useFilterFields = ({ form }: Props) => {
   const { accommodationTypes } = useAccommodationType();
 
-  console.log(accommodationTypes.data);
   const filterData: filter[] = [
     // {
     //   title: "تعداد نفرات",
@@ -26,19 +26,15 @@ const useFilterFields = ({ form }: Props) => {
     {
       title: "نوع اقامتگاه",
       content: (
-        <>
-          {accommodationTypes.data?.map((item) => (
-            <CustomCheckbox
-              key={item.id}
-              name="type__id"
-              label={item.name}
-              control={form.control}
-            />
-          ))}
-        </>
+        <CustomCheckBoxList
+          name="type__id"
+          control={form.control}
+          items={accommodationTypes.data}
+        />
       ),
     },
   ];
+  // console.log(form.watch());
 
   return (
     <div>
