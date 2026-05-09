@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import SearchForm from "../Landing/search/SearchForm";
 import CustomButton from "@/components/form/CustomButton";
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
+import SearchForm from "../search/SearchForm";
 
 const HeroSection = () => {
   const [animate, setAnimate] = useState(false);

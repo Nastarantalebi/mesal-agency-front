@@ -15,6 +15,7 @@ interface FormProps<TFormValues extends FieldValues> {
   buttonText?: string;
   handleSubmit: SubmitHandler<TFormValues>;
   children?: ReactNode;
+  className?: string;
 }
 
 const FormComponent = <TFormValues extends FieldValues>({
@@ -38,7 +39,11 @@ const FormComponent = <TFormValues extends FieldValues>({
             {formTypes<TFormValues>(item, form.control)}
           </div>
         ))}
-        {children}
+        {children && (
+          <div className="col-span-1 md:col-span-2 lg:col-span-4">
+            {children}
+          </div>
+        )}
 
         <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-end gap-3">
           <CustomButton type="submit">{buttonText}</CustomButton>

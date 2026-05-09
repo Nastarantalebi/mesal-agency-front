@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
@@ -15,9 +14,9 @@ interface Props {
 
 export function CustomCollapsible({ title, content }: Props) {
   return (
-    <Collapsible className="data-[state=open]:bg-muted">
+    <Collapsible className="data-[state=open]:bg-muted rounded-md">
       <CollapsibleTrigger asChild>
-        <Button variant="ghost" className="group w-full">
+        <Button variant="ghost" className="group w-full hover:bg-accent/30">
           {title}
           <ChevronDownIcon className="mr-auto group-data-[state=open]:rotate-180" />
         </Button>

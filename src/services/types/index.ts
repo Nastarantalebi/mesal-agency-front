@@ -1,6 +1,7 @@
+import type { QueryKey } from "@tanstack/react-query";
 
 export type Props = {
-  key: string[];
+  key: QueryKey;
   url: string;
   id?: string | number;
   enabled?: boolean;

@@ -18,7 +18,7 @@ export type accommodationSearchResponse = {
     },
     name: string,
     stars: number,
-    available_room_types: number,
+    available_room_types?: number,
     city: {
         id: number,
         name: string,
@@ -26,7 +26,8 @@ export type accommodationSearchResponse = {
             id: number,
             name: string,
         }
-    }
+    },
+    price_from?: number
 
 }
 

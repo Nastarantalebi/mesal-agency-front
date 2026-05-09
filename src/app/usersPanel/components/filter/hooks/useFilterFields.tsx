@@ -2,35 +2,25 @@ import { CustomCollapsible } from "@/components/form/CustomCollapsible";
 import type { filter, filterdata } from "../types/types";
 import type { UseFormReturn } from "react-hook-form";
 // import CustomCheckbox from "@/components/form/CustomCheckbox";
-import useAccommodation from "../services/useAccommodationType";
 import CustomCheckBoxList from "@/components/form/CustomCheckBoxList";
 import CustomStarInput from "@/components/form/CustomStarInput";
+import useAccommodationType from "../services/useAccommodationTypes";
 
 interface Props {
   form: UseFormReturn<filterdata>;
 }
 
 const useFilterFields = ({ form }: Props) => {
-  const { accommodationTypes, accommodatioFeatureList } = useAccommodation();
+  const { accommodationTypes, accommodatioFeatureList } = useAccommodationType();
 
   const updatedAccommodatioFeatureList = accommodatioFeatureList.data?.map(
     (item) => ({
       id: item.id,
       name: item.title as string,
     }),
-  ) ;
+  );
 
   const filterData: filter[] = [
-    // {
-    //   title: "تعداد نفرات",
-    //   content: (
-    //     <AddRemoveButtonTemplate
-    //       name="num_adults"
-    //       label="تعدات نفرات"
-    //       control={form.control}
-    //     />
-    //   ),
-    // },
     {
       title: "نوع اقامتگاه",
       content: (

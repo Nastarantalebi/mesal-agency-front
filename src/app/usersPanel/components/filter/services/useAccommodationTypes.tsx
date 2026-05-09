@@ -8,7 +8,9 @@ import {
 import useGetData from "@/services/useGetData";
 import type { accommodationFeatureList } from "../types/types";
 
-const useAccommodation = () => {
+
+
+const useAccommodationType = () => {
   const accommodationTypes = useGetData<accommodationTypes[]>({
     key: [accommodationTypes_key],
     url: accommodationTypes_url,
@@ -18,7 +20,9 @@ const useAccommodation = () => {
     key: [accommodationFeatureList_key],
     url: accommodationFeatureList_url,
   })
-  return { accommodationTypes, accommodatioFeatureList };
+
+
+  return { accommodationTypes, accommodatioFeatureList};
 };
 
-export default useAccommodation;
+export default useAccommodationType;

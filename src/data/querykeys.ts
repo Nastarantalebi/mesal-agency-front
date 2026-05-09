@@ -37,7 +37,7 @@ export const cities_key = "allCities"
 export const cities_url = "cities/"
 
 export const accommodation_key = "accommodations"
-export const accommodation_url = "accommodations"
+export const accommodation_url = "accommodations/"
 
 export const accommodationTypes_key = "accommodationTypes" 
 export const accommodationTypes_url = "accommodation_types/" 

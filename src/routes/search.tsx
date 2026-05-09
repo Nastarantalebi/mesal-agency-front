@@ -1,5 +1,7 @@
-import FilterModal from "@/app/usersPanel/components/filter/FilterModal";
+import AccommodationCardsDetails from "@/app/usersPanel/components/AccommodationCardsDetails";
+import FilterBadges from "@/app/usersPanel/components/filter/FilterBadges";
 import UserHeader from "@/app/usersPanel/components/UserHeader";
+import { useAccommoation } from "@/app/usersPanel/services/useAccommoation";
 import { createFileRoute, Outlet, useSearch } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import z from "zod";
@@ -29,14 +31,19 @@ function RouteComponent() {
   const provinceId = search.city__province__id as string | undefined;
   console.log(provinceId);
 
-  // const { getAccommodations } = useAccommoation({
-  //   city__province__id: Number(provinceId),
-  // });
+  const { getAccommodations } = useAccommoation();
+  console.log(getAccommodations.data)
   return (
     <div className="font-display!">
       <Toaster richColors position="top-right" />
       <UserHeader />
-      <FilterModal/>
+      <FilterBadges />
+      <div className="mx-20 my-5">
+        <AccommodationCardsDetails
+          accommodations={getAccommodations.data?.results}
+        />
+      </div>
+
       <Outlet />
     </div>
     // <div className="flex justify-center">
