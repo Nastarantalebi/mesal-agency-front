@@ -7,4 +7,10 @@ export type filter = {
   content: ReactNode;
 };
 
-export type filterdata = z.infer<typeof filterValidation>
+export type accommodationFeatureList = {
+  id: number;
+  title?: string;
+  name?: string;
+};
+
+export type filterdata = z.infer<typeof filterValidation>;
