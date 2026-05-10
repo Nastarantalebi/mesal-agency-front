@@ -6,15 +6,30 @@ interface Props {
   accommodations?: accommodationsResponse[];
 }
 const AccommodationCardsDetails = ({ accommodations }: Props) => {
+  console.log(accommodations);
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-w-8xl content-center gap-7">
       {accommodations?.map((item) => (
-        <div key={item.id} className="flex flex-col rounded-xl border border-gray-200 shadow-xl">
-          <img
-            src="./accommodationHero1.png"
-            alt=""
-            className="w-90 h-60 rounded-xl"
-          />
+        <div
+          key={item.id}
+          className="flex flex-col rounded-xl border border-gray-200 shadow-xl"
+        >
+          {item.images.length ? (
+            <img
+              src={
+                item.images.find((img) => img.main)?.image || "./defaultImg.jpg"
+              }
+              alt=""
+              className="w-90 h-60 rounded-xl"
+            />
+          ) : (
+            <img
+              src="./defaultImg.jpg"
+              alt="defaultImage"
+              className="w-90 h-60 rounded-xl bg-cover"
+            ></img>
+          )}
+
           <div className="flex flex-col my-5">
             <div className="flex flex-row justify-between items-center mx-4">
               <div className="flex flex-row mt-2">
