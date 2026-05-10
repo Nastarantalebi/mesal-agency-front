@@ -1,6 +1,5 @@
 import AccommodationCardsDetails from "@/app/usersPanel/components/AccommodationCardsDetails";
 import FilterBadges from "@/app/usersPanel/components/filter/FilterBadges";
-import { filterValidation } from "@/app/usersPanel/components/filter/fixtures/Validation";
 import type { filterdata } from "@/app/usersPanel/components/filter/types/types";
 import UserHeader from "@/app/usersPanel/components/UserHeader";
 import { useAccommoation } from "@/app/usersPanel/services/useAccommoation";

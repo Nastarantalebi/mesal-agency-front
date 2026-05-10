@@ -10,8 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { filterInitialValues, filterValidation } from "./fixtures/Validation";
 import FormComponent from "@/components/form/FormComponent";
 import useFilterFields from "./hooks/useFilterFields";
-import { useAccommoation } from "../../services/useAccommoation";
-import { useState, type Dispatch, type SetStateAction } from "react";
+
+import { type Dispatch, type SetStateAction } from "react";
 
 interface Props {
   open: boolean;
