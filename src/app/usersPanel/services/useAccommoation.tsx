@@ -37,14 +37,13 @@ if (Array.isArray(filters?.feature__id) && filters.feature__id.length > 0) {
   const url = `${accommodation_url}?${params.toString()}`;
 
 
-  const key = [accommodation_key, params.toString(), current_page, "KJKJK"];
+  const key = [accommodation_key, params.toString(), current_page];
 
   const getAccommodations = useGetData<
     TPaginatedResponse<accommodationsResponse>
   >({
     key,
     url,
-    enabled: !!filters,
   });
 
   return { getAccommodations };

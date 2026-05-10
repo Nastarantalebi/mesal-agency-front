@@ -11,8 +11,8 @@ export const filterValidation = z.object({
   feature__id: z.array(z.string().optional().nullable().optional()),
   // num_adults: z.number().optional().nullable(),
   // num_children: z.number().optional().nullable(),
-  // start: z.date().optional().nullable(),
-  // end: z.date().optional().nullable(),
+  open_start__gte: z.string().optional().nullable(),
+  open_end__lte: z.string().optional().nullable(),
 });
 
 export const filterInitialValues: filterdata = {
@@ -23,6 +23,6 @@ export const filterInitialValues: filterdata = {
   stars__gte: null,
   stars__lte: null,
   feature__id: [],
-  // start: null,
-  // end: null,
+  open_start__gte: null,
+  open_end__lte: null,
 };
