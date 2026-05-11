@@ -16,10 +16,10 @@ import formTypes from "@/components/form/FormInputTypes";
 
 const AccommodationForm = ({
   AccommodationId,
-  buttonText,
+  buttonText = AccommodationId ? "ویرایش" : "افزودن",
 }: {
   AccommodationId?: number;
-  buttonText: string;
+  buttonText?: string;
 }) => {
   const { getAccommodation, postAccommodation, putAccommodation } =
     useAccommodation(AccommodationId!);
@@ -78,9 +78,12 @@ const AccommodationForm = ({
     };
 
     if (isEdit) {
-      putAccommodation.mutateAsync({data: transformedData, id: AccommodationId}, {
-        onError: () => setErrorOpen(true),
-      });
+      putAccommodation.mutateAsync(
+        { data: transformedData, id: AccommodationId },
+        {
+          onError: () => setErrorOpen(true),
+        },
+      );
     } else {
       postAccommodation.mutateAsync(transformedData, {
         onSuccess: () => {

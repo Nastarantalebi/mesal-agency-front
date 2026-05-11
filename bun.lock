@@ -55,6 +55,7 @@
         "react-multi-date-picker": "^4.5.2",
         "react-resizable-panels": "^4.5.2",
         "sonner": "^2.0.7",
+        "tabulator-tables": "^6.4.0",
         "tailwind-merge": "^3.4.0",
         "zod": "^4.3.6",
         "zustand": "^5.0.11",
@@ -890,6 +891,8 @@
     "supports-color": ["supports-color@7.2.0", "https://artifacts.repo.mesal.ir/repository/npm/supports-color/-/supports-color-7.2.0.tgz", { "dependencies": { "has-flag": "^4.0.0" } }, "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw=="],
 
     "tabbable": ["tabbable@6.4.0", "https://artifacts.repo.mesal.ir/repository/npm/tabbable/-/tabbable-6.4.0.tgz", {}, "sha512-05PUHKSNE8ou2dwIxTngl4EzcnsCDZGJ/iCLtDflR/SHB/ny14rXc+qU5P4mG9JkusiV7EivzY9Mhm55AzAvCg=="],
+
+    "tabulator-tables": ["tabulator-tables@6.4.0", "https://artifacts.repo.mesal.ir/repository/npm/tabulator-tables/-/tabulator-tables-6.4.0.tgz", {}, "sha512-Lxh+leFNoBo/Yyr4USs6gxqbfo8anYUaUMmoT91pfVLtoUgl/dE+qV7ahnFrKVMCYYqGG33aIMPR7FzpPBaNYA=="],
 
     "tailwind-merge": ["tailwind-merge@3.4.0", "https://artifacts.repo.mesal.ir/repository/npm/tailwind-merge/-/tailwind-merge-3.4.0.tgz", {}, "sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g=="],
 

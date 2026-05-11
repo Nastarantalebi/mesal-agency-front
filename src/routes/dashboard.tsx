@@ -2,6 +2,7 @@ import AccommodationForm from "@/app/AdminPanel/Accommodation/components/Accommo
 import AccommodationList from "@/app/AdminPanel/Accommodation/components/AccommodationList";
 import Header from "@/app/AdminPanel/AdminFeatures/AdminHeader";
 import AccommodationSettings from "@/app/AdminPanel/settings/components/setting/AccommodationSettings";
+import TourList from "@/app/AdminPanel/tours/components/TourList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -16,8 +17,8 @@ function RouteComponent() {
       component: <AccommodationList />,
     },
     {
-      title: "ثبت اقامتگاه",
-      component: <AccommodationForm buttonText="ثبت" />,
+      title: "لیست تورها",
+      component: <TourList />,
     },
     {
       title: "تنظیمات",

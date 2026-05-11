@@ -7,47 +7,54 @@ import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete"
 import { AccommodationListColumns } from "../fixtures/AccommodationListColumns";
 import { useAccommodation } from "../services/useAccommodation";
 import type { AccommodationItem } from "../types";
-import SearchInput from "@/components/list/SearchInput";
+import CustomDialog from "@/components/modal";
+import AccommodationForm from "./AccommodationForm";
 
 const AccommodationList = () => {
   const [currentAccommodationPage, setCurrentAccommodationPage] = useState(1);
   const [selected, setSelected] = useState<AccommodationItem | null>(null);
   const [openD, setOpenDelete] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const [input, setInput] = useState("");
+  const [openAdd, setOpenAdd] = useState(false);
+
+  const [search, setSearch] = useState("");
 
   const { deleteAccommodation, getAccommodations } = useAccommodation(
     undefined,
     currentAccommodationPage,
-    searchInput
+    search
   );
 
   const navigate = useNavigate();
 
   if (getAccommodations.isFetching) return <div>Loading...</div>;
+
   if (getAccommodations.error)
     return (
-      <div className="text-red-600">{getAccommodations.error.message}</div>
+      <div className="text-red-600">
+        {getAccommodations.error.message}
+      </div>
     );
 
-  const PageCount = getAccommodations.data?.count
+  const pageCount = getAccommodations.data?.count
     ? Math.ceil(getAccommodations.data.count / 10)
     : 0;
+
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
   return (
     <>
       <div className="px-2 sm:px-0">
-        
-        <SearchInput
-          input={input}
-          setInput={setInput}
-          setSearchInput={setSearchInput}
-          placeholder="جست و جوی نام اقامتگاه"
-        />
-
         <div className="overflow-x-auto rounded-md mt-4">
           <CustomDataTable
+            searchValue={search}
+            onSearchChange={setSearch}
+            onSearch={(value) => {
+              setCurrentAccommodationPage(1);
+              setSearch(value);
+            }}
+            searchPlaceHolder="جست و جوی نام اقامتگاه"
+            customAddText="افزودن اقامتگاه"
+            onAdd={() => setOpenAdd(true)}
             onRowClick={(rowData) => {
               navigate({
                 to: "/accommodation/$id",
@@ -64,20 +71,27 @@ const AccommodationList = () => {
                 />
               </div>
             )}
-            showAction={true}
+            showAction
             columns={AccommodationListColumns}
-            data={getAccommodations.data?.results!}
+            data={getAccommodations.data?.results ?? []}
           />
         </div>
 
         <div className="mt-7 flex justify-center">
           <ListPagination
-            pageCount={PageCount}
+            pageCount={pageCount}
             currentPage={currentAccommodationPage}
             onPageChange={setCurrentAccommodationPage}
           />
         </div>
       </div>
+
+      <CustomDialog
+        dialogContent={<AccommodationForm />}
+        dialogTtile="افزودن اقامتگاه جدید"
+        onOpenChange={() => setOpenAdd(false)}
+        open={openAdd}
+      />
 
       <FormErrorModal
         open={openD}

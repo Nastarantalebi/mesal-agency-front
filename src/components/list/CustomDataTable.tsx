@@ -15,10 +15,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { type ReactNode } from "react";
+import React, { type ReactNode} from "react";
 import ListEdit from "./ListEdit";
 import { Button } from "../ui/button";
-
+import CustomTableHeader from "./CustomTableHeader";
 
 interface Props<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -28,8 +28,14 @@ interface Props<TData, TValue> {
   onFeature?: (id: string) => void;
   onBed?: (id: string) => void;
   onRowClick?: (rowData: TData) => void;
-  extraAction?: (rowData : TData) => ReactNode;
+  extraAction?: (rowData: TData) => ReactNode;
+  onAdd?: () => void;
   showAction: boolean;
+  customAddText?: string;
+  searchValue: string;
+  onSearchChange: (value: string) => void;
+  onSearch: (value: string) => void;
+  searchPlaceHolder: string;
 }
 
 type RowWithId = { id: string | number };
@@ -40,7 +46,13 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
   onEdit,
   onRowClick,
   extraAction,
-  showAction = true
+  onAdd,
+  customAddText = "افزودن جدید",
+  showAction = true,
+  searchPlaceHolder,
+  onSearch,
+  onSearchChange,
+  searchValue,
 }: Props<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -57,7 +69,15 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
 
   return (
     <div>
-      <div className="mx-auto overflow-x-auto rounded-sm">
+      <div className="mx-auto overflow-x-auto rounded-sm flex flex-col gap-3">
+        <CustomTableHeader
+          customAddText={customAddText}
+          searchValue={searchValue}
+          onSearchChange={onSearchChange}
+          onSearch={onSearch}
+          placeholder={searchPlaceHolder}
+          onAdd={onAdd!}
+        />
         <Table className="w-full table-fixed border border-primary ">
           <colgroup>
             {table.getAllLeafColumns().map((col) => (
@@ -67,7 +87,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
 
           <TableHeader className="bg-primary-90 ">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow  key={headerGroup.id}>
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead className="text-white" key={header.id}>
                     {header.isPlaceholder
@@ -78,7 +98,9 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                         )}
                   </TableHead>
                 ))}
-                {showAction && <TableHead className="w-32 text-white">عملیات</TableHead>}
+                {showAction && (
+                  <TableHead className="w-32 text-white">عملیات</TableHead>
+                )}
               </TableRow>
             ))}
           </TableHeader>
@@ -87,12 +109,15 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                className="border border-primary border-dashed"
+                  className="border border-primary border-dashed"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className="border-r border-primary" key={cell.id}>
+                    <TableCell
+                      className="border-r border-primary"
+                      key={cell.id}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -112,9 +137,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
                         </Button>
                       )}
                       {onEdit && (
-                        <ListEdit
-                          onClick={() => onEdit(row.original)}
-                        />
+                        <ListEdit onClick={() => onEdit(row.original)} />
                       )}
 
                       {extraAction?.(row.original)}
