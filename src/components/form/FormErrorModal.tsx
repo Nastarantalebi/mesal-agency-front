@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 
 type Props = {
-  open: boolean;
+  open?: boolean;
   message: string;
   onAcknowledge: () => void;
   onOpenChange: (open: boolean) => void;

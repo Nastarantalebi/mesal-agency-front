@@ -17,8 +17,8 @@ interface FormProps<TFormValues extends FieldValues> {
   handleSubmit: SubmitHandler<TFormValues>;
   children?: ReactNode;
   className?: string;
-  errorOpen: boolean;
-  setErrorOpen: any;
+  errorOpen?: boolean;
+  setErrorOpen?: any;
   errmessage?: string;
 }
 

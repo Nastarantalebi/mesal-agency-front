@@ -1,7 +1,7 @@
 export type TtourItems = {
     id: number;
   title: string;
-  category: string;description: string;vehicle_type: string;duration_days: number;difficulty:string;
+  category: {label:string, value:string};description: string;vehicle_type: {label:string, value:string};duration_days: number;difficulty:{label:string, value:string};
 }
 
 // export type TCreateTour = {

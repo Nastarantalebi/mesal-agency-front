@@ -49,12 +49,15 @@ const FilterModal = <T extends FieldValues>({
                 ))}
               </FieldGroup>
               <div className="mt-10">
-                <CustomButton type="submit" className="bg-primary text-white">
+                <CustomButton
+                  type="submit"
+                  className="bg-primary text-white hover:bg-primary/80"
+                >
                   فیلتر
                 </CustomButton>
                 <CustomButton
                   type="button"
-                  className="mr-1 bg-destructive/80 text-white"
+                  className="mr-1 bg-destructive/80 text-white hover:bg-destructive/60"
                   onClick={hadleDeleteFilters}
                 >
                   حذف فیلتر

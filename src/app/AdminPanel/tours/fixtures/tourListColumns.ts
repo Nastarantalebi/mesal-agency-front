@@ -12,7 +12,7 @@ export const tourListColumns: ColumnDef<TtourItems>[] = [
   {
     id: "category",
     header: "نوع تور",
-    accessorFn: (row) => row.category ?? "",
+    accessorFn: (row) => row.category.label ?? "",
   },
   {
     id: "description",
@@ -27,7 +27,7 @@ export const tourListColumns: ColumnDef<TtourItems>[] = [
   {
     id: "vehicle_type",
     header: "نوع وسیله نقلیه",
-    accessorFn: (row) => row.vehicle_type ?? "",
+    accessorFn: (row) => row.vehicle_type.label ?? "",
   },
 
 //   {

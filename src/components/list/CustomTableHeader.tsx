@@ -31,7 +31,7 @@ const TableHeader = ({
       <Button
         onClick={onAdd}
         variant="outline"
-        className="group-[.mode--light]:bg-white/12! group-[.mode--light]:text-slate-200! group-[.mode--light]:border-transparent!"
+        className="border-green-600 text-green-600 hover:bg-green-50 hover:text-green-600 w-full sm:w-auto"
       >
         <Plus/>
         {customAddText}

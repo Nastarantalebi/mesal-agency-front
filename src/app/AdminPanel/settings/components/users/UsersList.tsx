@@ -23,6 +23,8 @@ const usersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { getUsers } = useUsers(filters, currentPage);
   // const [filters, setFilters] = useState<createUsersList>(usersFilterInitialValues);
+  const [search, setSearch] = useState("");
+
 
   const PageCount = getUsers.data?.count
     ? Math.ceil(getUsers.data.count / 10)
@@ -62,6 +64,13 @@ const usersList = () => {
             />
           </div>
           <CustomDataTable
+            searchValue={search}
+            onSearchChange={setSearch}
+            onSearch={(value) => {
+              setCurrentPage(1);
+              setSearch(value);
+            }}
+            searchPlaceHolder="جست و جوی شماره همراه"
             showAction={true}
             columns={UserListColumns}
             data={getUsers.data?.results ?? []}

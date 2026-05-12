@@ -11,7 +11,7 @@ import { filterInitialValues, filterValidation } from "./fixtures/Validation";
 import FormComponent from "@/components/form/FormComponent";
 import useFilterFields from "./hooks/useFilterFields";
 
-import { type Dispatch, type SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 
 interface Props {
   open: boolean;
@@ -27,6 +27,7 @@ const filterModal = ({ open, onOpenChange, title, setFilter }: Props) => {
   });
 
   const content = useFilterFields({ form });
+  const [errorOpen, setErrorOpen] = useState(false);
 
   const handleFilterSubmit = (values: filterdata) => {
     setFilter(values);
@@ -44,6 +45,9 @@ const filterModal = ({ open, onOpenChange, title, setFilter }: Props) => {
           handleSubmit={handleFilterSubmit}
           children={content}
           buttonText="اعمال فیلتر"
+          errmessage="ثبت فیلتر با خطا مواجه شد"
+          errorOpen={errorOpen}
+          setErrorOpen={setErrorOpen}
         />
       </DialogContent>
     </Dialog>

@@ -1,14 +1,11 @@
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
-import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useRoomTypeList } from "../../services/useRoomType";
 import type { Props, RoomItem } from "../../types/index";
 import RoomTypeForm from "./RoomTypeForm";
 import ListDelete from "../roomTypeListIcons/ListDelete";
-import SearchInput from "@/components/list/SearchInput";
 import ListPagination from "@/components/list/ListPagination";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -22,14 +19,13 @@ export const columns: ColumnDef<RoomItem>[] = [
 ];
 
 const RoomTypeList = ({ AccommodationId }: Props) => {
-  const [searchInput, setSearchInput] = useState("");
-  const [input, setInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
 
   const { getRoomTypeList, deleteRoomType } = useRoomTypeList(
     AccommodationId,
     currentPage,
-    searchInput,
+    search,
   );
 
   const [selected, setSelected] = useState<RoomItem | null>(null);
@@ -55,7 +51,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   return (
     <>
       <div className="px-2 sm:px-0">
-        <Button
+        {/* <Button
           variant={"outline"}
           className="mb-5 border-green-600 text-green-600 hover:bg-green-50 hover:text-green-600 w-full sm:w-auto"
           // ⭐ button full-width on mobile
@@ -65,17 +61,18 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
         >
           <Plus />
           افزودن نوع اتاق جدید
-        </Button>
-
-        <SearchInput
-          input={input}
-          setInput={setInput}
-          setSearchInput={setSearchInput}
-          placeholder="جست و جوی نوع اتاق"
-        />
+        </Button> */}
 
         <div className="overflow-x-auto rounded-md mt-4">
           <CustomDataTable
+          searchValue={search}
+            onSearchChange={setSearch}
+            onSearch={(value) => {
+              setCurrentPage(1);
+              setSearch(value);
+            }}
+            searchPlaceHolder="جست و جوی نوع اتاق"
+
             onRowClick={(rowData) => {
               navigate({
                 to: "/accommodation/$id/listRoomTypes/$roomTypeId",
@@ -85,6 +82,8 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
                 },
               });
             }}
+            onAdd={() => setAddRoomType(true)}
+            customAddText="افزودن نوع اتاق جدید"
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
                 <ListDelete

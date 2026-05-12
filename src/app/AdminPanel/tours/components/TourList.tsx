@@ -1,7 +1,6 @@
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
 import ListPagination from "@/components/list/ListPagination";
-import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
 import CustomDialog from "@/components/modal";
@@ -54,7 +53,7 @@ const TourList = () => {
               setSearch(value);
             }}
             searchPlaceHolder="جست و جوی نام تور"
-            customAddText="افزودن "
+            customAddText="افزودن تور جدید"
             onAdd={() => setOpenAdd(true)}
             // onRowClick={(rowData) => {
             //   navigate({
