@@ -61,7 +61,6 @@
     "react-multi-date-picker": "^4.5.2",
     "react-resizable-panels": "^4.5.2",
     "sonner": "^2.0.7",
-    "tabulator-tables": "^6.4.0",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.3.6",
     "zustand": "^5.0.11"
