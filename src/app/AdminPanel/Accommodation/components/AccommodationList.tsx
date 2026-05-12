@@ -13,7 +13,7 @@ import AccommodationForm from "./AccommodationForm";
 const AccommodationList = () => {
   const [currentAccommodationPage, setCurrentAccommodationPage] = useState(1);
   const [selected, setSelected] = useState<AccommodationItem | null>(null);
-  const [openD, setOpenDelete] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
 
   const [search, setSearch] = useState("");
@@ -94,7 +94,7 @@ const AccommodationList = () => {
       />
 
       <FormErrorModal
-        open={openD}
+        open={openDelete}
         onOpenChange={() => setOpenDelete(false)}
         message={deleteMessage}
         onAcknowledge={() =>

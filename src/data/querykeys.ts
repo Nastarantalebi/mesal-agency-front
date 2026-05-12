@@ -22,6 +22,9 @@ export const default_url = "admin/defaults/"
 export const users_key = "users"
 export const users_url = "admin/users/"
 
+export const adminTour_key = "tours"
+export const adminTour_url = "admin/tours/"
+
 //-------------------------------------------------------------
 
 export const search_key = "searchAccommodations"

@@ -13,6 +13,7 @@ import useAccomodationFields from "../hooks/useAccomodationFields";
 import { useAccommodation } from "../services/useAccommodation";
 import type { TCreateAccomodation } from "../types";
 import formTypes from "@/components/form/FormInputTypes";
+import CustomLoader from "@/components/loading/CustomLoader";
 
 const AccommodationForm = ({
   AccommodationId,
@@ -94,7 +95,7 @@ const AccommodationForm = ({
     }
   };
 
-  if (getAccommodation.isFetching) return <div className="p-4">Loading...</div>;
+  if (getAccommodation.isFetching) return <div className="p-4"><CustomLoader/></div>;
 
   return (
     <Form {...form}>

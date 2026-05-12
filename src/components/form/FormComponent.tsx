@@ -8,6 +8,7 @@ import type { Items } from "./FormInputTypes";
 import formTypes from "./FormInputTypes";
 import CustomButton from "./CustomButton";
 import { type ReactNode } from "react";
+import FormErrorModal from "./FormErrorModal";
 
 interface FormProps<TFormValues extends FieldValues> {
   form: UseFormReturn<TFormValues>;
@@ -16,6 +17,9 @@ interface FormProps<TFormValues extends FieldValues> {
   handleSubmit: SubmitHandler<TFormValues>;
   children?: ReactNode;
   className?: string;
+  errorOpen: boolean;
+  setErrorOpen: any;
+  errmessage?: string;
 }
 
 const FormComponent = <TFormValues extends FieldValues>({
@@ -24,6 +28,9 @@ const FormComponent = <TFormValues extends FieldValues>({
   buttonText,
   handleSubmit,
   children,
+  errorOpen,
+  setErrorOpen,
+  errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.",
 }: FormProps<TFormValues>) => {
   return (
     <Form {...form}>
@@ -49,12 +56,12 @@ const FormComponent = <TFormValues extends FieldValues>({
           <CustomButton type="submit">{buttonText}</CustomButton>
         </div>
       </form>
-      {/* <FormErrorModal
+      <FormErrorModal
         open={errorOpen}
         message={errmessage}
         onOpenChange={setErrorOpen}
         onAcknowledge={() => setErrorOpen(false)}
-      /> */}
+      />
     </Form>
   );
 };

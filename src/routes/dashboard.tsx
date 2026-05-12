@@ -1,4 +1,3 @@
-import AccommodationForm from "@/app/AdminPanel/Accommodation/components/AccommodationForm";
 import AccommodationList from "@/app/AdminPanel/Accommodation/components/AccommodationList";
 import Header from "@/app/AdminPanel/AdminFeatures/AdminHeader";
 import AccommodationSettings from "@/app/AdminPanel/settings/components/setting/AccommodationSettings";
