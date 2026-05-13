@@ -2,6 +2,7 @@ import { Controller, type FieldValues } from "react-hook-form";
 import { useEffect, useState } from "react";
 import type { Props } from "./PropsType";
 import { Label } from "../ui/label";
+import { Trash, Trash2 } from "lucide-react";
 
 const CustomImageInput = <T extends FieldValues>({
   name,
@@ -11,7 +12,6 @@ const CustomImageInput = <T extends FieldValues>({
 }: Props<T>) => {
   const [preview, setPreview] = useState<string | null>(null);
 
-  console.log(isRequired);
 
   return (
     <>
@@ -84,9 +84,9 @@ const CustomImageInput = <T extends FieldValues>({
                         e.stopPropagation();
                         clearImage();
                       }}
-                      className="text-white bg-red-500 px-3 py-1 rounded-md"
+                      className="text-white bg-red-500 p-1 rounded-md"
                     >
-                      حذف
+                      <Trash2/>
                     </button>
                   </div>
                 )}
