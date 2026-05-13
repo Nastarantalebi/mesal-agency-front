@@ -25,6 +25,9 @@ export const users_url = "admin/users/"
 export const adminTour_key = "tours"
 export const adminTour_url = "admin/tours/"
 
+export const admin_news_key = "adminNews"
+export const admin_news_url = "admin/news/"
+
 //-------------------------------------------------------------
 
 export const search_key = "searchAccommodations"

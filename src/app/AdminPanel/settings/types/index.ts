@@ -1,3 +1,5 @@
+import { number, string } from "zod";
+
 export type TCreateBed = {
     name: string,
 }
@@ -49,3 +51,18 @@ export type createUsersList = {
     mobile: string;
     is_staff: string;
 };
+
+/////////////////////////////////////////////////////
+
+export type TResponseNews = {
+     id: number,
+      title: string,
+      slug: string,
+      type: string,
+      priority: string,
+      short_description: string,
+      image: string,
+      status: string,
+      published_date: string,
+      created_at: string
+}

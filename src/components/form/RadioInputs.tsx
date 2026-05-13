@@ -13,7 +13,7 @@ const Radio = <T extends FieldValues>({
 }: Props<T>) => {
   return (
     <div className="w-full min-w-0">
-      <Label className="block mb-3 mr-3">
+      <Label className="block mb-1 mr-3">
         {label}
         {isRequired && <span className="text-red-600">*</span>}
       </Label>
@@ -28,7 +28,7 @@ const Radio = <T extends FieldValues>({
               onValueChange={(value) => {
                 field.onChange(value);
               }}
-              className={`w-fit flex flex-wrap justify-around items-center gap-4 rounded-md border p-2 min-h-5 ${
+              className={`w-fit flex flex-wrap justify-around items-center gap-4 rounded-md border px-2 py-1 min-h-5 ${
                 fieldState.error ? "border-red-600" : `${className}`
               }`}
             >

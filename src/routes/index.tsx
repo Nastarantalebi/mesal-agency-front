@@ -1,3 +1,4 @@
+import NewsCard from "@/app/AdminPanel/settings/components/news/NewsCard";
 import Tours from "@/app/usersPanel/Landing/foreignTours/Tours";
 import HeroSection from "@/app/usersPanel/Landing/heroSection/HeroSection";
 import IranPattern from "@/app/usersPanel/Landing/popularCities/components/IranPattern";

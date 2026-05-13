@@ -50,4 +50,29 @@ export const usersFilterValidation = z.object({
 export const usersFilterInitialValues: createUsersList = {
   mobile: "",
   is_staff: "",
-}
+};
+
+//////////////////////////////////////////////////////////////
+
+export const newsValidation = z.object({
+  title: z.string().min(1, "عنوان الزامی است."),
+  type: z.enum(["news", "announcement"]).nullable(),
+  priority: z.enum(["normal", "high", "urgent"]).nullable(),
+  description: z.string(),
+  short_description: z.string(),
+  image: z.file().nullable(),
+  status: z.enum(["draft", "active", "archived"]).nullable(),
+  published_date: z.string().min(1, "انتخاب تاریخ انتشار الزامی است.")
+})
+
+export type TNews = z.infer<typeof newsValidation>
+
+export const newsInitialValues : TNews = {
+  title: "",
+  type: null,
+  priority: null,
+  description: "",
+  short_description:"", 
+  image:null, status:null, 
+  published_date:""
+};

@@ -1,10 +1,11 @@
-import { beds_key, beds_url, default_key, default_url, features_key, features_url, users_key, users_url } from "@/data/querykeys";
+import { admin_news_key, admin_news_url, beds_key, beds_url, default_key, default_url, features_key, features_url, users_key, users_url } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
-import type { createUsersList, TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse, UsersListResponse } from "../types";
+import type { createUsersList, TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse, TResponseNews, UsersListResponse } from "../types";
 import type { TPaginatedResponse } from "@/types";
 import useDeleteData from "@/services/useDeleteData";
 import usePutData from "@/services/usePutData";
+import type { TNews } from "../fixtures/validation";
 
 export const useDefaults = () => {
   
@@ -20,6 +21,7 @@ export const useDefaults = () => {
 
   return {getDefaults, postDefaults}
 }
+/////////////////////////////////////////////////////////////////////
 
 interface useFeatureProps {
   currentRoomPage?: number;
@@ -69,6 +71,7 @@ export const useFeatures = ({currentRoomPage, currentAccommodationPage, feature_
     return { postFeature, getRoomTypeFeatures, getAccommodationFeatures, getfeatureData, deleteFeature, putFeature}
 
 }
+///////////////////////////////////////////////////////////////////ز
 
 export const useBeds = ({currentBedPage, bedId}: {currentBedPage?: number, bedId?: number| null}) => {
 
@@ -104,10 +107,11 @@ export const useBeds = ({currentBedPage, bedId}: {currentBedPage?: number, bedId
   return { getBeds, deleteBed, getBed, postBed, putBed }
 }
 
+///////////////////////////////////////////////////////////////////////
+
 export const useUsers = (filters?: createUsersList, currentPage?: number) => {
   
   const url = `${users_url}?page=${currentPage}${filters?.is_staff === "" ?'' : `&is_staff=${filters?.is_staff}`}${filters?.mobile ? `&mobile__contains=${filters.mobile}` : ''}`
-  console.log(url)
 
   const getUsers = useGetData<TPaginatedResponse<UsersListResponse>>({
   key: [users_key, String(filters?.is_staff), filters?.mobile!],
@@ -121,3 +125,22 @@ export const useUsers = (filters?: createUsersList, currentPage?: number) => {
 
   return { getUsers, postUsers }
 }
+
+/////////////////////////////////////////////////////////////
+export const useNews = (currentPage?: number) => {
+  const url = `${admin_news_url}?page=${currentPage}`
+  const getNews = useGetData<TPaginatedResponse<TResponseNews>>({
+    key: [admin_news_key, currentPage],
+    url,
+    enabled: !!currentPage 
+  })
+
+  const postNews = usePostData<FormData>({
+    key: [admin_news_key],
+    url: admin_news_url,
+  })
+
+  return {getNews, postNews}
+
+} 
+

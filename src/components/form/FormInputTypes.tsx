@@ -134,7 +134,7 @@ function formTypes<T extends FieldValues>(
       );
 
     case "Map":
-      return <CustomMapPicker label="موقعیت مکانی" isRequired />;
+      return <CustomMapPicker label="موقعیت مکانی" isRequired={isRequired} />;
 
     case "Time":
       return (
@@ -147,7 +147,7 @@ function formTypes<T extends FieldValues>(
       );
 
     case "image":
-      return <CustomImageInput name={name} label={label} control={control} />;
+      return <CustomImageInput name={name} label={label} control={control} isRequired={isRequired}/>;
 
     default:
       return (
