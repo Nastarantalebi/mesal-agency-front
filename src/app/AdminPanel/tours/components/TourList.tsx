@@ -23,7 +23,7 @@ const TourList = () => {
     searchInput: search,
   });
 
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   if (getTours.isFetching)
     return (
@@ -88,7 +88,7 @@ const TourList = () => {
 
       <CustomDialog
         dialogContent={<TourForm />}
-        dialogTtile="افزودن اقامتگاه جدید"
+        dialogTitle="افزودن اقامتگاه جدید"
         onOpenChange={() => setOpenAdd(false)}
         open={openAdd}
       />
@@ -97,9 +97,7 @@ const TourList = () => {
         open={openDelete}
         onOpenChange={() => setOpenDelete(false)}
         message={deleteMessage}
-        onAcknowledge={() =>
-          deleteTour.mutateAsync({ id: selected?.id! })
-        }
+        onAcknowledge={() => deleteTour.mutateAsync({ id: selected?.id! })}
         buttonTitle="بله"
         dialogTitle="حذف"
       />

@@ -5,15 +5,31 @@ interface Props {
   dialogContent: JSX.Element;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  dialogTtile: string;
+  dialogTitle: string;
+  size?: "sm" | "lg" | "xl" | "xxl";
 }
 
-const CustomDialog = ({ dialogContent, open, onOpenChange, dialogTtile }: Props) => {
+const sizeClasses = {
+  sm: "max-w-sm",
+  lg: "max-w-lg",
+  xl: "max-w-xl",
+  xxl: "max-w-2xl",
+};
+
+const CustomDialog = ({
+  dialogContent,
+  open,
+  onOpenChange,
+  dialogTitle,
+  size = "lg",
+}: Props) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl overflow-y-scroll h-screen hide-scrollbar">
+      <DialogContent
+        className={`${sizeClasses[size]} w-full overflow-y-auto max-h-screen hide-scrollbar`}
+      >
         <DialogHeader>
-          <DialogTitle className="mb-6">{dialogTtile}</DialogTitle>
+          <DialogTitle className="mb-6">{dialogTitle}</DialogTitle>
         </DialogHeader>
         {dialogContent}
       </DialogContent>

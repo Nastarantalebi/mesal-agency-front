@@ -10,7 +10,7 @@ import type { ReactNode } from "react";
 import Radio from "./RadioInputs";
 import type { Type } from "@/app/AdminPanel/Accommodation/types";
 import CustomImageInput from "./CustomImageInput";
-
+import { file } from "zod";
 
 type fieldTypes =
   | "dropdown"
@@ -37,6 +37,7 @@ export interface Items<T> {
   direction?: string;
   placeholder?: string;
   items?: Type[];
+  imageUrl?: string | null;
 }
 
 function formTypes<T extends FieldValues>(
@@ -53,6 +54,7 @@ function formTypes<T extends FieldValues>(
     placeholder,
     className,
     items,
+    imageUrl,
   }: Items<T>,
   control: Control<T>,
 ) {
@@ -86,7 +88,6 @@ function formTypes<T extends FieldValues>(
           className={className}
         />
       );
-
 
     case "yesNoInput":
       return (
@@ -147,7 +148,15 @@ function formTypes<T extends FieldValues>(
       );
 
     case "image":
-      return <CustomImageInput name={name} label={label} control={control} isRequired={isRequired}/>;
+      return (
+        <CustomImageInput
+          name={name}
+          label={label}
+          control={control}
+          isRequired={isRequired}
+          imageUrl={imageUrl}
+        />
+      );
 
     default:
       return (

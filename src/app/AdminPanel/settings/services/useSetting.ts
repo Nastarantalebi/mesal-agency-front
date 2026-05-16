@@ -6,6 +6,8 @@ import type { TPaginatedResponse } from "@/types";
 import useDeleteData from "@/services/useDeleteData";
 import usePutData from "@/services/usePutData";
 import type { TNews } from "../fixtures/validation";
+import useGetById from "@/services/useGetById";
+import usePatchData from "@/services/usePatchData";
 
 export const useDefaults = () => {
   
@@ -127,12 +129,13 @@ export const useUsers = (filters?: createUsersList, currentPage?: number) => {
 }
 
 /////////////////////////////////////////////////////////////
-export const useNews = (currentPage?: number) => {
+export const useNews = ({currentPage, id}: {currentPage?: number, id?: number}) => {
   const url = `${admin_news_url}?page=${currentPage}`
+
   const getNews = useGetData<TPaginatedResponse<TResponseNews>>({
     key: [admin_news_key, currentPage],
     url,
-    enabled: !!currentPage 
+    enabled: !!currentPage,
   })
 
   const postNews = usePostData<FormData>({
@@ -140,7 +143,24 @@ export const useNews = (currentPage?: number) => {
     url: admin_news_url,
   })
 
-  return {getNews, postNews}
+  const deletNews = useDeleteData({
+    key: [admin_news_key],
+    url: admin_news_url,
+  })
+
+  const getNewsById = useGetById<TResponseNews>({
+    key: [admin_news_key],
+    url: admin_news_url,
+    id: id,
+    enabled: !!id,
+  })
+
+  const patchNews = usePatchData<FormData>({
+    key: [admin_news_key],
+    url: admin_news_url,
+  })
+
+  return {getNews, postNews, deletNews, getNewsById, patchNews}
 
 } 
 

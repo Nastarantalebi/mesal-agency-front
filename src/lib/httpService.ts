@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig } from "axios";
 import axios from "./axios";
+import type { config } from "zod";
 
 // type Config = {
 //   params?: Record<string, unknown>;
@@ -19,4 +20,7 @@ export const Request = {
     axios.put(url, body, config),
 
   delete: (url: string, params = {}) => axios.delete(url, { params }),
+
+  patch: (url: string, body={}, config:AxiosRequestConfig<object> = {} ) => 
+    axios.patch(url, body, config)
 };

@@ -16,4 +16,5 @@ export interface Props<T extends FieldValues> {
   icon?: ReactNode;
   direction?: string;
   className?: string;
+  imageUrl?: string | null;
 }

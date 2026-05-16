@@ -21,7 +21,7 @@ const AccommodationList = () => {
   const { deleteAccommodation, getAccommodations } = useAccommodation(
     undefined,
     currentAccommodationPage,
-    search
+    search,
   );
 
   const navigate = useNavigate();
@@ -30,9 +30,7 @@ const AccommodationList = () => {
 
   if (getAccommodations.error)
     return (
-      <div className="text-red-600">
-        {getAccommodations.error.message}
-      </div>
+      <div className="text-red-600">{getAccommodations.error.message}</div>
     );
 
   const pageCount = getAccommodations.data?.count
@@ -88,7 +86,7 @@ const AccommodationList = () => {
 
       <CustomDialog
         dialogContent={<AccommodationForm />}
-        dialogTtile="افزودن اقامتگاه جدید"
+        dialogTitle="افزودن اقامتگاه جدید"
         onOpenChange={() => setOpenAdd(false)}
         open={openAdd}
       />

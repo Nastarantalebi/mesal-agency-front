@@ -2,16 +2,21 @@ import { Controller, type FieldValues } from "react-hook-form";
 import { useEffect, useState } from "react";
 import type { Props } from "./PropsType";
 import { Label } from "../ui/label";
-import { Trash, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 const CustomImageInput = <T extends FieldValues>({
   name,
   control,
   label,
   isRequired,
+  imageUrl,
 }: Props<T>) => {
   const [preview, setPreview] = useState<string | null>(null);
-
+  useEffect(() => {
+    if (imageUrl) {
+      setPreview(imageUrl);
+    }
+  }, [imageUrl]);
 
   return (
     <>

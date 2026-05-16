@@ -2,7 +2,7 @@ import type { Items } from "@/components/form/FormInputTypes";
 import React from "react";
 import type { TNews } from "./validation";
 
-const newsFields = () => {
+const NewsFields = (imageUrl?: string | null) => {
   const newsFields: Items<TNews>[] = [
     {
       name: "title",
@@ -69,10 +69,11 @@ const newsFields = () => {
        label: "عکس",
        isRequired: true,
        fieldType: "image",
+       imageUrl,
      },
 
   ];
   return newsFields;
 };
 
-export default newsFields;
+export default NewsFields;

@@ -58,11 +58,12 @@ export type TResponseNews = {
      id: number,
       title: string,
       slug: string,
-      type: string,
-      priority: string,
+      type: {label: string, value: string},
+      priority: {label: string, value: string},
+      description: string,
       short_description: string,
       image: string,
-      status: string,
+      status: {label: string, value: string},
       published_date: string,
       created_at: string
 }

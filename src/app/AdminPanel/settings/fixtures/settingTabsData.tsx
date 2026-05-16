@@ -5,6 +5,7 @@ import AddFeaturesForm from "../components/features/AddFeaturesForm";
 import FeaturesList from "../components/features/FeaturesList";
 import News from "../components/news/NewsCard";
 import NewsForm from "../components/news/NewsForm";
+import NewsList from "../components/news/NewsList";
 import UsersList from "../components/users/UsersList";
 
 
@@ -46,6 +47,7 @@ export const settingTabs = [
       component: (
         <div className="flex flex-col gap-10">
           <NewsForm/>
+          <NewsList/>
         </div>
       ),
     },
