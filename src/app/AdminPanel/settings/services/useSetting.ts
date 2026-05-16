@@ -5,7 +5,6 @@ import type { createUsersList, TBedResponse, TCFeature, TCreateBed, TCreateDefau
 import type { TPaginatedResponse } from "@/types";
 import useDeleteData from "@/services/useDeleteData";
 import usePutData from "@/services/usePutData";
-import type { TNews } from "../fixtures/validation";
 import useGetById from "@/services/useGetById";
 import usePatchData from "@/services/usePatchData";
 

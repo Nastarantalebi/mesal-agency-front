@@ -2,46 +2,32 @@ import { accommodation_key, accommodation_url } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
 import type { accommodationsResponse } from "../types";
 import type { TPaginatedResponse } from "@/types";
-import type { filterdata } from "../components/filter/types/types";
+import { useSearch } from "@tanstack/react-router";
 
-export const useAccommoation = (
-  filters?: filterdata,
-  current_page?: number,
-) => {
+export const useAccommodation = (current_page?: number) => {
+  const search = useSearch({ from: "/search" });
 
+  // Build query string from search object
   const params = new URLSearchParams();
+  
+  Object.entries(search).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      params.append(key, String(value));
+    }
+  });
 
-  params.set("page", String(current_page ?? 1));
+  if (current_page) {
+    params.append('page', String(current_page));
+  }
 
-  if (filters?.name__contains)
-    params.set("name__contains", filters.name__contains);
+  const queryString = params.toString();
+  const url = `${accommodation_url}${queryString ? `?${queryString}` : ''}`;
 
-  if (filters?.city__id) params.set("city__id", String(filters.city__id));
+  console.log("url:", url);
 
-  if (filters?.city__province__id)
-    params.set("city__province__id", String(filters.city__province__id));
+  const key = [accommodation_key, queryString, current_page];
 
-  if (filters?.stars__gte) params.set("stars__gte", String(filters.stars__gte));
-
-  if (filters?.stars__lte) params.set("stars__lte", String(filters.stars__lte));
-
-if (Array.isArray(filters?.type__id) && filters.type__id.length > 0) {
-  params.set("type__id", filters.type__id.join(","));
-}
-
-if (Array.isArray(filters?.feature__id) && filters.feature__id.length > 0) {
-  params.set("feature__id", filters.feature__id.join(","));
-}
-
-
-  const url = `${accommodation_url}?${params.toString()}`;
-
-
-  const key = [accommodation_key, params.toString(), current_page];
-
-  const getAccommodations = useGetData<
-    TPaginatedResponse<accommodationsResponse>
-  >({
+  const getAccommodations = useGetData<TPaginatedResponse<accommodationsResponse>>({
     key,
     url,
   });

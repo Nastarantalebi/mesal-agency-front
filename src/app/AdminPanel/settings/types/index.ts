@@ -1,4 +1,3 @@
-import { number, string } from "zod";
 
 export type TCreateBed = {
     name: string,

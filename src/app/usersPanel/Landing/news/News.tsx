@@ -31,24 +31,24 @@ const News = () => {
   }, [groupedNews.length]);
 
   const variants = {
-    enter: {
-      x: -200,
+    enter: (direction: number) => ({
+      x: direction > 0 ? -200 : 200,
       opacity: 0,
-    },
+    }),
     center: {
       x: 0,
       opacity: 1,
     },
-    exit: {
-      x: 200,
+    exit: (direction: number) => ({
+      x: direction > 0 ? 200 : -200,
       opacity: 0,
-    },
+    }),
   };
-
   return (
     <div className="w-full overflow-hidden px-10">
       <AnimatePresence mode="wait">
         <motion.div
+          custom={direction}
           key={currentSlide}
           variants={variants}
           initial="enter"

@@ -39,6 +39,8 @@ const IranPattern = () => {
             search={{
               city__province__id: city.provinceId,
               city__id: city.cityId,
+              type__id: [],
+              feature__id: [],
             }}
           >
             <PopularCities city={city} />

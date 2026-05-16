@@ -11,16 +11,15 @@ import { filterInitialValues, filterValidation } from "./fixtures/Validation";
 import FormComponent from "@/components/form/FormComponent";
 import useFilterFields from "./hooks/useFilterFields";
 
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState } from "react";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  setFilter: Dispatch<SetStateAction<filterdata | undefined>>;
 }
 
-const filterModal = ({ open, onOpenChange, title, setFilter }: Props) => {
+const filterModal = ({ open, onOpenChange, title}: Props) => {
   const form = useForm<filterdata>({
     resolver: zodResolver(filterValidation),
     defaultValues: filterInitialValues,
@@ -29,8 +28,28 @@ const filterModal = ({ open, onOpenChange, title, setFilter }: Props) => {
   const content = useFilterFields({ form });
   const [errorOpen, setErrorOpen] = useState(false);
 
-  const handleFilterSubmit = (values: filterdata) => {
-    setFilter(values);
+  const handleFilterSubmit = (data: filterdata) => {
+    console.log("object:", data);
+    const params = new URLSearchParams();
+    Object.entries(data).forEach(([key, value]) => {
+      if (!value) return;
+
+      if (Array.isArray(value)) {
+        if (value.length > 0) {
+          params.set(key, value.join(","));
+        }
+      } else {
+        params.set(key, String(value));
+      }
+    });
+
+    const queryString = params.toString();
+
+    console.log("queryString:", queryString)
+
+    window.history.replaceState(null, "", `?${queryString}`);
+
+    // setFilter(values);
   };
   // console.log("data",getAccommodations.data)
 

@@ -1,5 +1,4 @@
 import type { Items } from "@/components/form/FormInputTypes";
-import React from "react";
 import type { TNews } from "./validation";
 
 const NewsFields = (imageUrl?: string | null) => {

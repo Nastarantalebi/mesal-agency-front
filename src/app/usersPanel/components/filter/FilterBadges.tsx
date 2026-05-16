@@ -10,47 +10,42 @@ import {
   miladiToShamsi,
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 
 export interface filterProps {
   setFilter: Dispatch<SetStateAction<filterdata | undefined>>;
   filter: filterdata | undefined;
 }
 
-const FilterBadges = ({ setFilter, filter }: filterProps) => {
+const FilterBadges = () => {
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
+  const search = useSearch({ from: "/search" }); // مسیر route خود را وارد کنید
 
-  const handleDateChange = (dates: DateObject | DateObject[]) => {
+  const handleDateChange = (dates: DateObject[]) => {
+  if (dates && dates.length === 2) {
+    const startMiladi = shamsiToMiladi(dates[0].format("YYYY-MM-DD"));
+    const endMiladi = shamsiToMiladi(dates[1].format("YYYY-MM-DD"));
 
-    const datesArray = Array.isArray(dates) ? dates : dates ? [dates] : [];
-
-    if (datesArray.length === 2) {
-      setFilter((prev) => ({
+    navigate({
+      to: "/search",
+      search: (prev) => ({
+        type__id: [],
+        feature__id: [],
         ...prev,
-        type__id: prev?.type__id ?? [],
-        feature__id: prev?.feature__id ?? [],
-        open_start__gte:
-          shamsiToMiladi(datesArray[0]?.format("YYYY-MM-DD")) || null,
-        open_end__lte:
-          shamsiToMiladi(datesArray[1]?.format("YYYY-MM-DD")) || null,
-      }));
-    } else if (datesArray.length === 0) {
-      setFilter((prev) => ({
-        ...prev,
-        type__id: prev?.type__id ?? [],
-        feature__id: prev?.feature__id ?? [],
-        open_start__gte: null,
-        open_end__lte: null,
-      }));
-    }
+        open_start__gte: startMiladi,
+        open_end__lte: endMiladi,
+      }),
+    });
+  } 
+};
 
-    console.log(filter)
-  };
 
   const dateValue =
-    filter?.open_start__gte && filter?.open_end__lte
+    search?.open_start__gte && search?.open_end__lte
       ? [
-          miladiToShamsi(filter.open_start__gte),
-          miladiToShamsi(filter.open_end__lte),
+          miladiToShamsi(search.open_start__gte),
+          miladiToShamsi(search.open_end__lte),
         ]
       : [];
 
@@ -83,14 +78,11 @@ const FilterBadges = ({ setFilter, filter }: filterProps) => {
         />
       </div>
 
-      {openModal && (
-        <FilterModal
-          open={openModal}
-          onOpenChange={() => setOpenModal(false)}
-          title="فیلتر ها"
-          setFilter={setFilter}
-        />
-      )}
+      <FilterModal
+        open={openModal}
+        onOpenChange={() => setOpenModal(false)}
+        title="فیلتر ها"
+      />
     </div>
   );
 };

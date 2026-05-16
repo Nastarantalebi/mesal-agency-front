@@ -1,5 +1,4 @@
 import UserHeader from "@/app/usersPanel/components/UserHeader";
-import News from "@/app/usersPanel/Landing/news/News";
 import NewsCard from "@/app/usersPanel/Landing/news/NewsCard";
 import NewsDetailCard from "@/app/usersPanel/Landing/news/NewsDetailCard";
 import useNews from "@/app/usersPanel/Landing/news/services/useNews";

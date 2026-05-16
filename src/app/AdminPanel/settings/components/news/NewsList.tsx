@@ -5,7 +5,6 @@ import { Card } from "@/components/ui/card";
 import ListPagination from "@/components/list/ListPagination";
 import CustomDialog from "@/components/modal/CustomDialog";
 import NewsForm from "./NewsForm";
-import { nullable } from "zod";
 
 const NewsList = () => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -10,7 +10,6 @@ import type { ReactNode } from "react";
 import Radio from "./RadioInputs";
 import type { Type } from "@/app/AdminPanel/Accommodation/types";
 import CustomImageInput from "./CustomImageInput";
-import { file } from "zod";
 
 type fieldTypes =
   | "dropdown"

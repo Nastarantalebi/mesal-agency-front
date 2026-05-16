@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import NewsFields from "../../fixtures/NewsFields";
 
 interface Props {
-  newsId: number;
+  newsId?: number;
 }
 
 const NewsForm = ({ newsId }: Props) => {

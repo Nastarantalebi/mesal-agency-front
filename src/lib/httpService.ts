@@ -1,6 +1,5 @@
 import type { AxiosRequestConfig } from "axios";
 import axios from "./axios";
-import type { config } from "zod";
 
 // type Config = {
 //   params?: Record<string, unknown>;

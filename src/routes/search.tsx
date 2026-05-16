@@ -1,49 +1,77 @@
 import AccommodationCardsDetails from "@/app/usersPanel/components/AccommodationCardsDetails";
 import FilterBadges from "@/app/usersPanel/components/filter/FilterBadges";
-import type { filterdata } from "@/app/usersPanel/components/filter/types/types";
 import UserHeader from "@/app/usersPanel/components/UserHeader";
-import { useAccommoation } from "@/app/usersPanel/services/useAccommoation";
+import { useAccommodation } from "@/app/usersPanel/services/useAccommoation";
 import CustomLoader from "@/components/loading/CustomLoader";
-import { createFileRoute, Outlet, useSearch } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import z from "zod";
 
 export const Route = createFileRoute("/search")({
   component: RouteComponent,
-  validateSearch: (search) =>     z
+  validateSearch: (search) =>
+    z
       .object({
         name__contains: z.string().optional(),
-        city__province__id: z.number().optional(),
-        city__id: z.number().optional(),
-        type__id: z.number().optional(),
-        stars__gte: z.number().optional(),
-        stars__lte: z.number().optional(),
-        feature__id: z.number().optional(),
-          open_start__gte: z.string().optional().nullable(),
-          open_end__lte: z.string().optional().nullable(),
-        // num_adults: z.number().optional(),
-        // num_children: z.number().optional(),
-      }).parse(search),
+
+        city__province__id: z.coerce.number().optional(),
+        city__id: z.coerce.number().optional(),
+
+        type__id: z
+          .union([
+            z.string(),
+            z.array(z.string()),
+            z.number(),
+            z.array(z.number()),
+          ])
+          .optional()
+          .transform((v) => {
+            if (!v) return undefined;
+            if (typeof v === "number") return [v];
+            if (Array.isArray(v)) {
+              return v.map((item) =>
+                typeof item === "number" ? item : Number(item),
+              );
+            }
+            return v.split(",").map(Number);
+          }),
+
+        feature__id: z
+          .union([
+            z.string(),
+            z.array(z.string()),
+            z.number(),
+            z.array(z.number()),
+          ])
+          .optional()
+          .transform((v) => {
+            if (!v) return undefined;
+            if (typeof v === "number") return [v];
+            if (Array.isArray(v)) {
+              return v.map((item) =>
+                typeof item === "number" ? item : Number(item),
+              );
+            }
+            return v.split(",").map(Number);
+          }),
+
+        stars__gte: z.coerce.number().optional(),
+        stars__lte: z.coerce.number().optional(),
+
+        open_start__gte: z.string().optional().nullable(),
+        open_end__lte: z.string().optional().nullable(),
+      })
+      .parse(search),
 });
 
 function RouteComponent() {
-  const search = useSearch({ from: "/search" });
-  const provinceId = search.city__province__id as string | undefined;
-  console.log(provinceId);
+  const { getAccommodations } = useAccommodation();
 
-  const [filters, setFilters] = useState<filterdata>();
-
-  console.log("filters", filters)
-
-  const { getAccommodations } = useAccommoation(filters);
-
-  // console.log("accommodations:", getAccommodations.data);
   return (
     <div className="font-display!">
       <Toaster richColors position="top-right" />
-      <UserHeader searchPlaceHolder="جستجوی شهر ..."/>
-      <FilterBadges setFilter={setFilters} filter={filters} />
+      <UserHeader searchPlaceHolder="جستجوی شهر ..." />
+      <FilterBadges />
       <div className="mx-20 my-5 flex justify-center items-center">
         {getAccommodations.isFetching ? (
           <CustomLoader />
