@@ -51,8 +51,8 @@ export const accommodationTypes_url = "accommodation_types/"
 export const accommodationFeatureList_key = "accommodationFeatureList"
 export const accommodationFeatureList_url = "accommodation_feature_list/"
 
-export const useNews_key = "UserNews"
-export const useNews_url = "news/"
+export const userNews_key = "UserNews"
+export const userNews_url = "news/"
 
 
 

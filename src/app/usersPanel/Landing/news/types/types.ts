@@ -4,6 +4,7 @@ export type TNewsResponse = {
       slug: string,
       type: {label: string, value: string},
       priority:{label: string, value: string},
+      description?: string,
       short_description: string,
       image: string,
       published_date: string,

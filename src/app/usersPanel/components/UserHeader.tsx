@@ -1,7 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 
-const UserHeader = () => {
+
+interface Props {
+  searchPlaceHolder: string;
+}
+const UserHeader = ({searchPlaceHolder}: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -19,7 +23,7 @@ const UserHeader = () => {
           <div className="w-full h-10 relative rounded-2xl border border-gray-200">
             <input
               type="text"
-              placeholder="جستجو شهر..."
+              placeholder={searchPlaceHolder}
               className="w-full h-full px-4 pr-10 rounded-2xl outline-none"
             />
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />

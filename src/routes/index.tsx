@@ -1,7 +1,7 @@
 import NewsCard from "@/app/AdminPanel/settings/components/news/NewsCard";
 import NewsCardTest from "@/app/AdminPanel/settings/components/news/NewsCard";
 import { testNews } from "@/app/AdminPanel/settings/components/news/test";
-import News from "@/app/usersPanel/Landing/components/news/News";
+import News from "@/app/usersPanel/Landing/news/News";
 import Tours from "@/app/usersPanel/Landing/foreignTours/Tours";
 import HeroSection from "@/app/usersPanel/Landing/heroSection/HeroSection";
 import IranPattern from "@/app/usersPanel/Landing/popularCities/components/IranPattern";

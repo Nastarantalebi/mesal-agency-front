@@ -4,7 +4,7 @@ import NewsCard from "./NewsCard";
 import useNews from "./services/useNews";
 
 const News = () => {
-  const { getNews } = useNews();
+  const { getNews } = useNews({});
   const news = getNews.data?.results ?? [];
 
   // خبرها را دو‌تا‌دو‌تا گروه‌بندی می‌کنیم

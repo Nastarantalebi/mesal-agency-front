@@ -1,9 +1,45 @@
-import { createFileRoute } from '@tanstack/react-router'
+import UserHeader from "@/app/usersPanel/components/UserHeader";
+import News from "@/app/usersPanel/Landing/news/News";
+import NewsCard from "@/app/usersPanel/Landing/news/NewsCard";
+import NewsDetailCard from "@/app/usersPanel/Landing/news/NewsDetailCard";
+import useNews from "@/app/usersPanel/Landing/news/services/useNews";
+import CustomLoader from "@/components/loading/CustomLoader";
+import { Toaster } from "@/components/ui/sonner";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/news/')({
+export const Route = createFileRoute("/news/")({
+  validateSearch: (search) => ({
+    id: search.id ? Number(search.id) : undefined,
+  }),
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/news/"!</div>
+  const { id } = Route.useSearch();
+  const { getNews, getNewsById } = useNews({ newsId: id });
+
+  console.log("id", id);
+
+  return (
+    <div className="font-display!">
+      <Toaster richColors position="top-right" />
+      <UserHeader searchPlaceHolder="جستجوی خبر ..." />
+      {id && getNewsById.data ? (
+        <NewsDetailCard news={getNewsById.data} />
+      ) : (
+        <></>
+      )}
+      <h2 className="mx-20 mt-10 border-r-4 border-primary pr-4 text-xl font-extrabold text-gray-800">
+        اخبار دیگر
+      </h2>
+      <div className="mx-20 my-5 flex justify-center items-center gap-2">
+        {getNews.isFetching ? (
+          <CustomLoader />
+        ) : (
+          getNews.data?.results.map((item) => <NewsCard news={item} />)
+        )}
+      </div>
+      <Outlet />
+    </div>
+  );
 }

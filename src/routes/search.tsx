@@ -42,7 +42,7 @@ function RouteComponent() {
   return (
     <div className="font-display!">
       <Toaster richColors position="top-right" />
-      <UserHeader />
+      <UserHeader searchPlaceHolder="جستجوی شهر ..."/>
       <FilterBadges setFilter={setFilters} filter={filters} />
       <div className="mx-20 my-5 flex justify-center items-center">
         {getAccommodations.isFetching ? (
