@@ -9,11 +9,11 @@ interface Props {
   size?: "sm" | "lg" | "xl" | "xxl";
 }
 
-const sizeClasses = {
-  sm: "max-w-sm",
-  lg: "max-w-lg",
-  xl: "max-w-xl",
-  xxl: "max-w-2xl",
+const sizeClasses: Record<NonNullable<Props["size"]>, string> = {
+  sm: "sm:max-w-sm",
+  lg: "sm:max-w-lg",
+  xl: "sm:max-w-xl",
+  xxl: "sm:max-w-4xl",
 };
 
 const CustomDialog = ({
@@ -21,12 +21,14 @@ const CustomDialog = ({
   open,
   onOpenChange,
   dialogTitle,
-  size = "lg",
+  size = "lg", 
 }: Props) => {
+  const sizeClass = sizeClasses[size];
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className={`${sizeClasses[size]} w-full overflow-y-auto max-h-screen hide-scrollbar`}
+        className={`${sizeClass} w-full max-h-[90vh] overflow-y-auto hide-scrollbar`}
       >
         <DialogHeader>
           <DialogTitle className="mb-6">{dialogTitle}</DialogTitle>

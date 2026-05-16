@@ -3,7 +3,7 @@ import { useNews } from "../../services/useSetting";
 import NewsCard from "./NewsCard";
 import { Card } from "@/components/ui/card";
 import ListPagination from "@/components/list/ListPagination";
-import CustomDialog from "@/components/modal";
+import CustomDialog from "@/components/modal/CustomDialog";
 import NewsForm from "./NewsForm";
 import { nullable } from "zod";
 

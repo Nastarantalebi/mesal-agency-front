@@ -3,7 +3,7 @@ import { CustomDataTable } from "@/components/list/CustomDataTable";
 import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
-import CustomDialog from "@/components/modal";
+import CustomDialog from "@/components/modal/CustomDialog";
 import type { TtourItems } from "../types/types";
 import useTour from "../services/useTour";
 import CustomLoader from "@/components/loading/CustomLoader";

@@ -7,7 +7,7 @@ import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete"
 import { AccommodationListColumns } from "../fixtures/AccommodationListColumns";
 import { useAccommodation } from "../services/useAccommodation";
 import type { AccommodationItem } from "../types";
-import CustomDialog from "@/components/modal";
+import CustomDialog from "@/components/modal/CustomDialog";
 import AccommodationForm from "./AccommodationForm";
 
 const AccommodationList = () => {
