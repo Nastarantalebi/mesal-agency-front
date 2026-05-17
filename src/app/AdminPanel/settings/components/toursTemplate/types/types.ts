@@ -7,6 +7,15 @@ export type TtourItems = {
   vehicle_type: {label:string, value:string};
   difficulty:{label:string, value:string};
   country: string;
+  short_description:string;
+  destination: string;
+  age_requirement: number;
+  images: [{ id: 0,
+          image: string,
+          caption: string,
+          main: true,
+          order: number}]
+
 }
 
 // export type TCreateTour = {

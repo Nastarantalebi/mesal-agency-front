@@ -6,13 +6,13 @@ import {
 } from "../../fixtures/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormComponent from "@/components/form/FormComponent";
-import { useNews } from "../../services/useSetting";
 import {
   miladiToShamsi,
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
 import { useEffect } from "react";
 import NewsFields from "../../fixtures/NewsFields";
+import { useNews } from "../../services/useSetting";
 
 interface Props {
   newsId?: number;
@@ -21,7 +21,6 @@ interface Props {
 const NewsForm = ({ newsId }: Props) => {
   const isEdit = !!newsId;
   const { postNews, getNewsById, patchNews } = useNews({ id: newsId });
-  // console.log("image", getNewsById.data?.image)
   const newsFields = NewsFields(getNewsById.data?.image);
 
   console.log("getNewsById", getNewsById.data);

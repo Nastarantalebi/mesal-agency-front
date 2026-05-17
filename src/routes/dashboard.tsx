@@ -2,6 +2,7 @@ import AccommodationList from "@/app/AdminPanel/Accommodation/components/Accommo
 import Header from "@/app/AdminPanel/AdminFeatures/AdminHeader";
 import AccommodationSettings from "@/app/AdminPanel/settings/components/setting/AccommodationSettings";
 import TourList from "@/app/AdminPanel/settings/components/toursTemplate/components/TourList";
+import TourSteps from "@/app/AdminPanel/tours/components/TourSteps";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -17,7 +18,7 @@ function RouteComponent() {
     },
     {
       title: "لیست تورها",
-      component: <TourList />,
+      component: <TourSteps />,
     },
     {
       title: "تنظیمات",

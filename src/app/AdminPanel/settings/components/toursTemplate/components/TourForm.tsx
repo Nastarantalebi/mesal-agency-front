@@ -13,7 +13,7 @@ import {
   type TCreateTour,
 } from "../fixtures/validation";
 import FormComponent from "@/components/form/FormComponent";
-import useTour from "../services/useTour";
+import useTour from "../services/useTourTemplate";
 import useTourFields from "../hooks/useTourFields";
 import CustomLoader from "@/components/loading/CustomLoader";
 

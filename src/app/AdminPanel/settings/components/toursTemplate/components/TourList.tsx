@@ -4,7 +4,7 @@ import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import CustomDialog from "@/components/modal/CustomDialog";
 import type { TtourItems } from "../types/types";
-import useTour from "../services/useTour";
+import useTour from "../services/useTourTemplate";
 import CustomLoader from "@/components/loading/CustomLoader";
 import { tourListColumns } from "../fixtures/tourListColumns";
 import TourForm from "./TourForm";

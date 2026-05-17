@@ -1,8 +1,8 @@
 import type { TPaginatedResponse } from "@/types";
-import type { TResponseNews } from "../toursTemplate/types";
 import { Badge } from "@/components/ui/badge";
 import ListEdit from "@/components/list/ListEdit";
 import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/ListDelete";
+import type { TResponseNews } from "../../types";
 
 interface Props {
   news: TPaginatedResponse<TResponseNews>;
