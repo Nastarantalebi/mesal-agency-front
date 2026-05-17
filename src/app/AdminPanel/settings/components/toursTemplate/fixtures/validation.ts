@@ -23,41 +23,7 @@ export const tourValidation = z
     meta_description: z.string().max(500).optional(),
     average_rating: z.number().min(0).max(5).optional(),
     total_reviews: z.number().int().min(0).optional(),
-
-    //---------------------------------------------------------------------
-    // featured_image: z.file().nullable(),
-    // price: z.number().min(0, "قیمت نمی‌تواند منفی باشد"),
-    // original_price: z.number().min(0).optional().nullable(),
-    // duration_days: z
-    //   .number()
-    //   .int("تعداد روزها باید عدد صحیح باشد")
-    //   .min(1, "تعداد روزها باید حداقل ۱ باشد"),
-    // duration_nights: z
-    //   .number()
-    //   .int("تعداد شب‌ها باید عدد صحیح باشد")
-    //   .min(0, "تعداد شب‌ها نمی‌تواند منفی باشد"),
-    // start: z.string().min(1, "فیلد الزامی است."),
-    // end: z.string().min(1, "فیلد الزامی است."),
-    // meeting_point: z.string().min(3, "محل ملاقات الزامی است"),
-    // meeting_point_latitude: z
-    //   .number()
-    //   .min(-90)
-    //   .max(90)
-    //   .optional().nullable(),
-
-    // meeting_point_longitude: z
-    //   .number()
-    //   .min(-180)
-    //   .max(180)
-    //   .optional().nullable(),
-    // max_participants: z
-    //   .number()
-    //   .int()
-    //   .min(1, "حداکثر شرکت‌کننده باید حداقل ۱ باشد"),
-    // min_participants: z.number().int().min(1).optional(),
-    // included: z.string().optional(),
-    // excluded: z.string().optional(),
-    // status: z.enum(["draft", "active", "archived"]).optional().nullable(),
+   
   })
   // .refine((data) => new Date(data.end) > new Date(data.start), {
   //   message: "تاریخ پایان باید بعد از تاریخ شروع باشد",

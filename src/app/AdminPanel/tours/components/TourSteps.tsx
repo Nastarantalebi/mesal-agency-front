@@ -1,7 +1,7 @@
 import { useState } from "react";
 import StepIndicator from "./StepIndicator";
 import TourTemplatesList from "./TourTemplatesList";
-import AdditionalTourInfoForm from "./AdditionalTourInfoForm";
+import TourDepartureForm from "./TourDepartureForm";
 import TourPlans from "./TourPlans";
 
 const TourSteps = () => {
@@ -21,11 +21,11 @@ const TourSteps = () => {
       />
 
       {currentStep === 0 ? (
-        <TourTemplatesList/>
+        <TourTemplatesList />
       ) : currentStep === 1 ? (
-        <AdditionalTourInfoForm/>
+        <TourDepartureForm />
       ) : currentStep === 2 ? (
-        <TourPlans/>
+        <TourPlans />
       ) : null}
     </div>
   );
