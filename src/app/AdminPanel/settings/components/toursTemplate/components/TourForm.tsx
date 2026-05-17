@@ -1,5 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { useForm } from "react-hook-form";
 import {
   tourInitialValues,
@@ -18,10 +24,12 @@ const TourForm = ({
 }: {
   tourId?: number;
   buttonText?: string;
-    setOpenModal?: Dispatch<SetStateAction<boolean>>
+  setOpenModal?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const isEdit = !!tourId;
   const { postTours, getTourById, putTour } = useTour({ tourId });
+
+  console.log("getTourById", getTourById.data);
 
   const form = useForm<TCreateTour>({
     resolver: zodResolver(tourValidation),
@@ -33,9 +41,33 @@ const TourForm = ({
   const { fields } = useTourFields();
   const [errorOpen, setErrorOpen] = useState(false);
 
-  // useEffect(() => {
-  //   isEdit && form.reset(getTourById.data);
-  // }, [getTourById.data]);
+  const formData = useMemo(() => {
+    if (!getTourById.data) return undefined;
+
+    return {
+      title: getTourById.data.title,
+      category: getTourById.data.category.value,
+      short_description: getTourById.data.short_description,
+      description: getTourById.data.description,
+      transportation_included: getTourById.data.transportation_included,
+      vehicle_type: getTourById.data.vehicle_type.value,
+      vehicle_details: getTourById.data.vehicle_details,
+      destination: getTourById.data.destination,
+      country: getTourById.data.country,
+      difficulty: getTourById.data.difficulty.value,
+      age_requirement: getTourById.data.age_requirement,
+      highlights: getTourById.data.highlights,
+      is_featured: getTourById.data.is_featured,
+      meta_title: getTourById.data.meta_title,
+      meta_description: getTourById.data.meta_description,
+    };
+  }, [getTourById.data]);
+
+  useEffect(() => {
+    if (isEdit && getTourById.data) {
+      form.reset(formData);
+    }
+  }, [getTourById.data]);
 
   const handleSubmit = (values: TCreateTour) => {
     if (isEdit) {
@@ -49,7 +81,7 @@ const TourForm = ({
       postTours.mutateAsync(values, {
         onSuccess: () => {
           form.reset(tourInitialValues);
-          setOpenModal?.(false)
+          setOpenModal?.(false);
         },
         onError: () => setErrorOpen(true),
       });

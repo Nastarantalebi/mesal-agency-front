@@ -4,25 +4,18 @@ import { z } from "zod";
 export const tourValidation = z
   .object({
     title: z.string().min(3, "عنوان تور باید حداقل ۳ کاراکتر باشد"),
-    category: z.enum(["incountry", "foreign"], {
-      message: "دسته‌بندی تور نامعتبر است",
-    }),
+    category: z.string(),
     description: z.string().min(10, "توضیحات تور باید حداقل ۱۰ کاراکتر باشد"),
     short_description: z
       .string()
       .min(5, "توضیح کوتاه باید حداقل ۵ کاراکتر باشد")
       .max(300, "توضیح کوتاه نباید بیشتر از ۳۰۰ کاراکتر باشد"),
-    vehicle_type: z
-      .enum(["bus", "minibus", "van", "train", "flight", "walking", "car", "boat", "bicycle", "mixed"])
-      .nullable()
-      .optional(),
+    vehicle_type: z.string().optional().nullable(),
     vehicle_details: z.string().optional().nullable(),
     transportation_included: z.boolean().optional().nullable(),
     destination: z.string().min(1, "این فیلد الزامی است."),
     country: z.string().optional().nullable(),
-    difficulty: z.enum(["easy", "moderate", "challenging", "difficult"], {
-      message: "درجه سختی تور نامعتبر است",
-    }),
+    difficulty: z.string().optional().nullable(),
     age_requirement: z.number().int().min(0),
     highlights: z.string().optional(),
     is_featured: z.boolean().optional().nullable(),
@@ -85,7 +78,7 @@ export type TCreateTour = z.infer<typeof tourValidation>;
 
 export const tourInitialValues: TCreateTour = {
   title: "",
-  category: "incountry",
+  category: "",
   description: "",
   short_description: "",
   vehicle_type: null, 

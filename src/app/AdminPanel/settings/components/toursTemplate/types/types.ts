@@ -53,7 +53,7 @@ export type TtourResponse = {
     category: TOption,
     description: string,
     short_description: string,
-    vehicle_type: string,
+    vehicle_type: TOption,
     vehicle_details: string,
     transportation_included: boolean,
     destination: string
