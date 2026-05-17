@@ -1,5 +1,5 @@
 import z from "zod"
-import type { createUsersList, TCFeature, TCreateBed, TCreateDefaults } from "../types"
+import type { createUsersList, TCFeature, TCreateBed, TCreateDefaults } from "../components/toursTemplate/types"
 
 
 export const bedValidation = z.object({

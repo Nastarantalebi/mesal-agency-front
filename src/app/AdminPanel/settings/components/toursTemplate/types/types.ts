@@ -1,7 +1,12 @@
+import type { TOption } from "@/types";
+
 export type TtourItems = {
-    id: number;
+  id: number;
   title: string;
-  category: {label:string, value:string};description: string;vehicle_type: {label:string, value:string};duration_days: number;difficulty:{label:string, value:string};
+  category: {label:string, value:string};
+  vehicle_type: {label:string, value:string};
+  difficulty:{label:string, value:string};
+  country: string;
 }
 
 // export type TCreateTour = {
@@ -44,14 +49,23 @@ export type TtourItems = {
 export type TtourResponse = {
     id: number,
     title: string,
-    category: string,
+    slug: string
+    category: TOption,
+    description: string,
+    short_description: string,
     vehicle_type: string,
-    start: string,
-    end: string,
+    vehicle_details: string,
+    transportation_included: boolean,
+    destination: string
     country: string,
-    meeting_point: string,
-    max_participants: 2147483647,
-    price: string,
-    status: string,
-    created_at: string
+    difficulty: TOption,
+    age_requirement: number,
+    highlights: string,
+    is_featured: boolean,
+    meta_title: string,
+    meta_description: string,
+    average_rating: string,
+    total_reviews: string,
+    created_at: string,
+    updated_at: string,
 }

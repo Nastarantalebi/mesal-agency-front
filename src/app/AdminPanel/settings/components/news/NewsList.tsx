@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useNews } from "../../services/useSetting";
 import NewsCard from "./NewsCard";
 import { Card } from "@/components/ui/card";
 import ListPagination from "@/components/list/ListPagination";
 import CustomDialog from "@/components/modal/CustomDialog";
 import NewsForm from "./NewsForm";
+import { useNews } from "../../services/useSetting";
 
 const NewsList = () => {
   const [currentPage, setCurrentPage] = useState(1);

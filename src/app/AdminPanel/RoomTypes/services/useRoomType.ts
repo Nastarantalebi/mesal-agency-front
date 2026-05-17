@@ -5,7 +5,7 @@ import type { TPaginatedResponse } from "@/types";
 import type { RoomItem, TCreateRoomType, TCRoomTypeBed, TCRoomTypeFeature, TCRoomTypePrices, TCRoomTypesRoom, TRoomTypeBedResponse, TRoomTypeFeatureResponse, TRoomTypeImageResponse, TRoomTypePricesResponse, TRoomTypeResponse, TRoomTypeRoomResponse } from "../types";
 import usePutData from "@/services/usePutData";
 import usePostData from "@/services/usePostData";
-import type { TBedResponse, TFeatureResponse } from "../../settings/types";
+import type { TBedResponse, TFeatureResponse } from "../../settings/components/toursTemplate/types";
 
 export const useRoomType = (AccommodationId: number | undefined, RoomTypeId: number) => {
 

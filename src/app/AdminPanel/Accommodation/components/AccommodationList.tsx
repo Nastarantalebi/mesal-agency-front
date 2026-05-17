@@ -89,6 +89,7 @@ const AccommodationList = () => {
         dialogTitle="افزودن اقامتگاه جدید"
         onOpenChange={() => setOpenAdd(false)}
         open={openAdd}
+        size="xxl"
       />
 
       <FormErrorModal

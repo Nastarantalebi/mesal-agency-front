@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import {
   tourInitialValues,
@@ -10,23 +10,17 @@ import FormComponent from "@/components/form/FormComponent";
 import useTour from "../services/useTour";
 import useTourFields from "../hooks/useTourFields";
 import CustomLoader from "@/components/loading/CustomLoader";
-import { shamsiToMiladi } from "@/components/form/DateConverter";
 
 const TourForm = ({
   tourId,
   buttonText = tourId ? "ویرایش" : "افزودن",
+  setOpenModal,
 }: {
   tourId?: number;
   buttonText?: string;
+    setOpenModal?: Dispatch<SetStateAction<boolean>>
 }) => {
   const isEdit = !!tourId;
-  //   const { getAccommodation, postAccommodation, putAccommodation } =
-  //     useAccommodation(AccommodationId!);
-  //   const { accommodationValidation, accommodationInitialValues } =
-  //     useValidation();
-
-  //   const { postTours, getTourById } = useTour({});
-
   const { postTours, getTourById, putTour } = useTour({ tourId });
 
   const form = useForm<TCreateTour>({
@@ -39,35 +33,23 @@ const TourForm = ({
   const { fields } = useTourFields();
   const [errorOpen, setErrorOpen] = useState(false);
 
+  // useEffect(() => {
+  //   isEdit && form.reset(getTourById.data);
+  // }, [getTourById.data]);
+
   const handleSubmit = (values: TCreateTour) => {
-    const data = {
-      ...tourInitialValues,
-      ...values,
-      start: shamsiToMiladi(values.start),
-      end: shamsiToMiladi(values.end),
-    };
-
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) => {
-      if (key === "included" || key === "excluded" || key === "highlights") {
-        formData.append(key, JSON.stringify(value || []));
-      } else if (value !== undefined && value !== null) {
-        formData.append(key, value as any);
-      }
-    });
-
     if (isEdit) {
       putTour.mutateAsync(
-        { data: formData, id: tourId },
+        { data: values, id: tourId },
         {
           onError: () => setErrorOpen(true),
         },
       );
     } else {
-      postTours.mutateAsync(formData, {
+      postTours.mutateAsync(values, {
         onSuccess: () => {
           form.reset(tourInitialValues);
+          setOpenModal?.(false)
         },
         onError: () => setErrorOpen(true),
       });

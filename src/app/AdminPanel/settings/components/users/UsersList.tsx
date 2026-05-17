@@ -13,7 +13,7 @@ import {
   usersFilterInitialValues,
   usersFilterValidation,
 } from "../../fixtures/validation";
-import type { createUsersList } from "../../types";
+import type { createUsersList } from "../toursTemplate/types";
 import ReloadList from "@/components/list/ReloadList";
 
 const usersList = () => {
@@ -24,7 +24,6 @@ const usersList = () => {
   const { getUsers } = useUsers(filters, currentPage);
   // const [filters, setFilters] = useState<createUsersList>(usersFilterInitialValues);
   const [search, setSearch] = useState("");
-
 
   const PageCount = getUsers.data?.count
     ? Math.ceil(getUsers.data.count / 10)

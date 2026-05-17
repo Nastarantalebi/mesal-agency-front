@@ -15,19 +15,19 @@ export const tourListColumns: ColumnDef<TtourItems>[] = [
     accessorFn: (row) => row.category.label ?? "",
   },
   {
-    id: "description",
-    header: "توضیحات",
-    accessorFn: (row) => row.description ?? "",
-  },
-  {
-    id: "duration_days",
-    header: "تعداد روزها",
-    accessorFn: (row) => row.duration_days ?? "",
-  },
-  {
     id: "vehicle_type",
     header: "نوع وسیله نقلیه",
-    accessorFn: (row) => row.vehicle_type.label ?? "",
+    accessorFn: (row) => row.vehicle_type?.label ?? "",
+  },
+  {
+    id: "country",
+    header: "کشور",
+    accessorFn: (row) => row.country ?? "",
+  },
+  {
+    id: "difficulty",
+    header: "سطح برنامه",
+    accessorFn: (row) => row.difficulty.label ?? "",
   },
 
 //   {

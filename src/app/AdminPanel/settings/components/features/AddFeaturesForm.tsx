@@ -10,7 +10,7 @@ import {
   FeaturesValidation,
 } from "../../fixtures/validation";
 import { useFeatures } from "../../services/useSetting";
-import type { TCFeature } from "../../types";
+import type { TCFeature } from "../toursTemplate/types";
 import formTypes from "@/components/form/FormInputTypes";
 import {
   Dialog,

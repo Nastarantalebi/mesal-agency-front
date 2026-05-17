@@ -6,14 +6,15 @@ import CustomButton from "@/components/form/CustomButton";
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { useEffect, useState } from "react";
 import { useDefaults } from "../../services/useSetting";
-import type { TCreateDefaults } from "../../types";
-import { DefaultsInitialValues, DefaultsValidation } from "../../fixtures/validation";
+import type { TCreateDefaults } from "../toursTemplate/types";
+import {
+  DefaultsInitialValues,
+  DefaultsValidation,
+} from "../../fixtures/validation";
 import { DefaultFields } from "../../fixtures/DefaultFields";
 
-
 const DefaultsForm = () => {
-  
-  const { getDefaults , postDefaults } = useDefaults();
+  const { getDefaults, postDefaults } = useDefaults();
 
   const form = useForm<TCreateDefaults>({
     resolver: zodResolver(DefaultsValidation),
@@ -21,9 +22,9 @@ const DefaultsForm = () => {
   });
 
   useEffect(() => {
-    if(!getDefaults.data) return;
-    form.reset(getDefaults.data)
-  }, [getDefaults.data])
+    if (!getDefaults.data) return;
+    form.reset(getDefaults.data);
+  }, [getDefaults.data]);
 
   const [errorOpen, setErrorOpen] = useState(false);
   const errmessage = "ثبت فرم با خطا مواجه شد";

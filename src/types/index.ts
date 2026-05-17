@@ -5,6 +5,12 @@ export type TPaginatedResponse<T> = {
     results : T[]
 }
 
+export type TOption = {
+    label: string,
+    value: string,
+    children?: TOption[]
+}
+
 // export type TColumns = {
 //   label: string;
 //   sortable: boolean;

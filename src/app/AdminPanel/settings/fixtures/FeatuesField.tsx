@@ -13,22 +13,21 @@ export const FeaturesFields: Items<TCFeature>[] = [
     isRequired: true,
     fieldType: "input",
     inputType: "text",
-    className:"col-span-2"
+    className: "col-span-2",
   },
   {
     name: "type",
     label: "نوع ویژگی",
     isRequired: false,
     fieldType: "dropdown",
-    className:"col-span-2",
-    items:typeOptions
+    className: "col-span-2",
+    items: typeOptions,
   },
   {
     name: "show_in_home_page",
     label: "نمایش در صفحه اصلی؟",
     isRequired: false,
     fieldType: "checkBox",
-    className: "my-2"
+    className: "my-2",
   },
-
 ];

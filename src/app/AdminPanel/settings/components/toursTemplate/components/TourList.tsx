@@ -2,19 +2,19 @@ import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
 import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
-import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
 import CustomDialog from "@/components/modal/CustomDialog";
 import type { TtourItems } from "../types/types";
 import useTour from "../services/useTour";
 import CustomLoader from "@/components/loading/CustomLoader";
 import { tourListColumns } from "../fixtures/tourListColumns";
 import TourForm from "./TourForm";
+import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/ListDelete";
 
 const TourList = () => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
   const [selected, setSelected] = useState<TtourItems | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
-  const [openAdd, setOpenAdd] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const [search, setSearch] = useState("");
 
@@ -53,8 +53,12 @@ const TourList = () => {
               setSearch(value);
             }}
             searchPlaceHolder="جست و جوی نام تور"
-            customAddText="افزودن تور جدید"
-            onAdd={() => setOpenAdd(true)}
+            customAddText="افزودن تمپلیت تور"
+            onAdd={() => setOpenModal(true)}
+            onEdit={(data) => {
+              setOpenModal(true);
+              setSelected(data);
+            }}
             // onRowClick={(rowData) => {
             //   navigate({
             //     to: "/accommodation/$id",
@@ -87,10 +91,16 @@ const TourList = () => {
       </div>
 
       <CustomDialog
-        dialogContent={<TourForm />}
+        dialogContent={
+          selected ? <TourForm tourId={selected.id} /> : <TourForm />
+        }
         dialogTitle="افزودن اقامتگاه جدید"
-        onOpenChange={() => setOpenAdd(false)}
-        open={openAdd}
+        onOpenChange={() => {
+          setOpenModal(false);
+          setSelected(null);
+        }}
+        open={openModal}
+        size="xxl"
       />
 
       <FormErrorModal

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { BedFields } from "../../fixtures/BedsField";
 import { bedInitialValues, bedValidation } from "../../fixtures/validation";
 import { useBeds } from "../../services/useSetting";
-import type { TCreateBed } from "../../types";
+import type { TCreateBed } from "../toursTemplate/types";
 import {
   Dialog,
   DialogContent,
@@ -36,7 +36,6 @@ const AddBedsForm = ({
   onCloseModal,
   buttonTitle,
 }: Props) => {
-  
   const form = useForm<TCreateBed>({
     resolver: zodResolver(bedValidation),
     defaultValues: bedInitialValues,
