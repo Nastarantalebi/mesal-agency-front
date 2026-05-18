@@ -1,4 +1,4 @@
-import z, { string } from "zod";
+import z from "zod";
 
 export const  additionaTourInfoValidation = z.object({
     start: z.string().min(1, "فیلد الزامی است."),

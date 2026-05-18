@@ -6,13 +6,11 @@ import type { Dispatch, SetStateAction } from "react";
 type StepIndicatorProps = {
   steps: { label: string }[];
   currentStep: number;
-  setCurrentStep: Dispatch<SetStateAction<number>>;
 };
 
 const StepIndicator = ({
   steps,
   currentStep,
-  setCurrentStep,
 }: StepIndicatorProps) => {
   return (
     <div className="flex items-center justify-center gap-2 mb-6" dir="rtl">
@@ -23,7 +21,7 @@ const StepIndicator = ({
           <div key={i} className="flex items-center">
             <div className="flex flex-col items-center gap-1">
               <div
-                onClick={() => setCurrentStep(i)}
+                // onClick={() => setCurrentStep(i)}
                 className={cn(
                   "w-15 h-15 rounded-full flex items-center justify-center text-xs xl:text-sm font-medium transition-all duration-250",
                   "border-2 cursor-pointer hover:scale-110",
