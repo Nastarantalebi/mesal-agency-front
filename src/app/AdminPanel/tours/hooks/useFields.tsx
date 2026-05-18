@@ -36,14 +36,14 @@ const useFields = () => {
       name: "original_price",
       label: "قیمت قبل از تخفیف",
       fieldType: "input",
-      inputType: "text",
+      inputType: "number",
     },
     {
       name: "price",
       label: "قیمت اصلی",
       isRequired: true,
       fieldType: "input",
-      inputType: "text",
+      inputType: "number",
     },
     {
       name: "max_participants",

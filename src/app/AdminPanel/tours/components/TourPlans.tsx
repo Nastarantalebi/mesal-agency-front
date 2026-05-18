@@ -12,7 +12,15 @@ import {
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
 import FormBody from "@/components/form/FormBody";
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import useTour from "../services/useTour";
 
 interface Props {
@@ -20,6 +28,7 @@ interface Props {
   tourTemplateId?: number | null;
   planId?: number;
   onSubmitSuccess?: () => void;
+  setCurrentStep?: Dispatch<SetStateAction<number>>;
 }
 
 export interface DeparturePlanFormRef {
@@ -39,7 +48,10 @@ function getDateRange(start: string, end: string) {
 }
 
 const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
-  ({ departureData, planId, tourTemplateId, onSubmitSuccess }, ref) => {
+  (
+    { departureData, planId, tourTemplateId, onSubmitSuccess, setCurrentStep },
+    ref,
+  ) => {
     const isEdit = !!planId;
     const departureId = departureData?.id;
 
@@ -77,7 +89,12 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
       isEdit
         ? putDeparturePlan.mutateAsync(
             { data: payload.plans, id: planId },
-            { onSuccess: () => onSubmitSuccess?.() }
+            {
+              onSuccess: () => {
+                onSubmitSuccess?.();
+                setCurrentStep?.(0);
+              },
+            },
           )
         : postDeparturePlans.mutateAsync(payload.plans, {
             onError: () => setErrorOpen(true),
@@ -104,6 +121,7 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
           handleSubmit={handleSubmit}
           errorOpen={errorOpen}
           setErrorOpen={setErrorOpen}
+          showButton={false}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 col-span-full">
             {dates.map((item, index) => (
@@ -111,7 +129,12 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
                 key={index}
                 className="border rounded-xl p-4 shadow-sm bg-white"
               >
-                <h1 className="mb-5 text-blue-500">تاریخ: {item}</h1>
+                {dates.length !== 0 ? (
+                  <h1 className="mb-5 text-blue-500">تاریخ: {item}</h1>
+                ) : (
+                  <></>
+                )}
+
                 <div className="grid grid-cols-3">
                   <FormBody
                     fields={getPlansFields(index)}
@@ -124,7 +147,7 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
         </FormComponent>
       )
     );
-  }
+  },
 );
 
 TourPlans.displayName = "TourPlans";

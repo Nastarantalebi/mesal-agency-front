@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
-import type { Dispatch, SetStateAction } from "react";
 
 // --- Step Indicator ---
 type StepIndicatorProps = {

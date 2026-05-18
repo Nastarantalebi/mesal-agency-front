@@ -58,6 +58,8 @@ const TourDepartureForm = forwardRef<TourDepartureFormRef, TourDepartureFormProp
       defaultValues: additionalTourInfoInitialValues,
     });
 
+    console.log(form.watch())
+
     useEffect(() => {
       if (isEdit) {
         const transformedData = {

@@ -7,24 +7,29 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import TourDepartureForm from "./TourDepartureForm";
 
-
 const TourSteps = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [errorForm1, setErrorForm1] = useState(false);
   const [departureData, setDepartureData] = useState<
     TResponseTourDeparture | undefined
   >();
   const formRef1 = useRef<{ submitForm: () => void }>(null);
-  const formref2 = useRef<{ submitForm: () => void }>(null)
+  const formref2 = useRef<{ submitForm: () => void }>(null);
 
   const handleNext = () => {
+    if (currentStep === 0) {
+      if (selectedId !== null) {
+        setCurrentStep(currentStep + 1);
+      } else {
+        setErrorForm1(true);
+      }
+    }
     if (currentStep === 1) {
       formRef1.current?.submitForm();
     }
-    if(currentStep === 2){
+    if (currentStep === 2) {
       formref2.current?.submitForm();
-    } else {
-      setCurrentStep(currentStep + 1);
     }
   };
 
@@ -51,14 +56,20 @@ const TourSteps = () => {
           variant={"outline"}
           onClick={handleNext}
           type="button"
-          disabled={currentStep === 2}
         >
           بعدی <ChevronLeft />
         </Button>
       </div>
 
       {currentStep === 0 ? (
-        <TourTemplatesList setSelectedId={setSelectedId} />
+        <>
+          {errorForm1 && (
+            <div className="bg-red-100 rounded-2xl border border-red-400 text-red-400 p-3 mb-4">
+              یک تمپلیت فرم را انتخاب کنید!
+            </div>
+          )}
+          <TourTemplatesList setSelectedId={setSelectedId} />
+        </>
       ) : currentStep === 1 ? (
         <TourDepartureForm
           ref={formRef1}
@@ -67,7 +78,12 @@ const TourSteps = () => {
           onSubmitSuccess={() => setCurrentStep(2)}
         />
       ) : currentStep === 2 ? (
-        <TourPlans ref={formref2} tourTemplateId={selectedId} departureData={departureData} />
+        <TourPlans
+          ref={formref2}
+          tourTemplateId={selectedId}
+          departureData={departureData}
+          setCurrentStep={setCurrentStep}
+        />
       ) : null}
     </div>
   );
