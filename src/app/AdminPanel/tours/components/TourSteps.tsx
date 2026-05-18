@@ -3,9 +3,13 @@ import StepIndicator from "./StepIndicator";
 import TourTemplatesList from "./TourTemplatesList";
 import TourDepartureForm from "./TourDepartureForm";
 import TourPlans from "./TourPlans";
+import type { TResponseTourDeparture } from "../fixtures/validation";
 
 const TourSteps = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [departureData, setDepartureData] = useState<TResponseTourDeparture | undefined>();
+
   const STEPS = [
     { label: "انتخاب تمپلیت تور" },
     { label: "اطلاعات تکمیلی تور" },
@@ -21,11 +25,14 @@ const TourSteps = () => {
       />
 
       {currentStep === 0 ? (
-        <TourTemplatesList />
+        <TourTemplatesList setSelectedId={setSelectedId} />
       ) : currentStep === 1 ? (
-        <TourDepartureForm />
+        <TourDepartureForm
+          tourTemplateId={selectedId}
+          setDepartureData={setDepartureData}
+        />
       ) : currentStep === 2 ? (
-        <TourPlans />
+        <TourPlans tourTemplateId={selectedId} departureData={departureData} />
       ) : null}
     </div>
   );

@@ -3,12 +3,13 @@ import {
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import {
   additionalTourInfoInitialValues,
   additionaTourInfoValidation,
-  type TCreateAdditionalTour,
+  type TCreateTourDeparture,
+  type TResponseTourDeparture,
 } from "../fixtures/validation";
 import useTour from "../services/useTour";
 import useFields from "../hooks/useFields";
@@ -18,10 +19,12 @@ const TourDepartureForm = ({
   departureId,
   buttonText = departureId ? "ویرایش" : "افزودن",
   tourTemplateId,
+  setDepartureData,
 }: {
   departureId?: number;
   buttonText?: string;
-  tourTemplateId: number;
+  tourTemplateId: number | null;
+  setDepartureData: Dispatch<SetStateAction<TResponseTourDeparture | undefined>>;
 }) => {
   const isEdit = !!departureId;
 
@@ -29,9 +32,9 @@ const TourDepartureForm = ({
     { tourTemplateId },
   );
   const [errorOpen, setErrorOpen] = useState(false);
-  const fields = useFields();
+  const {fields} = useFields();
 
-  const form = useForm<TCreateAdditionalTour>({
+  const form = useForm<TCreateTourDeparture>({
     resolver: zodResolver(additionaTourInfoValidation),
     defaultValues: additionalTourInfoInitialValues,
   });
@@ -47,7 +50,7 @@ const TourDepartureForm = ({
     }
   }, [getTourDepartureById.data]);
 
-  const handleSubmit = (value: TCreateAdditionalTour) => {
+  const handleSubmit = (value: TCreateTourDeparture) => {
     const transformedData = {
       ...additionalTourInfoInitialValues,
       ...value,
@@ -63,9 +66,9 @@ const TourDepartureForm = ({
         },
       );
     } else {
-      postTourDeparture.mutateAsync(transformedData, {
-        onSuccess: () => {
-          form.reset(additionalTourInfoInitialValues);
+      postTourDeparture(transformedData, {
+        onSuccess: (data) => {
+          setDepartureData(data);
         },
         onError: () => setErrorOpen(true),
       });

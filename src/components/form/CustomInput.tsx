@@ -3,7 +3,7 @@ import { Label } from "../ui/label";
 import { Controller, type FieldValues } from "react-hook-form";
 import type { Props } from "./PropsType";
 
-export type InputType = "text" | "number" | "email" | "password" | "tel";
+export type InputType = "text" | "number" | "email" | "password" | "tel" | "textArea";
 
 const CustomInput = <T extends FieldValues>({
   name,

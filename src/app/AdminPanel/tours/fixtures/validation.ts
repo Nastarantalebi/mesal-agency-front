@@ -1,4 +1,4 @@
-import z from "zod";
+import z, { string } from "zod";
 
 export const  additionaTourInfoValidation = z.object({
     start: z.string().min(1, "فیلد الزامی است."),
@@ -11,8 +11,8 @@ export const  additionaTourInfoValidation = z.object({
         .number()
         .int("تعداد شب‌ها باید عدد صحیح باشد")
         .min(0, "تعداد شب‌ها نمی‌تواند منفی باشد"),
-        price: z.number().min(0, "قیمت نمی‌تواند منفی باشد"),
-        original_price: z.number().min(0).optional().nullable(),
+        price: z.string().min(0, "قیمت نمی‌تواند منفی باشد"),
+        original_price: z.string().min(0).optional().nullable(),
         max_participants: z
           .number()
           .int()
@@ -24,15 +24,15 @@ export const  additionaTourInfoValidation = z.object({
         is_featured: z.boolean()
 })
 
-export type TCreateAdditionalTour = z.infer<typeof additionaTourInfoValidation>;
-export type TResponseAdditionalTour = TCreateAdditionalTour & {id: number}
+export type TCreateTourDeparture = z.infer<typeof additionaTourInfoValidation>;
+export type TResponseTourDeparture = TCreateTourDeparture & {id: number}
 
-export const additionalTourInfoInitialValues: TCreateAdditionalTour = {
+export const additionalTourInfoInitialValues: TCreateTourDeparture = {
     start: "",
     end: "",
     duration_days: 1,
     duration_nights: 0,
-    price: 0,
+    price: "",
     original_price: null,
     max_participants: 1,
     min_participants: 1,
@@ -41,3 +41,18 @@ export const additionalTourInfoInitialValues: TCreateAdditionalTour = {
     status: null,
     is_featured: false,
 }
+export const departurePlansValidation = z.object({
+  plans: z.array(
+    z.object({
+      date: z.string(),
+      breakfast: z.boolean(),
+      dinner: z.boolean(),
+      lunch: z.boolean(),
+      description: z.string().min(1, "فیلد توضیحات نمیتواند خالی باشد."),
+    })
+  ),
+});
+
+
+export type TCreateDeparturePlan = z.infer<typeof departurePlansValidation>;
+

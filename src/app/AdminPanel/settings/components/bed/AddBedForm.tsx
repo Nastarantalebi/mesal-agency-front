@@ -9,13 +9,13 @@ import { useEffect, useState } from "react";
 import { BedFields } from "../../fixtures/BedsField";
 import { bedInitialValues, bedValidation } from "../../fixtures/validation";
 import { useBeds } from "../../services/useSetting";
-import type { TCreateBed } from "../toursTemplate/types";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import type { TCreateBed } from "../../types";
 
 interface Props {
   asModal: boolean;

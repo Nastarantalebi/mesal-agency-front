@@ -1,8 +1,11 @@
 import type { Items } from "@/components/form/FormInputTypes";
-import type { TCreateAdditionalTour } from "../fixtures/validation";
+import type {
+  TCreateDeparturePlan,
+  TCreateTourDeparture,
+} from "../fixtures/validation";
 
 const useFields = () => {
-  const fields: Items<TCreateAdditionalTour>[] = [
+  const fields: Items<TCreateTourDeparture>[] = [
     {
       name: "start",
       label: "تاریخ شروع",
@@ -33,14 +36,14 @@ const useFields = () => {
       name: "original_price",
       label: "قیمت قبل از تخفیف",
       fieldType: "input",
-      inputType: "number",
+      inputType: "text",
     },
     {
       name: "price",
       label: "قیمت اصلی",
       isRequired: true,
       fieldType: "input",
-      inputType: "number",
+      inputType: "text",
     },
     {
       name: "max_participants",
@@ -86,7 +89,45 @@ const useFields = () => {
       fieldType: "yesNoInput",
     },
   ];
-  return fields;
+
+  const getPlansFields = (index: number): Items<TCreateDeparturePlan>[] => [
+    // {
+    //   name: `${index}.date`, // اشاره به فیلد صبحانه در آرایه
+    //   label: "تاریخ",
+    //   isRequired: true,
+    //   fieldType: "input",
+    //   className: "col-span-2"
+    // },
+    {
+      name: `plans.${index}.breakfast`, 
+      label: "صبحانه",
+      isRequired: true,
+      fieldType: "checkBox",
+
+    },
+    {
+      name: `plans.${index}.lunch`,
+      label: "ناهار",
+      isRequired: true,
+      fieldType: "checkBox",
+    },
+    {
+      name: `plans.${index}.dinner`,
+      label: "شام",
+      isRequired: true,
+      fieldType: "checkBox",
+    },
+    {
+      name: `plans.${index}.description`,
+      label: "توضیحات",
+      isRequired: true,
+      fieldType: "input",
+      inputType: "textArea",
+      className: "col-start-1 col-span-full"
+    },
+  ];
+
+  return { fields, getPlansFields };
 };
 
 export default useFields;
