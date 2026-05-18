@@ -30,7 +30,7 @@ const TourTemplateCard = ({ tour, onClick }: Props) => {
       </div>
 
       {/* Content Section */}
-      <div className="px-6 flex flex-col gap-4">
+      <div className="px-6 flex flex-col gap-2">
         {/* Title */}
         <h1 className="text-xl font-bold text-gray-900">{tour.title}</h1>
 

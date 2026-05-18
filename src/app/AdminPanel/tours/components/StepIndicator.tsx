@@ -25,7 +25,7 @@ const StepIndicator = ({
               <div
                 onClick={() => setCurrentStep(i)}
                 className={cn(
-                  "w-9 h-9 rounded-full flex items-center justify-center text-xs xl:text-sm font-medium transition-all duration-250",
+                  "w-15 h-15 rounded-full flex items-center justify-center text-xs xl:text-sm font-medium transition-all duration-250",
                   "border-2 cursor-pointer hover:scale-110",
                   isCompleted &&
                     "bg-primary border-primary text-primary-foreground",
