@@ -51,18 +51,6 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
   return (
     <>
       <div className="px-2 sm:px-0">
-        {/* <Button
-          variant={"outline"}
-          className="mb-5 border-green-600 text-green-600 hover:bg-green-50 hover:text-green-600 w-full sm:w-auto"
-          // ⭐ button full-width on mobile
-          onClick={() => {
-            setAddRoomType(true);
-          }}
-        >
-          <Plus />
-          افزودن نوع اتاق جدید
-        </Button> */}
-
         <div className="overflow-x-auto rounded-md mt-4">
           <CustomDataTable
           searchValue={search}

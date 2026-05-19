@@ -1,7 +1,7 @@
 import AccommodationFeatures from "@/app/AdminPanel/Accommodation/components/AccommodationFeatures";
 import AccommodationForm from "@/app/AdminPanel/Accommodation/components/AccommodationForm";
 import AccommodationPhotoes from "@/app/AdminPanel/Accommodation/components/AccommodationPhotoes";
-import PeakDate from "@/app/AdminPanel/peakDates/components/PeakDate";
+import AccommodatioPeakDate from "@/app/AdminPanel/Accommodation/components/AccommodationPeakDate";
 import RoomTypeList from "@/app/AdminPanel/RoomTypes/components/roomType/RoomTypeList";
 
 export const AccommodationTabsData = (id: number) => [
@@ -19,14 +19,14 @@ export const AccommodationTabsData = (id: number) => [
   },
   {
     title: "لیست نوع اتاق ها",
-    component: (
-      <RoomTypeList AccommodationId={id}/>
-    ),
+    component: <RoomTypeList AccommodationId={id} />,
   },
   {
     title: "تاریخ های پیک",
-    component: <PeakDate accommodationId={+id} />,
+    component: <AccommodatioPeakDate AccommodationId={+id} />,
   },
 ];
 
-{/* <RoomTypeForm AccommodationId={+id} buttonTitle="ثبت" asModal={false} /> */}
+{
+  /* <RoomTypeForm AccommodationId={+id} buttonTitle="ثبت" asModal={false} /> */
+}

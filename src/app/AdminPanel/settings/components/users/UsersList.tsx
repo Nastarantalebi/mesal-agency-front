@@ -15,7 +15,6 @@ import {
 } from "../../fixtures/validation";
 import ReloadList from "@/components/list/ReloadList";
 import type { createUsersList } from "../../types";
-import CustomDialog from "@/components/modal/CustomDialog";
 
 const UsersList = () => {
   const [filters, setFilters] = useState<createUsersList>();

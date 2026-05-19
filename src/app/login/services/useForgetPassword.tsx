@@ -13,7 +13,7 @@ function useForgotPassWord() {
     },
     onSuccess: async (data) => {
       toast.success(data.message);
-      navigate({to: "/dashboard"});
+      navigate({to: "/admin/dashboard"});
     },
     onError: (e) => {
       throw new Error(

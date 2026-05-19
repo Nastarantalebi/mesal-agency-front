@@ -1,8 +1,9 @@
 import type z from "zod";
 import type { accommodationFeatureListValidation } from "../fixtures/Validation";
+import type { DateObject } from "react-multi-date-picker";
 
 export interface Props {
-  AccommodationId: number;
+  AccommodationId?: number;
 }
 
 export type TCreateAccomodation = {
@@ -155,6 +156,21 @@ export type TFeatureResponse = {
 }
 
 export type TFeatureListForm = z.infer<typeof accommodationFeatureListValidation>;
+
+export type TCreatePeakDate  = {
+  date: string;
+}
+
+export type TResponsePeakDate  = {
+    id: string;
+    date: string;
+}
+
+export type TPeakDateState = {
+  id: string;
+  date: DateObject; // used in component state
+};
+
 
 
 

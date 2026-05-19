@@ -27,7 +27,7 @@ function useVerifyOTP() {
     },
         onSuccess: (data) => {
       toast.success(data?.message || "ورود موفق");
-      navigate({ to: "/dashboard" })
+      navigate({ to: "/admin/dashboard" })
     },
   });
 }

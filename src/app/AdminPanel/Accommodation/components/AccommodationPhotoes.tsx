@@ -5,7 +5,7 @@ import { useAccommodationImg } from "../services/useAccommodation";
 const AccommodationPhotoes = ({
   AccommodationId,
 }: {
-  AccommodationId: number;
+  AccommodationId?: number;
 }) => {
   const { getImgs, postImg, deleteImg } = useAccommodationImg(AccommodationId);
 
@@ -50,7 +50,7 @@ const AccommodationPhotoes = ({
             </button>
           </>
         ) : (
-          <PhotoUploader size={530} onPick={handleMainImagePick} />
+          <PhotoUploader size={360} onPick={handleMainImagePick} />
         )}
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -74,7 +74,7 @@ const AccommodationPhotoes = ({
                   </button>
                 </>
               ) : (
-                <PhotoUploader size={260} onPick={handleSideImagePick} />
+                <PhotoUploader size={160} onPick={handleSideImagePick} />
               )}
             </div>
           );

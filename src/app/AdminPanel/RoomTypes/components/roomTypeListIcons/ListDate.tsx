@@ -5,13 +5,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { DoorClosed } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 interface Props {
   onClick: () => void;
 }
 
-const ListRooms = ({ onClick }: Props) => {
+const ListDate = ({ onClick }: Props) => {
   const stopRowClick = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
@@ -21,11 +21,11 @@ const ListRooms = ({ onClick }: Props) => {
           <TooltipTrigger asChild>
             <div onClick={stopRowClick}>
               <CustomButton
-                className="bg-primary/20 hover:bg-primary/40 "
+                className="bg-primary/20 hover:bg-primary/40"
                 type="button"
                 onClick={onClick}
               >
-                <DoorClosed
+                <Calendar
                   className="h-5 w-5 cursor-pointer"
                   strokeWidth={1.5}
                 />
@@ -33,7 +33,7 @@ const ListRooms = ({ onClick }: Props) => {
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>نوع اتاق ها</p>
+            <p>تاریخ های پیک</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -41,4 +41,4 @@ const ListRooms = ({ onClick }: Props) => {
   );
 };
 
-export default ListRooms;
+export default ListDate;

@@ -1,9 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router'
+import RoomTypeList from "@/app/AdminPanel/RoomTypes/components/roomType/RoomTypeList";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/admin/accommodations/$id/roomTypes/')({
+export const Route = createFileRoute("/admin/accommodations/$id/roomTypes/")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/admin/accommodations/$id/roomTypes/"!</div>
+  const { id } = Route.useParams();
+  return (
+    <div className="">
+      <RoomTypeList AccommodationId={+id} />
+    </div>
+  );
 }

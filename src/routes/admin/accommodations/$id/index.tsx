@@ -11,7 +11,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <CustomTab tabItems={AccommodationTabsData(+id)} orientation="vertical"/>
+      <CustomTab tabItems={AccommodationTabsData(+id)}/>
     </div>
   );
 }

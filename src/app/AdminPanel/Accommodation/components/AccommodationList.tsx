@@ -10,12 +10,23 @@ import type { AccommodationItem } from "../types";
 import CustomDialog from "@/components/modal/CustomDialog";
 import AccommodationForm from "./AccommodationForm";
 import CustomLoader from "@/components/loading/CustomLoader";
+import ListEdit from "@/components/list/ListEdit";
+import ListImage from "../../RoomTypes/components/roomTypeListIcons/ListImage";
+import AccommodationPhotoes from "./AccommodationPhotoes";
+import ListFeatures from "../../RoomTypes/components/roomTypeListIcons/ListFeatures";
+import AccommodationFeatures from "./AccommodationFeatures";
+import ListDate from "../../RoomTypes/components/roomTypeListIcons/ListDate";
+import AccommodatioPeakDate from "./AccommodationPeakDate";
+import ListRooms from "../../RoomTypes/components/roomTypeListIcons/ListRooms";
 
 const AccommodationList = () => {
   const [currentAccommodationPage, setCurrentAccommodationPage] = useState(1);
   const [selected, setSelected] = useState<AccommodationItem | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
-  const [openAdd, setOpenAdd] = useState(false);
+  const [openImg, setOpenImg] = useState(false);
+  const [openFeatures, setOpenFeatures] = useState(false);
+  const [openPeakDate, setOpenPeakDate] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const [search, setSearch] = useState("");
 
@@ -58,20 +69,51 @@ const AccommodationList = () => {
             }}
             searchPlaceHolder="جست و جوی نام اقامتگاه"
             customAddText="افزودن اقامتگاه"
-            onAdd={() => setOpenAdd(true)}
-            onRowClick={(rowData) => {
-              navigate({
-                to: `/admin/accommodations/${rowData.id}`,
-              });
-            }}
+            onAdd={() => setOpenModal(true)}
+            // onRowClick={(rowData) => {
+            //   navigate({
+            //     to: `/admin/accommodations/${rowData.id}`,
+            //   });
+            // }}
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
-                <ListDelete
+                <ListEdit
                   onClick={() => {
                     setSelected(rowData);
-                    setOpenDelete(true);
+                    setOpenModal(true);
                   }}
                 />
+                <ListImage
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenImg(true);
+                  }}
+                />
+                <ListFeatures
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenFeatures(true);
+                  }}
+                />
+                <ListDate
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenPeakDate(true);
+                  }}
+                />
+                <ListRooms
+                  onClick={() => {
+                    navigate({
+                      to: `/admin/accommodations/${rowData.id}/roomTypes`,
+                    });
+                  }}
+                />
+                  <ListDelete
+                    onClick={() => {
+                      setSelected(rowData);
+                      setOpenDelete(true);
+                    }}
+                  />
               </div>
             )}
             showAction
@@ -90,11 +132,46 @@ const AccommodationList = () => {
       </div>
 
       <CustomDialog
-        dialogContent={<AccommodationForm />}
-        dialogTitle="افزودن اقامتگاه جدید"
-        onOpenChange={() => setOpenAdd(false)}
-        open={openAdd}
+        dialogContent={<AccommodationForm AccommodationId={selected?.id} />}
+        dialogTitle={
+          selected
+            ? `ویرایش اقامتگاه (${selected?.name})`
+            : "افزودن اقامتگاه جدید"
+        }
+        onOpenChange={() => {
+          setOpenModal(false);
+          setSelected(null);
+        }}
+        open={openModal}
         size="xxl"
+      />
+      <CustomDialog
+        dialogContent={<AccommodationPhotoes AccommodationId={selected?.id} />}
+        dialogTitle={`عکس های اقامتگاه (${selected?.name})`}
+        onOpenChange={() => {
+          setOpenImg(false);
+          setSelected(null);
+        }}
+        open={openImg}
+        size="xxl"
+      />
+      <CustomDialog
+        dialogContent={<AccommodationFeatures AccommodationId={selected?.id} />}
+        dialogTitle={`ویژگی های اقامتگاه (${selected?.name})`}
+        onOpenChange={() => {
+          setOpenFeatures(false);
+          setSelected(null);
+        }}
+        open={openFeatures}
+      />
+      <CustomDialog
+        dialogContent={<AccommodatioPeakDate AccommodationId={selected?.id} />}
+        dialogTitle={`تاریخ های پیک اقامتگاه (${selected?.name})`}
+        onOpenChange={() => {
+          setOpenPeakDate(false);
+          setSelected(null);
+        }}
+        open={openPeakDate}
       />
 
       <FormErrorModal

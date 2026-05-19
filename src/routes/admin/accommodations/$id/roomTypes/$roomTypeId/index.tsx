@@ -13,7 +13,6 @@ function RouteComponent() {
   return (
     <div>
       <CustomTab
-        orientation="horizontal"
         tabItems={RoomTypeTabsData({
           AccommodationId: Number(id),
           roomTypeId: Number(roomTypeId),

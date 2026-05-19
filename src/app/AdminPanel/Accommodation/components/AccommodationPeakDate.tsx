@@ -6,10 +6,10 @@ import type { TPeakDateState, TResponsePeakDate } from "../types";
 import usePeakDate from "../services/usePeakDate";
 
 interface Props {
-  accommodationId: number;
+  AccommodationId?: number;
 }
 
-function PeakDate({ accommodationId }: Props) {
+function AccommodatioPeakDate({ AccommodationId }: Props) {
   const [currentDate, setCurrentDate] = useState<DateObject>(
     new DateObject({ calendar: persian, locale: persian_fa }),
   );
@@ -17,7 +17,7 @@ function PeakDate({ accommodationId }: Props) {
 
   // Use ref to avoid stale closure in mutateAsync callbacks
   const selectedDatesRef = useRef<TPeakDateState[]>(selectedDates);
-  
+
   useEffect(() => {
     selectedDatesRef.current = selectedDates;
   }, [selectedDates]);
@@ -42,7 +42,11 @@ function PeakDate({ accommodationId }: Props) {
     .toISOString()
     .split("T")[0];
 
-  const { getPeakDates, postPeakDate, deletePeakDate } = usePeakDate(accommodationId, startDate, endDate);
+  const { getPeakDates, postPeakDate, deletePeakDate } = usePeakDate(
+    AccommodationId,
+    startDate,
+    endDate,
+  );
 
   // Sync server data → local state on month change (fresh fetch)
   useEffect(() => {
@@ -137,4 +141,4 @@ function PeakDate({ accommodationId }: Props) {
   );
 }
 
-export default PeakDate;
+export default AccommodatioPeakDate;

@@ -17,7 +17,7 @@ function usePasswordLogin() {
     },
     onSuccess: async (data) => {
       toast.success(data?.message || "ورود موفق");
-      navigate({to: "/dashboard"});
+      navigate({to: "/admin/dashboard"});
 
     },
     onError: (e) => {

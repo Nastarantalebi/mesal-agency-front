@@ -13,7 +13,6 @@ import { Route as UseNotFoundRouteImport } from './routes/useNotFound'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as NotAdminRouteImport } from './routes/notAdmin'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news/index'
@@ -48,11 +47,6 @@ const NotAdminRoute = NotAdminRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRouteRoute = AdminRouteRouteImport.update({
@@ -139,7 +133,6 @@ const AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/notAdmin': typeof NotAdminRoute
   '/search': typeof SearchRoute
@@ -161,7 +154,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/notAdmin': typeof NotAdminRoute
   '/search': typeof SearchRoute
@@ -184,7 +176,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/notAdmin': typeof NotAdminRoute
   '/search': typeof SearchRoute
@@ -208,7 +199,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
-    | '/dashboard'
     | '/login'
     | '/notAdmin'
     | '/search'
@@ -230,7 +220,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
-    | '/dashboard'
     | '/login'
     | '/notAdmin'
     | '/search'
@@ -252,7 +241,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
-    | '/dashboard'
     | '/login'
     | '/notAdmin'
     | '/search'
@@ -275,7 +263,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
-  DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   NotAdminRoute: typeof NotAdminRoute
   SearchRoute: typeof SearchRoute
@@ -311,13 +298,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -468,7 +448,6 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
-  DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   NotAdminRoute: NotAdminRoute,
   SearchRoute: SearchRoute,

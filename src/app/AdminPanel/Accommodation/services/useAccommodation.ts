@@ -55,7 +55,7 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
 
 // -----------------------------------------------------------------------------------------
 
-export const useAccommodationFeatures = (AccommodationId: number) => {
+export const useAccommodationFeatures = (AccommodationId?: number) => {
 
     const key = ["accommodation-features", String(AccommodationId)];
       const url = `${admin_accommodation_url}${AccommodationId}/features/`;
@@ -93,7 +93,7 @@ export const useAccommodationFeatures = (AccommodationId: number) => {
 
 // -----------------------------------------------------------------------------------------
 
-export const useAccommodationImg = (AccommodationId: number) => {
+export const useAccommodationImg = (AccommodationId?: number) => {
 
     const key = ["accommodation-image", String(AccommodationId)];
     const url = `${admin_accommodation_url}${AccommodationId}/images/`;

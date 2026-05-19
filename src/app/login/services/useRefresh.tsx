@@ -12,7 +12,7 @@ function useRefresh() {
       return response;
     },
     onSuccess: () => {
-      navigate({ to: "/dashboard" });
+      navigate({ to: "/admin/dashboard" });
     },
     onError: (e) => {
       throw new Error(
