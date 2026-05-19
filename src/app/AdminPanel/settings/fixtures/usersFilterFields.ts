@@ -1,5 +1,5 @@
 import type { Items } from "@/components/form/FormInputTypes";
-import type { createUsersList } from "../components/toursTemplate/types";
+import type { createUsersList } from "../types";
 
 export const userFields: Items<createUsersList>[] = [     
  {

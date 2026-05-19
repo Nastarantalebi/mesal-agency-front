@@ -7,15 +7,15 @@ import {
   type SetStateAction,
 } from "react";
 import { useForm } from "react-hook-form";
-import {
-  tourInitialValues,
-  tourValidation,
-  type TCreateTour,
-} from "../fixtures/validation";
 import FormComponent from "@/components/form/FormComponent";
-import useTour from "../services/useTourTemplate";
-import useTourFields from "../hooks/useTourFields";
+import useTourFields from "../hooks/useTourTemplateFields";
 import CustomLoader from "@/components/loading/CustomLoader";
+import {
+  tourTemplateInitialValues,
+  tourTemplateValidation,
+  type TCreateTourTemplate,
+} from "../fixtures/validation";
+import useTourTemplate from "../services/useTourTemplate";
 
 const TourForm = ({
   tourId,
@@ -27,13 +27,13 @@ const TourForm = ({
   setOpenModal?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const isEdit = !!tourId;
-  const { postTours, getTourById, putTour } = useTour({ tourId });
+  const { postTours, getTourById, putTour } = useTourTemplate({ tourId });
 
   console.log("getTourById", getTourById.data);
 
-  const form = useForm<TCreateTour>({
-    resolver: zodResolver(tourValidation),
-    defaultValues: tourInitialValues,
+  const form = useForm<TCreateTourTemplate>({
+    resolver: zodResolver(tourTemplateValidation),
+    defaultValues: tourTemplateInitialValues,
   });
 
   console.log("form:", form.watch());
@@ -69,7 +69,7 @@ const TourForm = ({
     }
   }, [getTourById.data]);
 
-  const handleSubmit = (values: TCreateTour) => {
+  const handleSubmit = (values: TCreateTourTemplate) => {
     if (isEdit) {
       putTour.mutateAsync(
         { data: values, id: tourId },
@@ -80,7 +80,7 @@ const TourForm = ({
     } else {
       postTours.mutateAsync(values, {
         onSuccess: () => {
-          form.reset(tourInitialValues);
+          form.reset(tourTemplateInitialValues);
           setOpenModal?.(false);
         },
         onError: () => setErrorOpen(true),

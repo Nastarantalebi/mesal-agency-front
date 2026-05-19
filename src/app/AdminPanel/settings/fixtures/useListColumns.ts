@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { UsersListResponse } from "../components/toursTemplate/types";
+import type { UsersListResponse } from "../types";
 
 export const UserListColumns: ColumnDef<UsersListResponse>[] = [
   {

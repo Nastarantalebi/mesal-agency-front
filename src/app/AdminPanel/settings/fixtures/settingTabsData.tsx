@@ -5,8 +5,6 @@ import AddFeaturesForm from "../components/features/AddFeaturesForm";
 import FeaturesList from "../components/features/FeaturesList";
 import NewsForm from "../components/news/NewsForm";
 import NewsList from "../components/news/NewsList";
-import TourForm from "../components/toursTemplate/components/TourForm";
-import TourList from "../components/toursTemplate/components/TourList";
 import UsersList from "../components/users/UsersList";
 
 export const settingTabs = [
@@ -48,14 +46,6 @@ export const settingTabs = [
       <div className="flex flex-col gap-10">
         <NewsForm />
         <NewsList />
-      </div>
-    ),
-  },
-  {
-    title: "ایجاد تمپلیت تور",
-    component: (
-      <div className="flex flex-col gap-10">
-        <TourList />
       </div>
     ),
   },

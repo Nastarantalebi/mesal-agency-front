@@ -1,41 +1,39 @@
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
 import ListPagination from "@/components/list/ListPagination";
-import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
-import { AccommodationListColumns } from "../fixtures/AccommodationListColumns";
-import { useAccommodation } from "../services/useAccommodation";
-import type { AccommodationItem } from "../types";
+import type { TourItem } from "../types";
 import CustomDialog from "@/components/modal/CustomDialog";
-import AccommodationForm from "./AccommodationForm";
+import useTour from "../services/useTour";
 import CustomLoader from "@/components/loading/CustomLoader";
+import TourSteps from "./TourSteps";
+import { TourListColumns } from "../fixtures/TourListColumns";
 
-const AccommodationList = () => {
-  const [currentAccommodationPage, setCurrentAccommodationPage] = useState(1);
-  const [selected, setSelected] = useState<AccommodationItem | null>(null);
+const TourList = () => {
+  const [currentTourPage, setCurrentTourPage] = useState(1);
+  const [selected, setSelected] = useState<TourItem | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
 
   const [search, setSearch] = useState("");
 
-  const { deleteAccommodation, getAccommodations } = useAccommodation(
-    undefined,
-    currentAccommodationPage,
-    search,
-  );
+  const { deleteTourDeparture, getTourDeprtures } = useTour({
+    currentTourPage,
+  });
 
-  const navigate = useNavigate();
-
-  if (getAccommodations.isFetching) return <div><CustomLoader/></div>;
-
-  if (getAccommodations.error)
+  if (getTourDeprtures.isFetching)
     return (
-      <div className="text-red-600">{getAccommodations.error.message}</div>
+      <div>
+        <CustomLoader />
+      </div>
     );
 
-  const pageCount = getAccommodations.data?.count
-    ? Math.ceil(getAccommodations.data.count / 10)
+  if (getTourDeprtures.error)
+    return <div className="text-red-600">{getTourDeprtures.error.message}</div>;
+
+  const pageCount = getTourDeprtures.data?.count
+    ? Math.ceil(getTourDeprtures.data.count / 10)
     : 0;
 
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
@@ -48,18 +46,12 @@ const AccommodationList = () => {
             searchValue={search}
             onSearchChange={setSearch}
             onSearch={(value) => {
-              setCurrentAccommodationPage(1);
+              setCurrentTourPage(1);
               setSearch(value);
             }}
-            searchPlaceHolder="جست و جوی نام اقامتگاه"
-            customAddText="افزودن اقامتگاه"
+            searchPlaceHolder="جست و جوی نام تور"
+            customAddText="افزودن تور"
             onAdd={() => setOpenAdd(true)}
-            onRowClick={(rowData) => {
-              navigate({
-                to: "/accommodation/$id",
-                params: { id: String(rowData.id) },
-              });
-            }}
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
                 <ListDelete
@@ -71,23 +63,23 @@ const AccommodationList = () => {
               </div>
             )}
             showAction
-            columns={AccommodationListColumns}
-            data={getAccommodations.data?.results ?? []}
+            columns={TourListColumns}
+            data={getTourDeprtures.data?.results ?? []}
           />
         </div>
 
         <div className="mt-7 flex justify-center">
           <ListPagination
             pageCount={pageCount}
-            currentPage={currentAccommodationPage}
-            onPageChange={setCurrentAccommodationPage}
+            currentPage={currentTourPage}
+            onPageChange={setCurrentTourPage}
           />
         </div>
       </div>
 
       <CustomDialog
-        dialogContent={<AccommodationForm />}
-        dialogTitle="افزودن اقامتگاه جدید"
+        dialogContent={<TourSteps />}
+        dialogTitle="افزودن تور جدید"
         onOpenChange={() => setOpenAdd(false)}
         open={openAdd}
         size="xxl"
@@ -98,7 +90,7 @@ const AccommodationList = () => {
         onOpenChange={() => setOpenDelete(false)}
         message={deleteMessage}
         onAcknowledge={() =>
-          deleteAccommodation.mutateAsync({ id: selected?.id! })
+          deleteTourDeparture.mutateAsync({ id: selected?.id! })
         }
         buttonTitle="بله"
         dialogTitle="حذف"
@@ -107,4 +99,4 @@ const AccommodationList = () => {
   );
 };
 
-export default AccommodationList;
+export default TourList;

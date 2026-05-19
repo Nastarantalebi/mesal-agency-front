@@ -1,7 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { TtourItems } from "../types/types";
+import type { TtourTemplateItems } from "../types";
 
-export const tourListColumns: ColumnDef<TtourItems>[] = [
+export const tourTemplateListColumns: ColumnDef<TtourTemplateItems>[] = [
   {
     id: "index",
     header: "ردیف",

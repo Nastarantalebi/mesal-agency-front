@@ -13,8 +13,8 @@ import {
   usersFilterInitialValues,
   usersFilterValidation,
 } from "../../fixtures/validation";
-import type { createUsersList } from "../toursTemplate/types";
 import ReloadList from "@/components/list/ReloadList";
+import type { createUsersList } from "../../types";
 
 const usersList = () => {
   const [filters, setFilters] = useState<createUsersList>();

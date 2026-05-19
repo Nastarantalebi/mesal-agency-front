@@ -5,7 +5,6 @@ import type {
   UseFormReturn,
 } from "react-hook-form";
 import type { Items } from "./FormInputTypes";
-import formTypes from "./FormInputTypes";
 import CustomButton from "./CustomButton";
 import { type ReactNode } from "react";
 import FormErrorModal from "./FormErrorModal";

@@ -6,12 +6,12 @@ import CustomButton from "@/components/form/CustomButton";
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { useEffect, useState } from "react";
 import { useDefaults } from "../../services/useSetting";
-import type { TCreateDefaults } from "../toursTemplate/types";
 import {
   DefaultsInitialValues,
   DefaultsValidation,
 } from "../../fixtures/validation";
 import { DefaultFields } from "../../fixtures/DefaultFields";
+import type { TCreateDefaults } from "../../types";
 
 const DefaultsForm = () => {
   const { getDefaults, postDefaults } = useDefaults();

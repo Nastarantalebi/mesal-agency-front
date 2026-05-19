@@ -10,7 +10,6 @@ import {
   FeaturesValidation,
 } from "../../fixtures/validation";
 import { useFeatures } from "../../services/useSetting";
-import type { TCFeature } from "../toursTemplate/types";
 import formTypes from "@/components/form/FormInputTypes";
 import {
   Dialog,
@@ -18,6 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import type { TCFeature } from "../../types";
 
 interface Props {
   asModal: boolean;

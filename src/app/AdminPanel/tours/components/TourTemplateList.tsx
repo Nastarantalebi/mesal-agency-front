@@ -3,22 +3,22 @@ import { CustomDataTable } from "@/components/list/CustomDataTable";
 import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import CustomDialog from "@/components/modal/CustomDialog";
-import type { TtourItems } from "../types/types";
-import useTour from "../services/useTourTemplate";
 import CustomLoader from "@/components/loading/CustomLoader";
-import { tourListColumns } from "../fixtures/tourListColumns";
-import TourForm from "./TourForm";
+import { tourTemplateListColumns } from "../fixtures/tourTemplateListColumns";
+import TourForm from "./TourTemplateForm";
 import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/ListDelete";
+import type { TtourTemplateItems } from "../types";
+import useTourTemplate from "../services/useTourTemplate";
 
-const TourList = () => {
+const TourTemplateList = () => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
-  const [selected, setSelected] = useState<TtourItems | null>(null);
+  const [selected, setSelected] = useState<TtourTemplateItems | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   const [search, setSearch] = useState("");
 
-  const { getTours, deleteTour } = useTour({
+  const { getTours, deleteTour } = useTourTemplate({
     currentTourPage: currentTourPage,
     searchInput: search,
   });
@@ -76,7 +76,7 @@ const TourList = () => {
               </div>
             )}
             showAction
-            columns={tourListColumns}
+            columns={tourTemplateListColumns}
             data={getTours.data?.results ?? []}
           />
         </div>
@@ -115,4 +115,4 @@ const TourList = () => {
   );
 };
 
-export default TourList;
+export default TourTemplateList;

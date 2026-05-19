@@ -1,12 +1,12 @@
-import type { TtourItems } from "../../settings/components/toursTemplate/types/types";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { MapPin } from "lucide-react";
 import { useState } from "react";
+import type { TtourTemplateItems } from "../types";
 
 interface Props {
-  tour: TtourItems;
+  tour: TtourTemplateItems;
   onClick: (id: number) => void;
 }
 

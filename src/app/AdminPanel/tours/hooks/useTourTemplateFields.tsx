@@ -1,8 +1,8 @@
 import type { Items } from "@/components/form/FormInputTypes";
-import type { TCreateTour } from "../fixtures/validation";
+import type { TCreateTourTemplate } from "../fixtures/validation";
 
 const useTourFields = () => {
-  const fields: Items<TCreateTour>[] = [
+  const fields: Items<TCreateTourTemplate>[] = [
     {
       name: "title",
       label: "نام تور",
@@ -20,13 +20,13 @@ const useTourFields = () => {
         { label: "تور خارجی", value: "foreign" },
       ],
     },
-      {
-        name: "short_description",
-        label: "توضیح کوتاه",
-        isRequired: true,
-        fieldType: "input",
-        inputType: "text",
-      },
+    {
+      name: "short_description",
+      label: "توضیح کوتاه",
+      isRequired: true,
+      fieldType: "input",
+      inputType: "text",
+    },
     {
       name: "description",
       label: "توضیحات",
@@ -112,16 +112,15 @@ const useTourFields = () => {
       label: "عنوان متا",
       fieldType: "input",
       inputType: "text",
-      className: "col-start-1"
+      className: "col-start-1",
     },
     {
       name: "meta_description",
       label: "توضیحات متا",
       fieldType: "input",
       inputType: "text",
-      className: "col-span-3"
+      className: "col-span-3",
     },
-
   ];
 
   return { fields };

@@ -5,8 +5,8 @@ import useGetById from "@/services/useGetById";
 import usePutData from "@/services/usePutData";
 import type { TPaginatedResponse } from "@/types";
 import useDeleteData from "@/services/useDeleteData";
-import type { TCreateTour } from "../fixtures/validation";
-import type { TtourItems, TtourResponse } from "../types/types";
+import type { TCreateTourTemplate } from "../fixtures/validation";
+import type { TtourTemplateItems, TtourTemplateResponse } from "../types";
 
 interface Props {
   tourId?: string | number | null;
@@ -14,28 +14,27 @@ interface Props {
   searchInput?: string;
 }
 
-const useTour = ({ tourId, currentTourPage, searchInput }: Props) => {
+const useTourTemplate = ({ tourId, currentTourPage, searchInput }: Props) => {
+  console.log("currentTourPage:", currentTourPage);
 
-  console.log("currentTourPage:", currentTourPage)
-
-  const getTours = useGetData<TPaginatedResponse<TtourItems>>({
+  const getTours = useGetData<TPaginatedResponse<TtourTemplateItems>>({
     key: [adminTour_key],
     url: `${adminTour_url}${searchInput ? `?title__contains= ${searchInput}` : `?page=${currentTourPage ?? 1}`}`,
   });
 
-  const postTours = usePostData<TCreateTour>({
+  const postTours = usePostData<TCreateTourTemplate>({
     key: [adminTour_key],
     url: adminTour_url,
   });
 
-  const getTourById = useGetById<TtourResponse>({
+  const getTourById = useGetById<TtourTemplateResponse>({
     key: [adminTour_key, String(tourId)],
     url: adminTour_url,
     id: tourId,
     enabled: !!tourId,
   });
 
-  const putTour = usePutData<TCreateTour>({
+  const putTour = usePutData<TCreateTourTemplate>({
     key: [adminTour_key],
     url: adminTour_url,
     enabled: !!tourId,
@@ -48,4 +47,4 @@ const useTour = ({ tourId, currentTourPage, searchInput }: Props) => {
   return { getTours, postTours, getTourById, putTour, deleteTour };
 };
 
-export default useTour;
+export default useTourTemplate;

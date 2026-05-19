@@ -13,20 +13,22 @@ import {
 } from "react";
 import { useForm } from "react-hook-form";
 import {
-  additionalTourInfoInitialValues,
-  additionaTourInfoValidation,
+  tourDepartureInitialValues,
+  tourDepartureValidation,
   type TCreateTourDeparture,
   type TResponseTourDeparture,
 } from "../fixtures/validation";
 import useTour from "../services/useTour";
-import useFields from "../hooks/useFields";
+import useFields from "../hooks/useDepartureFields";
 import FormComponent from "@/components/form/FormComponent";
 
 interface TourDepartureFormProps {
   departureId?: number;
   buttonText?: string;
   tourTemplateId: number | null;
-  setDepartureData: Dispatch<SetStateAction<TResponseTourDeparture | undefined>>;
+  setDepartureData: Dispatch<
+    SetStateAction<TResponseTourDeparture | undefined>
+  >;
   onSubmitSuccess?: () => void;
 }
 
@@ -34,7 +36,10 @@ export interface TourDepartureFormRef {
   submitForm: () => void;
 }
 
-const TourDepartureForm = forwardRef<TourDepartureFormRef, TourDepartureFormProps>(
+const TourDepartureForm = forwardRef<
+  TourDepartureFormRef,
+  TourDepartureFormProps
+>(
   (
     {
       departureId,
@@ -43,22 +48,21 @@ const TourDepartureForm = forwardRef<TourDepartureFormRef, TourDepartureFormProp
       setDepartureData,
       onSubmitSuccess,
     },
-    ref
+    ref,
   ) => {
     const isEdit = !!departureId;
 
-    const { postTourDeparture, putTourDeparture, getTourDepartureById } = useTour(
-      { tourTemplateId }
-    );
+    const { postTourDeparture, putTourDeparture, getTourDepartureById } =
+      useTour({ tourTemplateId });
     const [errorOpen, setErrorOpen] = useState(false);
     const { fields } = useFields();
 
     const form = useForm<TCreateTourDeparture>({
-      resolver: zodResolver(additionaTourInfoValidation),
-      defaultValues: additionalTourInfoInitialValues,
+      resolver: zodResolver(tourDepartureValidation),
+      defaultValues: tourDepartureInitialValues,
     });
 
-    console.log(form.watch())
+    console.log(form.watch());
 
     useEffect(() => {
       if (isEdit) {
@@ -73,7 +77,7 @@ const TourDepartureForm = forwardRef<TourDepartureFormRef, TourDepartureFormProp
 
     const handleSubmit = (value: TCreateTourDeparture) => {
       const transformedData = {
-        ...additionalTourInfoInitialValues,
+        ...tourDepartureInitialValues,
         ...value,
         start: shamsiToMiladi(value.start),
         end: shamsiToMiladi(value.end),
@@ -87,7 +91,7 @@ const TourDepartureForm = forwardRef<TourDepartureFormRef, TourDepartureFormProp
               onSubmitSuccess?.();
             },
             onError: () => setErrorOpen(true),
-          }
+          },
         );
       } else {
         postTourDeparture(transformedData, {
@@ -117,7 +121,7 @@ const TourDepartureForm = forwardRef<TourDepartureFormRef, TourDepartureFormProp
         fields={fields}
       />
     );
-  }
+  },
 );
 
 TourDepartureForm.displayName = "TourDepartureForm";

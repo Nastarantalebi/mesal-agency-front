@@ -6,7 +6,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormComponent from "@/components/form/FormComponent";
-import useFields from "../hooks/useFields";
+import useFields from "../hooks/useDepartureFields";
 import {
   miladiToShamsi,
   shamsiToMiladi,
