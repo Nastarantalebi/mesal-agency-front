@@ -17,7 +17,7 @@ export const SidebarData = [
   },
   {
     title: "لیست تمپلیت تور ها",
-    url: `/admin/tours/`,
+    url: `/admin/tourTemplates/`,
     icon: <TentTreeIcon />,
   },
   {

@@ -18,6 +18,7 @@ const TourSteps = () => {
   const formref2 = useRef<{ submitForm: () => void }>(null);
 
   const handleNext = () => {
+      console.log("handleNext called, currentStep:", currentStep);
     if (currentStep === 0) {
       if (selectedId !== null) {
         setCurrentStep(currentStep + 1);

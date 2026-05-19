@@ -35,11 +35,14 @@ const useTour = ({
   >({
     key: [adminTour_key, "departures"],
     url: `${adminTour_url}${tourTemplateId}/departures/`,
+    enabled: !!tourTemplateId,
   });
+
+  console.log("tourTemplateId:", tourTemplateId, "departureId:", departureId)
 
   const deleteTourDeparture = useDeleteData({
     key: [adminTour_key, "departures"],
-    url: `${adminTour_url}${tourTemplateId}/departures/${departureId}`,
+    url: `${adminTour_url}${tourTemplateId}/departures/`,
   });
 
   const { mutate: postTourDeparture } = usePostData<TCreateTourDeparture>({

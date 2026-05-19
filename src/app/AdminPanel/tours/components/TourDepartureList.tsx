@@ -3,16 +3,16 @@ import { CustomDataTable } from "@/components/list/CustomDataTable";
 import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
-import type { TourItem } from "../types";
+import type { TourDepartureItem } from "../types";
 import CustomDialog from "@/components/modal/CustomDialog";
 import useTour from "../services/useTour";
 import CustomLoader from "@/components/loading/CustomLoader";
 import TourSteps from "./TourSteps";
 import { TourListColumns } from "../fixtures/TourListColumns";
 
-const TourList = () => {
+const TourDepartureList = ({tourTemplateId}: {tourTemplateId: number}) => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
-  const [selected, setSelected] = useState<TourItem | null>(null);
+  const [selected, setSelected] = useState<TourDepartureItem | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
 
@@ -20,6 +20,7 @@ const TourList = () => {
 
   const { deleteTourDeparture, getTourDeprtures } = useTour({
     currentTourPage,
+    tourTemplateId,
   });
 
   if (getTourDeprtures.isFetching)
@@ -82,7 +83,7 @@ const TourList = () => {
         dialogTitle="افزودن تور جدید"
         onOpenChange={() => setOpenAdd(false)}
         open={openAdd}
-        size="xxl"
+        size="xxxl"
       />
 
       <FormErrorModal
@@ -99,4 +100,4 @@ const TourList = () => {
   );
 };
 
-export default TourList;
+export default TourDepartureList;

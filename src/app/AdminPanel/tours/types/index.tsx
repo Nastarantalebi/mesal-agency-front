@@ -47,7 +47,7 @@ export type TCreateDeparturePlan = {
   description: string;
 };
 
-export type TourItem = {
+export type TourDepartureItem = {
   id: number;
   start: string;
   end: string;

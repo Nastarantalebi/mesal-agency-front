@@ -9,6 +9,8 @@ import TourForm from "./TourTemplateForm";
 import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/ListDelete";
 import type { TtourTemplateItems } from "../types";
 import useTourTemplate from "../services/useTourTemplate";
+import ListTourDepartures from "./ListTourDeparturesIcon";
+import { useNavigate } from "@tanstack/react-router";
 
 const TourTemplateList = () => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
@@ -23,7 +25,7 @@ const TourTemplateList = () => {
     searchInput: search,
   });
 
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   if (getTours.isFetching)
     return (
@@ -71,6 +73,13 @@ const TourTemplateList = () => {
                   onClick={() => {
                     setSelected(rowData);
                     setOpenDelete(true);
+                  }}
+                />
+                <ListTourDepartures
+                  onClick={() => {
+                    navigate({
+                      to: `/admin/tourTemplates/${rowData.id}`,
+                    });
                   }}
                 />
               </div>

@@ -1,14 +1,13 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { TourItem } from "../types";
+import type { TourDepartureItem } from "../types";
 
-export const TourListColumns: ColumnDef<TourItem>[] = [
+export const TourListColumns: ColumnDef<TourDepartureItem>[] = [
   {
     id: "index",
     header: "ردیف",
     cell: ({ row }) => row.index + 1,
     size: 30,
   },
-  { accessorKey: "name", header: "نام تور" },
   {
     id: "start",
     header: "تاریخ شروع",

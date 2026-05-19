@@ -17,14 +17,15 @@ import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news/index'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
-import { Route as AdminToursRouteImport } from './routes/admin/tours'
 import { Route as AdminNewsRouteImport } from './routes/admin/news'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
+import { Route as AdminTourTemplatesIndexRouteImport } from './routes/admin/tourTemplates/index'
 import { Route as AdminSettingIndexRouteImport } from './routes/admin/setting/index'
 import { Route as AdminAccommodationsIndexRouteImport } from './routes/admin/accommodations/index'
 import { Route as AdminSettingDefaultsRouteImport } from './routes/admin/setting/defaults'
 import { Route as AdminSettingAccommodationFeaturesRouteImport } from './routes/admin/setting/accommodationFeatures'
 import { Route as AdminSettingBedTypesRouteImport } from './routes/admin/setting/BedTypes'
+import { Route as AdminTourTemplatesIdIndexRouteImport } from './routes/admin/tourTemplates/$id/index'
 import { Route as AdminAccommodationsIdIndexRouteImport } from './routes/admin/accommodations/$id/index'
 import { Route as AdminAccommodationsIdRoomTypesIndexRouteImport } from './routes/admin/accommodations/$id/roomTypes/index'
 import { Route as AdminAccommodationsIdRoomTypesRoomTypeIdIndexRouteImport } from './routes/admin/accommodations/$id/roomTypes/$roomTypeId/index'
@@ -69,11 +70,6 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminToursRoute = AdminToursRouteImport.update({
-  id: '/tours',
-  path: '/tours',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
 const AdminNewsRoute = AdminNewsRouteImport.update({
   id: '/news',
   path: '/news',
@@ -82,6 +78,11 @@ const AdminNewsRoute = AdminNewsRouteImport.update({
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminTourTemplatesIndexRoute = AdminTourTemplatesIndexRouteImport.update({
+  id: '/tourTemplates/',
+  path: '/tourTemplates/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminSettingIndexRoute = AdminSettingIndexRouteImport.update({
@@ -111,6 +112,12 @@ const AdminSettingBedTypesRoute = AdminSettingBedTypesRouteImport.update({
   path: '/setting/BedTypes',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminTourTemplatesIdIndexRoute =
+  AdminTourTemplatesIdIndexRouteImport.update({
+    id: '/tourTemplates/$id/',
+    path: '/tourTemplates/$id/',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
 const AdminAccommodationsIdIndexRoute =
   AdminAccommodationsIdIndexRouteImport.update({
     id: '/accommodations/$id/',
@@ -139,7 +146,6 @@ export interface FileRoutesByFullPath {
   '/useNotFound': typeof UseNotFoundRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/news': typeof AdminNewsRoute
-  '/admin/tours': typeof AdminToursRoute
   '/admin/users': typeof AdminUsersRoute
   '/news/': typeof NewsIndexRoute
   '/admin/setting/BedTypes': typeof AdminSettingBedTypesRoute
@@ -147,7 +153,9 @@ export interface FileRoutesByFullPath {
   '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
   '/admin/accommodations/': typeof AdminAccommodationsIndexRoute
   '/admin/setting/': typeof AdminSettingIndexRoute
+  '/admin/tourTemplates/': typeof AdminTourTemplatesIndexRoute
   '/admin/accommodations/$id/': typeof AdminAccommodationsIdIndexRoute
+  '/admin/tourTemplates/$id/': typeof AdminTourTemplatesIdIndexRoute
   '/admin/accommodations/$id/roomTypes/': typeof AdminAccommodationsIdRoomTypesIndexRoute
   '/admin/accommodations/$id/roomTypes/$roomTypeId/': typeof AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute
 }
@@ -160,7 +168,6 @@ export interface FileRoutesByTo {
   '/useNotFound': typeof UseNotFoundRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/news': typeof AdminNewsRoute
-  '/admin/tours': typeof AdminToursRoute
   '/admin/users': typeof AdminUsersRoute
   '/news': typeof NewsIndexRoute
   '/admin/setting/BedTypes': typeof AdminSettingBedTypesRoute
@@ -168,7 +175,9 @@ export interface FileRoutesByTo {
   '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
   '/admin/accommodations': typeof AdminAccommodationsIndexRoute
   '/admin/setting': typeof AdminSettingIndexRoute
+  '/admin/tourTemplates': typeof AdminTourTemplatesIndexRoute
   '/admin/accommodations/$id': typeof AdminAccommodationsIdIndexRoute
+  '/admin/tourTemplates/$id': typeof AdminTourTemplatesIdIndexRoute
   '/admin/accommodations/$id/roomTypes': typeof AdminAccommodationsIdRoomTypesIndexRoute
   '/admin/accommodations/$id/roomTypes/$roomTypeId': typeof AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute
 }
@@ -182,7 +191,6 @@ export interface FileRoutesById {
   '/useNotFound': typeof UseNotFoundRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/news': typeof AdminNewsRoute
-  '/admin/tours': typeof AdminToursRoute
   '/admin/users': typeof AdminUsersRoute
   '/news/': typeof NewsIndexRoute
   '/admin/setting/BedTypes': typeof AdminSettingBedTypesRoute
@@ -190,7 +198,9 @@ export interface FileRoutesById {
   '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
   '/admin/accommodations/': typeof AdminAccommodationsIndexRoute
   '/admin/setting/': typeof AdminSettingIndexRoute
+  '/admin/tourTemplates/': typeof AdminTourTemplatesIndexRoute
   '/admin/accommodations/$id/': typeof AdminAccommodationsIdIndexRoute
+  '/admin/tourTemplates/$id/': typeof AdminTourTemplatesIdIndexRoute
   '/admin/accommodations/$id/roomTypes/': typeof AdminAccommodationsIdRoomTypesIndexRoute
   '/admin/accommodations/$id/roomTypes/$roomTypeId/': typeof AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute
 }
@@ -205,7 +215,6 @@ export interface FileRouteTypes {
     | '/useNotFound'
     | '/admin/dashboard'
     | '/admin/news'
-    | '/admin/tours'
     | '/admin/users'
     | '/news/'
     | '/admin/setting/BedTypes'
@@ -213,7 +222,9 @@ export interface FileRouteTypes {
     | '/admin/setting/defaults'
     | '/admin/accommodations/'
     | '/admin/setting/'
+    | '/admin/tourTemplates/'
     | '/admin/accommodations/$id/'
+    | '/admin/tourTemplates/$id/'
     | '/admin/accommodations/$id/roomTypes/'
     | '/admin/accommodations/$id/roomTypes/$roomTypeId/'
   fileRoutesByTo: FileRoutesByTo
@@ -226,7 +237,6 @@ export interface FileRouteTypes {
     | '/useNotFound'
     | '/admin/dashboard'
     | '/admin/news'
-    | '/admin/tours'
     | '/admin/users'
     | '/news'
     | '/admin/setting/BedTypes'
@@ -234,7 +244,9 @@ export interface FileRouteTypes {
     | '/admin/setting/defaults'
     | '/admin/accommodations'
     | '/admin/setting'
+    | '/admin/tourTemplates'
     | '/admin/accommodations/$id'
+    | '/admin/tourTemplates/$id'
     | '/admin/accommodations/$id/roomTypes'
     | '/admin/accommodations/$id/roomTypes/$roomTypeId'
   id:
@@ -247,7 +259,6 @@ export interface FileRouteTypes {
     | '/useNotFound'
     | '/admin/dashboard'
     | '/admin/news'
-    | '/admin/tours'
     | '/admin/users'
     | '/news/'
     | '/admin/setting/BedTypes'
@@ -255,7 +266,9 @@ export interface FileRouteTypes {
     | '/admin/setting/defaults'
     | '/admin/accommodations/'
     | '/admin/setting/'
+    | '/admin/tourTemplates/'
     | '/admin/accommodations/$id/'
+    | '/admin/tourTemplates/$id/'
     | '/admin/accommodations/$id/roomTypes/'
     | '/admin/accommodations/$id/roomTypes/$roomTypeId/'
   fileRoutesById: FileRoutesById
@@ -328,13 +341,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/tours': {
-      id: '/admin/tours'
-      path: '/tours'
-      fullPath: '/admin/tours'
-      preLoaderRoute: typeof AdminToursRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
     '/admin/news': {
       id: '/admin/news'
       path: '/news'
@@ -347,6 +353,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/admin/dashboard'
       preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/tourTemplates/': {
+      id: '/admin/tourTemplates/'
+      path: '/tourTemplates'
+      fullPath: '/admin/tourTemplates/'
+      preLoaderRoute: typeof AdminTourTemplatesIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/setting/': {
@@ -384,6 +397,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSettingBedTypesRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/tourTemplates/$id/': {
+      id: '/admin/tourTemplates/$id/'
+      path: '/tourTemplates/$id'
+      fullPath: '/admin/tourTemplates/$id/'
+      preLoaderRoute: typeof AdminTourTemplatesIdIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/accommodations/$id/': {
       id: '/admin/accommodations/$id/'
       path: '/accommodations/$id'
@@ -411,14 +431,15 @@ declare module '@tanstack/react-router' {
 interface AdminRouteRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminNewsRoute: typeof AdminNewsRoute
-  AdminToursRoute: typeof AdminToursRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminSettingBedTypesRoute: typeof AdminSettingBedTypesRoute
   AdminSettingAccommodationFeaturesRoute: typeof AdminSettingAccommodationFeaturesRoute
   AdminSettingDefaultsRoute: typeof AdminSettingDefaultsRoute
   AdminAccommodationsIndexRoute: typeof AdminAccommodationsIndexRoute
   AdminSettingIndexRoute: typeof AdminSettingIndexRoute
+  AdminTourTemplatesIndexRoute: typeof AdminTourTemplatesIndexRoute
   AdminAccommodationsIdIndexRoute: typeof AdminAccommodationsIdIndexRoute
+  AdminTourTemplatesIdIndexRoute: typeof AdminTourTemplatesIdIndexRoute
   AdminAccommodationsIdRoomTypesIndexRoute: typeof AdminAccommodationsIdRoomTypesIndexRoute
   AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute: typeof AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute
 }
@@ -426,7 +447,6 @@ interface AdminRouteRouteChildren {
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminDashboardRoute: AdminDashboardRoute,
   AdminNewsRoute: AdminNewsRoute,
-  AdminToursRoute: AdminToursRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminSettingBedTypesRoute: AdminSettingBedTypesRoute,
   AdminSettingAccommodationFeaturesRoute:
@@ -434,7 +454,9 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminSettingDefaultsRoute: AdminSettingDefaultsRoute,
   AdminAccommodationsIndexRoute: AdminAccommodationsIndexRoute,
   AdminSettingIndexRoute: AdminSettingIndexRoute,
+  AdminTourTemplatesIndexRoute: AdminTourTemplatesIndexRoute,
   AdminAccommodationsIdIndexRoute: AdminAccommodationsIdIndexRoute,
+  AdminTourTemplatesIdIndexRoute: AdminTourTemplatesIdIndexRoute,
   AdminAccommodationsIdRoomTypesIndexRoute:
     AdminAccommodationsIdRoomTypesIndexRoute,
   AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute:
