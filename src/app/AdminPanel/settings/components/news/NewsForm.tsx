@@ -10,15 +10,16 @@ import {
   miladiToShamsi,
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
-import { useEffect } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import NewsFields from "../../fixtures/NewsFields";
 import { useNews } from "../../services/useSetting";
 
 interface Props {
   newsId?: number;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const NewsForm = ({ newsId }: Props) => {
+const NewsForm = ({ newsId, setOpen }: Props) => {
   const isEdit = !!newsId;
   const { postNews, getNewsById, patchNews } = useNews({ id: newsId });
   const newsFields = NewsFields(getNewsById.data?.image);
@@ -57,10 +58,17 @@ const NewsForm = ({ newsId }: Props) => {
       formData.append(key, finalValue as any);
     });
     if (isEdit) {
-      await patchNews.mutateAsync({ data: formData, id: newsId });
+      await patchNews.mutateAsync(
+        { data: formData, id: newsId },
+        { onSuccess: () => setOpen(false) },
+      );
     } else {
-      await postNews.mutateAsync(formData);
-      form.reset(newsInitialValues);
+      await postNews.mutateAsync(formData, {
+        onSuccess: () => {
+          setOpen(false);
+          form.reset(newsInitialValues);
+        },
+      });
     }
   };
 

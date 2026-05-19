@@ -14,19 +14,21 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as NotAdminRouteImport } from './routes/notAdmin'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news/index'
-import { Route as AccommodationIndexRouteImport } from './routes/accommodation/index'
-import { Route as AccommodationSearchRouteImport } from './routes/accommodation/search'
-import { Route as AccommodationIdRouteRouteImport } from './routes/accommodation/$id/route'
-import { Route as AccommodationIdIndexRouteImport } from './routes/accommodation/$id/index'
-import { Route as AccommodationIdPeakDatesRouteImport } from './routes/accommodation/$id/peakDates'
-import { Route as AccommodationIdInfoRouteImport } from './routes/accommodation/$id/info'
-import { Route as AccommodationIdImagesRouteImport } from './routes/accommodation/$id/images'
-import { Route as AccommodationIdFeaturesRouteImport } from './routes/accommodation/$id/features'
-import { Route as AccommodationIdAddRoomTypesRouteImport } from './routes/accommodation/$id/addRoomTypes'
-import { Route as AccommodationIdListRoomTypesIndexRouteImport } from './routes/accommodation/$id/listRoomTypes/index'
-import { Route as AccommodationIdListRoomTypesRoomTypeIdRouteImport } from './routes/accommodation/$id/listRoomTypes/$roomTypeId'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminToursRouteImport } from './routes/admin/tours'
+import { Route as AdminNewsRouteImport } from './routes/admin/news'
+import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
+import { Route as AdminSettingIndexRouteImport } from './routes/admin/setting/index'
+import { Route as AdminAccommodationsIndexRouteImport } from './routes/admin/accommodations/index'
+import { Route as AdminSettingDefaultsRouteImport } from './routes/admin/setting/defaults'
+import { Route as AdminSettingAccommodationFeaturesRouteImport } from './routes/admin/setting/accommodationFeatures'
+import { Route as AdminSettingBedTypesRouteImport } from './routes/admin/setting/BedTypes'
+import { Route as AdminAccommodationsIdIndexRouteImport } from './routes/admin/accommodations/$id/index'
+import { Route as AdminAccommodationsIdRoomTypesIndexRouteImport } from './routes/admin/accommodations/$id/roomTypes/index'
+import { Route as AdminAccommodationsIdRoomTypesRoomTypeIdIndexRouteImport } from './routes/admin/accommodations/$id/roomTypes/$roomTypeId/index'
 
 const UseNotFoundRoute = UseNotFoundRouteImport.update({
   id: '/useNotFound',
@@ -53,6 +55,11 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -63,198 +70,216 @@ const NewsIndexRoute = NewsIndexRouteImport.update({
   path: '/news/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AccommodationIndexRoute = AccommodationIndexRouteImport.update({
-  id: '/accommodation/',
-  path: '/accommodation/',
-  getParentRoute: () => rootRouteImport,
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const AccommodationSearchRoute = AccommodationSearchRouteImport.update({
-  id: '/accommodation/search',
-  path: '/accommodation/search',
-  getParentRoute: () => rootRouteImport,
+const AdminToursRoute = AdminToursRouteImport.update({
+  id: '/tours',
+  path: '/tours',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const AccommodationIdRouteRoute = AccommodationIdRouteRouteImport.update({
-  id: '/accommodation/$id',
-  path: '/accommodation/$id',
-  getParentRoute: () => rootRouteImport,
+const AdminNewsRoute = AdminNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const AccommodationIdIndexRoute = AccommodationIdIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AccommodationIdRouteRoute,
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const AccommodationIdPeakDatesRoute =
-  AccommodationIdPeakDatesRouteImport.update({
-    id: '/peakDates',
-    path: '/peakDates',
-    getParentRoute: () => AccommodationIdRouteRoute,
+const AdminSettingIndexRoute = AdminSettingIndexRouteImport.update({
+  id: '/setting/',
+  path: '/setting/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAccommodationsIndexRoute =
+  AdminAccommodationsIndexRouteImport.update({
+    id: '/accommodations/',
+    path: '/accommodations/',
+    getParentRoute: () => AdminRouteRoute,
   } as any)
-const AccommodationIdInfoRoute = AccommodationIdInfoRouteImport.update({
-  id: '/info',
-  path: '/info',
-  getParentRoute: () => AccommodationIdRouteRoute,
+const AdminSettingDefaultsRoute = AdminSettingDefaultsRouteImport.update({
+  id: '/setting/defaults',
+  path: '/setting/defaults',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const AccommodationIdImagesRoute = AccommodationIdImagesRouteImport.update({
-  id: '/images',
-  path: '/images',
-  getParentRoute: () => AccommodationIdRouteRoute,
-} as any)
-const AccommodationIdFeaturesRoute = AccommodationIdFeaturesRouteImport.update({
-  id: '/features',
-  path: '/features',
-  getParentRoute: () => AccommodationIdRouteRoute,
-} as any)
-const AccommodationIdAddRoomTypesRoute =
-  AccommodationIdAddRoomTypesRouteImport.update({
-    id: '/addRoomTypes',
-    path: '/addRoomTypes',
-    getParentRoute: () => AccommodationIdRouteRoute,
+const AdminSettingAccommodationFeaturesRoute =
+  AdminSettingAccommodationFeaturesRouteImport.update({
+    id: '/setting/accommodationFeatures',
+    path: '/setting/accommodationFeatures',
+    getParentRoute: () => AdminRouteRoute,
   } as any)
-const AccommodationIdListRoomTypesIndexRoute =
-  AccommodationIdListRoomTypesIndexRouteImport.update({
-    id: '/listRoomTypes/',
-    path: '/listRoomTypes/',
-    getParentRoute: () => AccommodationIdRouteRoute,
+const AdminSettingBedTypesRoute = AdminSettingBedTypesRouteImport.update({
+  id: '/setting/BedTypes',
+  path: '/setting/BedTypes',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAccommodationsIdIndexRoute =
+  AdminAccommodationsIdIndexRouteImport.update({
+    id: '/accommodations/$id/',
+    path: '/accommodations/$id/',
+    getParentRoute: () => AdminRouteRoute,
   } as any)
-const AccommodationIdListRoomTypesRoomTypeIdRoute =
-  AccommodationIdListRoomTypesRoomTypeIdRouteImport.update({
-    id: '/listRoomTypes/$roomTypeId',
-    path: '/listRoomTypes/$roomTypeId',
-    getParentRoute: () => AccommodationIdRouteRoute,
+const AdminAccommodationsIdRoomTypesIndexRoute =
+  AdminAccommodationsIdRoomTypesIndexRouteImport.update({
+    id: '/accommodations/$id/roomTypes/',
+    path: '/accommodations/$id/roomTypes/',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
+const AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute =
+  AdminAccommodationsIdRoomTypesRoomTypeIdIndexRouteImport.update({
+    id: '/accommodations/$id/roomTypes/$roomTypeId/',
+    path: '/accommodations/$id/roomTypes/$roomTypeId/',
+    getParentRoute: () => AdminRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/notAdmin': typeof NotAdminRoute
   '/search': typeof SearchRoute
   '/useNotFound': typeof UseNotFoundRoute
-  '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
-  '/accommodation/search': typeof AccommodationSearchRoute
-  '/accommodation/': typeof AccommodationIndexRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/news': typeof AdminNewsRoute
+  '/admin/tours': typeof AdminToursRoute
+  '/admin/users': typeof AdminUsersRoute
   '/news/': typeof NewsIndexRoute
-  '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
-  '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
-  '/accommodation/$id/images': typeof AccommodationIdImagesRoute
-  '/accommodation/$id/info': typeof AccommodationIdInfoRoute
-  '/accommodation/$id/peakDates': typeof AccommodationIdPeakDatesRoute
-  '/accommodation/$id/': typeof AccommodationIdIndexRoute
-  '/accommodation/$id/listRoomTypes/$roomTypeId': typeof AccommodationIdListRoomTypesRoomTypeIdRoute
-  '/accommodation/$id/listRoomTypes/': typeof AccommodationIdListRoomTypesIndexRoute
+  '/admin/setting/BedTypes': typeof AdminSettingBedTypesRoute
+  '/admin/setting/accommodationFeatures': typeof AdminSettingAccommodationFeaturesRoute
+  '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
+  '/admin/accommodations/': typeof AdminAccommodationsIndexRoute
+  '/admin/setting/': typeof AdminSettingIndexRoute
+  '/admin/accommodations/$id/': typeof AdminAccommodationsIdIndexRoute
+  '/admin/accommodations/$id/roomTypes/': typeof AdminAccommodationsIdRoomTypesIndexRoute
+  '/admin/accommodations/$id/roomTypes/$roomTypeId/': typeof AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/notAdmin': typeof NotAdminRoute
   '/search': typeof SearchRoute
   '/useNotFound': typeof UseNotFoundRoute
-  '/accommodation/search': typeof AccommodationSearchRoute
-  '/accommodation': typeof AccommodationIndexRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/news': typeof AdminNewsRoute
+  '/admin/tours': typeof AdminToursRoute
+  '/admin/users': typeof AdminUsersRoute
   '/news': typeof NewsIndexRoute
-  '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
-  '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
-  '/accommodation/$id/images': typeof AccommodationIdImagesRoute
-  '/accommodation/$id/info': typeof AccommodationIdInfoRoute
-  '/accommodation/$id/peakDates': typeof AccommodationIdPeakDatesRoute
-  '/accommodation/$id': typeof AccommodationIdIndexRoute
-  '/accommodation/$id/listRoomTypes/$roomTypeId': typeof AccommodationIdListRoomTypesRoomTypeIdRoute
-  '/accommodation/$id/listRoomTypes': typeof AccommodationIdListRoomTypesIndexRoute
+  '/admin/setting/BedTypes': typeof AdminSettingBedTypesRoute
+  '/admin/setting/accommodationFeatures': typeof AdminSettingAccommodationFeaturesRoute
+  '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
+  '/admin/accommodations': typeof AdminAccommodationsIndexRoute
+  '/admin/setting': typeof AdminSettingIndexRoute
+  '/admin/accommodations/$id': typeof AdminAccommodationsIdIndexRoute
+  '/admin/accommodations/$id/roomTypes': typeof AdminAccommodationsIdRoomTypesIndexRoute
+  '/admin/accommodations/$id/roomTypes/$roomTypeId': typeof AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/notAdmin': typeof NotAdminRoute
   '/search': typeof SearchRoute
   '/useNotFound': typeof UseNotFoundRoute
-  '/accommodation/$id': typeof AccommodationIdRouteRouteWithChildren
-  '/accommodation/search': typeof AccommodationSearchRoute
-  '/accommodation/': typeof AccommodationIndexRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/news': typeof AdminNewsRoute
+  '/admin/tours': typeof AdminToursRoute
+  '/admin/users': typeof AdminUsersRoute
   '/news/': typeof NewsIndexRoute
-  '/accommodation/$id/addRoomTypes': typeof AccommodationIdAddRoomTypesRoute
-  '/accommodation/$id/features': typeof AccommodationIdFeaturesRoute
-  '/accommodation/$id/images': typeof AccommodationIdImagesRoute
-  '/accommodation/$id/info': typeof AccommodationIdInfoRoute
-  '/accommodation/$id/peakDates': typeof AccommodationIdPeakDatesRoute
-  '/accommodation/$id/': typeof AccommodationIdIndexRoute
-  '/accommodation/$id/listRoomTypes/$roomTypeId': typeof AccommodationIdListRoomTypesRoomTypeIdRoute
-  '/accommodation/$id/listRoomTypes/': typeof AccommodationIdListRoomTypesIndexRoute
+  '/admin/setting/BedTypes': typeof AdminSettingBedTypesRoute
+  '/admin/setting/accommodationFeatures': typeof AdminSettingAccommodationFeaturesRoute
+  '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
+  '/admin/accommodations/': typeof AdminAccommodationsIndexRoute
+  '/admin/setting/': typeof AdminSettingIndexRoute
+  '/admin/accommodations/$id/': typeof AdminAccommodationsIdIndexRoute
+  '/admin/accommodations/$id/roomTypes/': typeof AdminAccommodationsIdRoomTypesIndexRoute
+  '/admin/accommodations/$id/roomTypes/$roomTypeId/': typeof AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/dashboard'
     | '/login'
     | '/notAdmin'
     | '/search'
     | '/useNotFound'
-    | '/accommodation/$id'
-    | '/accommodation/search'
-    | '/accommodation/'
+    | '/admin/dashboard'
+    | '/admin/news'
+    | '/admin/tours'
+    | '/admin/users'
     | '/news/'
-    | '/accommodation/$id/addRoomTypes'
-    | '/accommodation/$id/features'
-    | '/accommodation/$id/images'
-    | '/accommodation/$id/info'
-    | '/accommodation/$id/peakDates'
-    | '/accommodation/$id/'
-    | '/accommodation/$id/listRoomTypes/$roomTypeId'
-    | '/accommodation/$id/listRoomTypes/'
+    | '/admin/setting/BedTypes'
+    | '/admin/setting/accommodationFeatures'
+    | '/admin/setting/defaults'
+    | '/admin/accommodations/'
+    | '/admin/setting/'
+    | '/admin/accommodations/$id/'
+    | '/admin/accommodations/$id/roomTypes/'
+    | '/admin/accommodations/$id/roomTypes/$roomTypeId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/dashboard'
     | '/login'
     | '/notAdmin'
     | '/search'
     | '/useNotFound'
-    | '/accommodation/search'
-    | '/accommodation'
+    | '/admin/dashboard'
+    | '/admin/news'
+    | '/admin/tours'
+    | '/admin/users'
     | '/news'
-    | '/accommodation/$id/addRoomTypes'
-    | '/accommodation/$id/features'
-    | '/accommodation/$id/images'
-    | '/accommodation/$id/info'
-    | '/accommodation/$id/peakDates'
-    | '/accommodation/$id'
-    | '/accommodation/$id/listRoomTypes/$roomTypeId'
-    | '/accommodation/$id/listRoomTypes'
+    | '/admin/setting/BedTypes'
+    | '/admin/setting/accommodationFeatures'
+    | '/admin/setting/defaults'
+    | '/admin/accommodations'
+    | '/admin/setting'
+    | '/admin/accommodations/$id'
+    | '/admin/accommodations/$id/roomTypes'
+    | '/admin/accommodations/$id/roomTypes/$roomTypeId'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/dashboard'
     | '/login'
     | '/notAdmin'
     | '/search'
     | '/useNotFound'
-    | '/accommodation/$id'
-    | '/accommodation/search'
-    | '/accommodation/'
+    | '/admin/dashboard'
+    | '/admin/news'
+    | '/admin/tours'
+    | '/admin/users'
     | '/news/'
-    | '/accommodation/$id/addRoomTypes'
-    | '/accommodation/$id/features'
-    | '/accommodation/$id/images'
-    | '/accommodation/$id/info'
-    | '/accommodation/$id/peakDates'
-    | '/accommodation/$id/'
-    | '/accommodation/$id/listRoomTypes/$roomTypeId'
-    | '/accommodation/$id/listRoomTypes/'
+    | '/admin/setting/BedTypes'
+    | '/admin/setting/accommodationFeatures'
+    | '/admin/setting/defaults'
+    | '/admin/accommodations/'
+    | '/admin/setting/'
+    | '/admin/accommodations/$id/'
+    | '/admin/accommodations/$id/roomTypes/'
+    | '/admin/accommodations/$id/roomTypes/$roomTypeId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   NotAdminRoute: typeof NotAdminRoute
   SearchRoute: typeof SearchRoute
   UseNotFoundRoute: typeof UseNotFoundRoute
-  AccommodationIdRouteRoute: typeof AccommodationIdRouteRouteWithChildren
-  AccommodationSearchRoute: typeof AccommodationSearchRoute
-  AccommodationIndexRoute: typeof AccommodationIndexRoute
   NewsIndexRoute: typeof NewsIndexRoute
 }
 
@@ -295,6 +320,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -309,123 +341,138 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/accommodation/': {
-      id: '/accommodation/'
-      path: '/accommodation'
-      fullPath: '/accommodation/'
-      preLoaderRoute: typeof AccommodationIndexRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/search': {
-      id: '/accommodation/search'
-      path: '/accommodation/search'
-      fullPath: '/accommodation/search'
-      preLoaderRoute: typeof AccommodationSearchRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/tours': {
+      id: '/admin/tours'
+      path: '/tours'
+      fullPath: '/admin/tours'
+      preLoaderRoute: typeof AdminToursRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/$id': {
-      id: '/accommodation/$id'
-      path: '/accommodation/$id'
-      fullPath: '/accommodation/$id'
-      preLoaderRoute: typeof AccommodationIdRouteRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/news': {
+      id: '/admin/news'
+      path: '/news'
+      fullPath: '/admin/news'
+      preLoaderRoute: typeof AdminNewsRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/$id/': {
-      id: '/accommodation/$id/'
-      path: '/'
-      fullPath: '/accommodation/$id/'
-      preLoaderRoute: typeof AccommodationIdIndexRouteImport
-      parentRoute: typeof AccommodationIdRouteRoute
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/$id/peakDates': {
-      id: '/accommodation/$id/peakDates'
-      path: '/peakDates'
-      fullPath: '/accommodation/$id/peakDates'
-      preLoaderRoute: typeof AccommodationIdPeakDatesRouteImport
-      parentRoute: typeof AccommodationIdRouteRoute
+    '/admin/setting/': {
+      id: '/admin/setting/'
+      path: '/setting'
+      fullPath: '/admin/setting/'
+      preLoaderRoute: typeof AdminSettingIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/$id/info': {
-      id: '/accommodation/$id/info'
-      path: '/info'
-      fullPath: '/accommodation/$id/info'
-      preLoaderRoute: typeof AccommodationIdInfoRouteImport
-      parentRoute: typeof AccommodationIdRouteRoute
+    '/admin/accommodations/': {
+      id: '/admin/accommodations/'
+      path: '/accommodations'
+      fullPath: '/admin/accommodations/'
+      preLoaderRoute: typeof AdminAccommodationsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/$id/images': {
-      id: '/accommodation/$id/images'
-      path: '/images'
-      fullPath: '/accommodation/$id/images'
-      preLoaderRoute: typeof AccommodationIdImagesRouteImport
-      parentRoute: typeof AccommodationIdRouteRoute
+    '/admin/setting/defaults': {
+      id: '/admin/setting/defaults'
+      path: '/setting/defaults'
+      fullPath: '/admin/setting/defaults'
+      preLoaderRoute: typeof AdminSettingDefaultsRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/$id/features': {
-      id: '/accommodation/$id/features'
-      path: '/features'
-      fullPath: '/accommodation/$id/features'
-      preLoaderRoute: typeof AccommodationIdFeaturesRouteImport
-      parentRoute: typeof AccommodationIdRouteRoute
+    '/admin/setting/accommodationFeatures': {
+      id: '/admin/setting/accommodationFeatures'
+      path: '/setting/accommodationFeatures'
+      fullPath: '/admin/setting/accommodationFeatures'
+      preLoaderRoute: typeof AdminSettingAccommodationFeaturesRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/$id/addRoomTypes': {
-      id: '/accommodation/$id/addRoomTypes'
-      path: '/addRoomTypes'
-      fullPath: '/accommodation/$id/addRoomTypes'
-      preLoaderRoute: typeof AccommodationIdAddRoomTypesRouteImport
-      parentRoute: typeof AccommodationIdRouteRoute
+    '/admin/setting/BedTypes': {
+      id: '/admin/setting/BedTypes'
+      path: '/setting/BedTypes'
+      fullPath: '/admin/setting/BedTypes'
+      preLoaderRoute: typeof AdminSettingBedTypesRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/$id/listRoomTypes/': {
-      id: '/accommodation/$id/listRoomTypes/'
-      path: '/listRoomTypes'
-      fullPath: '/accommodation/$id/listRoomTypes/'
-      preLoaderRoute: typeof AccommodationIdListRoomTypesIndexRouteImport
-      parentRoute: typeof AccommodationIdRouteRoute
+    '/admin/accommodations/$id/': {
+      id: '/admin/accommodations/$id/'
+      path: '/accommodations/$id'
+      fullPath: '/admin/accommodations/$id/'
+      preLoaderRoute: typeof AdminAccommodationsIdIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/accommodation/$id/listRoomTypes/$roomTypeId': {
-      id: '/accommodation/$id/listRoomTypes/$roomTypeId'
-      path: '/listRoomTypes/$roomTypeId'
-      fullPath: '/accommodation/$id/listRoomTypes/$roomTypeId'
-      preLoaderRoute: typeof AccommodationIdListRoomTypesRoomTypeIdRouteImport
-      parentRoute: typeof AccommodationIdRouteRoute
+    '/admin/accommodations/$id/roomTypes/': {
+      id: '/admin/accommodations/$id/roomTypes/'
+      path: '/accommodations/$id/roomTypes'
+      fullPath: '/admin/accommodations/$id/roomTypes/'
+      preLoaderRoute: typeof AdminAccommodationsIdRoomTypesIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/accommodations/$id/roomTypes/$roomTypeId/': {
+      id: '/admin/accommodations/$id/roomTypes/$roomTypeId/'
+      path: '/accommodations/$id/roomTypes/$roomTypeId'
+      fullPath: '/admin/accommodations/$id/roomTypes/$roomTypeId/'
+      preLoaderRoute: typeof AdminAccommodationsIdRoomTypesRoomTypeIdIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
   }
 }
 
-interface AccommodationIdRouteRouteChildren {
-  AccommodationIdAddRoomTypesRoute: typeof AccommodationIdAddRoomTypesRoute
-  AccommodationIdFeaturesRoute: typeof AccommodationIdFeaturesRoute
-  AccommodationIdImagesRoute: typeof AccommodationIdImagesRoute
-  AccommodationIdInfoRoute: typeof AccommodationIdInfoRoute
-  AccommodationIdPeakDatesRoute: typeof AccommodationIdPeakDatesRoute
-  AccommodationIdIndexRoute: typeof AccommodationIdIndexRoute
-  AccommodationIdListRoomTypesRoomTypeIdRoute: typeof AccommodationIdListRoomTypesRoomTypeIdRoute
-  AccommodationIdListRoomTypesIndexRoute: typeof AccommodationIdListRoomTypesIndexRoute
+interface AdminRouteRouteChildren {
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminNewsRoute: typeof AdminNewsRoute
+  AdminToursRoute: typeof AdminToursRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminSettingBedTypesRoute: typeof AdminSettingBedTypesRoute
+  AdminSettingAccommodationFeaturesRoute: typeof AdminSettingAccommodationFeaturesRoute
+  AdminSettingDefaultsRoute: typeof AdminSettingDefaultsRoute
+  AdminAccommodationsIndexRoute: typeof AdminAccommodationsIndexRoute
+  AdminSettingIndexRoute: typeof AdminSettingIndexRoute
+  AdminAccommodationsIdIndexRoute: typeof AdminAccommodationsIdIndexRoute
+  AdminAccommodationsIdRoomTypesIndexRoute: typeof AdminAccommodationsIdRoomTypesIndexRoute
+  AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute: typeof AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute
 }
 
-const AccommodationIdRouteRouteChildren: AccommodationIdRouteRouteChildren = {
-  AccommodationIdAddRoomTypesRoute: AccommodationIdAddRoomTypesRoute,
-  AccommodationIdFeaturesRoute: AccommodationIdFeaturesRoute,
-  AccommodationIdImagesRoute: AccommodationIdImagesRoute,
-  AccommodationIdInfoRoute: AccommodationIdInfoRoute,
-  AccommodationIdPeakDatesRoute: AccommodationIdPeakDatesRoute,
-  AccommodationIdIndexRoute: AccommodationIdIndexRoute,
-  AccommodationIdListRoomTypesRoomTypeIdRoute:
-    AccommodationIdListRoomTypesRoomTypeIdRoute,
-  AccommodationIdListRoomTypesIndexRoute:
-    AccommodationIdListRoomTypesIndexRoute,
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminNewsRoute: AdminNewsRoute,
+  AdminToursRoute: AdminToursRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminSettingBedTypesRoute: AdminSettingBedTypesRoute,
+  AdminSettingAccommodationFeaturesRoute:
+    AdminSettingAccommodationFeaturesRoute,
+  AdminSettingDefaultsRoute: AdminSettingDefaultsRoute,
+  AdminAccommodationsIndexRoute: AdminAccommodationsIndexRoute,
+  AdminSettingIndexRoute: AdminSettingIndexRoute,
+  AdminAccommodationsIdIndexRoute: AdminAccommodationsIdIndexRoute,
+  AdminAccommodationsIdRoomTypesIndexRoute:
+    AdminAccommodationsIdRoomTypesIndexRoute,
+  AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute:
+    AdminAccommodationsIdRoomTypesRoomTypeIdIndexRoute,
 }
 
-const AccommodationIdRouteRouteWithChildren =
-  AccommodationIdRouteRoute._addFileChildren(AccommodationIdRouteRouteChildren)
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   NotAdminRoute: NotAdminRoute,
   SearchRoute: SearchRoute,
   UseNotFoundRoute: UseNotFoundRoute,
-  AccommodationIdRouteRoute: AccommodationIdRouteRouteWithChildren,
-  AccommodationSearchRoute: AccommodationSearchRoute,
-  AccommodationIndexRoute: AccommodationIndexRoute,
   NewsIndexRoute: NewsIndexRoute,
 }
 export const routeTree = rootRouteImport

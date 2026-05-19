@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 interface Props {
   tabItems: tabItems[];
+  orientation: "horizontal" | "vertical";
 }
 
 interface tabItems {
@@ -10,10 +11,10 @@ interface tabItems {
   component: JSX.Element;
 }
 
-const CustomTab = ({ tabItems }: Props) => {
+const CustomTab = ({ tabItems, orientation }: Props) => {
   return (
-    <Tabs defaultValue={tabItems[0].title} className="w-full">
-      <TabsList className="w-full">
+    <Tabs defaultValue={tabItems[0].title} className="w-full" orientation={orientation}>
+      <TabsList className="w-fit">
         {tabItems.map((item) => (
           <TabsTrigger
             key={item.title}
@@ -24,7 +25,7 @@ const CustomTab = ({ tabItems }: Props) => {
           </TabsTrigger>
         ))}
       </TabsList>
-      <div className="py-10">
+      <div className="py-10 mx-10">
         {tabItems.map((item) => (
           <TabsContent key={item.title} value={item.title}>
             {item.component}

@@ -9,17 +9,15 @@ import {
 import { Bell, LogOut, User } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { useLogout } from "../../login/services/useLogout";
-import type { TAccommodationResponse } from "../Accommodation/types";
 import useMe from "../../login/services/useMe";
 import UserProfile from "./hooks/UserProfile";
 import { useNavigate } from "@tanstack/react-router";
 
 interface Props {
-  AccommodationData?: TAccommodationResponse;
   menuBtn?: ReactNode;
 }
 
-const Header = ({ AccommodationData, menuBtn }: Props) => {
+const Header = ({ menuBtn }: Props) => {
   const { mutateAsync } = useLogout();
   const { data } = useMe();
   const [open, setOpen] = useState(false);
@@ -32,9 +30,6 @@ const Header = ({ AccommodationData, menuBtn }: Props) => {
         <div className="flex items-center gap-5 text-primary">
           {menuBtn}
           <span onClick={() => navigate({to: "/"})} className="cursor-pointer">آژانس</span>
-          <span>
-            {AccommodationData?.type.name} {AccommodationData?.name}
-          </span>
         </div>
         <div className="flex items-center justify-center cursor-pointer gap-4 mx-2">
           {/* <span className="text-sm font-medium text-background">نسترن طالبی</span> */}

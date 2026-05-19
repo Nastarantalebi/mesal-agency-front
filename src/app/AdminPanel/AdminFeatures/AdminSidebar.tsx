@@ -24,7 +24,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 interface Items {
   title: string;
   url?: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   children?: Items[];
 }
 
@@ -32,15 +32,16 @@ interface Props {
   sidebaritems: Items[];
 }
 
-export function AppSidebar({ sidebaritems }: Props) {
+export function AdminSidebar({ sidebaritems }: Props) {
   const { toggleSidebar, openMobile } = useSidebar(); // ← isOpen comes from the provider
   const isMobile = useIsMobile(); // ← true when < 768 px
-  
-  const toggleIcon = openMobile && isMobile ? (
-    <X className="h-7 w-7 text-primary cursor-pointer" />
-  ) : (
-    <MenuIcon className="h-7 w-7 text-primary cursor-pointer" />
-  );
+
+  const toggleIcon =
+    openMobile && isMobile ? (
+      <X className="h-7 w-7 text-primary cursor-pointer" />
+    ) : (
+      <MenuIcon className="h-7 w-7 text-primary cursor-pointer" />
+    );
   // const { toggleSidebar } = useSidebar();
 
   return (
@@ -48,7 +49,7 @@ export function AppSidebar({ sidebaritems }: Props) {
       collapsible="icon"
       className="md:relative absolute border-primary-60 shadow-2xl transition-[width] duration-100 z-40 "
     >
-      <SidebarHeader>  
+      <SidebarHeader>
         <span onClick={toggleSidebar}>{toggleIcon}</span>
       </SidebarHeader>
       <SidebarContent>
@@ -90,12 +91,16 @@ export function AppSidebar({ sidebaritems }: Props) {
                   </Collapsible>
                 ) : (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild className="hover:bg-primary/10 hover:text-primary hover:[&_svg]:text-primary">
+                    <SidebarMenuButton
+                      asChild
+                      className="hover:bg-primary/10 hover:text-primary hover:[&_svg]:text-primary"
+                    >
                       <Link
                         to={item.url}
                         className="transition-colors"
                         activeProps={{
-                          className: "bg-primary/20 text-primary [&_svg]:text-primary",
+                          className:
+                            "bg-primary/20 text-primary [&_svg]:text-primary",
                         }}
                       >
                         {item.icon}
@@ -103,7 +108,7 @@ export function AppSidebar({ sidebaritems }: Props) {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                )
+                ),
               )}
             </SidebarMenu>
           </SidebarGroupContent>

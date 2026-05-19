@@ -15,8 +15,9 @@ import {
 } from "../../fixtures/validation";
 import ReloadList from "@/components/list/ReloadList";
 import type { createUsersList } from "../../types";
+import CustomDialog from "@/components/modal/CustomDialog";
 
-const usersList = () => {
+const UsersList = () => {
   const [filters, setFilters] = useState<createUsersList>();
   // const [input, setInput] = useState("");
   const [openD, setOpen] = useState(false);
@@ -45,13 +46,6 @@ const usersList = () => {
   return (
     <>
       <div className="px-2 sm:px-0">
-        {/* <SearchInput
-          input={input}
-          setInput={setInput}
-          setSearchInput={setSearchInput}
-          placeholder="جست و جوی شماره همراه"
-        /> */}
-
         <div className="overflow-x-auto rounded-md mt-4 space-y-2">
           <div className="flex flex-row gap-1 justify-end">
             <FilterList onClick={() => setOpen(true)} />
@@ -88,6 +82,7 @@ const usersList = () => {
             onPageChange={setCurrentPage}
           />
         </div>
+        {/* <CustomDialog dialogContent={<UsersFor}/> */}
         <FilterModal<createUsersList>
           open={openD}
           setOpen={setOpen}
@@ -112,4 +107,4 @@ const usersList = () => {
   );
 };
 
-export default usersList;
+export default UsersList;

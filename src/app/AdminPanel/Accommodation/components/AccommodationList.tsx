@@ -27,7 +27,12 @@ const AccommodationList = () => {
 
   const navigate = useNavigate();
 
-  if (getAccommodations.isFetching) return <div><CustomLoader/></div>;
+  if (getAccommodations.isFetching)
+    return (
+      <div>
+        <CustomLoader />
+      </div>
+    );
 
   if (getAccommodations.error)
     return (
@@ -56,8 +61,7 @@ const AccommodationList = () => {
             onAdd={() => setOpenAdd(true)}
             onRowClick={(rowData) => {
               navigate({
-                to: "/accommodation/$id",
-                params: { id: String(rowData.id) },
+                to: `/admin/accommodations/${rowData.id}`,
               });
             }}
             extraAction={(rowData) => (

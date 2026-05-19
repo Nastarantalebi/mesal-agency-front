@@ -1,9 +1,9 @@
-import News from "@/app/usersPanel/Landing/news/News";
+import { createFileRoute } from "@tanstack/react-router";
 import Tours from "@/app/usersPanel/Landing/foreignTours/Tours";
 import HeroSection from "@/app/usersPanel/Landing/heroSection/HeroSection";
+import News from "@/app/usersPanel/Landing/news/News";
 import IranPattern from "@/app/usersPanel/Landing/popularCities/components/IranPattern";
 import Services from "@/app/usersPanel/Landing/services/components/Services";
-import { createFileRoute } from "@tanstack/react-router";
 
 // const queryClient = new QueryClient();
 export const Route = createFileRoute("/")({
@@ -30,12 +30,12 @@ function HomeComponent() {
   return (
     <div className="overflow-x-hidden flex flex-col items-center">
       <HeroSection />
-      <Services/>
-      <News/>
+      <Services />
+      <News />
       {/* <HomePageFeatures />
       <PropvinceBasedAccommodation /> */}
-      <IranPattern/>
-      <Tours/>
+      <IranPattern />
+      <Tours />
     </div>
   );
 }

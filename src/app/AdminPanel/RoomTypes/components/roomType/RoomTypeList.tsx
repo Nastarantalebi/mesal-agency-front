@@ -75,11 +75,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
 
             onRowClick={(rowData) => {
               navigate({
-                to: "/accommodation/$id/listRoomTypes/$roomTypeId",
-                params: {
-                  id: String(AccommodationId),
-                  roomTypeId: String(rowData.id),
-                },
+                to: `/admin/accommodations/$id/roomTypes/${rowData.id}`,
               });
             }}
             onAdd={() => setAddRoomType(true)}
