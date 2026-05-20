@@ -9,14 +9,15 @@ import useTour from "../services/useTour";
 import CustomLoader from "@/components/loading/CustomLoader";
 import TourSteps from "./TourSteps";
 import { TourListColumns } from "../fixtures/TourListColumns";
+import { useNavigate } from "@tanstack/react-router";
+import TourDepartureForm from "./TourDepartureForm";
 
-const TourDepartureList = ({tourTemplateId}: {tourTemplateId: number}) => {
+const TourDepartureList = ({ tourTemplateId }: { tourTemplateId: number }) => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
   const [selected, setSelected] = useState<TourDepartureItem | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
-  const [openAdd, setOpenAdd] = useState(false);
-
   const [search, setSearch] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const { deleteTourDeparture, getTourDeprtures } = useTour({
     currentTourPage,
@@ -50,9 +51,10 @@ const TourDepartureList = ({tourTemplateId}: {tourTemplateId: number}) => {
               setCurrentTourPage(1);
               setSearch(value);
             }}
+            
+            // onAdd={() => setOpenModal(true)}
             searchPlaceHolder="جست و جوی نام تور"
             customAddText="افزودن تور"
-            onAdd={() => setOpenAdd(true)}
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
                 <ListDelete
@@ -66,6 +68,7 @@ const TourDepartureList = ({tourTemplateId}: {tourTemplateId: number}) => {
             showAction
             columns={TourListColumns}
             data={getTourDeprtures.data?.results ?? []}
+            showAddButton={false}
           />
         </div>
 
@@ -78,13 +81,15 @@ const TourDepartureList = ({tourTemplateId}: {tourTemplateId: number}) => {
         </div>
       </div>
 
-      <CustomDialog
-        dialogContent={<TourSteps />}
-        dialogTitle="افزودن تور جدید"
-        onOpenChange={() => setOpenAdd(false)}
-        open={openAdd}
-        size="xxxl"
-      />
+      {/* <CustomDialog
+        dialogContent={<TourDepartureForm tourTemplateId={tourTemplateId} />}
+        dialogTitle="افزودن تمپلیت تور جدید"
+        onOpenChange={() => {
+          setOpenModal(false);
+        }}
+        open={openModal}
+        size="xxl"
+      /> */}
 
       <FormErrorModal
         open={openDelete}

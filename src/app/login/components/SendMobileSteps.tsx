@@ -24,10 +24,10 @@ const SendMobileSteps = ({ onSubmit, error }: mobileStepsProps) => {
   });
   const {LoginMobileFields} = useLoginFields()
   return (
-    <>
+    <div className="">
       {/* Display backend error */}
       {error && (
-        <div className="col-span-full rounded-md bg-red-50 p-3 border border-red-200">
+        <div className="col-span-full rounded-md bg-red-50 border border-red-200">
           <p className="text-sm text-red-800">
             {error.response.status === 429
               ? "تعداد درخواست‌ها بیش از حد مجاز است لطفا دقایقی دیگر تلاش کنید."
@@ -54,7 +54,7 @@ const SendMobileSteps = ({ onSubmit, error }: mobileStepsProps) => {
           </CustomButton>
         </form>
       </Form>
-    </>
+    </div>
   );
 };
 

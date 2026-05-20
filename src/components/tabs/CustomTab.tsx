@@ -24,7 +24,7 @@ const CustomTab = ({ tabItems }: Props) => {
           </TabsTrigger>
         ))}
       </TabsList>
-      <div className="py-10 mx-10 w-full">
+      <div className="py-10 w-full">
         {tabItems.map((item) => (
           <TabsContent key={item.title} value={item.title}>
             {item.component}

@@ -36,6 +36,7 @@ interface Props<TData, TValue> {
   onSearchChange: (value: string) => void;
   onSearch: (value: string) => void;
   searchPlaceHolder: string;
+  showAddButton?: boolean;
 }
 
 type RowWithId = { id: string | number };
@@ -53,6 +54,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
   onSearch,
   onSearchChange,
   searchValue,
+  showAddButton= true,
 }: Props<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -77,6 +79,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
           onSearch={onSearch}
           placeholder={searchPlaceHolder}
           onAdd={onAdd!}
+          showAddButton={showAddButton}
         />
         <Table className="w-full table-fixed border border-primary ">
           <colgroup>

@@ -10,7 +10,7 @@ const Login = () => {
         ورود به حساب کاربری
       </h1>
       <Separator className="bg-slate-200" />
-      <CustomTab tabItems={loginTabItems} />
+      <CustomTab tabItems={loginTabItems}/>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import {
   Settings2,
   Bed,
   Star,
+  TreePalm,
 } from "lucide-react";
 
 export const SidebarData = [
@@ -19,6 +20,11 @@ export const SidebarData = [
     title: "لیست تمپلیت تور ها",
     url: `/admin/tourTemplates/`,
     icon: <TentTreeIcon />,
+  },
+  {
+    title: "ایجاد تور جدید",
+    url: `/admin/tour/`,
+    icon: <TreePalm />,
   },
   {
     title: "اخبار",

@@ -53,34 +53,36 @@ const PasswordLogin = () => {
           </p>
         </div>
       )}
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
-          {LoginPassWordFields.map((item) => (
-            <div
-              key={String(item.name)}
-              className={item.className || "col-span-1"}
-            >
-              {formTypes<ILogingForm>(item, form.control)}
+      <div className="">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)}>
+            {LoginPassWordFields.map((item) => (
+              <div
+                key={String(item.name)}
+                className={item.className || "col-span-1"}
+              >
+                {formTypes<ILogingForm>(item, form.control)}
+              </div>
+            ))}
+            <div className="">
+              <CustomButton
+                type="submit"
+                variant={"outline"}
+                className="w-full text-secondary-40 border-4 hover:text-white mt-10"
+                disabled={isLogingIn}
+              >
+                {isLogingIn ? "در حال ورود..." : "ورود"}
+              </CustomButton>
             </div>
-          ))}
-          <div className="">
-            <CustomButton
-              type="submit"
-              variant={"outline"}
-              className="w-full text-secondary-40 border-4 hover:text-white mt-10"
-              disabled={isLogingIn}
+            <div
+              className="flex flex-row hover:text-black text-blue-800 items-center cursor-pointer p-2"
+              onClick={() => setForgetPassword(true)}
             >
-              {isLogingIn ? "در حال ورود..." : "ورود"}
-            </CustomButton>
-          </div>
-          <div
-            className="flex flex-row hover:text-black text-blue-800 items-center cursor-pointer p-2"
-            onClick={() => setForgetPassword(true)}
-          >
-            فراموشی رمز عبور؟
-          </div>
-        </form>
-      </Form>
+              فراموشی رمز عبور؟
+            </div>
+          </form>
+        </Form>
+      </div>
     </>
   );
 };

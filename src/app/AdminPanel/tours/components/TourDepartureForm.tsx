@@ -26,7 +26,7 @@ interface TourDepartureFormProps {
   departureId?: number;
   buttonText?: string;
   tourTemplateId: number | null;
-  setDepartureData: Dispatch<
+  setDepartureData?: Dispatch<
     SetStateAction<TResponseTourDeparture | undefined>
   >;
   onSubmitSuccess?: () => void;
@@ -96,7 +96,7 @@ const TourDepartureForm = forwardRef<
       } else {
         postTourDeparture(transformedData, {
           onSuccess: (data) => {
-            setDepartureData(data);
+            setDepartureData?.(data);
             onSubmitSuccess?.();
           },
           onError: () => setErrorOpen(true),

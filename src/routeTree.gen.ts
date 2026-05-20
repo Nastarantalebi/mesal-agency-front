@@ -20,6 +20,7 @@ import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminNewsRouteImport } from './routes/admin/news'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminTourTemplatesIndexRouteImport } from './routes/admin/tourTemplates/index'
+import { Route as AdminTourIndexRouteImport } from './routes/admin/tour/index'
 import { Route as AdminSettingIndexRouteImport } from './routes/admin/setting/index'
 import { Route as AdminAccommodationsIndexRouteImport } from './routes/admin/accommodations/index'
 import { Route as AdminSettingDefaultsRouteImport } from './routes/admin/setting/defaults'
@@ -27,6 +28,7 @@ import { Route as AdminSettingAccommodationFeaturesRouteImport } from './routes/
 import { Route as AdminSettingBedTypesRouteImport } from './routes/admin/setting/BedTypes'
 import { Route as AdminTourTemplatesIdIndexRouteImport } from './routes/admin/tourTemplates/$id/index'
 import { Route as AdminAccommodationsIdIndexRouteImport } from './routes/admin/accommodations/$id/index'
+import { Route as AdminTourTemplatesIdCreateRouteImport } from './routes/admin/tourTemplates/$id/create'
 import { Route as AdminAccommodationsIdRoomTypesIndexRouteImport } from './routes/admin/accommodations/$id/roomTypes/index'
 import { Route as AdminAccommodationsIdRoomTypesRoomTypeIdIndexRouteImport } from './routes/admin/accommodations/$id/roomTypes/$roomTypeId/index'
 
@@ -85,6 +87,11 @@ const AdminTourTemplatesIndexRoute = AdminTourTemplatesIndexRouteImport.update({
   path: '/tourTemplates/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminTourIndexRoute = AdminTourIndexRouteImport.update({
+  id: '/tour/',
+  path: '/tour/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminSettingIndexRoute = AdminSettingIndexRouteImport.update({
   id: '/setting/',
   path: '/setting/',
@@ -124,6 +131,12 @@ const AdminAccommodationsIdIndexRoute =
     path: '/accommodations/$id/',
     getParentRoute: () => AdminRouteRoute,
   } as any)
+const AdminTourTemplatesIdCreateRoute =
+  AdminTourTemplatesIdCreateRouteImport.update({
+    id: '/tourTemplates/$id/create',
+    path: '/tourTemplates/$id/create',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
 const AdminAccommodationsIdRoomTypesIndexRoute =
   AdminAccommodationsIdRoomTypesIndexRouteImport.update({
     id: '/accommodations/$id/roomTypes/',
@@ -153,7 +166,9 @@ export interface FileRoutesByFullPath {
   '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
   '/admin/accommodations/': typeof AdminAccommodationsIndexRoute
   '/admin/setting/': typeof AdminSettingIndexRoute
+  '/admin/tour/': typeof AdminTourIndexRoute
   '/admin/tourTemplates/': typeof AdminTourTemplatesIndexRoute
+  '/admin/tourTemplates/$id/create': typeof AdminTourTemplatesIdCreateRoute
   '/admin/accommodations/$id/': typeof AdminAccommodationsIdIndexRoute
   '/admin/tourTemplates/$id/': typeof AdminTourTemplatesIdIndexRoute
   '/admin/accommodations/$id/roomTypes/': typeof AdminAccommodationsIdRoomTypesIndexRoute
@@ -175,7 +190,9 @@ export interface FileRoutesByTo {
   '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
   '/admin/accommodations': typeof AdminAccommodationsIndexRoute
   '/admin/setting': typeof AdminSettingIndexRoute
+  '/admin/tour': typeof AdminTourIndexRoute
   '/admin/tourTemplates': typeof AdminTourTemplatesIndexRoute
+  '/admin/tourTemplates/$id/create': typeof AdminTourTemplatesIdCreateRoute
   '/admin/accommodations/$id': typeof AdminAccommodationsIdIndexRoute
   '/admin/tourTemplates/$id': typeof AdminTourTemplatesIdIndexRoute
   '/admin/accommodations/$id/roomTypes': typeof AdminAccommodationsIdRoomTypesIndexRoute
@@ -198,7 +215,9 @@ export interface FileRoutesById {
   '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
   '/admin/accommodations/': typeof AdminAccommodationsIndexRoute
   '/admin/setting/': typeof AdminSettingIndexRoute
+  '/admin/tour/': typeof AdminTourIndexRoute
   '/admin/tourTemplates/': typeof AdminTourTemplatesIndexRoute
+  '/admin/tourTemplates/$id/create': typeof AdminTourTemplatesIdCreateRoute
   '/admin/accommodations/$id/': typeof AdminAccommodationsIdIndexRoute
   '/admin/tourTemplates/$id/': typeof AdminTourTemplatesIdIndexRoute
   '/admin/accommodations/$id/roomTypes/': typeof AdminAccommodationsIdRoomTypesIndexRoute
@@ -222,7 +241,9 @@ export interface FileRouteTypes {
     | '/admin/setting/defaults'
     | '/admin/accommodations/'
     | '/admin/setting/'
+    | '/admin/tour/'
     | '/admin/tourTemplates/'
+    | '/admin/tourTemplates/$id/create'
     | '/admin/accommodations/$id/'
     | '/admin/tourTemplates/$id/'
     | '/admin/accommodations/$id/roomTypes/'
@@ -244,7 +265,9 @@ export interface FileRouteTypes {
     | '/admin/setting/defaults'
     | '/admin/accommodations'
     | '/admin/setting'
+    | '/admin/tour'
     | '/admin/tourTemplates'
+    | '/admin/tourTemplates/$id/create'
     | '/admin/accommodations/$id'
     | '/admin/tourTemplates/$id'
     | '/admin/accommodations/$id/roomTypes'
@@ -266,7 +289,9 @@ export interface FileRouteTypes {
     | '/admin/setting/defaults'
     | '/admin/accommodations/'
     | '/admin/setting/'
+    | '/admin/tour/'
     | '/admin/tourTemplates/'
+    | '/admin/tourTemplates/$id/create'
     | '/admin/accommodations/$id/'
     | '/admin/tourTemplates/$id/'
     | '/admin/accommodations/$id/roomTypes/'
@@ -362,6 +387,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTourTemplatesIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/tour/': {
+      id: '/admin/tour/'
+      path: '/tour'
+      fullPath: '/admin/tour/'
+      preLoaderRoute: typeof AdminTourIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/setting/': {
       id: '/admin/setting/'
       path: '/setting'
@@ -411,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAccommodationsIdIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/tourTemplates/$id/create': {
+      id: '/admin/tourTemplates/$id/create'
+      path: '/tourTemplates/$id/create'
+      fullPath: '/admin/tourTemplates/$id/create'
+      preLoaderRoute: typeof AdminTourTemplatesIdCreateRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/accommodations/$id/roomTypes/': {
       id: '/admin/accommodations/$id/roomTypes/'
       path: '/accommodations/$id/roomTypes'
@@ -437,7 +476,9 @@ interface AdminRouteRouteChildren {
   AdminSettingDefaultsRoute: typeof AdminSettingDefaultsRoute
   AdminAccommodationsIndexRoute: typeof AdminAccommodationsIndexRoute
   AdminSettingIndexRoute: typeof AdminSettingIndexRoute
+  AdminTourIndexRoute: typeof AdminTourIndexRoute
   AdminTourTemplatesIndexRoute: typeof AdminTourTemplatesIndexRoute
+  AdminTourTemplatesIdCreateRoute: typeof AdminTourTemplatesIdCreateRoute
   AdminAccommodationsIdIndexRoute: typeof AdminAccommodationsIdIndexRoute
   AdminTourTemplatesIdIndexRoute: typeof AdminTourTemplatesIdIndexRoute
   AdminAccommodationsIdRoomTypesIndexRoute: typeof AdminAccommodationsIdRoomTypesIndexRoute
@@ -454,7 +495,9 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminSettingDefaultsRoute: AdminSettingDefaultsRoute,
   AdminAccommodationsIndexRoute: AdminAccommodationsIndexRoute,
   AdminSettingIndexRoute: AdminSettingIndexRoute,
+  AdminTourIndexRoute: AdminTourIndexRoute,
   AdminTourTemplatesIndexRoute: AdminTourTemplatesIndexRoute,
+  AdminTourTemplatesIdCreateRoute: AdminTourTemplatesIdCreateRoute,
   AdminAccommodationsIdIndexRoute: AdminAccommodationsIdIndexRoute,
   AdminTourTemplatesIdIndexRoute: AdminTourTemplatesIdIndexRoute,
   AdminAccommodationsIdRoomTypesIndexRoute:
