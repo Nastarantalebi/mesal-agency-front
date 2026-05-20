@@ -11,10 +11,6 @@ import type { TtourTemplateItems } from "../types";
 import useTourTemplate from "../services/useTourTemplate";
 import ListTourDepartures from "./ListTourDeparturesIcon";
 import { useNavigate } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import TourSteps from "./TourSteps";
-
 const TourTemplateList = () => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
   const [selected, setSelected] = useState<TtourTemplateItems | null>(null);

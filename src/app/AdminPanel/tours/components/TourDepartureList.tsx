@@ -4,20 +4,15 @@ import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
 import type { TourDepartureItem } from "../types";
-import CustomDialog from "@/components/modal/CustomDialog";
 import useTour from "../services/useTour";
 import CustomLoader from "@/components/loading/CustomLoader";
-import TourSteps from "./TourSteps";
 import { TourListColumns } from "../fixtures/TourListColumns";
-import { useNavigate } from "@tanstack/react-router";
-import TourDepartureForm from "./TourDepartureForm";
 
 const TourDepartureList = ({ tourTemplateId }: { tourTemplateId: number }) => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
   const [selected, setSelected] = useState<TourDepartureItem | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [search, setSearch] = useState("");
-  const [openModal, setOpenModal] = useState(false);
 
   const { deleteTourDeparture, getTourDeprtures } = useTour({
     currentTourPage,
@@ -51,7 +46,6 @@ const TourDepartureList = ({ tourTemplateId }: { tourTemplateId: number }) => {
               setCurrentTourPage(1);
               setSearch(value);
             }}
-            
             // onAdd={() => setOpenModal(true)}
             searchPlaceHolder="جست و جوی نام تور"
             customAddText="افزودن تور"
