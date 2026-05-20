@@ -3,18 +3,17 @@ import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
 import CustomLoader from "@/components/loading/CustomLoader";
-import useDeparture from "../services/useDeparture";
+import useAllDeparture from "../services/useAllDeparture";
 import { DepartureListColumns } from "../fixtures/DepartureListColumns";
 import { useNavigate } from "@tanstack/react-router";
-import useTour from "../services/useTour";
 import FormErrorModal from "@/components/form/FormErrorModal";
 import type { TdepartureResponse } from "../types";
 import ListEdit from "@/components/list/ListEdit";
 import CustomDialog from "@/components/modal/CustomDialog";
 import TourDepartureForm from "./TourDepartureForm";
 import ListDate from "../../RoomTypes/components/roomTypeListIcons/ListDate";
-import TourPlans from "./TourPlans";
 import TourPlansList from "./TourPlansList";
+import useDeparture from "../services/useDeparture";
 
 const DeparturesList = () => {
   const [currentDeparturePage, setCurrentDeparturePage] = useState(1);
@@ -25,8 +24,8 @@ const DeparturesList = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openPlans, setOpenPlans] = useState(false);
 
-  const getDepartures = useDeparture();
-  const { deleteTourDeparture } = useTour({
+  const getDepartures = useAllDeparture();
+  const { deleteTourDeparture } = useDeparture({
     tourTemplateId: selected?.tour.id,
   });
 

@@ -1,7 +1,6 @@
 import {
   departurePlansValidation,
   type TCreateDeparturePlan,
-  type TResponseTourDeparture,
 } from "../fixtures/validation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,12 +20,12 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import useTour from "../services/useTour";
 import type { TdepartureResponse } from "../types";
+import usePlans from "../services/usePlans";
 
 interface Props {
-  departureData?: TdepartureResponse;
-  tourTemplateId?: number | null;
+  departureData: TdepartureResponse;
+  tourTemplateId: number | null;
   planId?: number;
   onSubmitSuccess?: () => void;
   setCurrentStep?: Dispatch<SetStateAction<number>>;
@@ -67,8 +66,8 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
     const departureId = departureData?.id;
 
     const { getPlansFields } = useFields();
-    const { postDeparturePlans, isPendingDepaturePlan, putDeparturePlan } =
-      useTour({
+    const { postDeparturePlans, putDeparturePlan } =
+      usePlans({
         departureId: departureId,
         tourTemplateId,
       });
@@ -91,7 +90,7 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
       },
     }));
     {
-      isPendingDepaturePlan && setIsPending?.(true);
+      postDeparturePlans.isPending && setIsPending?.(true);
     }
     const handleSubmit = (values: TCreateDeparturePlan) => {
       const payload = {
@@ -110,7 +109,7 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
               },
             },
           )
-        : postDeparturePlans(payload.plans, {
+        : postDeparturePlans.mutateAsync(payload.plans, {
             onError: () => setErrorOpen(true),
             onSuccess: () => {
               onSubmitSuccess?.();

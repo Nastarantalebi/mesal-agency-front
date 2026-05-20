@@ -1,14 +1,62 @@
-import { admin_departures_url, adminTour_key } from "@/data/querykeys";
-import useGetData from "@/services/useGetData";
 import type { TPaginatedResponse } from "@/types";
-import type { TdepartureResponse } from "../types";
+import type {
+  TCreateTourDeparture,
+  TResponseTourDeparture,
+} from "../fixtures/validation";
+import useGetData from "@/services/useGetData";
+import { adminTour_key, adminTour_url } from "@/data/querykeys";
+import useDeleteData from "@/services/useDeleteData";
+import usePostData from "@/services/usePostData";
+import usePutData from "@/services/usePutData";
+import useGetById from "@/services/useGetById";
 
-const useDeparture = () => {
-  const getDepartures  = useGetData<TPaginatedResponse<TdepartureResponse>>({
+interface Props {
+  currentTourPage?: number;
+  tourTemplateId?: number | null;
+  departureId?: number;
+}
+
+const useDeparture = ({ tourTemplateId, departureId }: Props) => {
+  const getTourDeprtures = useGetData<
+    TPaginatedResponse<TResponseTourDeparture>
+  >({
     key: [adminTour_key, "departures"],
-    url: admin_departures_url,
+    url: `${adminTour_url}${tourTemplateId}/departures/`,
+    enabled: !!tourTemplateId,
   });
-  return getDepartures;
+
+  const deleteTourDeparture = useDeleteData({
+    key: [adminTour_key, "departures"],
+    url: `${adminTour_url}${tourTemplateId}/departures/`,
+  });
+
+  const postTourDeparture = usePostData<TCreateTourDeparture>({
+    key: [adminTour_key, "departures"],
+    url: `${adminTour_url}${tourTemplateId}/departures/`,
+  });
+
+  const putTourDeparture = usePutData<TCreateTourDeparture>({
+    key: [adminTour_key, "departures"],
+    url: `${adminTour_url}${tourTemplateId}/departures/`,
+  });
+
+  const getTourDepartureById = useGetById<TResponseTourDeparture>({
+    key: [
+      adminTour_key,
+      "departures",
+      String(departureId),
+      String(tourTemplateId),
+    ],
+    url: `${adminTour_url}${tourTemplateId}/departures/${departureId}/`,
+    enabled: !!departureId,
+  });
+  return {
+    getTourDeprtures,
+    deleteTourDeparture,
+    postTourDeparture,
+    putTourDeparture,
+    getTourDepartureById,
+  };
 };
 
 export default useDeparture;

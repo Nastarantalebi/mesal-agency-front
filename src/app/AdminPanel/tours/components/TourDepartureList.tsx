@@ -4,9 +4,9 @@ import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
 import type { TourDepartureItem } from "../types";
-import useTour from "../services/useTour";
 import CustomLoader from "@/components/loading/CustomLoader";
 import { TourListColumns } from "../fixtures/TourListColumns";
+import useDeparture from "../services/useDeparture";
 
 const TourDepartureList = ({ tourTemplateId }: { tourTemplateId: number }) => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
@@ -14,7 +14,7 @@ const TourDepartureList = ({ tourTemplateId }: { tourTemplateId: number }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const [search, setSearch] = useState("");
 
-  const { deleteTourDeparture, getTourDeprtures } = useTour({
+  const { deleteTourDeparture, getTourDeprtures } = useDeparture({
     currentTourPage,
     tourTemplateId,
   });

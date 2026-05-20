@@ -16,20 +16,17 @@ import {
   tourDepartureInitialValues,
   tourDepartureValidation,
   type TCreateTourDeparture,
-  type TResponseTourDeparture,
 } from "../fixtures/validation";
-import useTour from "../services/useTour";
 import useFields from "../hooks/useDepartureFields";
 import FormComponent from "@/components/form/FormComponent";
 import type { TdepartureResponse } from "../types";
+import useDeparture from "../services/useDeparture";
 
 interface TourDepartureFormProps {
   departureId?: number;
   buttonText?: string;
   tourTemplateId: number | null;
-  setDepartureData?: Dispatch<
-    SetStateAction<TdepartureResponse | undefined>
-  >;
+  setDepartureData?: Dispatch<SetStateAction<TdepartureResponse | undefined>>;
   onSubmitSuccess?: () => void;
   setIsPending?: Dispatch<SetStateAction<boolean>>;
 }
@@ -55,12 +52,8 @@ const TourDepartureForm = forwardRef<
   ) => {
     const isEdit = !!departureId;
 
-    const {
-      postTourDeparture,
-      isPendingDeparture,
-      putTourDeparture,
-      getTourDepartureById,
-    } = useTour({ tourTemplateId, departureId });
+    const { postTourDeparture, putTourDeparture, getTourDepartureById } =
+      useDeparture({ tourTemplateId, departureId });
     const [errorOpen, setErrorOpen] = useState(false);
     const { fields } = useFields();
 
@@ -82,7 +75,7 @@ const TourDepartureForm = forwardRef<
     }, [getTourDepartureById.data, isEdit]);
 
     {
-      isPendingDeparture && setIsPending?.(true);
+      postTourDeparture.isPending && setIsPending?.(true);
     }
     const handleSubmit = (value: TCreateTourDeparture) => {
       const transformedData = {
@@ -103,7 +96,7 @@ const TourDepartureForm = forwardRef<
           },
         );
       } else {
-        postTourDeparture(transformedData, {
+        postTourDeparture.mutateAsync(transformedData, {
           onSuccess: (data) => {
             setDepartureData?.(data);
             onSubmitSuccess?.();

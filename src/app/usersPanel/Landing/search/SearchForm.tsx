@@ -17,6 +17,8 @@ export default function SearchForm() {
     num_adults: "",
     province: "",
   });
+
+  console.log(filters)
   // const { getSearch } = useSearch(filters);
 
   const handleSubmit = (formData: accommodationSearch) => {

@@ -3,10 +3,10 @@ import { CustomDataTable } from "@/components/list/CustomDataTable";
 import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
-import useTour from "../services/useTour";
 import CustomLoader from "@/components/loading/CustomLoader";
 import type { TtourPlanResponse } from "../fixtures/validation";
 import { PlanListColumns } from "../fixtures/PlanListColumns";
+import usePlans from "../services/usePlans";
 
 const TourPlansList = ({
   tourTemplateId,
@@ -21,7 +21,7 @@ const TourPlansList = ({
   const [search, setSearch] = useState("");
 
 
-  const { getDeparturePlans, deleteTourPlans } = useTour({
+  const { getDeparturePlans, deleteDeparturePlans } = usePlans({
     tourTemplateId,
     departureId,
   });
@@ -80,7 +80,7 @@ const TourPlansList = ({
       <FormErrorModal
         open={openDelete}
         onOpenChange={() => setOpenDelete(false)}
-        onAcknowledge={() => deleteTourPlans.mutateAsync({ id: selected?.id! })}
+        onAcknowledge={() => deleteDeparturePlans.mutateAsync({ id: selected?.id! })}
         buttonTitle="بله"
         dialogTitle="حذف"
       />

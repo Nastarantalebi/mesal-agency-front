@@ -19,9 +19,7 @@ const TourSteps = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [errorForm1, setErrorForm1] = useState(false);
   const [isPending, setIsPending] = useState(false);
-  const [departureData, setDepartureData] = useState<
-    TdepartureResponse | undefined
-  >();
+  const [departureData, setDepartureData] = useState<TdepartureResponse>();
   const formRef1 = useRef<{ submitForm: () => void }>(null);
   const formref2 = useRef<{ submitForm: () => void }>(null);
 
@@ -84,7 +82,7 @@ const TourSteps = () => {
         <TourPlans
           ref={formref2}
           tourTemplateId={selectedId}
-          departureData={departureData}
+          departureData={departureData!}
           setCurrentStep={setCurrentStep}
           setIsPending={setIsPending}
           showButton={false}
