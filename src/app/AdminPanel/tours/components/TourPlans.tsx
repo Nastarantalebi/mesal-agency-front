@@ -22,14 +22,16 @@ import {
   type SetStateAction,
 } from "react";
 import useTour from "../services/useTour";
+import type { TdepartureResponse } from "../types";
 
 interface Props {
-  departureData?: TResponseTourDeparture;
+  departureData?: TdepartureResponse;
   tourTemplateId?: number | null;
   planId?: number;
   onSubmitSuccess?: () => void;
   setCurrentStep?: Dispatch<SetStateAction<number>>;
-  setIsPending: Dispatch<SetStateAction<boolean>>;
+  setIsPending?: Dispatch<SetStateAction<boolean>>;
+  showButton?: boolean;
 }
 
 export interface DeparturePlanFormRef {
@@ -57,6 +59,7 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
       onSubmitSuccess,
       setCurrentStep,
       setIsPending,
+      showButton,
     },
     ref,
   ) => {
@@ -66,7 +69,7 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
     const { getPlansFields } = useFields();
     const { postDeparturePlans, isPendingDepaturePlan, putDeparturePlan } =
       useTour({
-        departureId,
+        departureId: departureId,
         tourTemplateId,
       });
     const [errorOpen, setErrorOpen] = useState(false);
@@ -111,7 +114,7 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
             onError: () => setErrorOpen(true),
             onSuccess: () => {
               onSubmitSuccess?.();
-              setIsPending(false);
+              setIsPending?.(false);
             },
           });
     };
@@ -135,7 +138,7 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
           handleSubmit={handleSubmit}
           errorOpen={errorOpen}
           setErrorOpen={setErrorOpen}
-          showButton={false}
+          showButton={showButton}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 col-span-full">
             {dates.map((item, index) => (

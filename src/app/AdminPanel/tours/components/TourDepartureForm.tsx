@@ -21,13 +21,14 @@ import {
 import useTour from "../services/useTour";
 import useFields from "../hooks/useDepartureFields";
 import FormComponent from "@/components/form/FormComponent";
+import type { TdepartureResponse } from "../types";
 
 interface TourDepartureFormProps {
   departureId?: number;
   buttonText?: string;
   tourTemplateId: number | null;
   setDepartureData?: Dispatch<
-    SetStateAction<TResponseTourDeparture | undefined>
+    SetStateAction<TdepartureResponse | undefined>
   >;
   onSubmitSuccess?: () => void;
   setIsPending?: Dispatch<SetStateAction<boolean>>;

@@ -6,6 +6,7 @@ import type {
   TCreateTourDeparture,
   TResponseTourDeparture,
   TsendDeparturePlan,
+  TtourPlanResponse,
 } from "../fixtures/validation";
 import usePutData from "@/services/usePutData";
 import useGetById from "@/services/useGetById";
@@ -43,10 +44,11 @@ const useTour = ({
     url: `${adminTour_url}${tourTemplateId}/departures/`,
   });
 
-  const { mutate: postTourDeparture, isPending:isPendingDeparture } = usePostData<TCreateTourDeparture>({
-    key: [adminTour_key, "departures"],
-    url: `${adminTour_url}${tourTemplateId}/departures/`,
-  });
+  const { mutate: postTourDeparture, isPending: isPendingDeparture } =
+    usePostData<TCreateTourDeparture>({
+      key: [adminTour_key, "departures"],
+      url: `${adminTour_url}${tourTemplateId}/departures/`,
+    });
 
   const putTourDeparture = usePutData<TCreateTourDeparture>({
     key: [adminTour_key, "departures"],
@@ -54,20 +56,37 @@ const useTour = ({
   });
 
   const getTourDepartureById = useGetById<TResponseTourDeparture>({
-    key: [adminTour_key, "departures", String(departureId), String(tourTemplateId)],
+    key: [
+      adminTour_key,
+      "departures",
+      String(departureId),
+      String(tourTemplateId),
+    ],
     url: `${adminTour_url}${tourTemplateId}/departures/${departureId}/`,
-    enabled: !!departureId
+    enabled: !!departureId,
   });
 
-  const {mutate:postDeparturePlans, isPending:isPendingDepaturePlan} = usePostData<TsendDeparturePlan[]>({
-    key: [adminTour_key, "plans"],
-    url: `${adminTour_url}${tourTemplateId}/departures/${departureId}/plans/`,
-  });
+  const { mutate: postDeparturePlans, isPending: isPendingDepaturePlan } =
+    usePostData<TsendDeparturePlan[]>({
+      key: [adminTour_key, "plans"],
+      url: `${adminTour_url}${tourTemplateId}/departures/${departureId}/plans/`,
+    });
 
   const putDeparturePlan = usePutData<TsendDeparturePlan[]>({
     key: [adminTour_key, "plans"],
     url: `${adminTour_url}${tourTemplateId}/departures/${departureId}/plans/`,
     enabled: !!planId,
+  });
+
+  const getDeparturePlans = useGetData<TPaginatedResponse<TtourPlanResponse>>({
+    key: [adminTour_key, "plans", String(tourTemplateId), String(departureId)],
+    url: `${adminTour_url}${tourTemplateId}/departures/${departureId}/plans/`,
+    enabled: !!tourTemplateId && !!departureId,
+  });
+
+  const deleteTourPlans = useDeleteData({
+    key: [adminTour_key, "plans"],
+    url: `${adminTour_url}${tourTemplateId}/departures/${departureId}/plans/`,
   });
 
   return {
@@ -81,6 +100,8 @@ const useTour = ({
     postDeparturePlans,
     isPendingDepaturePlan,
     putDeparturePlan,
+    getDeparturePlans,
+    deleteTourPlans,
   };
 };
 

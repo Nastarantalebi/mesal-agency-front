@@ -2,11 +2,11 @@ import { useRef, useState } from "react";
 import StepIndicator from "./StepIndicator";
 import TourTemplatesList from "./TourTemplatesList";
 import TourPlans from "./TourPlans";
-import type { TResponseTourDeparture } from "../fixtures/validation";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import TourDepartureForm from "./TourDepartureForm";
 import { Spinner } from "@/components/ui/spinner";
+import type { TdepartureResponse } from "../types";
 
 const STEPS = [
   { label: "انتخاب تمپلیت تور" },
@@ -20,7 +20,7 @@ const TourSteps = () => {
   const [errorForm1, setErrorForm1] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [departureData, setDepartureData] = useState<
-    TResponseTourDeparture | undefined
+    TdepartureResponse | undefined
   >();
   const formRef1 = useRef<{ submitForm: () => void }>(null);
   const formref2 = useRef<{ submitForm: () => void }>(null);
@@ -87,7 +87,7 @@ const TourSteps = () => {
           departureData={departureData}
           setCurrentStep={setCurrentStep}
           setIsPending={setIsPending}
-
+          showButton={false}
         />
       ) : null}
     </div>

@@ -131,3 +131,12 @@ export type TsendDeparturePlan = {
       description: string,
 }
 
+export type TtourPlanResponse = {
+  id: number,
+        date: string,
+      breakfast: boolean,
+      dinner: boolean,
+      lunch: boolean,
+      description: string,
+}
+

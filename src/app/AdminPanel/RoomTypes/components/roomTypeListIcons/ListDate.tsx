@@ -9,9 +9,10 @@ import { Calendar } from "lucide-react";
 
 interface Props {
   onClick: () => void;
+  tooltip?: string
 }
 
-const ListDate = ({ onClick }: Props) => {
+const ListDate = ({ onClick, tooltip }: Props) => {
   const stopRowClick = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
@@ -33,7 +34,7 @@ const ListDate = ({ onClick }: Props) => {
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>تاریخ های پیک</p>
+            <p>{tooltip}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

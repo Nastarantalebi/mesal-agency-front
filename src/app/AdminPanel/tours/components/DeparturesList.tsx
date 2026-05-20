@@ -12,14 +12,18 @@ import type { TdepartureResponse } from "../types";
 import ListEdit from "@/components/list/ListEdit";
 import CustomDialog from "@/components/modal/CustomDialog";
 import TourDepartureForm from "./TourDepartureForm";
+import ListDate from "../../RoomTypes/components/roomTypeListIcons/ListDate";
+import TourPlans from "./TourPlans";
+import TourPlansList from "./TourPlansList";
 
 const DeparturesList = () => {
-  const [currentTourPage, setCurrentTourPage] = useState(1);
+  const [currentDeparturePage, setCurrentDeparturePage] = useState(1);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const [selected, setSelected] = useState<TdepartureResponse | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openPlans, setOpenPlans] = useState(false);
 
   const getDepartures = useDeparture();
   const { deleteTourDeparture } = useTour({
@@ -45,7 +49,7 @@ const DeparturesList = () => {
             searchValue={search}
             onSearchChange={setSearch}
             onSearch={(value) => {
-              setCurrentTourPage(1);
+              setCurrentDeparturePage(1);
               setSearch(value);
             }}
             onAdd={() => navigate({ to: "/admin/tour/create" })}
@@ -65,6 +69,13 @@ const DeparturesList = () => {
                     setOpenEdit(true);
                   }}
                 />
+                <ListDate
+                  tooltip="برنامه ها"
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenPlans(true);
+                  }}
+                />
               </div>
             )}
             showAction
@@ -76,8 +87,8 @@ const DeparturesList = () => {
         <div className="mt-7 flex justify-center">
           <ListPagination
             pageCount={pageCount}
-            currentPage={currentTourPage}
-            onPageChange={setCurrentTourPage}
+            currentPage={currentDeparturePage}
+            onPageChange={setCurrentDeparturePage}
           />
         </div>
       </div>
@@ -95,6 +106,21 @@ const DeparturesList = () => {
           if (!isOpen) setSelected(null);
         }}
         dialogTitle={`ویرایش تور(${selected?.tour.title})`}
+        size="xxl"
+      />
+      <CustomDialog
+        dialogContent={
+          <TourPlansList
+            tourTemplateId={selected?.tour.id!}
+            departureId={selected?.id!}
+          />
+        }
+        open={openPlans}
+        onOpenChange={(isOpen) => {
+          setOpenPlans(isOpen);
+          if (!isOpen) setSelected(null);
+        }}
+        dialogTitle={`ویرایش برنامه های تور(${selected?.tour.title})`}
         size="xxl"
       />
 
