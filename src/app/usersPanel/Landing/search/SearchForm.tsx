@@ -27,7 +27,6 @@ export default function SearchForm() {
       province: formData.province ?? "",
     });
 
-    console.log("Filters", filters);
   };
 
   return (

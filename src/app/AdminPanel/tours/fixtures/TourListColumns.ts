@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import type { TourDepartureItem } from "../types";
+import { miladiToShamsi } from "@/components/form/DateConverter";
 
 export const TourListColumns: ColumnDef<TourDepartureItem>[] = [
   {
@@ -11,12 +12,12 @@ export const TourListColumns: ColumnDef<TourDepartureItem>[] = [
   {
     id: "start",
     header: "تاریخ شروع",
-    accessorFn: (row) => row.start ?? "",
+    accessorFn: (row) => miladiToShamsi(row.start) ?? "",
   },
   {
     id: "end",
     header: "تاریخ پایان",
-    accessorFn: (row) => row.start ?? "",
+    accessorFn: (row) => miladiToShamsi(row.end) ?? "",
   },
   {
     id: "duration_days",

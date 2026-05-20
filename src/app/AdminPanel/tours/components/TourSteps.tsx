@@ -6,11 +6,19 @@ import type { TResponseTourDeparture } from "../fixtures/validation";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import TourDepartureForm from "./TourDepartureForm";
+import { Spinner } from "@/components/ui/spinner";
+
+const STEPS = [
+  { label: "انتخاب تمپلیت تور" },
+  { label: "اطلاعات تکمیلی تور" },
+  { label: "برنامه ها" },
+];
 
 const TourSteps = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [errorForm1, setErrorForm1] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const [departureData, setDepartureData] = useState<
     TResponseTourDeparture | undefined
   >();
@@ -18,7 +26,6 @@ const TourSteps = () => {
   const formref2 = useRef<{ submitForm: () => void }>(null);
 
   const handleNext = () => {
-      console.log("handleNext called, currentStep:", currentStep);
     if (currentStep === 0) {
       if (selectedId !== null) {
         setCurrentStep(currentStep + 1);
@@ -33,12 +40,6 @@ const TourSteps = () => {
       formref2.current?.submitForm();
     }
   };
-
-  const STEPS = [
-    { label: "انتخاب تمپلیت تور" },
-    { label: "اطلاعات تکمیلی تور" },
-    { label: "برنامه ها" },
-  ];
 
   return (
     <div>
@@ -58,7 +59,7 @@ const TourSteps = () => {
           onClick={handleNext}
           type="button"
         >
-          بعدی <ChevronLeft />
+          بعدی {isPending ? <Spinner /> : <ChevronLeft />}
         </Button>
       </div>
 
@@ -77,6 +78,7 @@ const TourSteps = () => {
           tourTemplateId={selectedId}
           setDepartureData={setDepartureData}
           onSubmitSuccess={() => setCurrentStep(2)}
+          setIsPending={setIsPending}
         />
       ) : currentStep === 2 ? (
         <TourPlans
@@ -84,6 +86,8 @@ const TourSteps = () => {
           tourTemplateId={selectedId}
           departureData={departureData}
           setCurrentStep={setCurrentStep}
+          setIsPending={setIsPending}
+
         />
       ) : null}
     </div>

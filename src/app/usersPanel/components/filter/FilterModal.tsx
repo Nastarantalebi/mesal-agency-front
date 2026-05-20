@@ -29,7 +29,6 @@ const filterModal = ({ open, onOpenChange, title}: Props) => {
   const [errorOpen, setErrorOpen] = useState(false);
 
   const handleFilterSubmit = (data: filterdata) => {
-    console.log("object:", data);
     const params = new URLSearchParams();
     Object.entries(data).forEach(([key, value]) => {
       if (!value) return;
@@ -45,13 +44,11 @@ const filterModal = ({ open, onOpenChange, title}: Props) => {
 
     const queryString = params.toString();
 
-    console.log("queryString:", queryString)
 
     window.history.replaceState(null, "", `?${queryString}`);
 
     // setFilter(values);
   };
-  // console.log("data",getAccommodations.data)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

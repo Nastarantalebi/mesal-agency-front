@@ -41,10 +41,8 @@ const AddBedsForm = ({
     defaultValues: bedInitialValues,
   });
 
-  console.log(bedId);
 
   const { getBed, postBed, putBed } = useBeds({ bedId });
-  console.log(getBed.data);
 
   useEffect(() => {
     if (!getBed.data) return;

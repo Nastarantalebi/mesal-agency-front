@@ -99,22 +99,21 @@ const useFields = () => {
     //   className: "col-span-2"
     // },
     {
-      name: `plans.${index}.breakfast`, 
+      name: `plans.${index}.breakfast`,
       label: "صبحانه",
-      isRequired: true,
+      isRequired: false,
       fieldType: "checkBox",
-
     },
     {
       name: `plans.${index}.lunch`,
       label: "ناهار",
-      isRequired: true,
+      isRequired: false,
       fieldType: "checkBox",
     },
     {
       name: `plans.${index}.dinner`,
       label: "شام",
-      isRequired: true,
+      isRequired: false,
       fieldType: "checkBox",
     },
     {
@@ -123,7 +122,7 @@ const useFields = () => {
       isRequired: true,
       fieldType: "input",
       inputType: "textArea",
-      className: "col-start-1 col-span-full"
+      className: "col-start-1 col-span-full",
     },
   ];
 

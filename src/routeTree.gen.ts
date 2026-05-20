@@ -23,6 +23,7 @@ import { Route as AdminTourTemplatesIndexRouteImport } from './routes/admin/tour
 import { Route as AdminTourIndexRouteImport } from './routes/admin/tour/index'
 import { Route as AdminSettingIndexRouteImport } from './routes/admin/setting/index'
 import { Route as AdminAccommodationsIndexRouteImport } from './routes/admin/accommodations/index'
+import { Route as AdminTourCreateRouteImport } from './routes/admin/tour/create'
 import { Route as AdminSettingDefaultsRouteImport } from './routes/admin/setting/defaults'
 import { Route as AdminSettingAccommodationFeaturesRouteImport } from './routes/admin/setting/accommodationFeatures'
 import { Route as AdminSettingBedTypesRouteImport } from './routes/admin/setting/BedTypes'
@@ -103,6 +104,11 @@ const AdminAccommodationsIndexRoute =
     path: '/accommodations/',
     getParentRoute: () => AdminRouteRoute,
   } as any)
+const AdminTourCreateRoute = AdminTourCreateRouteImport.update({
+  id: '/tour/create',
+  path: '/tour/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminSettingDefaultsRoute = AdminSettingDefaultsRouteImport.update({
   id: '/setting/defaults',
   path: '/setting/defaults',
@@ -164,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/admin/setting/BedTypes': typeof AdminSettingBedTypesRoute
   '/admin/setting/accommodationFeatures': typeof AdminSettingAccommodationFeaturesRoute
   '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
+  '/admin/tour/create': typeof AdminTourCreateRoute
   '/admin/accommodations/': typeof AdminAccommodationsIndexRoute
   '/admin/setting/': typeof AdminSettingIndexRoute
   '/admin/tour/': typeof AdminTourIndexRoute
@@ -188,6 +195,7 @@ export interface FileRoutesByTo {
   '/admin/setting/BedTypes': typeof AdminSettingBedTypesRoute
   '/admin/setting/accommodationFeatures': typeof AdminSettingAccommodationFeaturesRoute
   '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
+  '/admin/tour/create': typeof AdminTourCreateRoute
   '/admin/accommodations': typeof AdminAccommodationsIndexRoute
   '/admin/setting': typeof AdminSettingIndexRoute
   '/admin/tour': typeof AdminTourIndexRoute
@@ -213,6 +221,7 @@ export interface FileRoutesById {
   '/admin/setting/BedTypes': typeof AdminSettingBedTypesRoute
   '/admin/setting/accommodationFeatures': typeof AdminSettingAccommodationFeaturesRoute
   '/admin/setting/defaults': typeof AdminSettingDefaultsRoute
+  '/admin/tour/create': typeof AdminTourCreateRoute
   '/admin/accommodations/': typeof AdminAccommodationsIndexRoute
   '/admin/setting/': typeof AdminSettingIndexRoute
   '/admin/tour/': typeof AdminTourIndexRoute
@@ -239,6 +248,7 @@ export interface FileRouteTypes {
     | '/admin/setting/BedTypes'
     | '/admin/setting/accommodationFeatures'
     | '/admin/setting/defaults'
+    | '/admin/tour/create'
     | '/admin/accommodations/'
     | '/admin/setting/'
     | '/admin/tour/'
@@ -263,6 +273,7 @@ export interface FileRouteTypes {
     | '/admin/setting/BedTypes'
     | '/admin/setting/accommodationFeatures'
     | '/admin/setting/defaults'
+    | '/admin/tour/create'
     | '/admin/accommodations'
     | '/admin/setting'
     | '/admin/tour'
@@ -287,6 +298,7 @@ export interface FileRouteTypes {
     | '/admin/setting/BedTypes'
     | '/admin/setting/accommodationFeatures'
     | '/admin/setting/defaults'
+    | '/admin/tour/create'
     | '/admin/accommodations/'
     | '/admin/setting/'
     | '/admin/tour/'
@@ -408,6 +420,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAccommodationsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/tour/create': {
+      id: '/admin/tour/create'
+      path: '/tour/create'
+      fullPath: '/admin/tour/create'
+      preLoaderRoute: typeof AdminTourCreateRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/setting/defaults': {
       id: '/admin/setting/defaults'
       path: '/setting/defaults'
@@ -474,6 +493,7 @@ interface AdminRouteRouteChildren {
   AdminSettingBedTypesRoute: typeof AdminSettingBedTypesRoute
   AdminSettingAccommodationFeaturesRoute: typeof AdminSettingAccommodationFeaturesRoute
   AdminSettingDefaultsRoute: typeof AdminSettingDefaultsRoute
+  AdminTourCreateRoute: typeof AdminTourCreateRoute
   AdminAccommodationsIndexRoute: typeof AdminAccommodationsIndexRoute
   AdminSettingIndexRoute: typeof AdminSettingIndexRoute
   AdminTourIndexRoute: typeof AdminTourIndexRoute
@@ -493,6 +513,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminSettingAccommodationFeaturesRoute:
     AdminSettingAccommodationFeaturesRoute,
   AdminSettingDefaultsRoute: AdminSettingDefaultsRoute,
+  AdminTourCreateRoute: AdminTourCreateRoute,
   AdminAccommodationsIndexRoute: AdminAccommodationsIndexRoute,
   AdminSettingIndexRoute: AdminSettingIndexRoute,
   AdminTourIndexRoute: AdminTourIndexRoute,

@@ -15,7 +15,6 @@ interface Props {
 }
 
 const useTourTemplate = ({ tourId, currentTourPage, searchInput }: Props) => {
-  console.log("currentTourPage:", currentTourPage);
 
   const getTours = useGetData<TPaginatedResponse<TtourTemplateItems>>({
     key: [adminTour_key],

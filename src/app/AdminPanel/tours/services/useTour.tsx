@@ -38,14 +38,12 @@ const useTour = ({
     enabled: !!tourTemplateId,
   });
 
-  console.log("tourTemplateId:", tourTemplateId, "departureId:", departureId)
-
   const deleteTourDeparture = useDeleteData({
     key: [adminTour_key, "departures"],
     url: `${adminTour_url}${tourTemplateId}/departures/`,
   });
 
-  const { mutate: postTourDeparture } = usePostData<TCreateTourDeparture>({
+  const { mutate: postTourDeparture, isPending:isPendingDeparture } = usePostData<TCreateTourDeparture>({
     key: [adminTour_key, "departures"],
     url: `${adminTour_url}${tourTemplateId}/departures/`,
   });
@@ -56,11 +54,12 @@ const useTour = ({
   });
 
   const getTourDepartureById = useGetById<TResponseTourDeparture>({
-    key: [adminTour_key, "departures", String(departureId)],
+    key: [adminTour_key, "departures", String(departureId), String(tourTemplateId)],
     url: `${adminTour_url}${tourTemplateId}/departures/${departureId}/`,
+    enabled: !!departureId
   });
 
-  const postDeparturePlans = usePostData<TsendDeparturePlan[]>({
+  const {mutate:postDeparturePlans, isPending:isPendingDepaturePlan} = usePostData<TsendDeparturePlan[]>({
     key: [adminTour_key, "plans"],
     url: `${adminTour_url}${tourTemplateId}/departures/${departureId}/plans/`,
   });
@@ -74,11 +73,13 @@ const useTour = ({
   return {
     getTours,
     postTourDeparture,
+    isPendingDeparture,
     getTourDeprtures,
     deleteTourDeparture,
     putTourDeparture,
     getTourDepartureById,
     postDeparturePlans,
+    isPendingDepaturePlan,
     putDeparturePlan,
   };
 };

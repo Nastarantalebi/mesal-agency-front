@@ -29,6 +29,7 @@ interface Props {
   planId?: number;
   onSubmitSuccess?: () => void;
   setCurrentStep?: Dispatch<SetStateAction<number>>;
+  setIsPending: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface DeparturePlanFormRef {
@@ -49,17 +50,25 @@ function getDateRange(start: string, end: string) {
 
 const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
   (
-    { departureData, planId, tourTemplateId, onSubmitSuccess, setCurrentStep },
+    {
+      departureData,
+      planId,
+      tourTemplateId,
+      onSubmitSuccess,
+      setCurrentStep,
+      setIsPending,
+    },
     ref,
   ) => {
     const isEdit = !!planId;
     const departureId = departureData?.id;
 
     const { getPlansFields } = useFields();
-    const { postDeparturePlans, putDeparturePlan } = useTour({
-      departureId,
-      tourTemplateId,
-    });
+    const { postDeparturePlans, isPendingDepaturePlan, putDeparturePlan } =
+      useTour({
+        departureId,
+        tourTemplateId,
+      });
     const [errorOpen, setErrorOpen] = useState(false);
 
     const dates = useMemo(() => {
@@ -78,7 +87,9 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
         form.handleSubmit(handleSubmit)();
       },
     }));
-
+    {
+      isPendingDepaturePlan && setIsPending?.(true);
+    }
     const handleSubmit = (values: TCreateDeparturePlan) => {
       const payload = {
         plans: values.plans.map((plan) => ({
@@ -96,9 +107,12 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
               },
             },
           )
-        : postDeparturePlans.mutateAsync(payload.plans, {
+        : postDeparturePlans(payload.plans, {
             onError: () => setErrorOpen(true),
-            onSuccess: () => onSubmitSuccess?.(),
+            onSuccess: () => {
+              onSubmitSuccess?.();
+              setIsPending(false);
+            },
           });
     };
 

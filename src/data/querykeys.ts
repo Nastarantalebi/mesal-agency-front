@@ -28,6 +28,9 @@ export const adminTour_url = "admin/tours/"
 export const admin_news_key = "adminNews"
 export const admin_news_url = "admin/news/"
 
+export const admin_departures_key = "adminDepartures"
+export const admin_departures_url = "admin/departures/"
+
 //-------------------------------------------------------------
 
 export const search_key = "searchAccommodations"

@@ -42,7 +42,6 @@ const AddFeaturesForm = ({
     feature_id,
   });
 
-  // console.log(getfeatureData.data)
 
   const form = useForm<TCFeature>({
     resolver: zodResolver(FeaturesValidation),
@@ -65,7 +64,6 @@ const AddFeaturesForm = ({
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handleSubmit = (value: TCFeature) => {
-    // console.log("values=", value)
     const isEdit = !!feature_id;
     if (isEdit) {
       putFeature.mutateAsync(

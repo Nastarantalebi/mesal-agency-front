@@ -24,8 +24,6 @@ const NewsForm = ({ newsId, setOpen }: Props) => {
   const { postNews, getNewsById, patchNews } = useNews({ id: newsId });
   const newsFields = NewsFields(getNewsById.data?.image);
 
-  console.log("getNewsById", getNewsById.data);
-
   const form = useForm<TNews>({
     resolver: zodResolver(newsValidation),
     defaultValues: newsInitialValues,
@@ -47,7 +45,6 @@ const NewsForm = ({ newsId, setOpen }: Props) => {
     }
   }, [getNewsById.data, isEdit]);
 
-  console.log(form.watch());
 
   const handleSubmit = async (values: TNews) => {
     const formData = new FormData();

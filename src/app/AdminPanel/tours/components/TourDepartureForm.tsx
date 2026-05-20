@@ -30,6 +30,7 @@ interface TourDepartureFormProps {
     SetStateAction<TResponseTourDeparture | undefined>
   >;
   onSubmitSuccess?: () => void;
+  setIsPending?: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface TourDepartureFormRef {
@@ -47,13 +48,18 @@ const TourDepartureForm = forwardRef<
       tourTemplateId,
       setDepartureData,
       onSubmitSuccess,
+      setIsPending,
     },
     ref,
   ) => {
     const isEdit = !!departureId;
 
-    const { postTourDeparture, putTourDeparture, getTourDepartureById } =
-      useTour({ tourTemplateId });
+    const {
+      postTourDeparture,
+      isPendingDeparture,
+      putTourDeparture,
+      getTourDepartureById,
+    } = useTour({ tourTemplateId, departureId });
     const [errorOpen, setErrorOpen] = useState(false);
     const { fields } = useFields();
 
@@ -61,11 +67,10 @@ const TourDepartureForm = forwardRef<
       resolver: zodResolver(tourDepartureValidation),
       defaultValues: tourDepartureInitialValues,
     });
-
-    console.log(form.watch());
-
+    console.log(tourTemplateId);
+    console.log(getTourDepartureById.data);
     useEffect(() => {
-      if (isEdit) {
+      if (isEdit && getTourDepartureById.data) {
         const transformedData = {
           ...getTourDepartureById.data,
           start: miladiToShamsi(getTourDepartureById.data?.start!),
@@ -73,8 +78,11 @@ const TourDepartureForm = forwardRef<
         };
         form.reset(transformedData);
       }
-    }, [getTourDepartureById.data]);
+    }, [getTourDepartureById.data, isEdit]);
 
+    {
+      isPendingDeparture && setIsPending?.(true);
+    }
     const handleSubmit = (value: TCreateTourDeparture) => {
       const transformedData = {
         ...tourDepartureInitialValues,
@@ -98,6 +106,7 @@ const TourDepartureForm = forwardRef<
           onSuccess: (data) => {
             setDepartureData?.(data);
             onSubmitSuccess?.();
+            setIsPending?.(false);
           },
           onError: () => setErrorOpen(true),
         });
@@ -117,7 +126,7 @@ const TourDepartureForm = forwardRef<
         errorOpen={errorOpen}
         setErrorOpen={setErrorOpen}
         buttonText={buttonText}
-        showButton={false}
+        showButton={departureId ? true : false}
         fields={fields}
       />
     );

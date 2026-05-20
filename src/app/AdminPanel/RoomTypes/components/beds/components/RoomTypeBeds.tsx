@@ -25,7 +25,6 @@ const RoomTypeBeds = ({
     RoomTypeId!,
   );
 
-  console.log(getRoomTypeBeds.data)
 
   const form = useForm<TBedListForm>({
     resolver: zodResolver(bedListValidation),

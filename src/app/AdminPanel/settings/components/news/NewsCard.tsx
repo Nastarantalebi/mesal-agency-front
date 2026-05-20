@@ -11,7 +11,6 @@ interface Props {
 }
 
 const NewsCard = ({ news, onEdit, onDelete }: Props) => {
-  console.log("news:", news);
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 max-w-8xl content-center gap-4">
       {news?.results.map((item) => (

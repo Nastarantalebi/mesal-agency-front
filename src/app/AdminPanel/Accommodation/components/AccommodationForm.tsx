@@ -54,7 +54,6 @@ const AccommodationForm = ({
           : null,
       provience: transformedData.city?.province?.id ?? null,
     });
-    console.log(transformedData);
   }, [getAccommodation.data]);
 
   const province_id = form.watch("provience");

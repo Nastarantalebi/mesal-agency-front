@@ -23,8 +23,6 @@ export const useAccommodation = (current_page?: number) => {
   const queryString = params.toString();
   const url = `${accommodation_url}${queryString ? `?${queryString}` : ''}`;
 
-  console.log("url:", url);
-
   const key = [accommodation_key, queryString, current_page];
 
   const getAccommodations = useGetData<TPaginatedResponse<accommodationsResponse>>({

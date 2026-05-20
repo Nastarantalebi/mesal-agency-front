@@ -17,8 +17,6 @@ function RouteComponent() {
   const { id } = Route.useSearch();
   const { getNews, getNewsById } = useNews({ newsId: id });
 
-  console.log("id", id);
-
   return (
     <div className="font-display!">
       <Toaster richColors position="top-right" />

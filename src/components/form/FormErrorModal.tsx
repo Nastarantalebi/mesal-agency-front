@@ -11,7 +11,7 @@ import {
 
 type Props = {
   open?: boolean;
-  message: string;
+  message?: string;
   onAcknowledge: () => void;
   onOpenChange: (open: boolean) => void;
   buttonTitle?: string;
@@ -20,7 +20,7 @@ type Props = {
 
 export default function FormErrorModal({
   open,
-  message,
+  message = "آیا از حذف خود اطمینان دارید؟",
   onAcknowledge,
   onOpenChange,
   buttonTitle= "متوجه شدم",

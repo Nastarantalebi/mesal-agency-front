@@ -29,14 +29,11 @@ const TourForm = ({
   const isEdit = !!tourId;
   const { postTours, getTourById, putTour } = useTourTemplate({ tourId });
 
-  console.log("getTourById", getTourById.data);
-
   const form = useForm<TCreateTourTemplate>({
     resolver: zodResolver(tourTemplateValidation),
     defaultValues: tourTemplateInitialValues,
   });
 
-  console.log("form:", form.watch());
 
   const { fields } = useTourFields();
   const [errorOpen, setErrorOpen] = useState(false);

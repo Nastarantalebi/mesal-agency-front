@@ -46,7 +46,6 @@ const useFilterFields = ({ form }: Props) => {
       content: <CustomStarInput name="stars__gte" control={form.control} />,
     },
   ];
-  // console.log(form.watch());
 
   return (
     <div>

@@ -14,9 +14,7 @@ export const Route = createFileRoute("/")({
   //       queryFn: refresh,
   //     });
 
-  //     console.log("refresh result:", data);
   //   } catch (err) {
-  //     console.log("refresh error:", err);
   //     throw redirect({ to: "/login" });
   //   }
 

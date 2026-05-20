@@ -54,3 +54,31 @@ export type TourDepartureItem = {
   duration_days: number;
   available_seats: number;
 };
+
+//------------------------------------------
+
+export type TdepartureResponse = {
+  id: number;
+  start: string;
+  end: string;
+  duration_days: number;
+  duration_nights: number;
+  price: string;
+  original_price: string;
+  max_participants: number;
+  min_participants: number;
+  available_seats: number;
+  meeting_point: string;
+  status: TOption;
+  is_featured: true;
+  created_at: string;
+  tour: {
+    id: number;
+    title: string;
+    category: TOption;
+    short_description: string;
+    destination: string;
+    country: string;
+    difficulty: TOption;
+  };
+};
