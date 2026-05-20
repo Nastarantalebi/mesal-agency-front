@@ -17,17 +17,17 @@ export const PlanListColumns : ColumnDef<TtourPlanResponse>[] = [
   {
     id: "breakfast",
     header: "صبحانه",
-    accessorFn: (row) => {row.breakfast ? "دارد" : "ندارد"},
+    accessorFn: (row) => row.breakfast ? "دارد" : "ندارد",
 },
 {
   id: "lunch",
   header: "ناهار",
-  accessorFn: (row) => {row.lunch ? "دارد" : "ندارد"},
+  accessorFn: (row) => row.lunch ? "دارد" : "ندارد",
 },
   {
     id: "dinner",
     header: "شام",
-    accessorFn: (row) => {row.dinner ? "دارد" : "ندارد"},
+    accessorFn: (row) => row.dinner ? "دارد" : "ندارد",
   },
 
 ];

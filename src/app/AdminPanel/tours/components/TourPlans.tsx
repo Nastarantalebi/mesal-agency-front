@@ -24,13 +24,14 @@ import type { TdepartureResponse } from "../types";
 import usePlans from "../services/usePlans";
 
 interface Props {
-  departureData: TdepartureResponse;
+  departureData?: TdepartureResponse;
   tourTemplateId: number | null;
   planId?: number;
   onSubmitSuccess?: () => void;
   setCurrentStep?: Dispatch<SetStateAction<number>>;
   setIsPending?: Dispatch<SetStateAction<boolean>>;
   showButton?: boolean;
+  departureId?: number;
 }
 
 export interface DeparturePlanFormRef {
@@ -53,20 +54,17 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
   (
     {
       departureData,
-      planId,
       tourTemplateId,
       onSubmitSuccess,
-      setCurrentStep,
       setIsPending,
       showButton,
+      departureId,
     },
     ref,
   ) => {
-    const isEdit = !!planId;
-    const departureId = departureData?.id;
 
     const { getPlansFields } = useFields();
-    const { postDeparturePlans, putDeparturePlan } =
+    const { postDeparturePlans } =
       usePlans({
         departureId: departureId,
         tourTemplateId,
@@ -99,17 +97,7 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
           date: shamsiToMiladi(plan.date),
         })),
       };
-      isEdit
-        ? putDeparturePlan.mutateAsync(
-            { data: payload.plans, id: planId },
-            {
-              onSuccess: () => {
-                onSubmitSuccess?.();
-                setCurrentStep?.(0);
-              },
-            },
-          )
-        : postDeparturePlans.mutateAsync(payload.plans, {
+ postDeparturePlans.mutateAsync(payload.plans, {
             onError: () => setErrorOpen(true),
             onSuccess: () => {
               onSubmitSuccess?.();
@@ -166,6 +154,5 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
   },
 );
 
-TourPlans.displayName = "TourPlans";
 
 export default TourPlans;

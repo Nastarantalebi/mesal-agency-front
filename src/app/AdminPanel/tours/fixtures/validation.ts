@@ -140,3 +140,24 @@ export type TtourPlanResponse = {
       description: string,
 }
 
+//--------------------------------------
+export const departurePlanValidation = z.object({
+      date: z.string(),
+      breakfast: z.boolean(),
+      dinner: z.boolean(),
+      lunch: z.boolean(),
+      description: z.string().min(1, "فیلد توضیحات نمیتواند خالی باشد."),
+    })
+
+export const departurePlanInitialValues : TsendDeparturePlan = {
+  date: "",
+  breakfast: false,
+  dinner: false,
+  lunch: false,
+  description: "",
+}
+
+
+
+
+

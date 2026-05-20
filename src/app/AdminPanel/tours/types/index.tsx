@@ -39,6 +39,8 @@ export type TtourTemplateResponse = {
   updated_at: string;
 };
 
+//----------------------------------------------
+
 export type TCreateDeparturePlan = {
   date: string;
   breakfast: boolean;
@@ -47,6 +49,9 @@ export type TCreateDeparturePlan = {
   description: string;
 };
 
+
+//------------------------------------------
+
 export type TourDepartureItem = {
   id: number;
   start: string;
@@ -54,9 +59,6 @@ export type TourDepartureItem = {
   duration_days: number;
   available_seats: number;
 };
-
-//------------------------------------------
-
 export type TdepartureResponse = {
   id: number;
   start: string;

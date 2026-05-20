@@ -7,6 +7,9 @@ import CustomLoader from "@/components/loading/CustomLoader";
 import type { TtourPlanResponse } from "../fixtures/validation";
 import { PlanListColumns } from "../fixtures/PlanListColumns";
 import usePlans from "../services/usePlans";
+import ListEdit from "@/components/list/ListEdit";
+import CustomDialog from "@/components/modal/CustomDialog";
+import TourPlansComponent from "./TourPlansComponent";
 
 const TourPlansList = ({
   tourTemplateId,
@@ -18,8 +21,8 @@ const TourPlansList = ({
   const [currentPlanPage, setCurrentPlanPage] = useState(1);
   const [selected, setSelected] = useState<TtourPlanResponse | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [search, setSearch] = useState("");
-
 
   const { getDeparturePlans, deleteDeparturePlans } = usePlans({
     tourTemplateId,
@@ -48,9 +51,9 @@ const TourPlansList = ({
               setCurrentPlanPage(1);
               setSearch(value);
             }}
-            // onAdd={() => setOpenModal(true)}
-            searchPlaceHolder="جست و جوی نام تور"
-            customAddText="افزودن تور"
+            onAdd={() => setOpenModal(true)}
+            searchPlaceHolder="جستجوی نام برنامه"
+            customAddText="افزودن برنامه جدید"
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
                 <ListDelete
@@ -59,12 +62,18 @@ const TourPlansList = ({
                     setOpenDelete(true);
                   }}
                 />
+                <ListEdit
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenModal(true);
+                  }}
+                />
               </div>
             )}
             showAction
             columns={PlanListColumns}
             data={getDeparturePlans.data?.results ?? []}
-            showAddButton={false}
+            showAddButton={true}
           />
         </div>
 
@@ -76,11 +85,31 @@ const TourPlansList = ({
           />
         </div>
       </div>
+      <CustomDialog
+        dialogContent={
+          <TourPlansComponent
+            tourTemplateId={tourTemplateId}
+            departureId={departureId}
+            planId={selected?.id}
+          />
+        }
+        open={openModal}
+        onOpenChange={(isOpen) => {
+          setOpenModal(isOpen);
+          if (!isOpen) setSelected(null);
+        }}
+        dialogTitle={
+          selected?.id ? `ویرایش برنامه ${selected.id}` : "افزودن برنامه جدید"
+        }
+        size="lg"
+      />
 
       <FormErrorModal
         open={openDelete}
         onOpenChange={() => setOpenDelete(false)}
-        onAcknowledge={() => deleteDeparturePlans.mutateAsync({ id: selected?.id! })}
+        onAcknowledge={() =>
+          deleteDeparturePlans.mutateAsync({ id: selected?.id! })
+        }
         buttonTitle="بله"
         dialogTitle="حذف"
       />

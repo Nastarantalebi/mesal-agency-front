@@ -83,6 +83,7 @@ const TourSteps = () => {
           ref={formref2}
           tourTemplateId={selectedId}
           departureData={departureData!}
+          departureId={departureData?.id}
           setCurrentStep={setCurrentStep}
           setIsPending={setIsPending}
           showButton={false}
