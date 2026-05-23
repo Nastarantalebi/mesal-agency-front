@@ -15,10 +15,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { type ReactNode} from "react";
+import React, { type ReactNode } from "react";
 import ListEdit from "./ListEdit";
 import { Button } from "../ui/button";
 import CustomTableHeader from "./CustomTableHeader";
+import type { cn } from "@/lib/utils";
 
 interface Props<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -54,7 +55,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
   onSearch,
   onSearchChange,
   searchValue,
-  showAddButton= true,
+  showAddButton = true,
 }: Props<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -67,11 +68,12 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+
   });
 
   return (
     <div>
-      <div className="mx-auto overflow-x-auto rounded-sm flex flex-col gap-3">
+      <div className="mx-auto overflow-x-auto rounded-2xl flex flex-col gap-3 bg-primary/10 p-5">
         <CustomTableHeader
           customAddText={customAddText}
           searchValue={searchValue}
@@ -81,7 +83,7 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
           onAdd={onAdd!}
           showAddButton={showAddButton}
         />
-        <Table className="w-full table-fixed border border-primary ">
+        <Table className="w-full table-fixed border border-primary">
           <colgroup>
             {table.getAllLeafColumns().map((col) => (
               <col key={col.id} style={{ width: `${col.getSize()}px` }} />
@@ -110,9 +112,9 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
 
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map((row, index) => (
                 <TableRow
-                  className="border border-primary border-dashed"
+                  className={`border border-primary border-dashed ${index % 2 === 0 && "bg-gray-50"}`}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >

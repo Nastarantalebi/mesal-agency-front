@@ -68,13 +68,6 @@ const TourTemplateList = () => {
             // }}
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
-                <ListTourDepartures
-                  onClick={() => {
-                    navigate({
-                      to: `/admin/tourTemplates/${rowData.id}`,
-                    });
-                  }}
-                />
                 <ListDelete
                   onClick={() => {
                     setSelected(rowData);

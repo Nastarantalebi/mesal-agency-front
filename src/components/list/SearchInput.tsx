@@ -26,7 +26,7 @@ const SearchInput = ({
 
       <Button
         onClick={() => onSearch(value)}
-        className="cursor-pointer absolute left-1 top-1/2 -translate-y-1/2 h-8 w-9 bg-white hover:bg-primary/20"
+        className="cursor-pointer absolute left-0.5 top-1/2 -translate-y-1/2 h-8 w-9 bg-white hover:bg-primary/20"
       >
         <Search />
       </Button>

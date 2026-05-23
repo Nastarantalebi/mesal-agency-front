@@ -91,6 +91,7 @@ const TourPlansList = ({
             tourTemplateId={tourTemplateId}
             departureId={departureId}
             planId={selected?.id}
+            setOpenModal={setOpenModal}
           />
         }
         open={openModal}
@@ -107,9 +108,17 @@ const TourPlansList = ({
       <FormErrorModal
         open={openDelete}
         onOpenChange={() => setOpenDelete(false)}
-        onAcknowledge={() =>
-          deleteDeparturePlans.mutateAsync({ id: selected?.id! })
-        }
+        onAcknowledge={async () => {
+          await deleteDeparturePlans.mutateAsync(
+            { id: selected?.id! },
+            {
+              onSuccess: () => {
+                setSelected(null);
+                setOpenDelete(false);
+              },
+            },
+          );
+        }}
         buttonTitle="بله"
         dialogTitle="حذف"
       />
