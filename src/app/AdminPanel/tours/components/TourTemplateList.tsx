@@ -4,13 +4,12 @@ import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import CustomDialog from "@/components/modal/CustomDialog";
 import CustomLoader from "@/components/loading/CustomLoader";
-import { tourTemplateListColumns } from "../fixtures/tourTemplateListColumns";
 import TourForm from "./TourTemplateForm";
 import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/ListDelete";
 import type { TtourTemplateItems } from "../types";
 import useTourTemplate from "../services/useTourTemplate";
-import ListTourDepartures from "./ListTourDeparturesIcon";
 import { useNavigate } from "@tanstack/react-router";
+import { tourTemplateListColumns } from "../fixtures/TourTemplateListColumns";
 const TourTemplateList = () => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
   const [selected, setSelected] = useState<TtourTemplateItems | null>(null);
@@ -24,7 +23,6 @@ const TourTemplateList = () => {
     searchInput: search,
   });
 
-  const navigate = useNavigate();
 
   if (getTours.isFetching)
     return (

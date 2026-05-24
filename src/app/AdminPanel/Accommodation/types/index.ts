@@ -94,6 +94,8 @@ export type AccommodationItem = {
   name: string;
   type: {id: number, name: string} | null;
   city: City | null;
+  manufacture_date: string;
+  max_guests: number;
 };
 
 export interface Item {

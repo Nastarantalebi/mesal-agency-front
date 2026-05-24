@@ -61,8 +61,6 @@ const TourDepartureForm = forwardRef<
       resolver: zodResolver(tourDepartureValidation),
       defaultValues: tourDepartureInitialValues,
     });
-    console.log(tourTemplateId);
-    console.log(getTourDepartureById.data);
     useEffect(() => {
       if (isEdit && getTourDepartureById.data) {
         const transformedData = {
