@@ -46,10 +46,11 @@ export type UsersListResponse = {
     mobile: string;
     is_staff: boolean;
 };
-export type createUsersList = {
+export type TcreateUsersList = {
     mobile: string;
-    is_staff: string;
+    is_staff: boolean;
 };
+
 
 /////////////////////////////////////////////////////
 

@@ -1,7 +1,7 @@
 import { admin_news_key, admin_news_url, beds_key, beds_url, default_key, default_url, features_key, features_url, users_key, users_url } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
-import type { createUsersList, TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse, TResponseNews, UsersListResponse } from "../types";
+import type { TcreateUsersList, TBedResponse, TCFeature, TCreateBed, TCreateDefaults, TFeatureResponse, TResponseNews, UsersListResponse } from "../types";
 import type { TPaginatedResponse } from "@/types";
 import useDeleteData from "@/services/useDeleteData";
 import usePutData from "@/services/usePutData";
@@ -110,21 +110,25 @@ export const useBeds = ({currentBedPage, bedId}: {currentBedPage?: number, bedId
 
 ///////////////////////////////////////////////////////////////////////
 
-export const useUsers = (filters?: createUsersList, currentPage?: number) => {
+export const useUsers = (filters?: TcreateUsersList, currentPage?: number) => {
   
-  const url = `${users_url}?page=${currentPage}${filters?.is_staff === "" ?'' : `&is_staff=${filters?.is_staff}`}${filters?.mobile ? `&mobile__contains=${filters.mobile}` : ''}`
+  const url = `${users_url}?page=${currentPage}${filters?.is_staff === false ?'' : `&is_staff=${filters?.is_staff}`}${filters?.mobile ? `&mobile__contains=${filters.mobile}` : ''}`
 
   const getUsers = useGetData<TPaginatedResponse<UsersListResponse>>({
   key: [users_key, String(filters?.is_staff), filters?.mobile!],
   url,
   })
   
-  const postUsers = usePostData<createUsersList>({
+  const postUsers = usePostData<TcreateUsersList>({
+    key: [users_key],
+    url: users_url,
+  })
+  const putUser = usePutData<TcreateUsersList>({
     key: [users_key],
     url: users_url,
   })
 
-  return { getUsers, postUsers }
+  return { getUsers, postUsers, putUser }
 }
 
 /////////////////////////////////////////////////////////////

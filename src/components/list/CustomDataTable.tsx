@@ -19,7 +19,6 @@ import React, { type ReactNode } from "react";
 import ListEdit from "./ListEdit";
 import { Button } from "../ui/button";
 import CustomTableHeader from "./CustomTableHeader";
-import type { cn } from "@/lib/utils";
 
 interface Props<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

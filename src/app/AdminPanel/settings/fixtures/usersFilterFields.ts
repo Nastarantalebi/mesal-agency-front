@@ -1,7 +1,7 @@
 import type { Items } from "@/components/form/FormInputTypes";
-import type { createUsersList } from "../types";
+import type { TcreateUsersList } from "../types";
 
-export const userFields: Items<createUsersList>[] = [     
+export const userFields: Items<TcreateUsersList>[] = [     
  {
     name: "mobile",
     label: "شماره موبایل",

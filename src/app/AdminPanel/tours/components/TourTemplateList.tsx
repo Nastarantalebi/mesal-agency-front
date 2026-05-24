@@ -8,7 +8,6 @@ import TourForm from "./TourTemplateForm";
 import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/ListDelete";
 import type { TtourTemplateItems } from "../types";
 import useTourTemplate from "../services/useTourTemplate";
-import { useNavigate } from "@tanstack/react-router";
 import { tourTemplateListColumns } from "../fixtures/TourTemplateListColumns";
 const TourTemplateList = () => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
