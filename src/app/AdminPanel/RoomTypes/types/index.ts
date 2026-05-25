@@ -116,7 +116,7 @@ export type TRoomTypeBedResponse = {
 
 export type TCtourImage = {
   image: File;
-  main: boolean
+  main: boolean;
 }
 export type TRtourImage = {
   id: number;

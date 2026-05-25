@@ -8,7 +8,7 @@ import useTourTemplateFields from "../hooks/useTourTemplateFields";
 import { X } from "lucide-react";
 
 const TourTemplatePhotoes = ({ tourId }: { tourId: number }) => {
-  const form = useForm({
+  const form = useForm<TCtourImage>({
     resolver: zodResolver(tourImgValidation),
     defaultValues: { image: undefined, main: false },
   });
@@ -30,7 +30,8 @@ const TourTemplatePhotoes = ({ tourId }: { tourId: number }) => {
     }
 
     formData.append("main", String(values.main ?? false));
-    formData.append("caption", "");
+    // formData.append("caption", "dd");
+    // formData.append("order", "1");
 
     await postTourImg.mutateAsync(formData);
     form.reset({
