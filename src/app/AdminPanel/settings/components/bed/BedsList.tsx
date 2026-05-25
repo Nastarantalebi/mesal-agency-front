@@ -5,11 +5,14 @@ import { useState } from "react";
 import { useBeds } from "../../services/useSetting";
 import CardPagination from "../../../../../components/card/CardPagination";
 import AddBedForm from "./AddBedForm";
+import FormErrorModal from "@/components/form/FormErrorModal";
 
 const BedsList = () => {
   const [currentBedPage, setCurrentBedPage] = useState(1);
   const [openDialog, setOpenDialog] = useState(false);
   const [BedId, setBedId] = useState<number | null>(null);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const { getBeds, deleteBed } = useBeds({ currentBedPage });
 
@@ -45,7 +48,10 @@ const BedsList = () => {
                 >
                   {bed.name}
                   <button
-                    onClick={() => deleteBed.mutateAsync({ id: bed.id })}
+                    onClick={() => {
+                      setOpenDelete(true);
+                      setSelectedId(bed.id);
+                    }}
                     className="absolute right-1 top-1/2 -translate-y-1/2 hover:bg-destructive/10 rounded-full p-1.5 cursor-pointer"
                   >
                     <X className="h-3 w-3" />
@@ -80,6 +86,18 @@ const BedsList = () => {
           onOpenChange={() => setOpenDialog(false)}
         />
       )}
+      <FormErrorModal
+        open={openDelete}
+        onOpenChange={() => setOpenDelete(false)}
+        onAcknowledge={() =>
+          deleteBed.mutateAsync(
+            { id: selectedId! },
+            { onSuccess: () => setSelectedId(null) },
+          )
+        }
+        buttonTitle="بله"
+        dialogTitle="حذف"
+      />
     </div>
   );
 };

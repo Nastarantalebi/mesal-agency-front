@@ -5,10 +5,13 @@ import { useState } from "react";
 import { useFeatures } from "../../services/useSetting";
 import CardPagination from "../../../../../components/card/CardPagination";
 import AddFeaturesForm from "./AddFeaturesForm";
+import FormErrorModal from "@/components/form/FormErrorModal";
 
 const FeaturesList = () => {
   const [currentRoomPage, setCurrentRoomPage] = useState(1);
   const [currentAccommodationPage, setCurrentAccommodationPage] = useState(1);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const { getRoomTypeFeatures, getAccommodationFeatures, deleteFeature } =
     useFeatures({ currentRoomPage, currentAccommodationPage });
@@ -52,9 +55,10 @@ const FeaturesList = () => {
                 >
                   {feature.title}
                   <button
-                    onClick={() =>
-                      deleteFeature.mutateAsync({ id: feature.id })
-                    }
+                    onClick={() => {
+                      setOpenDelete(true);
+                      setSelectedId(feature.id);
+                    }}
                     className="absolute right-1 top-1/2 -translate-y-1/2 hover:bg-destructive/10 rounded-full p-1.5 cursor-pointer"
                   >
                     <X className="h-3 w-3" />
@@ -95,9 +99,10 @@ const FeaturesList = () => {
                 >
                   {feature.title}
                   <button
-                    onClick={() =>
-                      deleteFeature.mutateAsync({ id: feature.id })
-                    }
+                    onClick={() => {
+                      setOpenDelete(true);
+                      setSelectedId(feature.id);
+                    }}
                     className="absolute right-1 top-1/2 -translate-y-1/2 hover:bg-destructive/10 rounded-full p-1.5 cursor-pointer"
                   >
                     <X className="h-3 w-3" />
@@ -135,6 +140,18 @@ const FeaturesList = () => {
           buttonTitle="ویرایش"
         />
       )}
+      <FormErrorModal
+        open={openDelete}
+        onOpenChange={() => setOpenDelete(false)}
+        onAcknowledge={() =>
+          deleteFeature.mutateAsync(
+            { id: selectedId! },
+            { onSuccess: () => setSelectedId(null) },
+          )
+        }
+        buttonTitle="بله"
+        dialogTitle="حذف"
+      />
     </div>
   );
 };

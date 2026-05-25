@@ -5,7 +5,7 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { use, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   accommodationFeatureListInitialValues,
@@ -39,6 +39,8 @@ const AccommodationFeatures = ({ AccommodationId }: Props) => {
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const allAddedFeaturesIds = accommodationFeatureList.data?.results.map(
     (r) => r.feature.id,
@@ -100,11 +102,10 @@ const AccommodationFeatures = ({ AccommodationId }: Props) => {
                           feature.feature.id === f.id && (
                             <button
                               className="absolute right-1 top-1/2 -translate-y-1/2 bg-destructive/20 hover:bg-destructive/40 rounded-full p-1.5 cursor-pointer"
-                              onClick={() =>
-                                deleteAccommodatioFeature.mutateAsync({
-                                  id: feature.id,
-                                })
-                              }
+                              onClick={() => {
+                                setOpenDelete(true);
+                                setSelectedId(feature.id);
+                              }}
                             >
                               <X className="h-3 w-3" />
                             </button>
@@ -135,6 +136,18 @@ const AccommodationFeatures = ({ AccommodationId }: Props) => {
         message={errmessage}
         onOpenChange={setErrorOpen}
         onAcknowledge={() => setErrorOpen(false)}
+      />
+      <FormErrorModal
+        open={openDelete}
+        onOpenChange={() => setOpenDelete(false)}
+        onAcknowledge={() =>
+          deleteAccommodatioFeature.mutateAsync(
+            { id: selectedId! },
+            { onSuccess: () => setSelectedId(null) },
+          )
+        }
+        buttonTitle="بله"
+        dialogTitle="حذف"
       />
     </Form>
   );
