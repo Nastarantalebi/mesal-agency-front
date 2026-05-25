@@ -20,7 +20,7 @@ const NewsList = () => {
 
   return (
     <>
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-5">
         <Button
           onClick={() => setOpen(true)}
           variant="outline"

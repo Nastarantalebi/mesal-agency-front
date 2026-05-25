@@ -14,7 +14,6 @@ export const userFields: Items<TcreateUsersList>[] = [
     name: "is_staff",
     label: "مدیر؟",
     isRequired: false,
-    fieldType: "radio",
-    items: [{label: "هیچکدام", value:''}, {label: "خیر", value: "false"}, {label: "بله", value: "true"}, ]
+    fieldType: "yesNoInput",
   },
 ]

@@ -36,7 +36,7 @@ export const useRoomType = (AccommodationId: number | undefined, RoomTypeId: num
 
 export const useRoomTypeList = (AccommodationId: number, currentPage: number, searchInput?: string) => {
 
-    const getRoomTypeList = useGetData<TPaginatedResponse<RoomItem>>({
+    const getRoomTypeList = useGetData<TPaginatedResponse<TRoomTypeResponse>>({
         key: ["RoomTypes", String(AccommodationId), String(currentPage), searchInput!],
         url: `${admin_accommodation_url}${AccommodationId}/room_types/${searchInput ? `?name__contains=${searchInput}` : `?page=${currentPage}`}`
     });

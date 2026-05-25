@@ -1,22 +1,13 @@
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
-import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import { useRoomTypeList } from "../../services/useRoomType";
-import type { Props, RoomItem } from "../../types/index";
+import type { Props, TRoomTypeResponse } from "../../types/index";
 import RoomTypeForm from "./RoomTypeForm";
 import ListDelete from "../roomTypeListIcons/ListDelete";
 import ListPagination from "@/components/list/ListPagination";
 import { useNavigate } from "@tanstack/react-router";
-
-export const columns: ColumnDef<RoomItem>[] = [
-  {
-    id: "name",
-    header: "نوع اتاق",
-    accessorFn: (row) => row.name ?? "",
-    size: 100,
-  },
-];
+import RoomTypefields from "../../hooks/RoomTypefields";
 
 const RoomTypeList = ({ AccommodationId }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,7 +19,9 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
     search,
   );
 
-  const [selected, setSelected] = useState<RoomItem | null>(null);
+  const [selected, setSelected] = useState<TRoomTypeResponse | null>(null);
+
+  const fields = RoomTypefields();
 
   const [openAdd, setAddRoomType] = useState(false);
   const [openD, setopenD] = useState(false);
@@ -53,14 +46,13 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
       <div className="px-2 sm:px-0">
         <div className="overflow-x-auto rounded-md mt-4">
           <CustomDataTable
-          searchValue={search}
+            searchValue={search}
             onSearchChange={setSearch}
             onSearch={(value) => {
               setCurrentPage(1);
               setSearch(value);
             }}
             searchPlaceHolder="جست و جوی نوع اتاق"
-
             onRowClick={(rowData) => {
               navigate({
                 to: `/admin/accommodations/$id/roomTypes/${rowData.id}`,
@@ -79,7 +71,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
               </div>
             )}
             showAction={true}
-            columns={columns}
+            columns={fields}
             data={getRoomTypeList.data?.results ?? []}
           />
         </div>
