@@ -23,6 +23,8 @@ const TourSteps = () => {
   const formRef1 = useRef<{ submitForm: () => void }>(null);
   const formref2 = useRef<{ submitForm: () => void }>(null);
 
+  console.log(selectedId)
+
   const handleNext = () => {
     if (currentStep === 0) {
       if (selectedId !== null) {
@@ -68,7 +70,7 @@ const TourSteps = () => {
               یک تمپلیت فرم را انتخاب کنید!
             </div>
           )}
-          <TourTemplatesList setSelectedId={setSelectedId} />
+          <TourTemplatesList setSelectedId={setSelectedId} selectedId={selectedId}/>
         </>
       ) : currentStep === 1 ? (
         <TourDepartureForm
@@ -86,6 +88,7 @@ const TourSteps = () => {
           departureId={departureData?.id}
           setCurrentStep={setCurrentStep}
           setIsPending={setIsPending}
+          setSelectedId={setSelectedId}
           showButton={false}
         />
       ) : null}

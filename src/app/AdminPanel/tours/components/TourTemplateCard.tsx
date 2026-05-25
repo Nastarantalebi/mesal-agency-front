@@ -2,23 +2,25 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { MapPin } from "lucide-react";
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import type { TtourTemplateItems } from "../types";
 
 interface Props {
   tour: TtourTemplateItems;
-  onClick: (id: number) => void;
+  selectedId: number | null;
+  setSelectedId:  Dispatch<SetStateAction<number | null>>
 }
 
-const TourTemplateCard = ({ tour, onClick }: Props) => {
-  const [selected, setSelected] = useState(false);
+const TourTemplateCard = ({ tour, setSelectedId, selectedId }: Props) => {
+
+  const toggleId = (id: number) => {
+    setSelectedId((prev) => (prev === id ? null : id));
+  };
+
   return (
     <Card
-      className={`overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointe ${selected && "border-2 border-red-300 shadow-red-300"}`}
-      onClick={() => {
-        onClick(tour.id);
-        setSelected(true);
-      }}
+      className={`overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointe ${selectedId === tour.id && "border-2 border-red-300"}`}
+      onClick={() => toggleId(tour.id)}
     >
       {/* Image Section */}
       <div className="relative h-48 w-full overflow-hidden">

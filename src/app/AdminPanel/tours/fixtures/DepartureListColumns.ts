@@ -68,4 +68,10 @@ export const DepartureListColumns : ColumnDef<TdepartureResponse>[] = [
     accessorFn: (row) => row.price?? "",
             size: 50,
   },
+  {
+    id: "status",
+    header: "وضعیت",
+    accessorFn: (row) => row.status.label?? "",
+            size: 50,
+  },
 ];

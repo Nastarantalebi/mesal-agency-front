@@ -32,6 +32,7 @@ interface Props {
   setIsPending?: Dispatch<SetStateAction<boolean>>;
   showButton?: boolean;
   departureId?: number;
+  setSelectedId: Dispatch<SetStateAction<number | null>>;
 }
 
 export interface DeparturePlanFormRef {
@@ -59,16 +60,16 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
       setIsPending,
       showButton,
       departureId,
+      setCurrentStep,
+      setSelectedId,
     },
     ref,
   ) => {
-
     const { getPlansFields } = useFields();
-    const { postDeparturePlans } =
-      usePlans({
-        departureId: departureId,
-        tourTemplateId,
-      });
+    const { postDeparturePlans } = usePlans({
+      departureId: departureId,
+      tourTemplateId,
+    });
     const [errorOpen, setErrorOpen] = useState(false);
 
     const dates = useMemo(() => {
@@ -97,13 +98,15 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
           date: shamsiToMiladi(plan.date),
         })),
       };
- postDeparturePlans.mutateAsync(payload.plans, {
-            onError: () => setErrorOpen(true),
-            onSuccess: () => {
-              onSubmitSuccess?.();
-              setIsPending?.(false);
-            },
-          });
+      postDeparturePlans.mutateAsync(payload.plans, {
+        onError: () => setErrorOpen(true),
+        onSuccess: () => {
+          onSubmitSuccess?.();
+          setIsPending?.(false);
+          setCurrentStep?.(0)
+          setSelectedId(null)
+        },
+      });
     };
 
     useEffect(() => {
@@ -153,6 +156,5 @@ const TourPlans = forwardRef<DeparturePlanFormRef, Props>(
     );
   },
 );
-
 
 export default TourPlans;
