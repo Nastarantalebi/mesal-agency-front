@@ -9,10 +9,13 @@ import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/
 import type { TtourTemplateItems } from "../types";
 import useTourTemplate from "../services/useTourTemplate";
 import { tourTemplateListColumns } from "../fixtures/TourTemplateListColumns";
+import ListImage from "../../RoomTypes/components/roomTypeListIcons/ListImage";
+import TourTemplatePhotoes from "./tourTemplatePhotoes";
 const TourTemplateList = () => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
   const [selected, setSelected] = useState<TtourTemplateItems | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openImg, setOpenImg] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   const [search, setSearch] = useState("");
@@ -71,6 +74,12 @@ const TourTemplateList = () => {
                     setOpenDelete(true);
                   }}
                 />
+                                <ListImage
+                  onClick={() => {
+                    setSelected(rowData);
+                    setOpenImg(true);
+                  }}
+                />
               </div>
             )}
             showAction
@@ -100,6 +109,17 @@ const TourTemplateList = () => {
           setSelected(null);
         }}
         open={openModal}
+        size="xxl"
+      />
+
+      <CustomDialog
+        dialogContent={<TourTemplatePhotoes tourId={selected?.id!}/>}
+        dialogTitle={`عکس های تور(${selected?.title})`}
+        onOpenChange={() => {
+          setOpenImg(false);
+          setSelected(null);
+        }}
+        open={openImg}
         size="xxl"
       />
 

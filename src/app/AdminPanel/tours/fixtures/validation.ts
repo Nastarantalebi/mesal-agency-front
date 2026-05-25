@@ -157,6 +157,15 @@ export const departurePlanInitialValues : TsendDeparturePlan = {
   description: "",
 }
 
+// ------------------------------------------------------------
+
+export const tourImgValidation = z.object({
+  image: z.instanceof(File),
+  main: z.boolean(),
+});
+
+
+
 
 
 

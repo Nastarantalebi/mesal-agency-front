@@ -21,7 +21,7 @@ function RouteComponent() {
           <MobileAdminSidebar />
           <main className="flex-1 flex-col overflow-y-auto p-5">
             <div className="flex justify-end">
-              <Button variant={"outline"} className="border-2 border-primary" onClick={() => router.history.back()}>
+              <Button variant={"outline"} className="border-2 border-primary mb-5" onClick={() => router.history.back()}>
                 صفحه قبلی
               </Button>
             </div>

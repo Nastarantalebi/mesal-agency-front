@@ -107,11 +107,13 @@ export const useAccommodationImg = (AccommodationId?: number) => {
         staleTime: 5 * 60 * 1000, // 5 دقیقه - داده fresh باقی بمونه
         refetchOnWindowFocus: false,
         refetchOnMount: false,
+        enabled: !!AccommodationId
     });
 
     const postImg = usePostData<TAccommodationImage>({
         key,
         url,
+        enabled: !!AccommodationId
     });
 
     const deleteImg = useDeleteData({

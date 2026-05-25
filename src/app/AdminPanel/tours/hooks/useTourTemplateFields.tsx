@@ -1,5 +1,6 @@
 import type { Items } from "@/components/form/FormInputTypes";
 import type { TCreateTourTemplate } from "../fixtures/validation";
+import type { TCtourImage } from "../../RoomTypes/types";
 
 const useTourFields = () => {
   const fields: Items<TCreateTourTemplate>[] = [
@@ -123,7 +124,23 @@ const useTourFields = () => {
     },
   ];
 
-  return { fields };
+  const ImageFields: Items<TCtourImage>[] = [
+    {
+      name: "image",
+      fieldType: "image",
+      className: "col-span-2",
+    },
+    {
+      name: "main",
+      label: "عکس اصلی؟",
+      isRequired: false,
+      fieldType: "checkBox",
+      className: "my-2",
+    },
+  ];
+  
+
+  return { fields, ImageFields };
 };
 
 export default useTourFields;

@@ -113,3 +113,13 @@ export type TRoomTypeBedResponse = {
     bed: {id: string; name: string}
     number: number
 }[]
+
+export type TCtourImage = {
+  image: File;
+  main: boolean
+}
+export type TRtourImage = {
+  id: number;
+  image: string;
+  main: boolean
+}
