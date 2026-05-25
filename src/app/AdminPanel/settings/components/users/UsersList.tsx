@@ -13,16 +13,14 @@ import {
   usersFilterValidation,
 } from "../../fixtures/validation";
 import ReloadList from "@/components/list/ReloadList";
-import type { TcreateUsersList, UsersListResponse } from "../../types";
-import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/ListDelete";
-import FormErrorModal from "@/components/form/FormErrorModal";
+import type { TcreateUsersList } from "../../types";
 
 const UsersList = () => {
   const [filters, setFilters] = useState<TcreateUsersList>();
   // const [input, setInput] = useState("");
   const [openD, setOpen] = useState(false);
   // const [openModal, setOpenModal] = useState(false);
-  const [selected, setSelected] = useState<UsersListResponse | null>(null);
+  // const [selected, setSelected] = useState<UsersListResponse | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const { getUsers } = useUsers(filters, currentPage);
   // const [filters, setFilters] = useState<createUsersList>(usersFilterInitialValues);

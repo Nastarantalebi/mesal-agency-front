@@ -11,12 +11,17 @@ import type { TRtourImage } from "../../RoomTypes/types";
 
 interface Props {
   tourId?: string | number | null;
+  imageId?: number | null;
   currentTourPage?: number;
   searchInput?: string;
 }
 
-const useTourTemplate = ({ tourId, currentTourPage, searchInput }: Props) => {
-
+const useTourTemplate = ({
+  tourId,
+  currentTourPage,
+  searchInput,
+  imageId,
+}: Props) => {
   const key = [adminTour_key];
 
   const getTours = useGetData<TPaginatedResponse<TtourTemplateItems>>({
@@ -46,24 +51,41 @@ const useTourTemplate = ({ tourId, currentTourPage, searchInput }: Props) => {
     key,
     url: adminTour_url,
   });
-  
+
   const postTourImg = usePostData<FormData>({
     key,
-    url: `${adminTour_url}${tourId}/images`,
+    url: `${adminTour_url}${tourId}/images/`,
     enabled: !!tourId,
   });
 
   const deleteTourImg = useDeleteData({
     key,
-    url: `${adminTour_url}${tourId}/images`,
-  })
-  const getTourImg = useGetData<TPaginatedResponse<TRtourImage>>({
+    url: `${adminTour_url}${tourId}/images/`,
+  });
+
+    const getTourImg = useGetData<TPaginatedResponse<TRtourImage>>({
     key: [adminTour_key, "images"],
-    url: `${adminTour_url}${tourId}/images`,
+    url: `${adminTour_url}${tourId}/images/`,
     enabled: !!tourId
   })
-  
-  return { getTours, postTours, getTourById, putTour, deleteTour, postTourImg, deleteTourImg, getTourImg };
+  const getTourImgById = useGetById<TRtourImage>({
+    key: [adminTour_key, "images"],
+    url: `${adminTour_url}${tourId}/images/`,
+    id: imageId,
+    enabled: !!tourId && !!imageId,
+  });
+
+  return {
+    getTours,
+    postTours,
+    getTourById,
+    putTour,
+    deleteTour,
+    postTourImg,
+    deleteTourImg,
+    getTourImgById,
+    getTourImg,
+  };
 };
 
 export default useTourTemplate;

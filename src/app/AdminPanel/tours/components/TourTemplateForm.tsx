@@ -17,7 +17,7 @@ import {
 } from "../fixtures/validation";
 import useTourTemplate from "../services/useTourTemplate";
 
-const TourForm = ({
+const TourTemplateForm = ({
   tourId,
   buttonText = tourId ? "ویرایش" : "افزودن",
   setOpenModal,
@@ -34,7 +34,6 @@ const TourForm = ({
     defaultValues: tourTemplateInitialValues,
   });
 
-
   const { fields } = useTourFields();
   const [errorOpen, setErrorOpen] = useState(false);
 
@@ -43,15 +42,15 @@ const TourForm = ({
 
     return {
       title: getTourById.data.title,
-      category: getTourById.data.category.value,
+      category: getTourById.data.category?.value,
       short_description: getTourById.data.short_description,
       description: getTourById.data.description,
       transportation_included: getTourById.data.transportation_included,
-      vehicle_type: getTourById.data.vehicle_type.value,
+      vehicle_type: getTourById.data.vehicle_type?.value,
       vehicle_details: getTourById.data.vehicle_details,
       destination: getTourById.data.destination,
       country: getTourById.data.country,
-      difficulty: getTourById.data.difficulty.value,
+      difficulty: getTourById.data.difficulty?.value,
       age_requirement: getTourById.data.age_requirement,
       highlights: getTourById.data.highlights,
       is_featured: getTourById.data.is_featured,
@@ -104,4 +103,4 @@ const TourForm = ({
   );
 };
 
-export default TourForm;
+export default TourTemplateForm;

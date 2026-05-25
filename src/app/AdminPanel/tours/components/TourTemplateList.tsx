@@ -4,13 +4,13 @@ import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import CustomDialog from "@/components/modal/CustomDialog";
 import CustomLoader from "@/components/loading/CustomLoader";
-import TourForm from "./TourTemplateForm";
+import TourTemplateForm from "./TourTemplateForm";
 import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/ListDelete";
 import type { TtourTemplateItems } from "../types";
 import useTourTemplate from "../services/useTourTemplate";
 import { tourTemplateListColumns } from "../fixtures/TourTemplateListColumns";
 import ListImage from "../../RoomTypes/components/roomTypeListIcons/ListImage";
-import TourTemplatePhotoes from "./tourTemplatePhotoes";
+import TourTemplatePhotoes from "./TourTemplatePhotoes";
 const TourTemplateList = () => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
   const [selected, setSelected] = useState<TtourTemplateItems | null>(null);
@@ -24,7 +24,6 @@ const TourTemplateList = () => {
     currentTourPage: currentTourPage,
     searchInput: search,
   });
-
 
   if (getTours.isFetching)
     return (
@@ -74,7 +73,7 @@ const TourTemplateList = () => {
                     setOpenDelete(true);
                   }}
                 />
-                                <ListImage
+                <ListImage
                   onClick={() => {
                     setSelected(rowData);
                     setOpenImg(true);
@@ -98,7 +97,7 @@ const TourTemplateList = () => {
       </div>
 
       <CustomDialog
-        dialogContent={<TourForm tourId={selected?.id} />}
+        dialogContent={<TourTemplateForm tourId={selected?.id} />}
         dialogTitle={
           selected?.id
             ? `ویرایش تمپلیت تور (${selected.title})`
@@ -113,7 +112,9 @@ const TourTemplateList = () => {
       />
 
       <CustomDialog
-        dialogContent={<TourTemplatePhotoes tourId={selected?.id!}/>}
+        dialogContent={
+          <TourTemplatePhotoes tourId={selected?.id!} setOpenImg={setOpenImg} />
+        }
         dialogTitle={`عکس های تور(${selected?.title})`}
         onOpenChange={() => {
           setOpenImg(false);
