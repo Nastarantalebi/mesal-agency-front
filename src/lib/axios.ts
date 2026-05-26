@@ -50,9 +50,9 @@ const attachRefreshInterceptor = (axiosInstance: AxiosInstance) => {
       }
 
 
-      // if (status !== 401) {
-      //   return Promise.reject(error);
-      // }
+      if (status !== 401) {
+        return Promise.reject(error);
+      }
 
       if (original._retry) return Promise.reject(error);
       original._retry = true;

@@ -54,7 +54,7 @@ const useTourTemplate = ({
 
   const postTourImg = usePostData<FormData>({
     key,
-    url: `${adminTour_url}${tourId}/images/`,
+    url: `${adminTour_url}${tourId}/images`,
     enabled: !!tourId,
   });
 
@@ -63,11 +63,11 @@ const useTourTemplate = ({
     url: `${adminTour_url}${tourId}/images/`,
   });
 
-    const getTourImg = useGetData<TPaginatedResponse<TRtourImage>>({
+  const getTourImg = useGetData<TPaginatedResponse<TRtourImage>>({
     key: [adminTour_key, "images"],
     url: `${adminTour_url}${tourId}/images/`,
-    enabled: !!tourId
-  })
+    enabled: !!tourId,
+  });
   const getTourImgById = useGetById<TRtourImage>({
     key: [adminTour_key, "images"],
     url: `${adminTour_url}${tourId}/images/`,
