@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
-import type { accommodationsResponse } from "../types";
 import { DollarSign, MapPin } from "lucide-react";
+import type { accommodationsResponse } from "../../types";
 
 interface Props {
   accommodations?: accommodationsResponse[];

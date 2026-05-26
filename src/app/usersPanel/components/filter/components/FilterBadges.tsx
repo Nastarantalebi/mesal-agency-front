@@ -1,8 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, SlidersHorizontal } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import FilterModal from "./FilterModal";
-import type { filterdata } from "./types/types";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
@@ -11,6 +9,8 @@ import {
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
 import { useNavigate, useSearch } from "@tanstack/react-router";
+import type { filterdata } from "../types/types";
+import FilterModal from "./FilterModal";
 
 export interface filterProps {
   setFilter: Dispatch<SetStateAction<filterdata | undefined>>;

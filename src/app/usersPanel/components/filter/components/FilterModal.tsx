@@ -5,13 +5,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
-import type { filterdata } from "./types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { filterInitialValues, filterValidation } from "./fixtures/Validation";
 import FormComponent from "@/components/form/FormComponent";
-import useFilterFields from "./hooks/useFilterFields";
 
 import { useState } from "react";
+import { filterInitialValues, filterValidation } from "../fixtures/Validation";
+import type { filterdata } from "../types/types";
+import useFilterFields from "../hooks/useFilterFields";
 
 interface Props {
   open: boolean;
