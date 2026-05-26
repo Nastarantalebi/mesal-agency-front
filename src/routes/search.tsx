@@ -1,6 +1,6 @@
-import AccommodationCardsDetails from "@/app/usersPanel/components/AccommodationCardsDetails";
-import FilterBadges from "@/app/usersPanel/components/filter/FilterBadges";
-import UserHeader from "@/app/usersPanel/components/UserHeader";
+import AccommodationCardsDetails from "@/app/usersPanel/components/accommodation/AccommodationCardsDetails";
+import FilterBadges from "@/app/usersPanel/components/filter/components/FilterBadges";
+import UserHeader from "@/app/usersPanel/components/header/UserHeader";
 import { useAccommodation } from "@/app/usersPanel/services/useAccommoation";
 import CustomLoader from "@/components/loading/CustomLoader";
 import { createFileRoute, Outlet } from "@tanstack/react-router";

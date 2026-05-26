@@ -1,5 +1,5 @@
 import type { TPaginatedResponse } from "@/types";
-import type { accommodationsResponse } from "../types";
+import type { accommodationsResponse } from "../../types";
 
 interface Props {
   accommodation: TPaginatedResponse<accommodationsResponse>;
