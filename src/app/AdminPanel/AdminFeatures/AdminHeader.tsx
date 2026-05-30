@@ -11,17 +11,42 @@ import { useState, type ReactNode } from "react";
 import { useLogout } from "../../login/services/useLogout";
 import useMe from "../../login/services/useMe";
 import UserProfile from "./hooks/UserProfile";
-import { useNavigate } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { SidebarData } from "@/fixtures/SideBarData.";
 
 interface Props {
   menuBtn?: ReactNode;
 }
+
+const findBreadcrumb = (items: any[], pathname: string): any[] => {
+  console.log("items", items)
+  for (const item of items) {
+    if (item.url === pathname) return [item];
+    if (item.children) {
+      const childMatch = findBreadcrumb(item.children, pathname);
+      if (childMatch.length > 0) return [item, ...childMatch];
+    }
+  }
+  return [];
+};
 
 const Header = ({ menuBtn }: Props) => {
   const { mutateAsync } = useLogout();
   const { data } = useMe();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  // console.log("location", location)
+  const breadcrumbs = findBreadcrumb(SidebarData, location.pathname);
+  console.log("breadcrumbs", breadcrumbs)
 
   return (
     <div className="w-full">
@@ -30,6 +55,25 @@ const Header = ({ menuBtn }: Props) => {
         <div className="flex items-center gap-5 text-primary">
           {menuBtn}
           <span onClick={() => navigate({to: "/"})} className="cursor-pointer">آژانس</span>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/admin/dashboard">خانه</BreadcrumbLink>
+              </BreadcrumbItem>
+              {breadcrumbs.map((item, index) => (
+                <div key={item.url} className="flex items-center gap-2">
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    {index === breadcrumbs.length - 1 ? (
+                      <BreadcrumbPage>{item.title}</BreadcrumbPage>
+                    ) : (
+                      <BreadcrumbLink href={item.url}>{item.title}</BreadcrumbLink>
+                    )}
+                  </BreadcrumbItem>
+                </div>
+              ))}
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
         <div className="flex items-center justify-center cursor-pointer gap-4 mx-2">
           {/* <span className="text-sm font-medium text-background">نسترن طالبی</span> */}

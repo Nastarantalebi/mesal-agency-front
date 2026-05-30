@@ -13,17 +13,17 @@ import {
 export const SidebarData = [
   {
     title: "لیست اقامتگاه ها",
-    url: `/admin/accommodations/`,
+    url: `/admin/accommodations`,
     icon: <Home />,
   },
   {
     title: "لیست تمپلیت تور ها",
-    url: `/admin/tourTemplates/`,
+    url: `/admin/tourTemplates`,
     icon: <TentTreeIcon />,
   },
   {
     title: "ایجاد تور جدید",
-    url: `/admin/tour/`,
+    url: `/admin/tour`,
     icon: <TreePalm />,
   },
   {
@@ -33,27 +33,27 @@ export const SidebarData = [
   },
   {
     title: "کاربران",
-    url: `/admin/users/`,
+    url: `/admin/users`,
     icon: <UserRoundSearchIcon />,
   },
   {
     title: "تنظیمات سامانه",
-    url: `/admin/setting/`,
+    url: `/admin/setting`,
     icon: <Settings />,
     children: [
       {
         title: "ویژگی های اقامتگاه",
-        url: `/admin/setting/accommodationFeatures/`,
+        url: `/admin/setting/accommodationFeatures`,
         icon: <Star />,
       },
       {
         title: "نوع تخت ",
-        url: `/admin/setting/BedTypes/`,
+        url: `/admin/setting/BedTypes`,
         icon: <Bed />,
       },
       {
         title: "پیشفرض ها",
-        url: `/admin/setting/defaults/`,
+        url: `/admin/setting/defaults`,
         icon: <Settings2 />,
       },
     ],
