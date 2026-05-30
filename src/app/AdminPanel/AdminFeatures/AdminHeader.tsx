@@ -54,7 +54,8 @@ const Header = ({ menuBtn }: Props) => {
       <header className=" mx-5 my-2 rounded-xl top-0  right-0 z-10 flex h-14 justify-between items-center border px-4 bg-primary-10">
         <div className="flex items-center gap-5 text-primary">
           {menuBtn}
-          <span onClick={() => navigate({to: "/"})} className="cursor-pointer">آژانس</span>
+          <img src="/logo.webp" alt="agencyLogo" onClick={() => navigate({to: "/"})} className="w-10 h-10"/>
+          {/* <span onClick={() => navigate({to: "/"})} className="cursor-pointer">آژانس</span> */}
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
