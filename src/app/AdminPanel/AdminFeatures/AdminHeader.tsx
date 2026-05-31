@@ -21,22 +21,63 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { SidebarData } from "@/fixtures/SideBarData.";
+import useBreadCrumbTitles from "./stores/useBreadCrumbTitles";
 
 interface Props {
   menuBtn?: ReactNode;
 }
 
-const findBreadcrumb = (items: any[], pathname: string): any[] => {
-  console.log("items", items)
+const normalizePath = (path: string) => path.replace(/\/+$/, "");
+
+const isNumeric = (seg: string) => /^\d+$/.test(seg);
+
+// مقایسه url منو با مسیر تجمعی؛ سگمنت عددی یا داینامیک به‌عنوان wildcard
+const segmentsMatch = (menuUrl: string, accPath: string) => {
+  const menuSegs = normalizePath(menuUrl).split("/").filter(Boolean);
+  const pathSegs = normalizePath(accPath).split("/").filter(Boolean);
+  if (menuSegs.length !== pathSegs.length) return false;
+  return menuSegs.every((seg, i) => {
+    const dynamic =
+      seg.startsWith(":") || (seg.startsWith("[") && seg.endsWith("]"));
+    return dynamic || isNumeric(pathSegs[i]) || seg === pathSegs[i];
+  });
+};
+
+const findMenuItem = (items: any[], accPath: string): any | undefined => {
   for (const item of items) {
-    if (item.url === pathname) return [item];
+    if (item.url && segmentsMatch(item.url, accPath)) return item;
     if (item.children) {
-      const childMatch = findBreadcrumb(item.children, pathname);
-      if (childMatch.length > 0) return [item, ...childMatch];
+      const found = findMenuItem(item.children, accPath);
+      if (found) return found;
     }
   }
-  return [];
+  return undefined;
 };
+
+const buildBreadcrumbs = (
+  pathname: string,
+  items: any[],
+  breadCrumbTitle: string[]
+) => {
+  const segments = normalizePath(pathname).split("/").filter(Boolean);
+  const crumbs: { title: string; url: string }[] = [];
+  let acc = "";
+  let dynamicIndex = 0;
+
+  for (const segment of segments) {
+    acc += "/" + segment;
+    if (isNumeric(segment)) {
+      const title = breadCrumbTitle[dynamicIndex] ?? segment;
+      dynamicIndex++;
+      crumbs.push({ title, url: acc });
+    } else {
+      const item = findMenuItem(items, acc);
+      if (item?.title) crumbs.push({ title: item.title, url: acc });
+    }
+  }
+  return crumbs;
+};
+
 
 const Header = ({ menuBtn }: Props) => {
   const { mutateAsync } = useLogout();
@@ -44,8 +85,10 @@ const Header = ({ menuBtn }: Props) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  // console.log("location", location)
-  const breadcrumbs = findBreadcrumb(SidebarData, location.pathname);
+  const breadCrumbTitle = useBreadCrumbTitles((state) => state.breadCrumbTitle)
+  console.log(breadCrumbTitle)
+  console.log("location", location)
+  const breadcrumbs = buildBreadcrumbs(location.pathname, SidebarData, breadCrumbTitle);
   console.log("breadcrumbs", breadcrumbs)
 
   return (

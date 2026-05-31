@@ -4,6 +4,7 @@ import type { roomTypeFeatureListValidation } from "../fixtures/Validation";
 
 export interface Props {
   AccommodationId: number;
+  AccommodationName?: string;
   RoomTypeId?: number | null;
   RoomTypeName?: string | null;
   open?: boolean;

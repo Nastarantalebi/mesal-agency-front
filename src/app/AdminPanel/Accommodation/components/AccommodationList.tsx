@@ -18,6 +18,7 @@ import AccommodationFeatures from "./AccommodationFeatures";
 import ListDate from "../../RoomTypes/components/roomTypeListIcons/ListDate";
 import AccommodatioPeakDate from "./AccommodationPeakDate";
 import ListRooms from "../../RoomTypes/components/roomTypeListIcons/ListRooms";
+import useBreadCrumbTitles from "../../AdminFeatures/stores/useBreadCrumbTitles";
 
 const AccommodationList = () => {
   const [currentAccommodationPage, setCurrentAccommodationPage] = useState(1);
@@ -27,6 +28,7 @@ const AccommodationList = () => {
   const [openFeatures, setOpenFeatures] = useState(false);
   const [openPeakDate, setOpenPeakDate] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const setBreadCrumbTitle = useBreadCrumbTitles((state) => state.setBreadCrumbTitle);
 
   const [search, setSearch] = useState("");
 
@@ -105,7 +107,11 @@ const AccommodationList = () => {
                   onClick={() => {
                     navigate({
                       to: `/admin/accommodations/${rowData.id}/roomTypes`,
+                      search: {
+                        name: rowData.name,
+                      },
                     });
+                    setBreadCrumbTitle([rowData.name])
                   }}
                 />
                   <ListDelete

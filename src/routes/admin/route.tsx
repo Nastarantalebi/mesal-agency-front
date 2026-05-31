@@ -19,9 +19,9 @@ function RouteComponent() {
         <AdminSidebar sidebaritems={SidebarData} />
         <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
           <MobileAdminSidebar />
-          <main className="flex-1 flex-col overflow-y-auto p-5">
+          <main className="flex-1 flex-col overflow-y-auto px-5">
             <div className="flex justify-end">
-              <Button variant={"outline"} className="border-2 border-primary mb-5" onClick={() => router.history.back()}>
+              <Button variant={"outline"} className="border-2 border-primary" onClick={() => router.history.back()}>
                 صفحه قبلی
               </Button>
             </div>

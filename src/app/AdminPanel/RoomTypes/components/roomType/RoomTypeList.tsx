@@ -8,10 +8,12 @@ import ListDelete from "../roomTypeListIcons/ListDelete";
 import ListPagination from "@/components/list/ListPagination";
 import { useNavigate } from "@tanstack/react-router";
 import RoomTypefields from "../../hooks/RoomTypefields";
+import useBreadCrumbTitles from "@/app/AdminPanel/AdminFeatures/stores/useBreadCrumbTitles";
 
-const RoomTypeList = ({ AccommodationId }: Props) => {
+const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
+    const setBreadCrumbTitle = useBreadCrumbTitles((state) => state.setBreadCrumbTitle);
 
   const { getRoomTypeList, deleteRoomType } = useRoomTypeList(
     AccommodationId,
@@ -57,6 +59,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
               navigate({
                 to: `/admin/accommodations/$id/roomTypes/${rowData.id}`,
               });
+              setBreadCrumbTitle([AccommodationName!, rowData.name])
             }}
             onAdd={() => setAddRoomType(true)}
             customAddText="افزودن نوع اتاق جدید"
