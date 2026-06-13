@@ -7,7 +7,7 @@ import RoomTypeList from "@/app/AdminPanel/RoomTypes/components/roomType/RoomTyp
 export const AccommodationTabsData = (id: number) => [
   {
     title: "اطلاعات اولیه",
-    component: <AccommodationForm buttonText="ویرایش" AccommodationId={id} />,
+    component: <AccommodationForm AccommodationId={id} />,
   },
   {
     title: "ویژگی های اقامتگاه",

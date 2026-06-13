@@ -11,8 +11,8 @@ import TagsInput from "./TagsInput";
 import SwitchBox from "./FormSwitch/SwitchBox";
 import CustomTextArea from "./Textarea";
 import RadioInput from "./Radio";
-import ReactSelect from "@/components/form/FormSelect/ReactSelect";
 import type { TFormData } from "@/types";
+import ReactSelect from "./FormSelect/ReactSelect";
 
 /**
  * @description

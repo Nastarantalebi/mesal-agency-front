@@ -3,7 +3,7 @@ import {
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import useValidation from "../fixtures/useValidation";
 import useAccomodationFields from "../hooks/useAccomodationFields";
@@ -14,9 +14,10 @@ import FormComponent from "@/_components/Form/Form";
 
 const AccommodationForm = ({
   AccommodationId,
+  setOpenModal,
 }: {
   AccommodationId?: number;
-  buttonText?: string;
+ setOpenModal?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { getAccommodation, postAccommodation, ispendingPost, putAccommodation, ispendingPut } =
     useAccommodation(AccommodationId!);
@@ -77,11 +78,14 @@ const AccommodationForm = ({
     if (isEdit) {
       putAccommodation(
         { data: transformedData, id: AccommodationId },
+        {onSuccess: () => setOpenModal?.(false)}
       );
     } else {
       postAccommodation(transformedData, {
         onSuccess: () => {
-          form.reset(accommodationInitialValues);
+          {form.reset(accommodationInitialValues);
+            setOpenModal?.(false)
+          }
         },
       });
     }
