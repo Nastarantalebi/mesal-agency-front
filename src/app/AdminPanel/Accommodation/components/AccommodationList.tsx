@@ -149,7 +149,7 @@ const AccommodationList = () => {
           setSelected(null);
         }}
         open={openModal}
-        size="xxl"
+        size="xxxl"
       />
       <CustomDialog
         dialogContent={<AccommodationPhotoes AccommodationId={selected?.id} />}

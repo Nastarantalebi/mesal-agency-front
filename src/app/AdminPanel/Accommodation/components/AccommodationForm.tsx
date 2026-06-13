@@ -1,28 +1,24 @@
-import FormErrorModal from "@/components/form/FormErrorModal";
-import CustomButton from "@/components/form/CustomButton";
 import {
   miladiToShamsi,
   shamsiToMiladi,
 } from "@/components/form/DateConverter";
-import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useValidation from "../fixtures/useValidation";
 import useAccomodationFields from "../hooks/useAccomodationFields";
 import { useAccommodation } from "../services/useAccommodation";
 import type { TCreateAccomodation } from "../types";
-import formTypes from "@/components/form/FormInputTypes";
 import CustomLoader from "@/components/loading/CustomLoader";
+import FormComponent from "@/_components/Form/Form";
 
 const AccommodationForm = ({
   AccommodationId,
-  buttonText = AccommodationId ? "ویرایش" : "افزودن",
 }: {
   AccommodationId?: number;
   buttonText?: string;
 }) => {
-  const { getAccommodation, postAccommodation, putAccommodation } =
+  const { getAccommodation, postAccommodation, ispendingPost, putAccommodation, ispendingPut } =
     useAccommodation(AccommodationId!);
   const { accommodationValidation, accommodationInitialValues } =
     useValidation();
@@ -31,6 +27,8 @@ const AccommodationForm = ({
     resolver: zodResolver(accommodationValidation),
     defaultValues: accommodationInitialValues,
   });
+
+  console.log(form.watch())
 
   useEffect(() => {
     if (!getAccommodation.data) return;
@@ -57,11 +55,10 @@ const AccommodationForm = ({
   }, [getAccommodation.data]);
 
   const province_id = form.watch("provience");
+  
 
   const { accommodationFields } = useAccomodationFields(Number(province_id));
 
-  const [errorOpen, setErrorOpen] = useState(false);
-  const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
   const handleSubmit = (value: TCreateAccomodation) => {
     const isEdit = !!AccommodationId;
@@ -78,18 +75,14 @@ const AccommodationForm = ({
     };
 
     if (isEdit) {
-      putAccommodation.mutateAsync(
+      putAccommodation(
         { data: transformedData, id: AccommodationId },
-        {
-          onError: () => setErrorOpen(true),
-        },
       );
     } else {
-      postAccommodation.mutateAsync(transformedData, {
+      postAccommodation(transformedData, {
         onSuccess: () => {
           form.reset(accommodationInitialValues);
         },
-        onError: () => setErrorOpen(true),
       });
     }
   };
@@ -97,31 +90,37 @@ const AccommodationForm = ({
   if (getAccommodation.isFetching) return <div className="p-4"><CustomLoader/></div>;
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="grid w-full min-w-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start"
-      >
-        {accommodationFields.map((item) => (
-          <div
-            key={String(item.name)}
-            className={item.className || "col-span-1"}
-          >
-            {formTypes<TCreateAccomodation>(item, form.control)}
-          </div>
-        ))}
+    <FormComponent<TCreateAccomodation>
+      onSubmit={(value) => handleSubmit(value)}
+      form={form}
+      isSubmitting={ispendingPut || ispendingPost}
+      formFields={accommodationFields}
+    />
+    // <Form {...form}>
+    //   <form
+    //     onSubmit={form.handleSubmit(handleSubmit)}
+    //     className="grid w-full min-w-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start"
+    //   >
+    //     {accommodationFields.map((item) => (
+    //       <div
+    //         key={String(item.name)}
+    //         className={item.className || "col-span-1"}
+    //       >
+    //         {formTypes<TCreateAccomodation>(item, form.control)}
+    //       </div>
+    //     ))}
 
-        <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-end gap-3">
-          <CustomButton type="submit">{buttonText}</CustomButton>
-        </div>
-      </form>
-      <FormErrorModal
-        open={errorOpen}
-        message={errmessage}
-        onOpenChange={setErrorOpen}
-        onAcknowledge={() => setErrorOpen(false)}
-      />
-    </Form>
+    //     <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-end gap-3">
+    //       <CustomButton type="submit">{buttonText}</CustomButton>
+    //     </div>
+    //   </form>
+    //   <FormErrorModal
+    //     open={errorOpen}
+    //     message={errmessage}
+    //     onOpenChange={setErrorOpen}
+    //     onAcknowledge={() => setErrorOpen(false)}
+    //   />
+    // </Form>
   );
 };
 

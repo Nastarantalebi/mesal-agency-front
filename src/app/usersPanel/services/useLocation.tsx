@@ -1,7 +1,4 @@
-import {
-  type cities,
-  type provience,
-} from "@/app/AdminPanel/Accommodation/types";
+
 import {
   cities_key,
   cities_url,
@@ -9,14 +6,15 @@ import {
   province_url,
 } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
+import type { TOption2 } from "@/types";
 
 const useLocation = (province_id?: number) => {
-  const getProviences = useGetData<provience[]>({
+  const getProviences = useGetData<TOption2[]>({
     key: [province_key],
     url: province_url,
   });
 
-  const getCities = useGetData<cities[]>({
+  const getCities = useGetData<TOption2[]>({
     key: [cities_key, String(province_id)],
     url: `${cities_url}?province_id=${province_id}`,
     enabled: !!province_id,

@@ -1,4 +1,3 @@
-import type { accommodationTypes } from "@/app/AdminPanel/Accommodation/types";
 import {
   accommodationFeatureList_key,
   accommodationFeatureList_url,
@@ -7,11 +6,12 @@ import {
 } from "@/data/querykeys";
 import useGetData from "@/services/useGetData";
 import type { accommodationFeatureList } from "../types/types";
+import type { TOption2 } from "@/types";
 
 
 
 const useAccommodationType = () => {
-  const accommodationTypes = useGetData<accommodationTypes[]>({
+  const accommodationTypes = useGetData<TOption2[]>({
     key: [accommodationTypes_key],
     url: accommodationTypes_url,
   });

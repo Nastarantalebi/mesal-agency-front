@@ -1,6 +1,7 @@
 import type z from "zod";
 import type { accommodationFeatureListValidation } from "../fixtures/Validation";
 import type { DateObject } from "react-multi-date-picker";
+import type { TOption } from "@/types";
 
 export interface Props {
   AccommodationId?: number;
@@ -105,23 +106,12 @@ export interface Item {
   value?: string | boolean;
 }
 
-export interface accommodationTypes{
-  id: number;
-  name: string;
-}
-export interface provience{
-  id: number;
-  name: string;
-}
 
-export interface cities{
-  id: number;
-  name: string;
-}
 
-export const YES_NO_OPTIONS = [
-  { label: "بله", value: "true" },
-  { label: "خیر", value: "false" },
+
+export const YES_NO_OPTIONS: TOption[] = [
+  { label: "بله", value: true },
+  { label: "خیر", value: false },
 ];
 
 

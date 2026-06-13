@@ -19,15 +19,15 @@ export type TtourTemplateResponse = {
   id: number;
   title: string;
   slug: string;
-  category: TOption;
+  category: string;
   description: string;
   short_description: string;
-  vehicle_type: TOption;
+  vehicle_type: string;
   vehicle_details: string;
   transportation_included: boolean;
   destination: string;
   country: string;
-  difficulty: TOption;
+  difficulty: string;
   age_requirement: number;
   highlights: string;
   is_featured: boolean;

@@ -42,15 +42,15 @@ const TourTemplateForm = ({
 
     return {
       title: getTourById.data.title,
-      category: getTourById.data.category?.value,
+      category: getTourById.data.category,
       short_description: getTourById.data.short_description,
       description: getTourById.data.description,
       transportation_included: getTourById.data.transportation_included,
-      vehicle_type: getTourById.data.vehicle_type?.value,
+      vehicle_type: getTourById.data.vehicle_type,
       vehicle_details: getTourById.data.vehicle_details,
       destination: getTourById.data.destination,
       country: getTourById.data.country,
-      difficulty: getTourById.data.difficulty?.value,
+      difficulty: getTourById.data.difficulty,
       age_requirement: getTourById.data.age_requirement,
       highlights: getTourById.data.highlights,
       is_featured: getTourById.data.is_featured,

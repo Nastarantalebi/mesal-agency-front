@@ -231,6 +231,10 @@
   }
 }
 
+body[data-scroll-locked] {
+  pointer-events: auto !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

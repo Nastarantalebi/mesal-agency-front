@@ -1,30 +1,30 @@
 import { admin_accommodation_key, accommodation_types_key, accommodation_types_url, admin_accommodation_url, features_key, features_url } from "@/data/querykeys";
 import useDeleteData from "@/services/useDeleteData";
-import useGetData from "@/services/useGetData";
 import usePostData from "@/services/usePostData";
-import type { TPaginatedResponse } from "@/types";
-import type { AccommodationItem, accommodationTypes, TAccommodationFeatureResponse, TAccommodationImage, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
+import type { TOption2, TPaginatedResponse } from "@/types";
+import type { AccommodationItem, TAccommodationFeatureResponse, TAccommodationImage, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
 import usePutData from "@/services/usePutData";
+import useGetData from "@/services/useGetData";
 
 export const useAccommodation = (AccommodationId?: number, currentAccommodationPage?: number, searchInput?: string) => {
 
   const key = [admin_accommodation_key, String(AccommodationId)];
   const url =  `${admin_accommodation_url}${AccommodationId}/`
 
-    const getAccommodation = useGetData<TAccommodationResponse>({
+    const  getAccommodation = useGetData<TAccommodationResponse>({
         key,
         url,
         enabled: !!AccommodationId,
     });
 
-    const postAccommodation = usePostData<
+    const {mutateAsync: postAccommodation, isPending: ispendingPost} = usePostData<
         TCreateAccomodation
     >({
         key: [admin_accommodation_key],
         url: admin_accommodation_url,
     });
 
-    const putAccommodation = usePutData<
+    const {mutateAsync: putAccommodation, isPending: ispendingPut} = usePutData<
         TCreateAccomodation
     >({
         key,
@@ -44,13 +44,13 @@ export const useAccommodation = (AccommodationId?: number, currentAccommodationP
       enabled: !!currentAccommodationPage
     });
 
-    const getAccommodationTypes = useGetData<accommodationTypes[]>({
+    const getAccommodationTypes = useGetData<TOption2[]>({
       key: [accommodation_types_key],
       url: accommodation_types_url,
     })
 
 
-    return { getAccommodation, postAccommodation, putAccommodation, deleteAccommodation, getAccommodations, getAccommodationTypes}
+    return { getAccommodation, postAccommodation, ispendingPost, putAccommodation, ispendingPut, deleteAccommodation, getAccommodations, getAccommodationTypes}
 }
 
 // -----------------------------------------------------------------------------------------

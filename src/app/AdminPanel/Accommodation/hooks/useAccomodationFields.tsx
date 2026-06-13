@@ -2,203 +2,195 @@ import {
   YES_NO_OPTIONS,
   type TCreateAccomodation
 } from "@/app/AdminPanel/Accommodation/types/index";
-import type { Items } from "@/components/form/FormInputTypes";
 
 import useAdminLocation from "../services/useAdminLocation";
 import { useAccommodation } from "../services/useAccommodation";
+import type { TFormData } from "@/types";
+import { mapTOption2ToTOption } from "@/utils/formValues";
 
 function useAccomodationFields(province_id: number) {
 
   const {getAccommodationTypes} = useAccommodation()
   const { getAdminProviences, getAdminCities } = useAdminLocation(province_id)
 
-  const accommodationFields: Items<TCreateAccomodation>[] = [
+  const accommodationTypes = mapTOption2ToTOption(getAccommodationTypes.data!);
+  const proviences = mapTOption2ToTOption(getAdminProviences.data!)
+  const cities = getAdminCities.data 
+    ? mapTOption2ToTOption(getAdminCities.data) 
+    : [];
+
+  const accommodationFields: TFormData<TCreateAccomodation>[] = [
     {
       name: "type",
       label: "نوع اقامتگاه",
-      isRequired: true,
-      fieldType: "dropdown",
-      items: getAccommodationTypes.data,
+      required: true,
+      type:"select",
+      option: accommodationTypes,
+      // option: getAccommodationTypes.data,
     },
     {
       name: "name",
       label: "نام اقامتگاه",
-      isRequired: true,
-      fieldType: "input",
+      required: true,
       inputType: "text",
     },
     {
       name: "provience",
       label: "استان",
-      isRequired: false,
-      fieldType: "dropdown",
-      items: getAdminProviences.data,
+      required: false,
+      type: "select",
+      option:proviences,
+      // option: getAdminProviences.data,
     },
     {
       name: "city",
       label: "شهر",
-      isRequired: false,
-      fieldType: "dropdown",
-      items: getAdminCities.data,
-    },
-    {
-      name: "address",
-      label: "آدرس",
-      isRequired: false,
-      fieldType: "input",
-      inputType: "text",
-      className: "col-span-full",
-    },
-    {
-      name: "description",
-      label: "توضیحات",
-      isRequired: false,
-      fieldType: "input",
-      inputType: "text",
-      className: "col-span-full",
+      required: false,
+      type: "select",
+      option: cities ?? [],
     },
     {
       name: "open_start",
       label: "تاریخ شروع قرارداد",
-      isRequired: true,
-      fieldType: "DatePicker",
-      className:"col-start-1"
+      required: true,
+      type: "date",
+      className:""
     },
     {
       name: "open_end",
       label: "تاریخ پایان قرارداد",
-      isRequired: true,
-      fieldType: "DatePicker",
+      required: true,
+      type: "date",
     },
     {
       name: "min_child_age",
       label: "حداقل سن کودک",
-      isRequired: true,
-      fieldType: "input",
+      required: true,
       inputType:"number",
-      direction:"ltr",
     },
     {
       name: "max_child_age",
       label: "حداکثر سن کودک",
-      isRequired: true,
-      fieldType: "input",
+      required: true,
       inputType:"number",
-      direction:"ltr",
     },
     {
       name: "manufacture_date",
       label: "سال تاسیس",
-      isRequired: false,
-      fieldType: "DatePicker",
+      required: false,
+      type: "date",
     },
     {
       name: "floors",
       label: "تعداد طبقات",
-      isRequired: false,
-      fieldType: "input",
-      direction:"ltr",
+      required: false,
       inputType: "number",
     },
     {
       name: "total_rooms",
       label: "تعداد کل اتاق ها",
-      isRequired: false,
-      fieldType: "input",
-      direction:"ltr",
+      required: false,
       inputType: "number",
     },
     {
       name: "max_guests",
       label: "ماکزیمم تعداد مهمانان",
-      isRequired: false,
-      fieldType: "input",
-      direction:"ltr",
+      required: false,
       inputType: "number",
     },
     {
       name: "check_in_time",
       label: "ساعت ورود",
-      isRequired: false,
-      fieldType: "Time",
+      required: false,
+      type: "time",
     },
     {
       name: "check_out_time",
       label: "ساعت خروج",
-      isRequired: false,
-      fieldType: "Time",
+      required: false,
+      type: "time",
     },
-
+    
     {
       name: "area_sqm",
       label: "مساحت",
-      isRequired: false,
-      fieldType: "input",
-      direction:"ltr",
+      required: false,
       inputType: "number",
     },
     {
       name: "stars",
       label: "چند ستاره",
-      isRequired: false,
-      fieldType: "input",
-      direction:"ltr",
+      required: false,
       inputType: "number",
-      className: "col-start-1"
+      className: ""
     },
     {
       name: "top",
       label: "ستاره برتر؟",
-      isRequired: false,
-      fieldType: "yesNoInput",
-      items: YES_NO_OPTIONS,
+      required: false,
+      type: "select",
+      option: YES_NO_OPTIONS,
     },
     {
       name: "has_reception_24h",
       label: "پذیرش ۲۴ ساعته ",
-      isRequired: false,
-      fieldType: "yesNoInput",
-      items: YES_NO_OPTIONS,
-      className: "col-start-1"
+      required: false,
+      type: "select",
+      option: YES_NO_OPTIONS,
+      className: ""
     },
     {
       name: "has_elevator",
       label: "آسانسور",
-      isRequired: false,
-      fieldType: "yesNoInput",
-      items: YES_NO_OPTIONS,
+      required: false,
+      type: "select",
+      option: YES_NO_OPTIONS,
     },
     {
       name: "built_with_local_materials",
       label: "ساخته شده با مصالح محلی",
-      isRequired: false,
-      fieldType: "yesNoInput",
-      items: YES_NO_OPTIONS,
+      required: false,
+      type: "select",
+      option: YES_NO_OPTIONS,
     },
     {
       name: "allows_local_food_experience",
       label: "اجازه تجربه غذای محلی",
-      isRequired: false,
-      fieldType: "yesNoInput",
-      items: YES_NO_OPTIONS,
-      className: "col-start-1"
+      required: false,
+      type: "select",
+      option: YES_NO_OPTIONS,
+      className: ""
     },
     {
       name: "is_active",
       label: "فعال",
-      isRequired: false,
-      fieldType: "yesNoInput",
-      items: YES_NO_OPTIONS,
+      required: false,
+      type: "select",
+      option: YES_NO_OPTIONS,
     },
-        {
-      name: "latitude", 
-      label: "موقعیت مکانی",
-      isRequired: false,
-      fieldType: "Map",
-      className: "col-span-full",
+    {
+      name: "address",
+      label: "آدرس",
+      required: false,
+      type:"textArea",
+      // className: "col-span-full",
     },
-  ];
-  return {accommodationFields};
-}
-
-export default useAccomodationFields;
+    {
+      name: "description",
+      label: "توضیحات",
+      required: false,
+      type: "textArea",
+      className: " col-start-1",
+    },
+    //     {
+      //   name: "latitude", 
+      //   label: "موقعیت مکانی",
+      //   required: false,
+      //   type: "map",
+      //   className: "col-span-full",
+      // },
+    ];
+    return {accommodationFields};
+  }
+  
+  export default useAccomodationFields;
