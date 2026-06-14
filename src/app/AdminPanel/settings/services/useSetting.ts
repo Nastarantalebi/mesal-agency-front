@@ -9,7 +9,7 @@ import useGetById from "@/services/useGetById";
 import usePatchData from "@/services/usePatchData";
 
 export const useDefaults = () => {
-  
+
   const getDefaults = useGetData<TCreateDefaults>({
     key: [default_key],
     url: default_url,
@@ -20,7 +20,7 @@ export const useDefaults = () => {
     url: default_url,
   });
 
-  return {getDefaults, postDefaults}
+  return { getDefaults, postDefaults }
 }
 /////////////////////////////////////////////////////////////////////
 
@@ -30,51 +30,51 @@ interface useFeatureProps {
   feature_id?: number | null;
 }
 
-export const useFeatures = ({currentRoomPage, currentAccommodationPage, feature_id}: useFeatureProps) => {
+export const useFeatures = ({ currentRoomPage, currentAccommodationPage, feature_id }: useFeatureProps) => {
 
-    const postFeature = usePostData<TCFeature>({
-      key: [features_key],
-      url: features_url,
-    });
+  const postFeature = usePostData<TCFeature>({
+    key: [features_key],
+    url: features_url,
+  });
 
-    const getRoomTypeFeatures = useGetData<
-      TPaginatedResponse<TFeatureResponse>
-    >({
-      key: [features_key, "roomtype", String(currentRoomPage)],
-      url: `${features_url}?page=${currentRoomPage}&type=roomtype`,
-      enabled: !!currentAccommodationPage,
-    });
+  const getRoomTypeFeatures = useGetData<
+    TPaginatedResponse<TFeatureResponse>
+  >({
+    key: [features_key, "roomtype", String(currentRoomPage)],
+    url: `${features_url}?page=${currentRoomPage}&type=roomtype`,
+    enabled: !!currentAccommodationPage,
+  });
 
-    const getAccommodationFeatures= useGetData<
-        TPaginatedResponse<TFeatureResponse>
-      >({
-        key: [features_key, "accommodation", String(currentAccommodationPage)],
-        url: `${features_url}?page=${currentAccommodationPage}&type=accommodation`,
-        enabled: !!currentAccommodationPage,
-    });
+  const getAccommodationFeatures = useGetData<
+    TPaginatedResponse<TFeatureResponse>
+  >({
+    key: [features_key, "accommodation", String(currentAccommodationPage)],
+    url: `${features_url}?page=${currentAccommodationPage}&type=accommodation`,
+    enabled: !!currentAccommodationPage,
+  });
 
-    const getfeatureData = useGetData({
-      key: [features_key, String(feature_id)],
-      url: `${features_url}${feature_id}`,
-      enabled: !!feature_id,
-    })
+  const getfeatureData = useGetData({
+    key: [features_key, String(feature_id)],
+    url: `${features_url}${feature_id}`,
+    enabled: !!feature_id,
+  })
 
-    const deleteFeature = useDeleteData({
-      key: [features_key],
-      url: features_url,
-    });
+  const deleteFeature = useDeleteData({
+    key: [features_key],
+    url: features_url,
+  });
 
-    const putFeature = usePutData({
-      key: [features_key],
-      url: features_url,
-    });
+  const putFeature = usePutData({
+    key: [features_key],
+    url: features_url,
+  });
 
-    return { postFeature, getRoomTypeFeatures, getAccommodationFeatures, getfeatureData, deleteFeature, putFeature}
+  return { postFeature, getRoomTypeFeatures, getAccommodationFeatures, getfeatureData, deleteFeature, putFeature }
 
 }
 ///////////////////////////////////////////////////////////////////ز
 
-export const useBeds = ({currentBedPage, bedId}: {currentBedPage?: number, bedId?: number| null}) => {
+export const useBeds = ({ currentBedPage, bedId }: { currentBedPage?: number, bedId?: number | null }) => {
 
   const getBeds = useGetData<TPaginatedResponse<TBedResponse>>({
     key: [beds_key, String(currentBedPage)],
@@ -88,11 +88,11 @@ export const useBeds = ({currentBedPage, bedId}: {currentBedPage?: number, bedId
   });
 
   const getBed = useGetData
-  ({
-    key: [beds_key],
-    url: `${beds_url}${bedId}`,
-    enabled: !!bedId,
-  })
+    ({
+      key: [beds_key, String(bedId)],
+      url: `${beds_url}${bedId}`,
+      enabled: !!bedId,
+    })
 
   const postBed = usePostData<TCreateBed>({
     key: [beds_key],
@@ -111,14 +111,14 @@ export const useBeds = ({currentBedPage, bedId}: {currentBedPage?: number, bedId
 ///////////////////////////////////////////////////////////////////////
 
 export const useUsers = (filters?: TcreateUsersList, currentPage?: number) => {
-  
-  const url = `${users_url}?page=${currentPage}${filters?.is_staff === false ?'' : `&is_staff=${filters?.is_staff}`}${filters?.mobile ? `&mobile__contains=${filters.mobile}` : ''}`
+
+  const url = `${users_url}?page=${currentPage}${filters?.is_staff === false ? '' : `&is_staff=${filters?.is_staff}`}${filters?.mobile ? `&mobile__contains=${filters.mobile}` : ''}`
 
   const getUsers = useGetData<TPaginatedResponse<UsersListResponse>>({
-  key: [users_key, String(filters?.is_staff), filters?.mobile!],
-  url,
+    key: [users_key, String(filters?.is_staff), filters?.mobile!],
+    url,
   })
-  
+
   const postUsers = usePostData<TcreateUsersList>({
     key: [users_key],
     url: users_url,
@@ -132,7 +132,7 @@ export const useUsers = (filters?: TcreateUsersList, currentPage?: number) => {
 }
 
 /////////////////////////////////////////////////////////////
-export const useNews = ({currentPage, id}: {currentPage?: number, id?: number}) => {
+export const useNews = ({ currentPage, id }: { currentPage?: number, id?: number }) => {
   const url = `${admin_news_url}?page=${currentPage}`
 
   const getNews = useGetData<TPaginatedResponse<TResponseNews>>({
@@ -163,7 +163,7 @@ export const useNews = ({currentPage, id}: {currentPage?: number, id?: number}) 
     url: admin_news_url,
   })
 
-  return {getNews, postNews, deletNews, getNewsById, patchNews}
+  return { getNews, postNews, deletNews, getNewsById, patchNews }
 
-} 
+}
 

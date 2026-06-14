@@ -9,7 +9,7 @@ export const Route = createFileRoute("/admin/setting/BedTypes")({
 function RouteComponent() {
   return (
     <div className="flex flex-col gap-10">
-      <AddBedForm asModal={false} buttonTitle="ثبت" /> <BedsList />
+      <AddBedForm /> <BedsList />
     </div>
   );
 }

@@ -1,12 +1,12 @@
-import type { Items } from "@/components/form/FormInputTypes";
 import type { TCreateBed } from "../types";
+import type { TFormData } from "@/types";
 
-export const BedFields: Items<TCreateBed>[] = [
+export const BedFields: TFormData<TCreateBed>[] = [
   {
     name: "name",
     label: "نام تخت",
-    isRequired: true,
-    fieldType: "input",
+    required: true,
     inputType: "text",
+    className: "col-span-full"
   },
 ];

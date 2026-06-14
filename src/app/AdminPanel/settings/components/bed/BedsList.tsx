@@ -6,28 +6,19 @@ import { useBeds } from "../../services/useSetting";
 import CardPagination from "../../../../../components/card/CardPagination";
 import AddBedForm from "./AddBedForm";
 import FormErrorModal from "@/components/form/FormErrorModal";
+import CustomDialog from "@/components/modal/CustomDialog";
 
 const BedsList = () => {
   const [currentBedPage, setCurrentBedPage] = useState(1);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [BedId, setBedId] = useState<number | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const { getBeds, deleteBed } = useBeds({ currentBedPage });
 
   const PageCount = getBeds.data?.count
     ? Math.ceil(getBeds.data.count / 10)
     : 0;
-
-  const handlePutBed = (bedId: number) => {
-    setBedId(bedId);
-    setOpenDialog(true);
-  };
-  const onCloseModal = () => {
-    setOpenDialog(false);
-    setBedId(null);
-  };
 
   return (
     <div className="flex flex-col gap-10">
@@ -49,15 +40,18 @@ const BedsList = () => {
                   {bed.name}
                   <button
                     onClick={() => {
+                      setBedId(bed.id);
                       setOpenDelete(true);
-                      setSelectedId(bed.id);
                     }}
                     className="absolute right-1 top-1/2 -translate-y-1/2 hover:bg-destructive/10 rounded-full p-1.5 cursor-pointer"
                   >
                     <X className="h-3 w-3" />
                   </button>
                   <button
-                    onClick={() => handlePutBed(bed.id)}
+                    onClick={() => {
+                      setBedId(bed.id);
+                      setOpenModal(true);
+                    }}
                     className="absolute right-6 top-1/2 -translate-y-1/2 hover:bg-primary/10 rounded-full p-1.5 cursor-pointer"
                   >
                     <Edit2 className="h-3 w-3" />
@@ -75,24 +69,18 @@ const BedsList = () => {
           pageCount={PageCount}
         />
       </Card>
-      {openDialog && (
-        <AddBedForm
-          asModal={true}
-          bedId={BedId}
-          buttonTitle="ویرایش"
-          title="ویرایش"
-          open={openDialog}
-          onCloseModal={onCloseModal}
-          onOpenChange={() => setOpenDialog(false)}
-        />
-      )}
+      <CustomDialog dialogContent={<AddBedForm
+        bedId={BedId} setOpenModal={setOpenModal} setBedId={setBedId}
+      />} onOpenChange={() => { setOpenModal(false); setBedId(null) }} dialogTitle="ویرایش نوع تخت" open={openModal} size="lg" />
+
+
       <FormErrorModal
         open={openDelete}
         onOpenChange={() => setOpenDelete(false)}
         onAcknowledge={() =>
           deleteBed.mutateAsync(
-            { id: selectedId! },
-            { onSuccess: () => setSelectedId(null) },
+            { id: BedId! },
+            { onSuccess: () => { setBedId(null); } },
           )
         }
         buttonTitle="بله"
