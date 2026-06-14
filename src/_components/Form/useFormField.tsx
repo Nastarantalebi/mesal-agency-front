@@ -13,7 +13,6 @@ import CustomTextArea from "./Textarea";
 import RadioInput from "./Radio";
 import type { TFormData } from "@/types";
 import ReactSelect from "./FormSelect/ReactSelect";
-import FormCheck from "./FormCheck";
 import ImageField from "./FormImage";
 
 /**

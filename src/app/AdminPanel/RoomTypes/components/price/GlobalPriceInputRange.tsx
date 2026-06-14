@@ -32,16 +32,16 @@ const GlobalPriceInputRange = ({ form }: Props) => {
       return {
         ...price,
         normal_price:
-          isInclude && type === "adult" ? rangeNormalPrice : price.normal_price,
+          isInclude && type === "adult" ? String(rangeNormalPrice) : price.normal_price,
         peak_price:
-          isInclude && type === "adult" ? rangePeakPrice : price.peak_price,
+          isInclude && type === "adult" ? String(rangePeakPrice) : price.peak_price,
         normal_child_price:
           isInclude && type === "child"
-            ? rangeNormalPrice
+            ? String(rangeNormalPrice)
             : price.normal_child_price,
         peak_child_price:
           isInclude && type === "child"
-            ? rangePeakPrice
+            ? String(rangePeakPrice)
             : price.peak_child_price,
       };
     });
