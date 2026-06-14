@@ -134,7 +134,7 @@ function formTypes<T extends FieldValues>(
       );
 
     case "Map":
-      return <CustomMapPicker label="موقعیت مکانی" isRequired={isRequired} />;
+      return <CustomMapPicker label={"موقعیت مکانی"} isRequired={isRequired} />;
 
     case "Time":
       return (

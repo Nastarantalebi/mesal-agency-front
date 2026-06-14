@@ -91,7 +91,7 @@ const CustomImageInput = <T extends FieldValues>({
                       }}
                       className="text-white bg-red-500 p-1 rounded-md"
                     >
-                      <Trash2/>
+                      <Trash2 />
                     </button>
                   </div>
                 )}

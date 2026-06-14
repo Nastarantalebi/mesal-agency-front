@@ -52,7 +52,7 @@ const NewsList = () => {
           onPageChange={setCurrentPage}
         />
         <CustomDialog
-          dialogContent={<NewsForm newsId={selectedId} setOpen={setOpen}/>}
+          dialogContent={<NewsForm newsId={selectedId} setOpen={setOpen} />}
           dialogTitle={selectedId ? "ویرایش خبر" : "افزودن خبر"}
           onOpenChange={() => setOpen(false)}
           open={open}

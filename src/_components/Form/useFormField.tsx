@@ -14,6 +14,7 @@ import RadioInput from "./Radio";
 import type { TFormData } from "@/types";
 import ReactSelect from "./FormSelect/ReactSelect";
 import FormCheck from "./FormCheck";
+import ImageField from "./FormImage";
 
 /**
  * @description
@@ -100,7 +101,7 @@ function useFormField<TFormValues extends FieldValues>() {
             // onChange={onChange}
             // ref={ref}
             {...rest}
-            // onKeyDown={}
+          // onKeyDown={}
           />
         );
       }
@@ -119,30 +120,30 @@ function useFormField<TFormValues extends FieldValues>() {
       //     />
       //   );
 
-  //     case "checkbox":
-  //        return (
-  //   <FormCheck>
-  //     <FormCheck.Input
-  //       type="checkbox"
-  //       id={name}
-  //       checked={field.value}
-  //       onChange={(e) => field.onChange(e.target.checked)}
-  //     />
-  //     <FormCheck.Label htmlFor={name}>
-  //       {props.label}
-  //     </FormCheck.Label>
-  //   </FormCheck>
-  // );
+      //     case "checkbox":
+      //        return (
+      //   <FormCheck>
+      //     <FormCheck.Input
+      //       type="checkbox"
+      //       id={name}
+      //       checked={field.value}
+      //       onChange={(e) => field.onChange(e.target.checked)}
+      //     />
+      //     <FormCheck.Label htmlFor={name}>
+      //       {props.label}
+      //     </FormCheck.Label>
+      //   </FormCheck>
+      // );
 
-case "switch":
-  return (
-    <SwitchBox
-      field={field}
-      onValue={true}
-      offValue={false}
-      {...rest}
-    />
-  );
+      // case "switch":
+      //   return (
+      //     <SwitchBox
+      //       field={field}
+      //       onValue={true}
+      //       offValue={false}
+      //       {...rest}
+      //     />
+      //   );
 
 
       case "radio":
@@ -265,7 +266,19 @@ case "switch":
       //     />
       //   );
 
-      // // این مورد را برای کامپوننت آپلودر تصویر اضافه کردم
+      case "image":
+        return (
+          <ImageField
+            field={field}
+            label={props.label}
+            required={required}
+            disabled={rest.disabled}
+            imageUrl={props.medium_url || props.original_url}
+            error={errors[name]?.message as string | undefined}
+          />
+        );
+
+      // این مورد را برای کامپوننت آپلودر تصویر اضافه کردم
       // case "image":
       //   return (
       //     <ImageUploader<TFormValues>

@@ -5,7 +5,6 @@ import {
   type TNews,
 } from "../../fixtures/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormComponent from "@/components/form/FormComponent";
 import {
   miladiToShamsi,
   shamsiToMiladi,
@@ -13,6 +12,7 @@ import {
 import { useEffect, type Dispatch, type SetStateAction } from "react";
 import NewsFields from "../../fixtures/NewsFields";
 import { useNews } from "../../services/useSetting";
+import FormComponent from "@/_components/Form/Form";
 
 interface Props {
   newsId?: number;
@@ -28,6 +28,7 @@ const NewsForm = ({ newsId, setOpen }: Props) => {
     resolver: zodResolver(newsValidation),
     defaultValues: newsInitialValues,
   });
+
   useEffect(() => {
     if (isEdit && getNewsById?.data) {
       const data = getNewsById.data;
@@ -70,12 +71,13 @@ const NewsForm = ({ newsId, setOpen }: Props) => {
   };
 
   return (
-    <FormComponent
-      form={form}
-      handleSubmit={handleSubmit}
-      buttonText="ثبت"
-      fields={newsFields}
-    />
+    <FormComponent<TNews> form={form} onSubmit={handleSubmit} formFields={newsFields} isSubmitting={postNews.isPending || patchNews.isPending}></FormComponent>
+    // <FormComponent
+    //   form={form}
+    //   handleSubmit={handleSubmit}
+    //   buttonText="ثبت"
+    //   fields={newsFields}
+    // />
   );
 };
 
