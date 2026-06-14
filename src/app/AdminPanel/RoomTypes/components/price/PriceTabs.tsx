@@ -33,7 +33,7 @@ const PriceTabs = ({ form }: Props) => {
           </TabsTrigger>
         ))}
       </TabsList>
-      <div className="py-10">
+      <div className="py-2">
         {items.map((item) => (
           <TabsContent key={item.title} value={item.title}>
             {item.component}

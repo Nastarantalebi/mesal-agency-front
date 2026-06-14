@@ -70,7 +70,7 @@ function FormComponent<TFormValues extends FieldValues>({
   enableCtrlEnterSubmit = true,
   onClose,
 }: // title,
-TProps<TFormValues>) {
+  TProps<TFormValues>) {
   // const { setTitle } = useBreadcrumbState();
 
   // useEffect(() => {
@@ -178,22 +178,21 @@ TProps<TFormValues>) {
               {!childrenFirst && children}
             </div>
             {/* Render the custom button or the default submit button */}
-            {/* Render the custom button or the default submit button */}
             {button
               ? button
               : showSubmitButton !== false && (
-                  <div className="flex justify-end">
-                    <Button
-                      disabled={disabledBtn}
-                      // isPending={isSubmitting || form.formState.isSubmitting}
-                      variant="primary"
-                      type="submit"
-                      className="mt-5"
-                    >
-                      {isSubmitting || form.formState.isSubmitting ? <Loader2/> : btnSubmitText}
-                    </Button>
-                  </div>
-                )}
+                <div className="flex justify-end">
+                  <Button
+                    disabled={disabledBtn}
+                    // isPending={isSubmitting || form.formState.isSubmitting}
+                    variant="primary"
+                    type="submit"
+                    className="mt-5"
+                  >
+                    {isSubmitting || form.formState.isSubmitting ? <Loader2 /> : btnSubmitText}
+                  </Button>
+                </div>
+              )}
           </div>
 
           {extraField}

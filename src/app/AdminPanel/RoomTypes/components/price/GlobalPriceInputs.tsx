@@ -46,17 +46,17 @@ const GlobalPriceInputs = ({ form }: Props) => {
         ...price,
         normal_price:
           isInclude && type === "adult"
-            ? +globalNormalPrice
+            ? String(globalNormalPrice)
             : price.normal_price,
         peak_price:
-          isInclude && type === "adult" ? +globalPeakPrice : price.peak_price,
+          isInclude && type === "adult" ? String(globalPeakPrice) : price.peak_price,
         normal_child_price:
           isInclude && type === "child"
-            ? +globalNormalPrice
+            ? String(globalNormalPrice)
             : price.normal_child_price,
         peak_child_price:
           isInclude && type === "child"
-            ? +globalPeakPrice
+            ? String(globalPeakPrice)
             : price.peak_child_price,
       };
     });
@@ -66,25 +66,22 @@ const GlobalPriceInputs = ({ form }: Props) => {
 
   return (
     <div className="flex items-center justify-center flex-col">
-      <div className="flex gap-4">
-        <PriceInputs
-          normalPrice={globalNormalPrice}
-          peakPrice={globalPeakPrice}
-          onNormalPriceChange={setGlobalNormalPrice}
-          onPeakPriceChange={setGlobalPeakPrice}
-        />
-      </div>
-      <div className="flex mt-5 mb-10 gap-2 flex-wrap">
+      <PriceInputs
+        normalPrice={globalNormalPrice}
+        peakPrice={globalPeakPrice}
+        onNormalPriceChange={setGlobalNormalPrice}
+        onPeakPriceChange={setGlobalPeakPrice}
+      />
+      <div className="flex mt-5 mb-5 gap-2 flex-wrap">
         {/* Dynamic Badges for each day */}
         {daysOfWeek.map((day) => (
           <Badge
             key={day.value}
             variant={selectedDays.includes(day.value) ? "primary" : "outline"} // Change style when selected
-            className={`rounded-full cursor-pointer px-3 py-1 text-sm ${
-              selectedDays.includes(day.value)
-                ? "bg-primary/50 text-secondary"
-                : "border-primary"
-            }`}
+            className={`rounded-full cursor-pointer px-3 py-1 text-sm ${selectedDays.includes(day.value)
+              ? "bg-primary/50 text-secondary"
+              : "border-primary"
+              }`}
             onClick={() => toggleDaySelection(day.value)} // Toggle selection when clicked
           >
             {day.name}

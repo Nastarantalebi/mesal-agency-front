@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import FormInput from "@/_components/Form/FormInput";
 import { Label } from "@/components/ui/label";
 import { Equal, Plus } from "lucide-react";
 import { useState } from "react";
@@ -16,7 +16,7 @@ const PriceInputs = ({
   onNormalPriceChange,
   onPeakPriceChange,
 }: Props) => {
-  
+
   const [pricePlus, setPricePlus] = useState<number>(0);
   const [pricePercentage, setPricePercentage] = useState<number>(0);
 
@@ -43,6 +43,7 @@ const PriceInputs = ({
   };
 
   const handleNormalPriceChange = (value: number) => {
+
     onNormalPriceChange(value);
     if (pricePlus) calculateByPlus(value, pricePlus);
     else if (pricePercentage) calculateByPercentage(value, pricePercentage);
@@ -53,28 +54,30 @@ const PriceInputs = ({
   };
 
   return (
-    <div className="flex gap-4 flex-wrap items-center mt-3 mb-5">
+    <div className="flex gap-4 flex-wrap items-center">
       <div className="flex flex-col gap-1">
         <Label>قیمت نرمال (تومان)</Label>
-        <Input
+        <FormInput
           type="number"
           className="w-30"
           value={normalPrice}
+          money={true}
           onChange={(e) => handleNormalPriceChange(+e.target.value)}
         />
       </div>
       <Plus />
       <div className="flex flex-col gap-1">
         <Label>تومان</Label>
-        <Input
-          className="w-15"
+        <FormInput
+          className="w-24!"
           type="number"
           value={pricePlus}
+          money={true}
           onChange={(e) => handlePricePlusChange(+e.target.value)}
         />
         <Label>درصد</Label>
-        <Input
-          className="w-15"
+        <FormInput
+          className="w-24!"
           type="number"
           value={pricePercentage}
           onChange={(e) => handlePricePercentageChange(+e.target.value)}
@@ -83,10 +86,12 @@ const PriceInputs = ({
       <Equal />
       <div className="flex flex-col gap-1">
         <Label>قیمت پیک (تومان)</Label>
-        <Input
+        <FormInput
           type="number"
           className="w-30"
           value={peakPrice}
+          money={true}
+
           onChange={(e) => handlePeakPriceChange(+e.target.value)}
         />
       </div>

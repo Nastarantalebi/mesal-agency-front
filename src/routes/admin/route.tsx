@@ -3,14 +3,14 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AdminSidebar } from "@/app/AdminPanel/AdminFeatures/AdminSidebar";
 import { SidebarData } from "@/fixtures/SideBarData.";
 import MobileAdminSidebar from "@/app/AdminPanel/AdminFeatures/MobileAdminSidebar";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const router = useRouter();
+  // const router = useRouter();
   return (
     // <div className="flex-1 flex flex-col">
     //   <Header />
@@ -20,11 +20,11 @@ function RouteComponent() {
         <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
           <MobileAdminSidebar />
           <main className="flex-1 flex-col overflow-y-auto px-5">
-            <div className="flex justify-end">
+            {/* <div className="flex justify-end">
               <Button variant={"outline"} className="border-2 border-primary" onClick={() => router.history.back()}>
                 صفحه قبلی
               </Button>
-            </div>
+            </div> */}
             <Outlet />
           </main>
         </div>

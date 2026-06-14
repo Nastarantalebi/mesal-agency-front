@@ -14,6 +14,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import TableForm from "@/_components/Form/tableForm/TableForm";
 import { DataThead, initialEntries } from "./fixtures";
 import FormComponent from "@/_components/Form/Form";
+import PriceTabs from "./PriceTabs";
 
 const PriceForm = ({
   AccommodationId,
@@ -136,6 +137,7 @@ const PriceForm = ({
       <div className="">
         {selectedMonth && (
           <>
+            <PriceTabs form={form} />
             <FormComponent<TCRoomTypePrices> form={form} onSubmit={handleSubmit}>          <TableForm<TCRoomTypePrices, "prices">
               form={form}
               isControlable={false}
