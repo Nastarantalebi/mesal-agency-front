@@ -8,16 +8,6 @@ import {
 } from "react-hook-form";
 import FormHeader from "./FormHeader";
 import FormsRow from "./FormsRow";
-// import type { TFormData } from "../types";
-// import {
-//   Table,
-//   TableBody,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table";
-// import Table from "@/components/Table";
-// import { Checkbox } from "@/components/ui/checkbox";
 import { useFocusRowStore } from "./rowFocusState";
 import { cn } from "@/lib/utils";
 import type { TFormData } from "@/types";

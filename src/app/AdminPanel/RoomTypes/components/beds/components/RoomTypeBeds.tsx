@@ -75,6 +75,7 @@ const RoomTypeBeds = ({
 
   return (
     <div className="w-full">
+      
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="grid grid-cols-1 gap-10">

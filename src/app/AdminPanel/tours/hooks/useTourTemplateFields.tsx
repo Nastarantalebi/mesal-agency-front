@@ -1,22 +1,27 @@
 import type { Items } from "@/components/form/FormInputTypes";
 import type { TCreateTourTemplate } from "../fixtures/validation";
 import type { TCtourImage } from "../../RoomTypes/types";
+import type { TFormData } from "@/types";
+import { YES_NO_OPTIONS } from "../../Accommodation/types";
+import type { UseFormReturn } from "react-hook-form";
 
-const useTourFields = () => {
-  const fields: Items<TCreateTourTemplate>[] = [
+const useTourFields = (form?: UseFormReturn<TCreateTourTemplate>) => {
+
+  const vehicle = form?.watch("transportation_included");
+
+  const fields: (TFormData<TCreateTourTemplate> | undefined)[] = [
     {
       name: "title",
       label: "نام تور",
-      isRequired: true,
-      fieldType: "input",
+      required: true,
       inputType: "text",
     },
     {
       name: "category",
       label: "نوع تور",
-      isRequired: true,
-      fieldType: "dropdown",
-      items: [
+      required: true,
+      type: "select",
+      option: [
         { label: "تور داخلی", value: "incountry" },
         { label: "تور خارجی", value: "foreign" },
       ],
@@ -24,67 +29,34 @@ const useTourFields = () => {
     {
       name: "short_description",
       label: "توضیح کوتاه",
-      isRequired: true,
-      fieldType: "input",
+      required: true,
       inputType: "text",
     },
     {
       name: "description",
       label: "توضیحات",
-      isRequired: true,
-      fieldType: "input",
-      inputType: "text",
-      className: "col-span-full",
-    },
-    {
-      name: "transportation_included",
-      label: "حمل و نقل شامل می‌شود؟",
-      fieldType: "yesNoInput",
-    },
-    {
-      name: "vehicle_type",
-      label: "نوع وسیله نقلیه",
-      fieldType: "dropdown",
-      items: [
-        { label: "اتوبوس", value: "bus" },
-        { label: "مینی‌بوس", value: "minibus" },
-        { label: "ون", value: "van" },
-        { label: "قطار", value: "train" },
-        { label: "هواپیما", value: "flight" },
-        { label: "پیاده‌روی", value: "walking" },
-        { label: "خودرو", value: "car" },
-        { label: "قایق", value: "boat" },
-        { label: "دوچرخه", value: "bicycle" },
-        { label: "ترکیبی", value: "mixed" },
-      ],
-    },
-    {
-      name: "vehicle_details",
-      label: "جزئیات وسیله نقلیه",
-      isRequired: true,
-      fieldType: "input",
+      required: true,
+      type: "textArea",
       inputType: "text",
       className: "col-span-full",
     },
     {
       name: "destination",
       label: "مقصد",
-      isRequired: true,
-      fieldType: "input",
+      required: true,
       inputType: "text",
     },
     {
       name: "country",
       label: "کشور",
-      fieldType: "input",
       inputType: "text",
     },
     {
       name: "difficulty",
       label: "سطح سختی",
-      isRequired: true,
-      fieldType: "dropdown",
-      items: [
+      required: true,
+      type: "select",
+      option: [
         { label: "آسان", value: "easy" },
         { label: "متوسط", value: "moderate" },
         { label: "سخت", value: "challenging" },
@@ -94,32 +66,61 @@ const useTourFields = () => {
     {
       name: "age_requirement",
       label: "حداقل سن مجاز",
-      fieldType: "input",
       inputType: "number",
     },
     {
       name: "highlights",
       label: "ویژگی‌ها و نقاط برجسته",
-      fieldType: "input",
       inputType: "text",
     },
     {
       name: "is_featured",
       label: "نمایش در تورهای ویژه",
-      fieldType: "yesNoInput",
+      type: "select",
+      option: YES_NO_OPTIONS
     },
+    {
+      name: "transportation_included",
+      label: "حمل و نقل شامل می‌شود؟",
+      type: "select",
+      option: YES_NO_OPTIONS,
+    },
+    vehicle ?
+      {
+        name: "vehicle_type",
+        label: "نوع وسیله نقلیه",
+        type: "select",
+        option: [
+          { label: "اتوبوس", value: "bus" },
+          { label: "مینی‌بوس", value: "minibus" },
+          { label: "ون", value: "van" },
+          { label: "قطار", value: "train" },
+          { label: "هواپیما", value: "flight" },
+          { label: "پیاده‌روی", value: "walking" },
+          { label: "خودرو", value: "car" },
+          { label: "قایق", value: "boat" },
+          { label: "دوچرخه", value: "bicycle" },
+          { label: "ترکیبی", value: "mixed" },
+        ],
+      } : undefined,
+    vehicle ?
+      {
+        name: "vehicle_details",
+        label: "جزئیات وسیله نقلیه",
+        required: true,
+        inputType: "text",
+        className: "col-span-4",
+      } : undefined,
     {
       name: "meta_title",
       label: "عنوان متا",
-      fieldType: "input",
       inputType: "text",
       className: "col-start-1",
     },
     {
       name: "meta_description",
       label: "توضیحات متا",
-      fieldType: "input",
-      inputType: "text",
+      type: "textArea",
       className: "col-span-3",
     },
   ];
@@ -138,7 +139,7 @@ const useTourFields = () => {
       className: "my-2",
     },
   ];
-  
+
 
   return { fields, ImageFields };
 };

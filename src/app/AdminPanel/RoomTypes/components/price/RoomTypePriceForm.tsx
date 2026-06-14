@@ -86,11 +86,6 @@ const RoomTypePriceForm = ({
 
   const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
 
-  // const normalizeKey = (persianDate: string): string => {
-  //   return persianDate
-  //     .replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))) // Persian → Latin digits
-  //     .replace(/\/0(\d)/g, "/$1"); // remove zero-padding → "01" becomes "1"
-  // };
 
   useEffect(() => {
     form.reset({

@@ -1,5 +1,5 @@
 import RoomTypeBeds from "@/app/AdminPanel/RoomTypes/components/beds/components/RoomTypeBeds";
-import RoomTypePriceForm from "@/app/AdminPanel/RoomTypes/components/price/RoomTypePriceForm";
+import PriceForm from "@/app/AdminPanel/RoomTypes/components/price/PriceForm";
 import RoomTypeRooms from "@/app/AdminPanel/RoomTypes/components/rooms/RoomTypeRooms";
 import RoomTypeFeatures from "@/app/AdminPanel/RoomTypes/components/roomType/RoomTypeFeatures";
 import RoomTypeForm from "@/app/AdminPanel/RoomTypes/components/roomType/RoomTypeForm";
@@ -17,8 +17,6 @@ export const RoomTypeTabsData = ({ AccommodationId, roomTypeId }: Props) => [
         <RoomTypeForm
           AccommodationId={AccommodationId}
           RoomTypeId={roomTypeId}
-          buttonTitle="ویرایش"
-          asModal={false}
         />
       ),
     },
@@ -50,7 +48,7 @@ export const RoomTypeTabsData = ({ AccommodationId, roomTypeId }: Props) => [
       ),
     },
     {
-      title: "نوع اتاق",
+      title: "اتاق ها",
       component: (
         <RoomTypeRooms
           RoomTypeId={roomTypeId}
@@ -61,7 +59,7 @@ export const RoomTypeTabsData = ({ AccommodationId, roomTypeId }: Props) => [
     {
       title: "قیمت",
       component: (
-        <RoomTypePriceForm
+        <PriceForm
           RoomTypeId={roomTypeId}
           AccommodationId={AccommodationId}
         />

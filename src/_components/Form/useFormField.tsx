@@ -13,6 +13,7 @@ import CustomTextArea from "./Textarea";
 import RadioInput from "./Radio";
 import type { TFormData } from "@/types";
 import ReactSelect from "./FormSelect/ReactSelect";
+import FormCheck from "./FormCheck";
 
 /**
  * @description
@@ -118,17 +119,31 @@ function useFormField<TFormValues extends FieldValues>() {
       //     />
       //   );
 
-      // case "checkbox":
-      //   return <CustomCheckBox<TFormValues> field={field} {...rest} />;
+  //     case "checkbox":
+  //        return (
+  //   <FormCheck>
+  //     <FormCheck.Input
+  //       type="checkbox"
+  //       id={name}
+  //       checked={field.value}
+  //       onChange={(e) => field.onChange(e.target.checked)}
+  //     />
+  //     <FormCheck.Label htmlFor={name}>
+  //       {props.label}
+  //     </FormCheck.Label>
+  //   </FormCheck>
+  // );
 
-      // case "switch":
-      //   return (
-      //     <SwitchButton<TFormValues>
-      //       field={field}
-      //       onClick={onClick}
-      //       {...rest}
-      //     />
-      //   );
+case "switch":
+  return (
+    <SwitchBox
+      field={field}
+      onValue={true}
+      offValue={false}
+      {...rest}
+    />
+  );
+
 
       case "radio":
         return (

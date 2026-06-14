@@ -108,7 +108,7 @@ const TourTemplateList = () => {
           setSelected(null);
         }}
         open={openModal}
-        size="xxl"
+        size="xxxl"
       />
 
       <CustomDialog

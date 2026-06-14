@@ -8,6 +8,7 @@ import "leaflet/dist/leaflet.css";
 import { queryClient } from "./lib/clientQuery";
 import "leaflet/dist/leaflet.css";
 import { QueryClient } from "@tanstack/react-query";
+import { FocusRegistryProvider } from "./_components/Form/FocusRegistryContext";
 // const queryClient = new QueryClient();
 
 export interface RouterContext {
@@ -37,8 +38,9 @@ const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
-    <QueryClientProvider client={queryClient}>
+    <FocusRegistryProvider >    <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </QueryClientProvider>,
+    </QueryClientProvider>,</FocusRegistryProvider>
+
   );
 }

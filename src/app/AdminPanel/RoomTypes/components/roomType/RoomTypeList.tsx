@@ -9,11 +9,12 @@ import ListPagination from "@/components/list/ListPagination";
 import { useNavigate } from "@tanstack/react-router";
 import RoomTypefields from "../../hooks/RoomTypefields";
 import useBreadCrumbTitles from "@/app/AdminPanel/AdminFeatures/stores/useBreadCrumbTitles";
+import CustomDialog from "@/components/modal/CustomDialog";
 
 const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-    const setBreadCrumbTitle = useBreadCrumbTitles((state) => state.setBreadCrumbTitle);
+  const setBreadCrumbTitle = useBreadCrumbTitles((state) => state.setBreadCrumbTitle);
 
   const { getRoomTypeList, deleteRoomType } = useRoomTypeList(
     AccommodationId,
@@ -25,7 +26,7 @@ const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
 
   const fields = RoomTypefields();
 
-  const [openAdd, setAddRoomType] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [openD, setopenD] = useState(false);
   const navigate = useNavigate();
 
@@ -61,8 +62,7 @@ const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
               });
               setBreadCrumbTitle([AccommodationName!, rowData.name])
             }}
-            onAdd={() => setAddRoomType(true)}
-            customAddText="افزودن نوع اتاق جدید"
+            onAdd={() => setOpenModal(true)}
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
                 <ListDelete
@@ -87,16 +87,7 @@ const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
           />
         </div>
       </div>
-
-      <RoomTypeForm
-        AccommodationId={AccommodationId}
-        open={openAdd}
-        onOpenChange={() => setAddRoomType(false)}
-        title="افزودن نوع اتاق جدید"
-        buttonTitle="ثبت"
-        asModal={true}
-      />
-      <FormErrorModal
+            <FormErrorModal
         open={openD}
         onOpenChange={() => setopenD(false)}
         message={deleteMessage}
@@ -104,6 +95,14 @@ const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
         buttonTitle="بله"
         dialogTitle="حذف"
       />
+      <CustomDialog         
+        open={openModal}
+        size="lg" 
+        dialogTitle="افزودن نو اتاق جدید" 
+        onOpenChange={() => setOpenModal(false)} 
+        dialogContent={<RoomTypeForm setOpenModal={setOpenModal}
+          AccommodationId={AccommodationId}/>} 
+        />
     </>
   );
 };

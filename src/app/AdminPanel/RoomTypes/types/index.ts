@@ -14,7 +14,7 @@ export interface Props {
 
 export type TCreateRoomType = {
   name: string,
-  capacity : number | null,
+  capacity: number | null,
   extraPerson: number | null,
   description: string | null,
   breakfast: boolean | null,
@@ -24,7 +24,7 @@ export type TCreateRoomType = {
 export type TRoomTypeResponse = {
   id: number,
   name: string,
-  capacity : number | null,
+  capacity: number | null,
   extraPerson: number | null,
   description: string | null,
   breakfast: boolean | null,
@@ -33,11 +33,11 @@ export type TRoomTypeResponse = {
 }
 
 export type TCRoomTypeFeature = {
-    feature: number[] ;
+  feature: number[];
 }
 export type TRoomTypeFeatureResponse = {
-    id: number;
-    feature: {id: number; title: string};
+  id: number;
+  feature: { id: number; title: string };
 }[]
 
 
@@ -56,7 +56,7 @@ export type TRoomTypeImageResponse = {
 export type TCRoomTypesRoom = {
   name: string;
   floor: number | null;
-  description: string| null;
+  description: string | null;
 }
 
 export type TRoomTypeRoomResponse = {
@@ -74,21 +74,22 @@ export type TCPriceRange = {
 export type TCRoomTypePrices = {
   prices: {
     date: string;
-    normal_price: number;
-    normal_child_price: number;
-    peak_price: number;
-    peak_child_price: number;
+    day?: string;
+    normal_price: string;
+    normal_child_price: string;
+    peak_price: string;
+    peak_child_price: string;
     phone_call_price: boolean;
   }[];
 };
 
 export type TRoomTypePricesResponse = {
-    date: string;
-    normal_price: number;
-    normal_child_price: number;
-    peak_price: number;
-    peak_child_price: number;
-    phone_call_price: boolean;
+  date: string;
+  normal_price: number;
+  normal_child_price: number;
+  peak_price: number;
+  peak_child_price: number;
+  phone_call_price: boolean;
 }[];
 
 type Type = {
@@ -110,9 +111,9 @@ export type TCRoomTypeBed = {
 };
 
 export type TRoomTypeBedResponse = {
-    id: number;
-    bed: {id: string; name: string}
-    number: number
+  id: number;
+  bed: { id: string; name: string }
+  number: number
 }[]
 
 export type TCtourImage = {

@@ -65,8 +65,8 @@ export default function SwitchBox<T extends SwitchValue>({
         onClick={toggle}
         disabled={disabled}
         className={clsx(
-          "relative w-14 h-7 flex items-center rounded-full p-1 transition-all",
-          isChecked ? "bg-green-500 justify-end" : "bg-gray-300 justify-start"
+          "relative w-14 h-7 flex items-center rounded-full p-1 transition-all cursor-pointer",
+          isChecked ? "bg-successw justify-end" : "bg-gray-300 justify-start"
         )}>
         <span className="w-5 h-5 bg-white rounded-full shadow-md transition-transform" />
       </button>

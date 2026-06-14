@@ -7,7 +7,6 @@ import {
   type SetStateAction,
 } from "react";
 import { useForm } from "react-hook-form";
-import FormComponent from "@/components/form/FormComponent";
 import useTourFields from "../hooks/useTourTemplateFields";
 import CustomLoader from "@/components/loading/CustomLoader";
 import {
@@ -16,10 +15,10 @@ import {
   type TCreateTourTemplate,
 } from "../fixtures/validation";
 import useTourTemplate from "../services/useTourTemplate";
+import FormComponent from "@/_components/Form/Form";
 
 const TourTemplateForm = ({
   tourId,
-  buttonText = tourId ? "ویرایش" : "افزودن",
   setOpenModal,
 }: {
   tourId?: number;
@@ -34,8 +33,7 @@ const TourTemplateForm = ({
     defaultValues: tourTemplateInitialValues,
   });
 
-  const { fields } = useTourFields();
-  const [errorOpen, setErrorOpen] = useState(false);
+  const { fields } = useTourFields(form);
 
   const formData = useMemo(() => {
     if (!getTourById.data) return undefined;
@@ -69,9 +67,6 @@ const TourTemplateForm = ({
     if (isEdit) {
       putTour.mutateAsync(
         { data: values, id: tourId },
-        {
-          onError: () => setErrorOpen(true),
-        },
       );
     } else {
       postTours.mutateAsync(values, {
@@ -79,7 +74,6 @@ const TourTemplateForm = ({
           form.reset(tourTemplateInitialValues);
           setOpenModal?.(false);
         },
-        onError: () => setErrorOpen(true),
       });
     }
   };
@@ -92,14 +86,16 @@ const TourTemplateForm = ({
     );
 
   return (
-    <FormComponent
-      form={form}
-      handleSubmit={handleSubmit}
-      errorOpen={errorOpen}
-      setErrorOpen={setErrorOpen}
-      buttonText={buttonText}
-      fields={fields}
-    />
+    <FormComponent<TCreateTourTemplate> form={form} onSubmit={handleSubmit} isSubmitting={postTours.isPending || putTour.isPending}
+      formFields={fields} />
+    // <FormComponent
+    //   form={form}
+    //   handleSubmit={handleSubmit}
+    //   errorOpen={errorOpen}
+    //   setErrorOpen={setErrorOpen}
+    //   buttonText={buttonText}
+    //   fields={fields}
+    // />
   );
 };
 

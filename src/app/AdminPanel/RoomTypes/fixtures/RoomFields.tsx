@@ -1,29 +1,25 @@
-import type { Items } from "@/components/form/FormInputTypes";
 import type { TCRoomTypesRoom } from "../types";
+import type { TFormData } from "@/types";
 
-export const RoomFields: Items<TCRoomTypesRoom>[] = [
+export const RoomFields: TFormData<TCRoomTypesRoom>[] = [
   {
     name: "name",
     label: "نام اتاق",
-    isRequired: true,
-    fieldType: "input",
+    required: true,
     inputType: "text",
   },
   {
     name: "floor",
     label: "طبقه",
-    isRequired: false,
-    fieldType: "input",
-      direction:"ltr",
+    required: false,
     inputType: "number",
   },
   {
     name: "description",
     label: "توضیحات",
-    isRequired: false,
-    fieldType: "input",
-    inputType: "text",
-    className: "col-span-full",
+    required: false,
+    type: "textArea",
+    // className: "col-span-full",
   },
 ];
 // export const PriceFields: Items<TCPriceRange>[] = [

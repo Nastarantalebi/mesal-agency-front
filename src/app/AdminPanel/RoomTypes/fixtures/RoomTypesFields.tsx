@@ -1,53 +1,51 @@
-import type { Items } from "@/components/form/FormInputTypes";
+import type { TFormData } from "@/types";
+import { YES_NO_OPTIONS } from "../../Accommodation/types";
 import type { TCreateRoomType } from "../types";
 
-export const RoomTypeFields: Items<TCreateRoomType>[] = [
+export const RoomTypeFields: TFormData<TCreateRoomType>[] = [
   {
     name: "name",
     label: "نام نوع اتاق",
-    isRequired: true,
-    fieldType: "input",
+    required: true,
     inputType: "text",
   },
   {
     name: "capacity",
     label: "ظرفیت",
-    isRequired: false,
-    fieldType: "input",
-      direction:"ltr",
+    required: false,
     inputType: "number",
   },
   {
     name: "extraPerson",
     label: "ظرفیت نفر اضافه",
-    isRequired: false,
-    fieldType: "input",
-      direction:"ltr",
+    required: false,
     inputType: "number",
   },
   {
     name: "description",
     label: "توضیحات",
-    isRequired: false,
-    fieldType: "input",
-    inputType: "text",
+    required: false,
+    type: "textArea",
   },
   {
     name: "breakfast",
     label: "صبحانه",
-    isRequired: false,
-    fieldType: "checkBox",
+    required: false,
+    type: "select",
+    option: YES_NO_OPTIONS,
   },
   {
     name: "lunch",
     label: "ناهار",
-    isRequired: false,
-    fieldType: "checkBox",
+    required: false,
+    type: "select",
+    option: YES_NO_OPTIONS,
   },
   {
     name: "dinner",
     label: "شام",
-    isRequired: false,
-    fieldType: "checkBox",
+    required: false,
+    type: "select",
+    option: YES_NO_OPTIONS,
   },
 ];

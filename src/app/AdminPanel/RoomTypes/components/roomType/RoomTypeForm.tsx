@@ -1,15 +1,5 @@
-import CustomButton from "@/components/form/CustomButton";
-import FormErrorModal from "@/components/form/FormErrorModal";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { FieldGroup } from "@/components/ui/field";
-import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import type { TCreateRoomType } from "../../types";
 import { useRoomType } from "../../services/useRoomType";
@@ -17,29 +7,21 @@ import {
   roomTypeInitialValues,
   roomTypeValidation,
 } from "../../fixtures/Validation";
-import formTypes from "@/components/form/FormInputTypes";
 import { RoomTypeFields } from "../../fixtures/RoomTypesFields";
+import FormComponent from "@/_components/Form/Form";
 
 interface Props {
   AccommodationId?: number;
   RoomTypeId?: number | null;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  title?: string;
-  buttonTitle?: string;
-  asModal?: boolean;
+  setOpenModal?: Dispatch<SetStateAction<boolean>>;
 }
 
 const RoomTypeForm = ({
   AccommodationId,
   RoomTypeId,
-  asModal,
-  open,
-  onOpenChange: onOpenchange,
-  title,
-  buttonTitle,
+  setOpenModal,
 }: Props) => {
-  const { getRoomType, putRoomType, postRoomType } = useRoomType(
+  const { getRoomType, putRoomType, ispendingPut, postRoomType, ispendingPost } = useRoomType(
     AccommodationId,
     RoomTypeId!,
   );
@@ -57,92 +39,37 @@ const RoomTypeForm = ({
     });
   }, [getRoomType.data]);
 
-  const [errorOpen, setErrorOpen] = useState(false);
-  const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-
   const handleSubmit = (value: TCreateRoomType) => {
     const isEdit = !!RoomTypeId;
 
     if (isEdit) {
-      putRoomType.mutateAsync(
+      putRoomType(
         { data: value, id: RoomTypeId },
         {
           onSuccess: () => {
-            onOpenchange?.(false);
+            setOpenModal?.(false);
           },
-          onError: () => setErrorOpen(true),
         },
       );
     } else {
-      postRoomType.mutateAsync(value, {
+      postRoomType(value, {
         onSuccess: () => {
           form.reset(roomTypeInitialValues);
-          onOpenchange?.(false);
+          setOpenModal?.(false);
         },
-        onError: () => setErrorOpen(true),
       });
     }
   };
 
   if (getRoomType.isFetching) return <div className="p-4">Loading...</div>;
 
-  const formContent = (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="max-w-2xl">
-        <FieldGroup>
-          {RoomTypeFields.map((item) => (
-            <div
-              key={String(item.name)}
-              className={item.className || "col-span-1"}
-            >
-              {formTypes<TCreateRoomType>(item, form.control)}
-            </div>
-          ))}
-        </FieldGroup>
-        <div className="mt-10 space-x-2">
-          <CustomButton
-            type="button"
-            variant="outline"
-            onClick={() => onOpenchange?.(false)}
-          >
-            انصراف
-          </CustomButton>
-          <CustomButton type="submit">{buttonTitle}</CustomButton>
-        </div>
-      </form>
-    </Form>
-  );
-  if (asModal) {
-    return (
-      <>
-        <Dialog open={open} onOpenChange={onOpenchange}>
-          <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl overflow-y-scroll h-screen hide-scrollbar">
-            <DialogHeader>
-              <DialogTitle className="mb-6">{title}</DialogTitle>
-            </DialogHeader>
-            {formContent}
-          </DialogContent>
-        </Dialog>
-        <FormErrorModal
-          open={errorOpen}
-          message={errmessage}
-          onOpenChange={setErrorOpen}
-          onAcknowledge={() => setErrorOpen(false)}
-        />
-      </>
-    );
-  }
-
   return (
-    <>
-      {formContent}
-      <FormErrorModal
-        open={errorOpen}
-        message={errmessage}
-        onOpenChange={setErrorOpen}
-        onAcknowledge={() => setErrorOpen(false)}
-      />
-    </>
+    <FormComponent<TCreateRoomType>
+      onSubmit={(value) => handleSubmit(value)}
+      form={form}
+      isSubmitting={ispendingPut || ispendingPost}
+      formFields={RoomTypeFields}
+    />
   );
 };
 

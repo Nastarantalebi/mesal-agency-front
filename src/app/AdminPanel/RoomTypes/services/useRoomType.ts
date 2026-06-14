@@ -18,17 +18,17 @@ export const useRoomType = (AccommodationId: number | undefined, RoomTypeId: num
         enabled: !!RoomTypeId,
         });
   
-    const putRoomType = usePutData<TCreateRoomType>({
+    const {mutateAsync: putRoomType, isPending:ispendingPut} = usePutData<TCreateRoomType>({
         key,
         url,
     });
 
-    const postRoomType = usePostData<TCreateRoomType>({
+    const {mutateAsync: postRoomType, isPending: ispendingPost} = usePostData<TCreateRoomType>({
         key,
         url,
     });
 
-    return { getRoomType, putRoomType, postRoomType};
+    return { getRoomType, putRoomType, ispendingPut, postRoomType, ispendingPost};
   
 }
 
@@ -119,12 +119,12 @@ export const useRooms = (AccommodationId: number, RoomTypeId: number) => {
     const key = ["RoomType-rooms", String(RoomTypeId) || ""];
     const url = `${admin_accommodation_url}${AccommodationId}/room_types/${RoomTypeId}/rooms/`;
     
-    const postRoom = usePostData<TCRoomTypesRoom>({
+    const {mutateAsync: postRoom, isPending: ispendingPost} = usePostData<TCRoomTypesRoom>({
       key,
       url,
     });
 
-    return { postRoom }
+    return { postRoom, ispendingPost }
 }
 
 // ----------------------------------------------------------------------------------------
