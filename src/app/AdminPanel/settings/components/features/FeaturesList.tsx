@@ -6,6 +6,7 @@ import { useFeatures } from "../../services/useSetting";
 import CardPagination from "../../../../../components/card/CardPagination";
 import AddFeaturesForm from "./AddFeaturesForm";
 import FormErrorModal from "@/components/form/FormErrorModal";
+import CustomDialog from "@/components/modal/CustomDialog";
 
 const FeaturesList = () => {
   const [currentRoomPage, setCurrentRoomPage] = useState(1);
@@ -16,8 +17,7 @@ const FeaturesList = () => {
   const { getRoomTypeFeatures, getAccommodationFeatures, deleteFeature } =
     useFeatures({ currentRoomPage, currentAccommodationPage });
 
-  const [openDialog, setOpenDialog] = useState(false);
-  const [fetureId, setFeatureId] = useState<number | null>(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const roomPageCount = getRoomTypeFeatures.data?.count
     ? Math.ceil(getRoomTypeFeatures.data.count / 10)
@@ -27,13 +27,13 @@ const FeaturesList = () => {
     : 0;
 
   const handlePutFeature = (feature_id: number) => {
-    setFeatureId(feature_id);
-    setOpenDialog(true);
+    setSelectedId(feature_id);
+    setOpenModal(true);
   };
 
   const onCloseModal = () => {
-    setOpenDialog(false);
-    setFeatureId(null);
+    setOpenModal(false);
+    setSelectedId(null);
   };
 
   return (
@@ -126,20 +126,22 @@ const FeaturesList = () => {
           pageCount={roomPageCount}
         />
       </Card>
-      {openDialog && (
-        <AddFeaturesForm
-          key={fetureId ?? "new"}
-          feature_id={fetureId}
-          asModal={true}
-          title="ویرایش"
-          open={openDialog}
-          onCloseModal={onCloseModal}
-          onOpenChange={(open) => {
-            if (!open) onCloseModal();
-          }}
-          buttonTitle="ویرایش"
-        />
-      )}
+      <CustomDialog
+        dialogContent={
+          <AddFeaturesForm
+            feature_id={selectedId}
+            setOpenModal={setOpenModal}
+          />
+        }
+        dialogTitle="ویرایش ویژگی"
+        open={openModal}
+        onOpenChange={() => {
+          setOpenModal(false);
+          setSelectedId(null);
+        }}
+        size="xxl"
+      />
+
       <FormErrorModal
         open={openDelete}
         onOpenChange={() => setOpenDelete(false)}

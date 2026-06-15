@@ -1,8 +1,5 @@
-import CustomButton from "@/components/form/CustomButton";
-import FormErrorModal from "@/components/form/FormErrorModal";
-import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { FeaturesFields } from "../../fixtures/FeatuesField";
 import {
@@ -10,38 +7,19 @@ import {
   FeaturesValidation,
 } from "../../fixtures/validation";
 import { useFeatures } from "../../services/useSetting";
-import formTypes from "@/components/form/FormInputTypes";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import type { TCFeature } from "../../types";
+import FormComponent from "@/_components/Form/Form";
 
 interface Props {
-  asModal: boolean;
   feature_id?: number | null;
-  title?: string;
-  open?: boolean;
-  onCloseModal?: () => void;
-  onOpenChange?: (open: boolean) => void;
-  buttonTitle: string;
+  setOpenModal?: Dispatch<SetStateAction<boolean>>;
 }
 
-const AddFeaturesForm = ({
-  feature_id,
-  asModal,
-  title,
-  onOpenChange,
-  open,
-  onCloseModal,
-  buttonTitle,
-}: Props) => {
+const AddFeaturesForm = ({ feature_id, setOpenModal }: Props) => {
+  const isEdit = !!feature_id;
   const { getfeatureData, postFeature, putFeature } = useFeatures({
     feature_id,
   });
-
 
   const form = useForm<TCFeature>({
     resolver: zodResolver(FeaturesValidation),
@@ -60,90 +38,33 @@ const AddFeaturesForm = ({
     }
   }, [getfeatureData.data, feature_id]);
 
-  const [errorOpen, setErrorOpen] = useState(false);
-  const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-
   const handleSubmit = (value: TCFeature) => {
-    const isEdit = !!feature_id;
     if (isEdit) {
       putFeature.mutateAsync(
         { data: value, id: feature_id },
         {
-          onError: () => setErrorOpen(true),
+          onSuccess: () => {
+            setOpenModal?.(false);
+            form.reset(FeaturesInitialValues);
+          },
         },
       );
-      if (onCloseModal) {
-        onCloseModal();
-      }
-      form.reset(FeaturesInitialValues);
     } else {
       postFeature.mutateAsync(value, {
         onSuccess: () => {
           form.reset(FeaturesInitialValues);
         },
-        onError: () => setErrorOpen(true),
       });
     }
   };
 
-  const formContent = (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8  items-start gap-7"
-      >
-        {FeaturesFields.map((item) => (
-          <div
-            key={String(item.name)}
-            className={item.className || "col-span-1"}
-          >
-            {formTypes<TCFeature>(item, form.control)}
-          </div>
-        ))}
-        <div className="my-1">
-          <CustomButton type="submit">{buttonTitle}</CustomButton>
-        </div>
-      </form>
-      <FormErrorModal
-        open={errorOpen}
-        message={errmessage}
-        onOpenChange={setErrorOpen}
-        onAcknowledge={() => setErrorOpen(false)}
-      />
-    </Form>
-  );
-
-  if (asModal) {
-    return (
-      <>
-        <Dialog open={open} onOpenChange={onOpenChange}>
-          <DialogContent className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl h-50">
-            <DialogHeader>
-              <DialogTitle className="">{title}</DialogTitle>
-            </DialogHeader>
-            {formContent}
-          </DialogContent>
-        </Dialog>
-        <FormErrorModal
-          open={errorOpen}
-          message={errmessage}
-          onOpenChange={setErrorOpen}
-          onAcknowledge={() => setErrorOpen(false)}
-        />
-      </>
-    );
-  }
-
   return (
-    <>
-      {formContent}
-      <FormErrorModal
-        open={errorOpen}
-        message={errmessage}
-        onOpenChange={setErrorOpen}
-        onAcknowledge={() => setErrorOpen(false)}
-      />
-    </>
+    <FormComponent<TCFeature>
+      form={form}
+      onSubmit={handleSubmit}
+      formFields={FeaturesFields}
+      isSubmitting={postFeature.isPending || putFeature.isPending}
+    />
   );
 };
 
