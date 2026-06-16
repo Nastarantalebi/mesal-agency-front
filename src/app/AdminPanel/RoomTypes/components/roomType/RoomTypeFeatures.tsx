@@ -18,6 +18,7 @@ import {
 } from "../../fixtures/Validation";
 import { useRoomTypeFeatures } from "../../services/useRoomType";
 import CardPagination from "@/components/card/CardPagination";
+import FormComponent from "@/_components/Form/Form";
 
 const RoomTypeFeatures = ({
   AccommodationId,
@@ -93,70 +94,82 @@ const RoomTypeFeatures = ({
   }, [open, form]);
 
   return (
-    <div className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl ">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <Card className="shadow-lg shadow-primary/50 w-fit">
-            <CardTitle className="text-center text-sm font-light mr-5">
-              ویژگی های مربوط به اتاق
-            </CardTitle>
-            {getFeatures.data ? (
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {getFeatures.data.results?.map((f) => {
-                    const isAdded = allAddedFeaturesIds?.includes(f.id);
-                    const selected = selectedIds.includes(f.id) && !isAdded;
-                    return (
-                      <Badge
-                        key={f.id}
-                        variant="outline"
-                        onClick={() => {
-                          !isAdded && toggle(f.id);
-                        }}
-                        className={`cursor-pointer px-6 py-2 relative ${isAdded ? "cursor-not-allowed bg-accent/20 border-accent pr-10" : ""} ${selected ? "bg-green-400/10 text-black border-green-400 cursor-pointer" : ""}`}
-                      >
-                        {getRoomTypeFeatures?.data?.map(
-                          (feature) =>
-                            feature.feature.id === f.id && (
-                              <button
-                                className="absolute right-1 top-1/2 -translate-y-1/2 bg-destructive/20 hover:bg-destructive/40 rounded-full p-1.5 cursor-pointer"
-                                onClick={() =>
-                                  deleteRoomTypeFeatures.mutateAsync({
-                                    id: feature.id,
-                                  })
-                                }
-                              >
-                                <X className="h-3 w-3" />
-                              </button>
-                            ),
-                        )}
-                        {f.title}
-                      </Badge>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            ) : (
-              <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
-            )}
-            <CardPagination
-              currentPage={currentRoomTypeFeaturePage}
-              onPageChange={setCurrentRoomTypeFeaturePage}
-              pageCount={roomTypeFeaturesPageCount}
+    <FormComponent<TRoomTypeFeatureListForm>
+      form={form}
+      onSubmit={handleSubmit}
+    >
+      <Card className="shadow-lg  col-span-full">
+        <CardTitle className="text-center text-lg font-bold ">
+          ویژگی های مربوط به اتاق
+        </CardTitle>
+        {getFeatures.data ? (
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              {getFeatures.data.results?.map((f) => {
+                const isAdded = allAddedFeaturesIds?.includes(f.id);
+                const selected = selectedIds.includes(f.id) && !isAdded;
+                return (
+                  <Badge
+                    key={f.id}
+                    variant="outline"
+                    onClick={() => {
+                      !isAdded && toggle(f.id);
+                    }}
+                    className={`cursor-pointer px-6 py-2 relative ${isAdded ? "cursor-not-allowed bg-accent/20 border-accent pr-10" : ""} ${selected ? "bg-green-400/10 text-black border-green-400 cursor-pointer" : ""}`}
+                  >
+                    {getRoomTypeFeatures?.data?.map(
+                      (feature) =>
+                        feature.feature.id === f.id && (
+                          <button
+                            className="absolute right-1 top-1/2 -translate-y-1/2 bg-destructive/20 hover:bg-destructive/40 rounded-full p-1.5 cursor-pointer"
+                            onClick={() =>
+                              deleteRoomTypeFeatures.mutateAsync({
+                                id: feature.id,
+                              })
+                            }
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        ),
+                    )}
+                    {f.title}
+                  </Badge>
+                );
+              })}
+            </div>
+          </CardContent>
+        ) : (
+          <CardContent className="flex justify-center items-center">
+            <img
+              src="/No data-amico.svg"
+              alt="no data"
+              className="w-50 h-50 "
             />
-          </Card>
-          <CustomButton type="submit" className="mt-5">ثبت</CustomButton>
-
-          <div className="flex flex-col gap-5 items-start justify-start"></div>
-        </form>
-        <FormErrorModal
-          open={errorOpen}
-          message={errmessage}
-          onOpenChange={setErrorOpen}
-          onAcknowledge={() => setErrorOpen(false)}
+          </CardContent>
+        )}
+        <CardPagination
+          currentPage={currentRoomTypeFeaturePage}
+          onPageChange={setCurrentRoomTypeFeaturePage}
+          pageCount={roomTypeFeaturesPageCount}
         />
-      </Form>
-    </div>
+      </Card>
+    </FormComponent>
+    // <div className="sm:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl ">
+    //   <Form {...form}>
+    //     <form onSubmit={form.handleSubmit(handleSubmit)}>
+
+    //       <CustomButton type="submit" className="mt-5">ثبت</CustomButton>
+
+    //       <div className="flex flex-col gap-5 items-start justify-start"></div>
+    //     </form>
+    //     <FormErrorModal
+    //       open={errorOpen}
+    //       message={errmessage}
+    //       onOpenChange={setErrorOpen}
+    //       onAcknowledge={() => setErrorOpen(false)}
+    //     />
+    //   </Form>
+    // </div>
   );
 };
 

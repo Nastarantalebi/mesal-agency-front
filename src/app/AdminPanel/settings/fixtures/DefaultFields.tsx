@@ -1,34 +1,31 @@
-import type { Items } from "@/components/form/FormInputTypes";
 import type { TCreateDefaults } from "../types";
+import type { TFormData } from "@/types";
 
-export const DefaultFields: Items<TCreateDefaults>[] = [
+export const DefaultFields: TFormData<TCreateDefaults>[] = [
   {
     name: "min_child_age",
     label: "حداقل سن کودک",
-    isRequired: true,
-    fieldType: "input",
-    direction: "ltr",
+    required: true,
+    // dir: "ltr",
     inputType: "number",
   },
   {
     name: "max_child_age",
     label: "حداکثر سن کودک",
-    isRequired: true,
-    fieldType: "input",
-    direction: "ltr",
+    required: true,
+    // dir: "ltr",
     inputType: "number",
   },
   {
     name: "check_in_time",
     label: "ساعت ورود",
-    isRequired: true,
-    className: "col-start-1",
-    fieldType: "Time",
+    required: true,
+    type: "time",
   },
   {
     name: "check_out_time",
     label: "ساعت خروج",
-    isRequired: true,
-    fieldType: "Time",
+    required: true,
+    type: "time",
   },
 ];

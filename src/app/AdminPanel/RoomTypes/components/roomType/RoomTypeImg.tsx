@@ -4,10 +4,8 @@ import type { Props, TCRoomTypeImage } from "../../types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { roomTypeImgValidation } from "../../fixtures/Validation";
-import { Form } from "@/components/ui/form";
 import { ImageFields } from "../../fixtures/ImageFields";
-import formTypes from "@/components/form/FormInputTypes";
-import CustomButton from "@/components/form/CustomButton";
+import FormComponent from "@/_components/Form/Form";
 
 const roomTypeImg = ({ AccommodationId, RoomTypeId }: Props) => {
   const { getImgs, postImg, deleteImg } = useRoomTypeImg(
@@ -48,41 +46,33 @@ const roomTypeImg = ({ AccommodationId, RoomTypeId }: Props) => {
 
   return (
     <>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8  items-start gap-7"
-        >
-          {ImageFields.map((item) => (
-            <div
-              key={String(item.name)}
-              className={item.className || "col-span-1"}
-            >
-              {formTypes<TCRoomTypeImage>(item, form.control)}
+      <div className="grid grid-cols-4">
+        <div className="col-span-1">
+          <FormComponent<TCRoomTypeImage>
+            form={form}
+            onSubmit={handleSubmit}
+            formFields={ImageFields}
+            isSubmitting={postImg.isPending}
+          />
+        </div>
+
+        <div className="flex flex-row gap-5 mt-3">
+          {getImgs.data?.results?.map((image) => (
+            <div key={image.id} className="relative">
+              <img
+                src={image.image}
+                alt="room type"
+                className="w-50 h-50 object-cover rounded-lg"
+              />
+              <button
+                onClick={() => handleDelete(image.id)}
+                className="absolute top-1 right-1 bg-primary/50 text-white rounded-full p-1.5 transition-colors cursor-pointer"
+              >
+                <X className="h-6 w-6" />
+              </button>
             </div>
           ))}
-          <div className="my-1">
-            <CustomButton type="submit">ارسال</CustomButton>
-          </div>
-        </form>
-      </Form>
-
-      <div className="flex flex-row gap-5 mt-10">
-        {getImgs.data?.results?.map((image) => (
-          <div key={image.id} className="relative">
-            <img
-              src={image.image}
-              alt="room type"
-              className="w-40 h-40 object-cover rounded-lg"
-            />
-            <button
-              onClick={() => handleDelete(image.id)}
-              className="absolute top-1 right-1 bg-primary/50 text-white rounded-full p-1.5 transition-colors cursor-pointer"
-            >
-              <X className="h-6 w-6" />
-            </button>
-          </div>
-        ))}
+        </div>
       </div>
     </>
   );
