@@ -11,7 +11,8 @@ interface Props {
 }
 
 const useFilterFields = ({ form }: Props) => {
-  const { accommodationTypes, accommodatioFeatureList } = useAccommodationType();
+  const { accommodationTypes, accommodatioFeatureList } =
+    useAccommodationType();
 
   const updatedAccommodatioFeatureList = accommodatioFeatureList.data?.map(
     (item) => ({

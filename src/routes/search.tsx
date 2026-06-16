@@ -1,5 +1,5 @@
 import AccommodationCardsDetails from "@/app/usersPanel/components/accommodation/AccommodationCardsDetails";
-import FilterBadges from "@/app/usersPanel/components/filter/components/FilterBadges";
+import Filter from "@/app/usersPanel/components/filter/components/Filter";
 import UserHeader from "@/app/usersPanel/components/header/UserHeader";
 import { useAccommodation } from "@/app/usersPanel/services/useAccommoation";
 import CustomLoader from "@/components/loading/CustomLoader";
@@ -71,16 +71,22 @@ function RouteComponent() {
     <div className="font-display!">
       <Toaster richColors position="top-right" />
       <UserHeader searchPlaceHolder="جستجوی شهر ..." />
-      <FilterBadges />
-      <div className="mx-20 my-5 flex justify-center items-center">
-        {getAccommodations.isFetching ? (
-          <CustomLoader />
-        ) : (
-          <AccommodationCardsDetails
-            accommodations={getAccommodations.data?.results}
-          />
-        )}
+      {/* <FilterBadges /> */}
+      <div className="grid grid-cols-6">
+        <div className="">
+          <Filter />
+        </div>
+        <div className=" col-span-5 ml-5 flex justify-center items-center">
+          {getAccommodations.isFetching ? (
+            <CustomLoader />
+          ) : (
+            <AccommodationCardsDetails
+              accommodations={getAccommodations.data?.results}
+            />
+          )}
+        </div>
       </div>
+
       <Outlet />
     </div>
   );

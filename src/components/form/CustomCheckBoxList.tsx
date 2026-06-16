@@ -19,8 +19,8 @@ const CustomCheckboxList = <T extends FieldValues>({
             : [];
 
           return (
-            <FieldGroup className="mx-auto w-full">
-              <Field orientation="vertical">
+            <FieldGroup className="mx-auto w-ful">
+              <Field orientation="vertical" className="">
                 {items?.map((item) => {
                   const value =
                     "value" in item ? String(item.value) : String(item.id);

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, SlidersHorizontal } from "lucide-react";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
@@ -10,7 +10,6 @@ import {
 } from "@/components/form/DateConverter";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import type { filterdata } from "../types/types";
-import FilterModal from "./FilterModal";
 
 export interface filterProps {
   setFilter: Dispatch<SetStateAction<filterdata | undefined>>;
@@ -18,28 +17,26 @@ export interface filterProps {
 }
 
 const FilterBadges = () => {
-  const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const search = useSearch({ from: "/search" }); // مسیر route خود را وارد کنید
 
   const handleDateChange = (dates: DateObject[]) => {
-  if (dates && dates.length === 2) {
-    const startMiladi = shamsiToMiladi(dates[0].format("YYYY-MM-DD"));
-    const endMiladi = shamsiToMiladi(dates[1].format("YYYY-MM-DD"));
+    if (dates && dates.length === 2) {
+      const startMiladi = shamsiToMiladi(dates[0].format("YYYY-MM-DD"));
+      const endMiladi = shamsiToMiladi(dates[1].format("YYYY-MM-DD"));
 
-    navigate({
-      to: "/search",
-      search: (prev) => ({
-        type__id: [],
-        feature__id: [],
-        ...prev,
-        open_start__gte: startMiladi,
-        open_end__lte: endMiladi,
-      }),
-    });
-  } 
-};
-
+      navigate({
+        to: "/search",
+        search: (prev) => ({
+          type__id: [],
+          feature__id: [],
+          ...prev,
+          open_start__gte: startMiladi,
+          open_end__lte: endMiladi,
+        }),
+      });
+    }
+  };
 
   const dateValue =
     search?.open_start__gte && search?.open_end__lte
@@ -52,10 +49,7 @@ const FilterBadges = () => {
   return (
     <div>
       <div className="flex flex-wrap gap-2">
-        <Badge
-          className="mr-10 h-8 px-3 cursor-pointer"
-          onClick={() => setOpenModal(true)}
-        >
+        <Badge className="mr-10 h-8 px-3 cursor-pointer">
           <SlidersHorizontal /> فیلتر ها
         </Badge>
 
@@ -78,11 +72,7 @@ const FilterBadges = () => {
         />
       </div>
 
-      <FilterModal
-        open={openModal}
-        onOpenChange={() => setOpenModal(false)}
-        title="فیلتر ها"
-      />
+      {/* <Filter /> */}
     </div>
   );
 };

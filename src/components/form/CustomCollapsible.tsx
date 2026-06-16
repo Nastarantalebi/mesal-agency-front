@@ -14,9 +14,12 @@ interface Props {
 
 export function CustomCollapsible({ title, content }: Props) {
   return (
-    <Collapsible className="data-[state=open]:bg-muted rounded-md">
+    <Collapsible className="data-[state=open]:bg-muted">
       <CollapsibleTrigger asChild>
-        <Button variant="ghost" className="group w-full hover:bg-accent/30">
+        <Button
+          variant="ghost"
+          className="group w-full hover:bg-slate-200 rounded-none!"
+        >
           {title}
           <ChevronDownIcon className="mr-auto group-data-[state=open]:rotate-180" />
         </Button>
