@@ -1,5 +1,6 @@
 import AccommodationCardsDetails from "@/app/usersPanel/components/accommodation/AccommodationCardsDetails";
 import Filter from "@/app/usersPanel/components/filter/components/Filter";
+import SearchBox from "@/app/usersPanel/components/filter/components/SearchBox";
 import UserHeader from "@/app/usersPanel/components/header/UserHeader";
 import { useAccommodation } from "@/app/usersPanel/services/useAccommoation";
 import CustomLoader from "@/components/loading/CustomLoader";
@@ -70,7 +71,8 @@ function RouteComponent() {
   return (
     <div className="font-display!">
       <Toaster richColors position="top-right" />
-      <UserHeader searchPlaceHolder="جستجوی شهر ..." />
+      <UserHeader />
+      <SearchBox />
       {/* <FilterBadges /> */}
       <div className="grid grid-cols-6">
         <div className="">

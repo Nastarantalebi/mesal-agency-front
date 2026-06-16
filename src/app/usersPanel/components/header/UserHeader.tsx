@@ -1,17 +1,26 @@
 import { useNavigate } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { LogOut, User } from "lucide-react";
+import useMe from "@/app/login/services/useMe";
+import { useState } from "react";
+import { useLogout } from "@/app/login/services/useLogout";
 
-
-interface Props {
-  searchPlaceHolder: string;
-}
-const UserHeader = ({searchPlaceHolder}: Props) => {
+const UserHeader = () => {
   const navigate = useNavigate();
+  const { data } = useMe();
+  const { mutateAsync } = useLogout();
 
   return (
     <div className="w-full">
-      <header className=" mx-5 my-2 flex h-14 items-center px-4 border-b">
-        <div className="flex items-center gap-5 text-primary ">
+      <header className=" mx-5 my-2 flex h-14 items-center px-4 border-b justify-between">
+        <div className="flex items-center text-primary justify-between ">
           <span
             onClick={() => navigate({ to: "/" })}
             className="cursor-pointer"
@@ -20,14 +29,35 @@ const UserHeader = ({searchPlaceHolder}: Props) => {
               <img src="./logo.webp" alt="logo" className="w-fit h-fit" />
             </div>
           </span>
-          <div className="w-full h-10 relative rounded-2xl border border-gray-200">
-            <input
-              type="text"
-              placeholder={searchPlaceHolder}
-              className="w-full h-full px-4 pr-10 rounded-2xl outline-none"
-            />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          </div>
+        </div>{" "}
+        <div className="flex items-center justify-center cursor-pointer gap-4 mx-2">
+          {/* <span className="text-sm font-medium text-background">نسترن طالبی</span> */}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Avatar className="h-9 w-9 cursor-pointer">
+                <AvatarFallback>
+                  <User className="text-primary" />
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="items-end">
+              <div dir="rtl">
+                <DropdownMenuItem className="gap-2 focus:bg-transparent">
+                  <User className="w-4 h-4" />
+                  {data?.mobile}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="cursor-pointer gap-2 focus:bg-primary/10"
+                  onClick={() => mutateAsync()}
+                >
+                  <LogOut className="w-4 h-4" />
+                  خروج
+                </DropdownMenuItem>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
     </div>
