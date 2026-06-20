@@ -9,7 +9,6 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LogOut, User } from "lucide-react";
 import useMe from "@/app/login/services/useMe";
-import { useState } from "react";
 import { useLogout } from "@/app/login/services/useLogout";
 
 const UserHeader = () => {

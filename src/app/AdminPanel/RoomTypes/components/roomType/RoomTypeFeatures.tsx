@@ -1,8 +1,5 @@
-import CustomButton from "@/components/form/CustomButton";
-import FormErrorModal from "@/components/form/FormErrorModal";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -45,9 +42,6 @@ const RoomTypeFeatures = ({
     currentRoomTypeFeaturePage,
   );
 
-  const [errorOpen, setErrorOpen] = useState(false);
-  const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-
   const roomTypeFeaturesPageCount = getFeatures.data?.count
     ? Math.ceil(getFeatures.data.count / 10)
     : 0;
@@ -80,7 +74,6 @@ const RoomTypeFeatures = ({
           form.reset();
           setSelectedIds([]);
         },
-        onError: () => setErrorOpen(true),
       },
     );
   };

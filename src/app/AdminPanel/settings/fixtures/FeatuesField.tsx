@@ -1,4 +1,3 @@
-import type { Items } from "@/components/form/FormInputTypes";
 import type { TCFeature } from "../types";
 import type { TFormData } from "@/types";
 import { YES_NO_OPTIONS } from "../../Accommodation/types";

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/admin/setting/accommodationFeatures")({
 function RouteComponent() {
   return (
     <div className="flex flex-col gap-10">
-      <AddFeaturesForm asModal={false} buttonTitle="ثبت" /> <FeaturesList />
+      <AddFeaturesForm /> <FeaturesList />
     </div>
   );
 }

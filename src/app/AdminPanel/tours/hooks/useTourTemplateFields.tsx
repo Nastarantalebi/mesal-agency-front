@@ -1,4 +1,3 @@
-import type { Items } from "@/components/form/FormInputTypes";
 import type { TCreateTourTemplate } from "../fixtures/validation";
 import type { TCtourImage } from "../../RoomTypes/types";
 import type { TFormData } from "@/types";

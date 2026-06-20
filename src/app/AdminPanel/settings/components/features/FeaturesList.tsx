@@ -31,11 +31,6 @@ const FeaturesList = () => {
     setOpenModal(true);
   };
 
-  const onCloseModal = () => {
-    setOpenModal(false);
-    setSelectedId(null);
-  };
-
   return (
     <div className="flex flex-col gap-10">
       <Card className=" border-2 border-primary bg-primary/10">

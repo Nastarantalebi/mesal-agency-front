@@ -20,7 +20,7 @@ function RouteComponent() {
   return (
     <div className="font-display!">
       <Toaster richColors position="top-right" />
-      <UserHeader searchPlaceHolder="جستجوی خبر ..." />
+      <UserHeader />
       {id && getNewsById.data ? (
         <NewsDetailCard news={getNewsById.data} />
       ) : (
