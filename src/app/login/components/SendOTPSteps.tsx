@@ -102,7 +102,7 @@ const SendOTPSteps = ({
   return (
     <>
       {/* mobile display*/}
-      <div className="bg-white backdrop-blur-3xl rounded-xl mb-5 flex flex-row justify-between items-center">
+      <div className="bg-white backdrop-blur-3xl rounded-xl mb-5 flex flex-row justify-between items-center overflow-y-hidden">
         <div className="p-2 flex flex-row gap-2 text-slate-500">
           <Phone className="h-5 w-5" />
           {mobile}
@@ -182,7 +182,7 @@ const SendOTPSteps = ({
             <CustomButton
               type="submit"
               variant={"outline"}
-              className="w-full text-secondary-40 border-4 hover:text-white mt-10"
+              className="w-full border-4  mt-10 hover:bg-primary/10 hover:text-primary text-primary"
               disabled={isLoading || isExpired}
             >
               {isLoading ? (

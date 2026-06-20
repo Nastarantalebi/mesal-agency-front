@@ -22,9 +22,9 @@ const SendMobileSteps = ({ onSubmit, error }: mobileStepsProps) => {
     ),
     defaultValues: mobileInitialValue,
   });
-  const {LoginMobileFields} = useLoginFields()
+  const { LoginMobileFields } = useLoginFields();
   return (
-    <div className="">
+    <div className="overflow-y-hidden">
       {/* Display backend error */}
       {error && (
         <div className="col-span-full rounded-md bg-red-50 border border-red-200">
@@ -48,7 +48,7 @@ const SendMobileSteps = ({ onSubmit, error }: mobileStepsProps) => {
           <CustomButton
             type="submit"
             variant={"outline"}
-            className="w-full text-secondary-40 border-4 hover:text-white mt-10"
+            className="w-full border-4  mt-10 hover:bg-primary/10 hover:text-primary text-primary"
           >
             دریافت رمز کد یکبار مصرف
           </CustomButton>

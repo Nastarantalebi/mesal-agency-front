@@ -35,7 +35,7 @@ const PasswordLogin = () => {
     <ForgetPassword setForgetPassword={setForgetPassword} />
   ) : (
     <>
-      <Alert className="flex items-center px-4 py-3 mb-5 bg-primary-20 border-primary-30 rounded-[0.6rem] leading-[1.7]">
+      <Alert className="flex items-center px-4 py-3 mb-5 bg-primary-20 border-primary-30 rounded-[0.6rem] leading-[1.7] overflow-y-hidden">
         <Lightbulb className="w-15 h-15 mb-1 text-default" />
         <AlertDescription>
           <div className="text-default">
@@ -68,7 +68,7 @@ const PasswordLogin = () => {
               <CustomButton
                 type="submit"
                 variant={"outline"}
-                className="w-full text-secondary-40 border-4 hover:text-white mt-10"
+                className="w-full border-4  mt-10 hover:bg-primary/10 hover:text-primary text-primary"
                 disabled={isLogingIn}
               >
                 {isLogingIn ? "در حال ورود..." : "ورود"}

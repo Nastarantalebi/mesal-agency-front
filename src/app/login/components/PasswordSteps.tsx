@@ -3,13 +3,7 @@ import type { IForgotPassword } from "../types";
 import { passwordValidation } from "../fixtures/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import {
-  ArrowLeft,
-  Lightbulb,
-  Loader2,
-  Phone,
-  Clock,
-} from "lucide-react";
+import { ArrowLeft, Lightbulb, Loader2, Phone, Clock } from "lucide-react";
 import formTypes from "@/components/form/FormInputTypes";
 import CustomButton from "@/components/form/CustomButton";
 import { Form } from "@/components/ui/form";
@@ -47,7 +41,7 @@ const PasswordSteps = ({
   const { LoginNewPasswordFields } = useLoginFields();
 
   return (
-    <div className="">
+    <div className="overflow-y-hidden">
       <Alert className="flex items-center px-4 py-3 mb-5 backdrop-blur-3xl rounded-[0.6rem] leading-[1.7]">
         <Lightbulb className="w-15 h-15 mb-1 text-default" />
         <AlertDescription>
@@ -100,8 +94,8 @@ const PasswordSteps = ({
             <CustomButton
               type="submit"
               variant={"outline"}
+              className="w-full border-4  mt-10 hover:bg-primary/10 hover:text-primary text-primary"
               disabled={isLoading || isExpired}
-              className="w-full text-secondary-40 border-4 hover:text-white mt-10"
             >
               {isLoading ? (
                 <>
@@ -109,9 +103,7 @@ const PasswordSteps = ({
                   در حال ایجاد رمز عبور...
                 </>
               ) : (
-                <>
-                  ایجاد رمز عبور و ورود
-                </>
+                <>ایجاد رمز عبور و ورود</>
               )}
             </CustomButton>
           </div>
