@@ -69,7 +69,14 @@ const FeaturesList = () => {
             </div>
           </CardContent>
         ) : (
-          <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
+          <CardContent className="flex flex-col justify-center items-center">
+            <img
+              src="/No data-amico.svg"
+              alt="no data"
+              className="w-50 h-50 "
+            />
+            <span>داده ای وجود ندارد!</span>
+          </CardContent>
         )}
         <CardPagination
           currentPage={currentAccommodationPage}
@@ -113,7 +120,14 @@ const FeaturesList = () => {
             </div>
           </CardContent>
         ) : (
-          <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
+          <CardContent className="flex flex-col justify-center items-center">
+            <img
+              src="/No data-amico.svg"
+              alt="no data"
+              className="w-50 h-50 "
+            />
+            <span>داده ای وجود ندارد!</span>
+          </CardContent>
         )}
         <CardPagination
           currentPage={currentRoomPage}

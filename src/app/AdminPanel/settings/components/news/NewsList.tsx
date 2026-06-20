@@ -43,7 +43,14 @@ const NewsList = () => {
               onDelete={(id: number) => deletNews.mutateAsync({ id: id })}
             />
           ) : (
-            <span>خبری وجود ندارد.</span>
+            <div className="flex flex-col justify-center items-center">
+              <img
+                src="/No data-amico.svg"
+                alt="no-data"
+                className="w-50 h-50 "
+              />
+              <span>داده ای وجود ندارد!</span>
+            </div>
           )}
         </div>
         <ListPagination

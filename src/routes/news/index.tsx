@@ -22,7 +22,10 @@ function RouteComponent() {
       <Toaster richColors position="top-right" />
       <UserHeader />
       {id && getNewsById.data ? (
-        <NewsDetailCard news={getNewsById.data} />
+        <div className="bg-primary/10 py-6">
+          {" "}
+          <NewsDetailCard news={getNewsById.data} />
+        </div>
       ) : (
         <></>
       )}

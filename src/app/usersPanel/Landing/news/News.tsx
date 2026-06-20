@@ -45,7 +45,7 @@ const News = () => {
     }),
   };
   return (
-    <div className="w-full overflow-hidden px-10">
+    <div className="w-full overflow-hidden px-10 bg-primary-10/50 py-6">
       <AnimatePresence mode="wait">
         <motion.div
           custom={direction}

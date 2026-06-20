@@ -89,12 +89,13 @@ const RoomTypeBeds = ({
               ))}
             </CardContent>
           ) : (
-            <CardContent className="flex justify-center items-center">
+            <CardContent className="flex flex-col justify-center items-center">
               <img
                 src="/No data-amico.svg"
                 alt="no data"
                 className="w-50 h-50 "
               />
+              <span>داده ای وجود ندارد!</span>
             </CardContent>
           )}
         </Card>

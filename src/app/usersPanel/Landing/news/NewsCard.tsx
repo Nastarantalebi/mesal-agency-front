@@ -50,11 +50,11 @@ const NewsCard = ({ news }: { news: TNewsResponse }) => {
           </p>
 
           <div
-            className="flex items-center gap-1 text-sm text-primary font-medium cursor-pointer group-hover:gap-2 transition-all"
+            className="group/btn flex items-center gap-1 text-sm text-primary font-medium cursor-pointer hover:gap-2 transition-all"
             onClick={() => handleClick(news.id)}
           >
             <span>بیشتر</span>
-            <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            <ChevronLeft className="w-4 h-4 transition-transform group-hover/btn:-translate-x-1" />
           </div>
         </div>
       </div>

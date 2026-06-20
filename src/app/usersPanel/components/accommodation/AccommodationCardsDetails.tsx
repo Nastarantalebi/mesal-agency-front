@@ -70,7 +70,10 @@ const AccommodationCardsDetails = ({ accommodations }: Props) => {
       ))}
     </div>
   ) : (
-    <img src="./No data-amico.svg" alt="" className="w-80 h-80" />
+    <div className="flex flex-col justify-center items-center">
+      <img src="./No data-amico.svg" alt="" className="w-80 h-80" />
+      <span>داده ای وجود ندارد!</span>
+    </div>
   );
 };
 

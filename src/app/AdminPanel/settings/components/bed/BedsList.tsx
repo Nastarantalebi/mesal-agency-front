@@ -61,7 +61,14 @@ const BedsList = () => {
             </div>
           </CardContent>
         ) : (
-          <CardContent>داده ای برای نمایش وجود ندارد</CardContent>
+          <CardContent className="flex flex-col justify-center items-center">
+            <img
+              src="/No data-amico.svg"
+              alt="no data"
+              className="w-50 h-50 "
+            />
+            <span>داده ای وجود ندارد!</span>
+          </CardContent>
         )}
         <CardPagination
           currentPage={currentBedPage}
@@ -69,10 +76,22 @@ const BedsList = () => {
           pageCount={PageCount}
         />
       </Card>
-      <CustomDialog dialogContent={<AddBedForm
-        bedId={BedId} setOpenModal={setOpenModal} setBedId={setBedId}
-      />} onOpenChange={() => { setOpenModal(false); setBedId(null) }} dialogTitle="ویرایش نوع تخت" open={openModal} size="lg" />
-
+      <CustomDialog
+        dialogContent={
+          <AddBedForm
+            bedId={BedId}
+            setOpenModal={setOpenModal}
+            setBedId={setBedId}
+          />
+        }
+        onOpenChange={() => {
+          setOpenModal(false);
+          setBedId(null);
+        }}
+        dialogTitle="ویرایش نوع تخت"
+        open={openModal}
+        size="lg"
+      />
 
       <FormErrorModal
         open={openDelete}
@@ -80,7 +99,11 @@ const BedsList = () => {
         onAcknowledge={() =>
           deleteBed.mutateAsync(
             { id: BedId! },
-            { onSuccess: () => { setBedId(null); } },
+            {
+              onSuccess: () => {
+                setBedId(null);
+              },
+            },
           )
         }
         buttonTitle="بله"

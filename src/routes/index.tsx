@@ -13,7 +13,7 @@ export const Route = createFileRoute("/")({
 function HomeComponent() {
   // const navigate = useNavigate();
   return (
-    <div className="overflow-x-hidden flex flex-col items-center">
+    <div className="overflow-x-hidden flex flex-col items-center gap-10">
       <HeroSection />
       <Services />
       <News />
