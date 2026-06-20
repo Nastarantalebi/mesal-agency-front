@@ -2,13 +2,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { tourImgValidation } from "../fixtures/validation";
 import type { TCtourImage } from "../../RoomTypes/types";
-import FormComponent from "@/components/form/FormComponent";
 import useTourTemplate from "../services/useTourTemplate";
 import useTourTemplateFields from "../hooks/useTourTemplateFields";
 import { X } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
+import FormComponent from "@/_components/Form/Form";
 
-const TourTemplatePhotoes = ({ tourId }: { tourId: number, setOpenImg?: Dispatch<SetStateAction<boolean>>}) => {
+const TourTemplatePhotoes = ({
+  tourId,
+}: {
+  tourId: number;
+  setOpenImg?: Dispatch<SetStateAction<boolean>>;
+}) => {
   const form = useForm<TCtourImage>({
     resolver: zodResolver(tourImgValidation),
     defaultValues: { image: undefined, main: false },
@@ -44,28 +49,33 @@ const TourTemplatePhotoes = ({ tourId }: { tourId: number, setOpenImg?: Dispatch
 
   return (
     <>
-      <FormComponent
-        form={form}
-        handleSubmit={handleSubmit}
-        fields={ImageFields}
-      />
-
-      <div className="flex flex-row gap-5 mt-10">
-        {getTourImg.data?.results?.map((image) => (
-          <div key={image.id} className="relative">
-            <img
-              src={image.image}
-              alt="room type"
-              className="w-40 h-40 object-cover rounded-lg"
-            />
-            <button
-              onClick={() => handleDelete(image.id)}
-              className="absolute top-1 right-1 bg-primary/50 text-white rounded-full p-1.5 transition-colors cursor-pointer"
-            >
-              <X className="h-6 w-6" />
-            </button>
+      <div className="grid grid-cols-6">
+        <div className="col-span-1 w-80">
+          <FormComponent
+            form={form}
+            onSubmit={handleSubmit}
+            formFields={ImageFields}
+          />
+        </div>
+        <div className="col-span-5">
+          <div className="flex flex-row gap-5 mt-3">
+            {getTourImg.data?.results?.map((image) => (
+              <div key={image.id} className="relative">
+                <img
+                  src={image.image}
+                  alt="room type"
+                  className="w-40 h-40 object-cover rounded-lg"
+                />
+                <button
+                  onClick={() => handleDelete(image.id)}
+                  className="absolute top-1 right-1 bg-primary/50 text-white rounded-full p-1.5 transition-colors cursor-pointer"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </>
   );

@@ -40,6 +40,7 @@
         "@tanstack/react-query": "^5.90.20",
         "@tanstack/react-router": "^1.153.2",
         "@tanstack/react-table": "^8.21.3",
+        "@tanstack/zod-adapter": "^1.167.0",
         "axios": "^1.8.3",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
@@ -510,6 +511,8 @@
     "@tanstack/table-core": ["@tanstack/table-core@8.21.3", "https://artifacts.repo.mesal.ir/repository/npm/@tanstack/table-core/-/table-core-8.21.3.tgz", {}, "sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg=="],
 
     "@tanstack/virtual-file-routes": ["@tanstack/virtual-file-routes@1.154.7", "https://artifacts.repo.mesal.ir/repository/npm/@tanstack/virtual-file-routes/-/virtual-file-routes-1.154.7.tgz", {}, "sha512-cHHDnewHozgjpI+MIVp9tcib6lYEQK5MyUr0ChHpHFGBl8Xei55rohFK0I0ve/GKoHeioaK42Smd8OixPp6CTg=="],
+
+    "@tanstack/zod-adapter": ["@tanstack/zod-adapter@1.167.0", "https://artifacts.repo.mesal.ir/repository/npm/@tanstack/zod-adapter/-/zod-adapter-1.167.0.tgz", { "peerDependencies": { "@tanstack/react-router": ">=1.43.2", "zod": "^3.23.8" } }, "sha512-5Wlm5teSu+pz3KKhfa1ESsiOJXbvV6ITr1vKOQKi9yEdtozp6VefEzxzafLLida97mnL2tmauva/njokQrG5CA=="],
 
     "@types/babel__core": ["@types/babel__core@7.20.5", "https://artifacts.repo.mesal.ir/repository/npm/@types/babel__core/-/babel__core-7.20.5.tgz", { "dependencies": { "@babel/parser": "^7.20.7", "@babel/types": "^7.20.7", "@types/babel__generator": "*", "@types/babel__template": "*", "@types/babel__traverse": "*" } }, "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA=="],
 

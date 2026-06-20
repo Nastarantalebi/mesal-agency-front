@@ -19,9 +19,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+} from "@/components/ui/breadcrumb";
 import { SidebarData } from "@/fixtures/SideBarData.";
-import useBreadCrumbTitles from "./stores/useBreadCrumbTitles";
+// import useBreadCrumbTitles from "./stores/useBreadCrumbTitles";
 
 interface Props {
   menuBtn?: ReactNode;
@@ -57,7 +57,7 @@ const findMenuItem = (items: any[], accPath: string): any | undefined => {
 const buildBreadcrumbs = (
   pathname: string,
   items: any[],
-  breadCrumbTitle: string[]
+  // breadCrumbTitle: string[],
 ) => {
   const segments = normalizePath(pathname).split("/").filter(Boolean);
   const crumbs: { title: string; url: string }[] = [];
@@ -67,9 +67,9 @@ const buildBreadcrumbs = (
   for (const segment of segments) {
     acc += "/" + segment;
     if (isNumeric(segment)) {
-      const title = breadCrumbTitle[dynamicIndex] ?? segment;
+      // const title = breadCrumbTitle[dynamicIndex] ?? segment;
       dynamicIndex++;
-      crumbs.push({ title, url: acc });
+      // crumbs.push({ title, url: acc });
     } else {
       const item = findMenuItem(items, acc);
       if (item?.title) crumbs.push({ title: item.title, url: acc });
@@ -78,26 +78,34 @@ const buildBreadcrumbs = (
   return crumbs;
 };
 
-
 const Header = ({ menuBtn }: Props) => {
   const { mutateAsync } = useLogout();
   const { data } = useMe();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const breadCrumbTitle = useBreadCrumbTitles((state) => state.breadCrumbTitle)
-  console.log(breadCrumbTitle)
-  console.log("location", location)
-  const breadcrumbs = buildBreadcrumbs(location.pathname, SidebarData, breadCrumbTitle);
-  console.log("breadcrumbs", breadcrumbs)
+  // const breadCrumbTitle = useBreadCrumbTitles((state) => state.breadCrumbTitle);
+  // console.log(breadCrumbTitle);
+  console.log("location", location);
+  const breadcrumbs = buildBreadcrumbs(
+    location.pathname,
+    SidebarData,
+    // breadCrumbTitle,
+  );
+  console.log("breadcrumbs", breadcrumbs);
 
   return (
     <div className="w-full">
       <div className="top-0 left-0 right-0 backdrop-blur-sm z-9 pointer-events-none " />
       <header className=" mx-5 my-2 rounded-xl top-0  right-0 z-10 flex h-14 justify-between items-center border px-4 bg-primary-10">
-        <div className="flex items-center gap-5 text-primary">
+        <div className="flex items-center gap-5 text-primary cursor-pointer">
           {menuBtn}
-          <img src="/logo.webp" alt="agencyLogo" onClick={() => navigate({to: "/"})} className="w-10 h-10"/>
+          <img
+            src="/logo.webp"
+            alt="agencyLogo"
+            onClick={() => navigate({ to: "/" })}
+            className="w-10 h-10"
+          />
           {/* <span onClick={() => navigate({to: "/"})} className="cursor-pointer">آژانس</span> */}
           <Breadcrumb>
             <BreadcrumbList>
@@ -111,7 +119,9 @@ const Header = ({ menuBtn }: Props) => {
                     {index === breadcrumbs.length - 1 ? (
                       <BreadcrumbPage>{item.title}</BreadcrumbPage>
                     ) : (
-                      <BreadcrumbLink href={item.url}>{item.title}</BreadcrumbLink>
+                      <BreadcrumbLink href={item.url}>
+                        {item.title}
+                      </BreadcrumbLink>
                     )}
                   </BreadcrumbItem>
                 </div>

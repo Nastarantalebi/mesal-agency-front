@@ -26,7 +26,7 @@ const UserHeader = () => {
             className="cursor-pointer"
           >
             <div className="w-15 h-15 flex justify-center items-center">
-              <img src="./logo.webp" alt="logo" className="w-fit h-fit" />
+              <img src="./logo.webp" alt="logo" className="w-fit h-fit " />
             </div>
           </span>
         </div>{" "}

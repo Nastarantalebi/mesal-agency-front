@@ -8,13 +8,13 @@ import ListDelete from "../roomTypeListIcons/ListDelete";
 import ListPagination from "@/components/list/ListPagination";
 import { useNavigate } from "@tanstack/react-router";
 import RoomTypefields from "../../hooks/RoomTypefields";
-import useBreadCrumbTitles from "@/app/AdminPanel/AdminFeatures/stores/useBreadCrumbTitles";
+// import useBreadCrumbTitles from "@/app/AdminPanel/AdminFeatures/stores/useBreadCrumbTitles";
 import CustomDialog from "@/components/modal/CustomDialog";
 
-const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
+const RoomTypeList = ({ AccommodationId }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const setBreadCrumbTitle = useBreadCrumbTitles((state) => state.setBreadCrumbTitle);
+  // const setBreadCrumbTitle = useBreadCrumbTitles((state) => state.setBreadCrumbTitle);
 
   const { getRoomTypeList, deleteRoomType } = useRoomTypeList(
     AccommodationId,
@@ -60,7 +60,7 @@ const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
               navigate({
                 to: `/admin/accommodations/$id/roomTypes/${rowData.id}`,
               });
-              setBreadCrumbTitle([AccommodationName!, rowData.name])
+              // setBreadCrumbTitle([AccommodationName!, rowData.name])
             }}
             onAdd={() => setOpenModal(true)}
             extraAction={(rowData) => (
@@ -87,7 +87,7 @@ const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
           />
         </div>
       </div>
-            <FormErrorModal
+      <FormErrorModal
         open={openD}
         onOpenChange={() => setopenD(false)}
         message={deleteMessage}
@@ -95,14 +95,18 @@ const RoomTypeList = ({ AccommodationId, AccommodationName }: Props) => {
         buttonTitle="بله"
         dialogTitle="حذف"
       />
-      <CustomDialog         
+      <CustomDialog
         open={openModal}
-        size="lg" 
-        dialogTitle="افزودن نو اتاق جدید" 
-        onOpenChange={() => setOpenModal(false)} 
-        dialogContent={<RoomTypeForm setOpenModal={setOpenModal}
-          AccommodationId={AccommodationId}/>} 
-        />
+        size="lg"
+        dialogTitle="افزودن نو اتاق جدید"
+        onOpenChange={() => setOpenModal(false)}
+        dialogContent={
+          <RoomTypeForm
+            setOpenModal={setOpenModal}
+            AccommodationId={AccommodationId}
+          />
+        }
+      />
     </>
   );
 };

@@ -6,8 +6,8 @@ interface Props {
   accommodations?: accommodationsResponse[];
 }
 const AccommodationCardsDetails = ({ accommodations }: Props) => {
-  return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-w-8xl content-center gap-7">
+  return accommodations ? (
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-w-8xl content-start gap-7 animate-slide-down">
       {accommodations?.map((item) => (
         <div
           key={item.id}
@@ -32,7 +32,7 @@ const AccommodationCardsDetails = ({ accommodations }: Props) => {
           <div className="flex flex-col my-5">
             <div className="flex flex-row justify-between items-center mx-4">
               <div className="flex flex-row mt-2">
-                {[1, 2, 3, 4, 5].map((star) => (
+                {Array.from({ length: 5 }).map((_, star) => (
                   <span
                     key={star}
                     className={
@@ -69,6 +69,8 @@ const AccommodationCardsDetails = ({ accommodations }: Props) => {
         </div>
       ))}
     </div>
+  ) : (
+    <img src="./No data-amico.svg" alt="" className="w-80 h-80" />
   );
 };
 

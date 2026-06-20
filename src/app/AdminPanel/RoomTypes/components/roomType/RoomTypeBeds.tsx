@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import FormErrorModal from "@/components/form/FormErrorModal";
-import CustomButton from "@/components/form/CustomButton";
+
 import {
   bedListValidation,
   type TBedListForm,
@@ -32,9 +30,6 @@ const RoomTypeBeds = ({
     },
   });
 
-  const [errorOpen, setErrorOpen] = useState(false);
-  const errmessage = "ثبت فرم با خطا مواجه شد، لطفاً دوباره تلاش کنید.";
-
   useEffect(() => {
     if (getbeds.data?.results && getRoomTypeBeds.data) {
       const bedsWithNumbers = getbeds.data.results.map((bed) => ({
@@ -60,7 +55,6 @@ const RoomTypeBeds = ({
           onOpenChange?.(false);
           form.reset();
         },
-        onError: () => setErrorOpen(true),
       },
     );
   };
@@ -77,9 +71,10 @@ const RoomTypeBeds = ({
         form={form}
         onSubmit={handleSubmit}
         isSubmitting={postRoomTypeBeds.isPending}
+        size="custom"
       >
         {" "}
-        <Card className="shadow-lg shadow-primary/50 grid grid-cols-1">
+        <Card className="shadow-lg shadow-primary/50 ">
           {getRoomTypeBeds.isFetching ? (
             <CardContent>در حال بارگذاری...</CardContent>
           ) : getbeds.data ? (

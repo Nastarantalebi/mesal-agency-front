@@ -1,6 +1,3 @@
-import useBreadCrumbTitles from "../stores/useBreadCrumbTitles";
-
-
 const normalizePath = (path: string) => path.replace(/\/+$/, "");
 
 const isNumeric = (seg: string) => /^\d+$/.test(seg);
@@ -18,9 +15,18 @@ const segmentsMatch = (menuSegs: string[], pathSegs: string[]) => {
   });
 };
 
-const findItemByPath = (items: MenuItem[], pathSegs: string[]): MenuItem | undefined => {
+const findItemByPath = (
+  items: MenuItem[],
+  pathSegs: string[],
+): MenuItem | undefined => {
   for (const item of items) {
-    if (item.url && segmentsMatch(normalizePath(item.url).split("/").filter(Boolean), pathSegs)) {
+    if (
+      item.url &&
+      segmentsMatch(
+        normalizePath(item.url).split("/").filter(Boolean),
+        pathSegs,
+      )
+    ) {
       return item;
     }
     if (item.children) {
@@ -31,10 +37,8 @@ const findItemByPath = (items: MenuItem[], pathSegs: string[]): MenuItem | undef
   return undefined;
 };
 
-
-
 export const useBreadcrumb = (pathname: string, menu: MenuItem[]): Crumb[] => {
-  const breadCrumbTitle = useBreadCrumbTitles((s) => s.breadCrumbTitle);
+  // const breadCrumbTitle = useBreadCrumbTitles((s) => s.breadCrumbTitle);
 
   const segments = normalizePath(pathname).split("/").filter(Boolean);
 
@@ -48,9 +52,9 @@ export const useBreadcrumb = (pathname: string, menu: MenuItem[]): Crumb[] => {
 
     if (isNumeric(segment)) {
       // به عدد رسیدیم: عنوان رو از store بردار
-      const title = breadCrumbTitle[dynamicIndex] ?? segment;
+      // const title = breadCrumbTitle[dynamicIndex] ?? segment;
       dynamicIndex++;
-      crumbs.push({ title, url: acc });
+      // crumbs.push({ title, url: acc });
     } else {
       const item = findItemByPath(menu, accSegs);
       if (item?.title) crumbs.push({ title: item.title, url: acc });

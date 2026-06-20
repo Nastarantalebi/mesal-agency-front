@@ -2,10 +2,11 @@ import CustomButton from "@/components/form/CustomButton";
 import PopularCities from "./PopularCities";
 import { ChevronLeft } from "lucide-react";
 import usePopularCities from "../fixtures/usePopularCities";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 const IranPattern = () => {
   const { popularCities } = usePopularCities();
+  const navigate = useNavigate();
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-2 justify-items-center items-center mx-4 md:mx-10 lg:mx-20 md:gap-0 ">
       <div className="col-span-1 flex flex-col gap-6 md:gap-10">
@@ -19,6 +20,7 @@ const IranPattern = () => {
         <CustomButton
           className="bg-accent w-fit text-white py-4 md:py-6 px-4 md:px-6 text-base md:text-lg rounded-xl md:rounded-2xl"
           icon={<ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />}
+          onClick={() => navigate({ to: "/search" })}
         >
           شروع کنید
         </CustomButton>
@@ -39,8 +41,6 @@ const IranPattern = () => {
             search={{
               city__province__id: city.provinceId,
               city__id: city.cityId,
-              type__id: [],
-              feature__id: [],
             }}
           >
             <PopularCities city={city} />

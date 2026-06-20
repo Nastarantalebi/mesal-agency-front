@@ -6,7 +6,6 @@ import { YES_NO_OPTIONS } from "../../Accommodation/types";
 import type { UseFormReturn } from "react-hook-form";
 
 const useTourFields = (form?: UseFormReturn<TCreateTourTemplate>) => {
-
   const vehicle = form?.watch("transportation_included");
 
   const fields: (TFormData<TCreateTourTemplate> | undefined)[] = [
@@ -77,7 +76,7 @@ const useTourFields = (form?: UseFormReturn<TCreateTourTemplate>) => {
       name: "is_featured",
       label: "نمایش در تورهای ویژه",
       type: "select",
-      option: YES_NO_OPTIONS
+      option: YES_NO_OPTIONS,
     },
     {
       name: "transportation_included",
@@ -85,32 +84,34 @@ const useTourFields = (form?: UseFormReturn<TCreateTourTemplate>) => {
       type: "select",
       option: YES_NO_OPTIONS,
     },
-    vehicle ?
-      {
-        name: "vehicle_type",
-        label: "نوع وسیله نقلیه",
-        type: "select",
-        option: [
-          { label: "اتوبوس", value: "bus" },
-          { label: "مینی‌بوس", value: "minibus" },
-          { label: "ون", value: "van" },
-          { label: "قطار", value: "train" },
-          { label: "هواپیما", value: "flight" },
-          { label: "پیاده‌روی", value: "walking" },
-          { label: "خودرو", value: "car" },
-          { label: "قایق", value: "boat" },
-          { label: "دوچرخه", value: "bicycle" },
-          { label: "ترکیبی", value: "mixed" },
-        ],
-      } : undefined,
-    vehicle ?
-      {
-        name: "vehicle_details",
-        label: "جزئیات وسیله نقلیه",
-        required: true,
-        inputType: "text",
-        className: "col-span-4",
-      } : undefined,
+    vehicle
+      ? {
+          name: "vehicle_type",
+          label: "نوع وسیله نقلیه",
+          type: "select",
+          option: [
+            { label: "اتوبوس", value: "bus" },
+            { label: "مینی‌بوس", value: "minibus" },
+            { label: "ون", value: "van" },
+            { label: "قطار", value: "train" },
+            { label: "هواپیما", value: "flight" },
+            { label: "پیاده‌روی", value: "walking" },
+            { label: "خودرو", value: "car" },
+            { label: "قایق", value: "boat" },
+            { label: "دوچرخه", value: "bicycle" },
+            { label: "ترکیبی", value: "mixed" },
+          ],
+        }
+      : undefined,
+    vehicle
+      ? {
+          name: "vehicle_details",
+          label: "جزئیات وسیله نقلیه",
+          required: true,
+          inputType: "text",
+          className: "col-span-4",
+        }
+      : undefined,
     {
       name: "meta_title",
       label: "عنوان متا",
@@ -125,21 +126,21 @@ const useTourFields = (form?: UseFormReturn<TCreateTourTemplate>) => {
     },
   ];
 
-  const ImageFields: Items<TCtourImage>[] = [
+  const ImageFields: TFormData<TCtourImage>[] = [
     {
       name: "image",
-      fieldType: "image",
-      className: "col-span-2",
+      type: "image",
+      className: "col-span-full",
     },
     {
       name: "main",
       label: "عکس اصلی؟",
-      isRequired: false,
-      fieldType: "checkBox",
-      className: "my-2",
+      required: false,
+      type: "select",
+      option: YES_NO_OPTIONS,
+      className: "col-start-1 col-span-full",
     },
   ];
-
 
   return { fields, ImageFields };
 };

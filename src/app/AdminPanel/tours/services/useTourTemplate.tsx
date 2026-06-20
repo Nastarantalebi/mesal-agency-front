@@ -54,7 +54,7 @@ const useTourTemplate = ({
 
   const postTourImg = usePostData<FormData>({
     key,
-    url: `${adminTour_url}${tourId}/images`,
+    url: `${adminTour_url}${tourId}/images/`,
     enabled: !!tourId,
   });
 
