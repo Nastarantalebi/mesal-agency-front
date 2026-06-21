@@ -1,19 +1,26 @@
-import type { TPaginatedResponse } from "@/types";
+import type { TOption, TPaginatedResponse } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import ListEdit from "@/components/list/ListEdit";
 import ListDelete from "@/app/AdminPanel/RoomTypes/components/roomTypeListIcons/ListDelete";
-import type { TResponseNews } from "../../types";
 
+export type Tdata = {
+  id: number;
+  title: string;
+  image?: string;
+  type?: TOption;
+  status?: TOption;
+  short_description?: string;
+};
 interface Props {
-  news: TPaginatedResponse<TResponseNews>;
+  data: TPaginatedResponse<Tdata>;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
-const NewsCard = ({ news, onEdit, onDelete }: Props) => {
+const CustomCard = ({ data, onEdit, onDelete }: Props) => {
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 max-w-8xl content-center gap-4">
-      {news?.results.map((item) => (
+      {data?.results.map((item) => (
         <div
           key={item.id}
           className="relative flex flex-col rounded-lg border border-gray-200 shadow-md hover:shadow-lg transition-shadow"
@@ -32,13 +39,16 @@ const NewsCard = ({ news, onEdit, onDelete }: Props) => {
             />
           )}
           <div className="absolute top-2 left-2 flex flex-row gap-1">
-            {" "}
-            <Badge className="bg-red-100 text-red-400 border border-red-400  text-[10px] rounded-full w-fit">
-              {item.type.label}
-            </Badge>
-            <Badge className="bg-indigo-200 text-indigo-900 border border-indigo-400/50 text-[10px] rounded-full w-fit">
-              {item.status.label}
-            </Badge>
+            {item.type && (
+              <Badge className="bg-red-100 text-red-400 border border-red-400  text-[10px] rounded-full w-fit">
+                {item.type.label}
+              </Badge>
+            )}
+            {item.status && (
+              <Badge className="bg-indigo-200 text-indigo-900 border border-indigo-400/50 text-[10px] rounded-full w-fit">
+                {item.status.label}
+              </Badge>
+            )}
           </div>
 
           <div className="flex flex-col p-2 gap-1">
@@ -49,7 +59,6 @@ const NewsCard = ({ news, onEdit, onDelete }: Props) => {
               {item.short_description}
             </h3>
             <div className="flex gap-1">
-              {" "}
               <ListEdit onClick={() => onEdit(item.id)} />
               <ListDelete onClick={() => onDelete(item.id)} />
             </div>
@@ -60,4 +69,4 @@ const NewsCard = ({ news, onEdit, onDelete }: Props) => {
   );
 };
 
-export default NewsCard;
+export default CustomCard;

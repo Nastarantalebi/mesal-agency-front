@@ -68,18 +68,18 @@ const useTourFields = (form?: UseFormReturn<TCreateTourTemplate>) => {
     },
     {
       name: "highlights",
-      label: "ویژگی‌ها و نقاط برجسته",
+      label: "ویژگی‌های برجسته",
       inputType: "text",
     },
     {
       name: "is_featured",
-      label: "نمایش در تورهای ویژه",
+      label: " تورهای ویژه",
       type: "select",
       option: YES_NO_OPTIONS,
     },
     {
       name: "transportation_included",
-      label: "حمل و نقل شامل می‌شود؟",
+      label: "شامل حمل و نقل؟",
       type: "select",
       option: YES_NO_OPTIONS,
     },

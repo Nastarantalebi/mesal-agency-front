@@ -1,10 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  useEffect,
-  useMemo,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { useEffect, useMemo, type Dispatch, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import useTourFields from "../hooks/useTourTemplateFields";
 import CustomLoader from "@/components/loading/CustomLoader";
@@ -32,6 +27,9 @@ const TourTemplateForm = ({
     defaultValues: tourTemplateInitialValues,
   });
 
+  console.log(form.watch());
+  console.log(form.formState.errors);
+
   const { fields } = useTourFields(form);
 
   const formData = useMemo(() => {
@@ -39,20 +37,20 @@ const TourTemplateForm = ({
 
     return {
       title: getTourById.data.title,
-      category: getTourById.data.category,
-      short_description: getTourById.data.short_description,
-      description: getTourById.data.description,
+      category: (getTourById.data.category.value as string) || "",
+      short_description: getTourById.data.short_description || "",
+      description: getTourById.data.description || "",
       transportation_included: getTourById.data.transportation_included,
-      vehicle_type: getTourById.data.vehicle_type,
-      vehicle_details: getTourById.data.vehicle_details,
-      destination: getTourById.data.destination,
-      country: getTourById.data.country,
-      difficulty: getTourById.data.difficulty,
+      vehicle_type: (getTourById.data.vehicle_type?.value as string) || "",
+      vehicle_details: getTourById.data.vehicle_details || "",
+      destination: getTourById.data.destination || "",
+      country: getTourById.data.country || "",
+      difficulty: (getTourById.data.difficulty.value as string) || "",
       age_requirement: getTourById.data.age_requirement,
-      highlights: getTourById.data.highlights,
+      highlights: getTourById.data.highlights || "",
       is_featured: getTourById.data.is_featured,
-      meta_title: getTourById.data.meta_title,
-      meta_description: getTourById.data.meta_description,
+      meta_title: getTourById.data.meta_title || "",
+      meta_description: getTourById.data.meta_description || "",
     };
   }, [getTourById.data]);
 
@@ -64,9 +62,7 @@ const TourTemplateForm = ({
 
   const handleSubmit = (values: TCreateTourTemplate) => {
     if (isEdit) {
-      putTour.mutateAsync(
-        { data: values, id: tourId },
-      );
+      putTour.mutateAsync({ data: values, id: tourId });
     } else {
       postTours.mutateAsync(values, {
         onSuccess: () => {
@@ -85,8 +81,12 @@ const TourTemplateForm = ({
     );
 
   return (
-    <FormComponent<TCreateTourTemplate> form={form} onSubmit={handleSubmit} isSubmitting={postTours.isPending || putTour.isPending}
-      formFields={fields} />
+    <FormComponent<TCreateTourTemplate>
+      form={form}
+      onSubmit={handleSubmit}
+      isSubmitting={postTours.isPending || putTour.isPending}
+      formFields={fields}
+    />
     // <FormComponent
     //   form={form}
     //   handleSubmit={handleSubmit}

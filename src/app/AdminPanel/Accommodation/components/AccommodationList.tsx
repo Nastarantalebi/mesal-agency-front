@@ -1,6 +1,5 @@
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
-import ListPagination from "@/components/list/ListPagination";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
@@ -18,10 +17,11 @@ import AccommodationFeatures from "./AccommodationFeatures";
 import ListDate from "../../RoomTypes/components/roomTypeListIcons/ListDate";
 import AccommodatioPeakDate from "./AccommodationPeakDate";
 import ListRooms from "../../RoomTypes/components/roomTypeListIcons/ListRooms";
+import { initialValue } from "@/types";
 // import useBreadCrumbTitles from "../../AdminFeatures/stores/useBreadCrumbTitles";
 
 const AccommodationList = () => {
-  const [currentAccommodationPage, setCurrentAccommodationPage] = useState(1);
+  // const [currentAccommodationPage, setCurrentAccommodationPage] = useState(1);
   const [selected, setSelected] = useState<AccommodationItem | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [openImg, setOpenImg] = useState(false);
@@ -34,7 +34,6 @@ const AccommodationList = () => {
 
   const { deleteAccommodation, getAccommodations } = useAccommodation(
     undefined,
-    currentAccommodationPage,
     search,
   );
 
@@ -52,10 +51,6 @@ const AccommodationList = () => {
       <div className="text-red-600">{getAccommodations.error.message}</div>
     );
 
-  const pageCount = getAccommodations.data?.count
-    ? Math.ceil(getAccommodations.data.count / 10)
-    : 0;
-
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
   return (
@@ -66,17 +61,11 @@ const AccommodationList = () => {
             searchValue={search}
             onSearchChange={setSearch}
             onSearch={(value) => {
-              setCurrentAccommodationPage(1);
               setSearch(value);
             }}
             searchPlaceHolder="جست و جوی نام اقامتگاه"
             customAddText="افزودن اقامتگاه"
             onAdd={() => setOpenModal(true)}
-            // onRowClick={(rowData) => {
-            //   navigate({
-            //     to: `/admin/accommodations/${rowData.id}`,
-            //   });
-            // }}
             extraAction={(rowData) => (
               <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
                 <ListEdit
@@ -111,7 +100,6 @@ const AccommodationList = () => {
                         name: rowData.name,
                       },
                     });
-                    // setBreadCrumbTitle([rowData.name])
                   }}
                 />
                 <ListDelete
@@ -124,15 +112,7 @@ const AccommodationList = () => {
             )}
             showAction
             columns={AccommodationListColumns}
-            data={getAccommodations.data?.results ?? []}
-          />
-        </div>
-
-        <div className="mt-7 flex justify-center">
-          <ListPagination
-            pageCount={pageCount}
-            currentPage={currentAccommodationPage}
-            onPageChange={setCurrentAccommodationPage}
+            data={getAccommodations.data ?? initialValue}
           />
         </div>
       </div>

@@ -11,16 +11,15 @@ const TourTemplatesList = ({
   setSelectedId: Dispatch<SetStateAction<number | null>>;
   selectedId: number | null;
 }) => {
-  const [currentTourPage, setCurrentTourPage] = useState(1);
-  const { getTours } = useTour({ currentTourPage: currentTourPage });
-
+  const { getTours } = useTour();
+  const [currentPage, setCurrentPage] = useState(1);
   const pageCount = getTours.data?.count
     ? Math.ceil(getTours.data.count / 10)
     : 0;
 
   return (
-    <Card className="bg-primary-20/30">
-      <div className="grid grid-cols-4 px-7 gap-2">
+    <Card className="bg-primary-20/3 p-3 md:p-5">
+      <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 px-7 gap-2">
         {getTours.data?.results.map((tour) => (
           <TourTemplateCard
             tour={tour}
@@ -29,11 +28,13 @@ const TourTemplatesList = ({
           />
         ))}
       </div>
-      <ListPagination
-        currentPage={currentTourPage}
-        pageCount={pageCount}
-        onPageChange={setCurrentTourPage}
-      />
+      <div className="mt-4 md:mt-7 flex justify-center">
+        <ListPagination
+          currentPage={currentPage}
+          pageCount={pageCount}
+          onPageChange={setCurrentPage}
+        ></ListPagination>
+      </div>
     </Card>
   );
 };

@@ -5,20 +5,18 @@ import { useRoomTypeList } from "../../services/useRoomType";
 import type { Props, TRoomTypeResponse } from "../../types/index";
 import RoomTypeForm from "./RoomTypeForm";
 import ListDelete from "../roomTypeListIcons/ListDelete";
-import ListPagination from "@/components/list/ListPagination";
 import { useNavigate } from "@tanstack/react-router";
 import RoomTypefields from "../../hooks/RoomTypefields";
 // import useBreadCrumbTitles from "@/app/AdminPanel/AdminFeatures/stores/useBreadCrumbTitles";
 import CustomDialog from "@/components/modal/CustomDialog";
+import { initialValue } from "@/types";
 
 const RoomTypeList = ({ AccommodationId }: Props) => {
-  const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   // const setBreadCrumbTitle = useBreadCrumbTitles((state) => state.setBreadCrumbTitle);
 
   const { getRoomTypeList, deleteRoomType } = useRoomTypeList(
     AccommodationId,
-    currentPage,
     search,
   );
 
@@ -34,10 +32,6 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
     await deleteRoomType.mutateAsync({ id });
   };
 
-  const PageCount = getRoomTypeList.data?.count
-    ? Math.ceil(getRoomTypeList.data.count / 10)
-    : 0;
-
   if (getRoomTypeList.isFetching) return <div>Loading...</div>;
   if (getRoomTypeList.error)
     return <div className="text-red-600">{getRoomTypeList.error.message}</div>;
@@ -52,7 +46,6 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
             searchValue={search}
             onSearchChange={setSearch}
             onSearch={(value) => {
-              setCurrentPage(1);
               setSearch(value);
             }}
             searchPlaceHolder="جست و جوی نوع اتاق"
@@ -75,15 +68,7 @@ const RoomTypeList = ({ AccommodationId }: Props) => {
             )}
             showAction={true}
             columns={fields}
-            data={getRoomTypeList.data?.results ?? []}
-          />
-        </div>
-
-        <div className="mt-7 flex justify-center">
-          <ListPagination
-            pageCount={PageCount}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
+            data={getRoomTypeList.data ?? initialValue}
           />
         </div>
       </div>

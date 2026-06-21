@@ -1,6 +1,5 @@
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
-import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
 import CustomLoader from "@/components/loading/CustomLoader";
@@ -10,6 +9,7 @@ import usePlans from "../services/usePlans";
 import ListEdit from "@/components/list/ListEdit";
 import CustomDialog from "@/components/modal/CustomDialog";
 import TourPlansComponent from "./TourPlansComponent";
+import { initialValue } from "@/types";
 
 const TourPlansList = ({
   tourTemplateId,
@@ -72,16 +72,8 @@ const TourPlansList = ({
             )}
             showAction
             columns={PlanListColumns}
-            data={getDeparturePlans.data?.results ?? []}
+            data={getDeparturePlans.data ?? initialValue}
             showAddButton={true}
-          />
-        </div>
-
-        <div className="mt-7 flex justify-center">
-          <ListPagination
-            pageCount={pageCount}
-            currentPage={currentPlanPage}
-            onPageChange={setCurrentPlanPage}
           />
         </div>
       </div>

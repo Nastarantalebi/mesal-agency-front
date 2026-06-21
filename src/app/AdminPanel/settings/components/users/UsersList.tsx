@@ -1,5 +1,4 @@
 import { CustomDataTable } from "@/components/list/CustomDataTable";
-import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import { UserListColumns } from "../../fixtures/useListColumns";
 import { useUsers } from "../../services/useSetting";
@@ -14,32 +13,29 @@ import {
 } from "../../fixtures/validation";
 import ReloadList from "@/components/list/ReloadList";
 import type { TcreateUsersList } from "../../types";
+import { initialValue } from "@/types";
+import { useNavigate } from "@tanstack/react-router";
 
 const UsersList = () => {
-  const [filters, setFilters] = useState<TcreateUsersList>();
-  // const [input, setInput] = useState("");
+  const navigate = useNavigate({ from: "/admin/users" });
+  console.log(navigate);
   const [openD, setOpen] = useState(false);
-  // const [openModal, setOpenModal] = useState(false);
-  // const [selected, setSelected] = useState<UsersListResponse | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const { getUsers } = useUsers(filters, currentPage);
-  // const [filters, setFilters] = useState<createUsersList>(usersFilterInitialValues);
+  const { getUsers } = useUsers();
   const [search, setSearch] = useState("");
-
-  const PageCount = getUsers.data?.count
-    ? Math.ceil(getUsers.data.count / 10)
-    : 0;
 
   const form = useForm<TcreateUsersList>({
     resolver: zodResolver(usersFilterValidation),
     defaultValues: usersFilterInitialValues,
   });
 
-  // const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
-
   const handleFilter = (values: TcreateUsersList) => {
-    setFilters(values);
-    setCurrentPage(1);
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        ...values,
+      }),
+      replace: true,
+    });
     setOpen(false);
   };
 
@@ -60,7 +56,6 @@ const UsersList = () => {
             searchValue={search}
             onSearchChange={setSearch}
             onSearch={(value) => {
-              setCurrentPage(1);
               setSearch(value);
             }}
             // onAdd={() => {
@@ -69,18 +64,10 @@ const UsersList = () => {
             searchPlaceHolder="جست و جوی شماره همراه"
             showAction={true}
             columns={UserListColumns}
-            data={getUsers.data?.results ?? []}
-
+            data={getUsers.data ?? initialValue}
           />
         </div>
 
-        <div className="mt-7 flex justify-center">
-          <ListPagination
-            pageCount={PageCount}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
-        </div>
         {/* <CustomDialog
           dialogContent={<UsersForm setOpenModal={setOpenModal} id={selected} />}
           dialogTitle={selected ? "ویرایش کاربر" : "افزودن کاربر جدید"}

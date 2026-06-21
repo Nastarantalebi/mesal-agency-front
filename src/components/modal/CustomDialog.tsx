@@ -6,7 +6,7 @@ interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   dialogTitle: string;
-  size?: "sm" | "lg" | "xl" | "xxl" | "xxxl";
+  size?: "sm" | "lg" | "xl" | "xxl" | "xxxl" | "xxxxl";
 }
 
 const sizeClasses: Record<NonNullable<Props["size"]>, string> = {
@@ -14,7 +14,8 @@ const sizeClasses: Record<NonNullable<Props["size"]>, string> = {
   lg: "sm:max-w-lg",
   xl: "sm:max-w-xl",
   xxl: "sm:max-w-4xl",
-  xxxl: "sm:max-w-8xl",
+  xxxl: "sm:max-w-6xl",
+  xxxxl: "sm:max-w-8xl",
 };
 
 const CustomDialog = ({
@@ -22,7 +23,7 @@ const CustomDialog = ({
   open,
   onOpenChange,
   dialogTitle,
-  size = "lg", 
+  size = "lg",
 }: Props) => {
   const sizeClass = sizeClasses[size];
 

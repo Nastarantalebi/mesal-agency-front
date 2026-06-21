@@ -1,5 +1,5 @@
 import UserHeader from "@/app/usersPanel/components/header/UserHeader";
-import NewsCard from "@/app/usersPanel/Landing/news/NewsCard";
+import Card from "@/app/usersPanel/Landing/news/Card";
 import NewsDetailCard from "@/app/usersPanel/Landing/news/NewsDetailCard";
 import useNews from "@/app/usersPanel/Landing/news/services/useNews";
 import CustomLoader from "@/components/loading/CustomLoader";
@@ -36,7 +36,7 @@ function RouteComponent() {
         {getNews.isFetching ? (
           <CustomLoader />
         ) : (
-          getNews.data?.results.map((item) => <NewsCard news={item} />)
+          getNews.data?.results.map((item) => <Card news={item} />)
         )}
       </div>
       <Outlet />

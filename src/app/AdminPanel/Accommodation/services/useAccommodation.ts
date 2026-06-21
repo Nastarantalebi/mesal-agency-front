@@ -1,125 +1,144 @@
-import { admin_accommodation_key, accommodation_types_key, accommodation_types_url, admin_accommodation_url, features_key, features_url } from "@/data/querykeys";
+import {
+  admin_accommodation_key,
+  accommodation_types_key,
+  accommodation_types_url,
+  admin_accommodation_url,
+  features_key,
+  features_url,
+} from "@/data/querykeys";
 import useDeleteData from "@/services/useDeleteData";
 import usePostData from "@/services/usePostData";
 import type { TOption2, TPaginatedResponse } from "@/types";
-import type { AccommodationItem, TAccommodationFeatureResponse, TAccommodationImage, TAccommodationImageResponse, TAccommodationResponse, TCAccommodationFeature, TCreateAccomodation, TFeatureResponse } from "../types";
+import type {
+  AccommodationItem,
+  TAccommodationFeatureResponse,
+  TAccommodationImage,
+  TAccommodationImageResponse,
+  TAccommodationResponse,
+  TCAccommodationFeature,
+  TCreateAccomodation,
+  TFeatureResponse,
+} from "../types";
 import usePutData from "@/services/usePutData";
 import useGetData from "@/services/useGetData";
 
-export const useAccommodation = (AccommodationId?: number, currentAccommodationPage?: number, searchInput?: string) => {
-
+export const useAccommodation = (
+  AccommodationId?: number,
+  searchInput?: string,
+) => {
   const key = [admin_accommodation_key, String(AccommodationId)];
-  const url =  `${admin_accommodation_url}${AccommodationId}/`
+  const url = `${admin_accommodation_url}${AccommodationId}/`;
 
-    const  getAccommodation = useGetData<TAccommodationResponse>({
-        key,
-        url,
-        enabled: !!AccommodationId,
-    });
+  const getAccommodation = useGetData<TAccommodationResponse>({
+    key,
+    url,
+    enabled: !!AccommodationId,
+  });
 
-    const {mutateAsync: postAccommodation, isPending: ispendingPost} = usePostData<
-        TCreateAccomodation
-    >({
-        key: [admin_accommodation_key],
-        url: admin_accommodation_url,
-    });
-
-    const {mutateAsync: putAccommodation, isPending: ispendingPut} = usePutData<
-        TCreateAccomodation
-    >({
-        key,
-        url: admin_accommodation_url,
-    });
-
-    const deleteAccommodation = useDeleteData({
+  const { mutateAsync: postAccommodation, isPending: ispendingPost } =
+    usePostData<TCreateAccomodation>({
       key: [admin_accommodation_key],
       url: admin_accommodation_url,
     });
 
-    const getAccommodations = useGetData<
-      TPaginatedResponse<AccommodationItem>
-    >({
-      key: [admin_accommodation_key, String(currentAccommodationPage), searchInput!],
-      url: `${admin_accommodation_url}${searchInput ? `?name__contains= ${searchInput}`: `?page=${currentAccommodationPage}`}`,
-      enabled: !!currentAccommodationPage
+  const { mutateAsync: putAccommodation, isPending: ispendingPut } =
+    usePutData<TCreateAccomodation>({
+      key,
+      url: admin_accommodation_url,
     });
 
-    const getAccommodationTypes = useGetData<TOption2[]>({
-      key: [accommodation_types_key],
-      url: accommodation_types_url,
-    })
+  const deleteAccommodation = useDeleteData({
+    key: [admin_accommodation_key],
+    url: admin_accommodation_url,
+  });
 
+  const getAccommodations = useGetData<TPaginatedResponse<AccommodationItem>>({
+    key: [admin_accommodation_key, searchInput!],
+    url: `${admin_accommodation_url}${searchInput && `&name__contains= ${searchInput}`}`,
+  });
 
-    return { getAccommodation, postAccommodation, ispendingPost, putAccommodation, ispendingPut, deleteAccommodation, getAccommodations, getAccommodationTypes}
-}
+  const getAccommodationTypes = useGetData<TOption2[]>({
+    key: [accommodation_types_key],
+    url: accommodation_types_url,
+  });
+
+  return {
+    getAccommodation,
+    postAccommodation,
+    ispendingPost,
+    putAccommodation,
+    ispendingPut,
+    deleteAccommodation,
+    getAccommodations,
+    getAccommodationTypes,
+  };
+};
 
 // -----------------------------------------------------------------------------------------
 
 export const useAccommodationFeatures = (AccommodationId?: number) => {
+  const key = ["accommodation-features", String(AccommodationId)];
+  const url = `${admin_accommodation_url}${AccommodationId}/features/`;
 
-    const key = ["accommodation-features", String(AccommodationId)];
-      const url = `${admin_accommodation_url}${AccommodationId}/features/`;
-    
-      const accommodationFeatures = useGetData<
-        TPaginatedResponse<TFeatureResponse>
-      >({
-        key: [features_key, String(AccommodationId)],
-        url: `${features_url}?type=accommodation`,
-      });
-    
-      const accommodationFeatureList = useGetData<
-        TPaginatedResponse<TAccommodationFeatureResponse>
-      >({
-        key,
-        url,
-        enabled: !!AccommodationId,
-      });
-    
-      const postAccommodationFeatures = usePostData<
-        TCAccommodationFeature
-      >({
-        key,
-        url,
-      });
-    
-      const deleteAccommodatioFeature = useDeleteData({
-        key,
-        url,
-      });
+  const accommodationFeatures = useGetData<
+    TPaginatedResponse<TFeatureResponse>
+  >({
+    key: [features_key, String(AccommodationId)],
+    url: `${features_url}?type=accommodation`,
+  });
 
-      return { accommodationFeatures, accommodationFeatureList, postAccommodationFeatures, deleteAccommodatioFeature}
-    
-}
+  const accommodationFeatureList = useGetData<
+    TPaginatedResponse<TAccommodationFeatureResponse>
+  >({
+    key,
+    url,
+    enabled: !!AccommodationId,
+  });
+
+  const postAccommodationFeatures = usePostData<TCAccommodationFeature>({
+    key,
+    url,
+  });
+
+  const deleteAccommodatioFeature = useDeleteData({
+    key,
+    url,
+  });
+
+  return {
+    accommodationFeatures,
+    accommodationFeatureList,
+    postAccommodationFeatures,
+    deleteAccommodatioFeature,
+  };
+};
 
 // -----------------------------------------------------------------------------------------
 
 export const useAccommodationImg = (AccommodationId?: number) => {
+  const key = ["accommodation-image", String(AccommodationId)];
+  const url = `${admin_accommodation_url}${AccommodationId}/images/`;
 
-    const key = ["accommodation-image", String(AccommodationId)];
-    const url = `${admin_accommodation_url}${AccommodationId}/images/`;
-    
-    const getImgs = useGetData<
-        TPaginatedResponse<TAccommodationImageResponse>
-    >({
-        key,
-        url,
-        gcTime: 30 * 60 * 1000, // 30 دقیقه (قبلاً cacheTime بود)
-        staleTime: 5 * 60 * 1000, // 5 دقیقه - داده fresh باقی بمونه
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        enabled: !!AccommodationId
-    });
+  const getImgs = useGetData<TPaginatedResponse<TAccommodationImageResponse>>({
+    key,
+    url,
+    gcTime: 30 * 60 * 1000, // 30 دقیقه (قبلاً cacheTime بود)
+    staleTime: 5 * 60 * 1000, // 5 دقیقه - داده fresh باقی بمونه
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    enabled: !!AccommodationId,
+  });
 
-    const postImg = usePostData<TAccommodationImage>({
-        key,
-        url,
-        enabled: !!AccommodationId
-    });
+  const postImg = usePostData<TAccommodationImage>({
+    key,
+    url,
+    enabled: !!AccommodationId,
+  });
 
-    const deleteImg = useDeleteData({
-        key,
-        url,
-    });
+  const deleteImg = useDeleteData({
+    key,
+    url,
+  });
 
-    return { getImgs, postImg, deleteImg }
-}
+  return { getImgs, postImg, deleteImg };
+};

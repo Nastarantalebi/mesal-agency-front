@@ -1,5 +1,4 @@
 import { CustomDataTable } from "@/components/list/CustomDataTable";
-import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import ListDelete from "../../RoomTypes/components/roomTypeListIcons/ListDelete";
 import CustomLoader from "@/components/loading/CustomLoader";
@@ -14,6 +13,7 @@ import TourDepartureForm from "./TourDepartureForm";
 import ListDate from "../../RoomTypes/components/roomTypeListIcons/ListDate";
 import TourPlansList from "./TourPlansList";
 import useDeparture from "../services/useDeparture";
+import { initialValue } from "@/types";
 
 const DeparturesList = () => {
   const [currentDeparturePage, setCurrentDeparturePage] = useState(1);
@@ -79,15 +79,7 @@ const DeparturesList = () => {
             )}
             showAction
             columns={DepartureListColumns}
-            data={getDepartures.data?.results ?? []}
-          />
-        </div>
-
-        <div className="mt-7 flex justify-center">
-          <ListPagination
-            pageCount={pageCount}
-            currentPage={currentDeparturePage}
-            onPageChange={setCurrentDeparturePage}
+            data={getDepartures.data ?? initialValue}
           />
         </div>
       </div>

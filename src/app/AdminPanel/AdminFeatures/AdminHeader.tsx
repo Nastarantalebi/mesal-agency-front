@@ -107,7 +107,7 @@ const Header = ({ menuBtn }: Props) => {
             className="w-10 h-10"
           />
           {/* <span onClick={() => navigate({to: "/"})} className="cursor-pointer">آژانس</span> */}
-          <Breadcrumb>
+          <Breadcrumb className="hidden md:block">
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink href="/admin/dashboard">خانه</BreadcrumbLink>

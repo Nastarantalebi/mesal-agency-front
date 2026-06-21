@@ -1,6 +1,5 @@
 import FormErrorModal from "@/components/form/FormErrorModal";
 import { CustomDataTable } from "@/components/list/CustomDataTable";
-import ListPagination from "@/components/list/ListPagination";
 import { useState } from "react";
 import CustomDialog from "@/components/modal/CustomDialog";
 import CustomLoader from "@/components/loading/CustomLoader";
@@ -11,6 +10,7 @@ import useTourTemplate from "../services/useTourTemplate";
 import { tourTemplateListColumns } from "../fixtures/TourTemplateListColumns";
 import ListImage from "../../RoomTypes/components/roomTypeListIcons/ListImage";
 import TourTemplatePhotoes from "./TourTemplatePhotoes";
+import { initialValue } from "@/types";
 const TourTemplateList = () => {
   const [currentTourPage, setCurrentTourPage] = useState(1);
   const [selected, setSelected] = useState<TtourTemplateItems | null>(null);
@@ -35,9 +35,9 @@ const TourTemplateList = () => {
   if (getTours.error)
     return <div className="text-red-600">{getTours.error.message}</div>;
 
-  const pageCount = getTours.data?.count
-    ? Math.ceil(getTours.data.count / 10)
-    : 0;
+  // const pageCount = getTours.data?.count
+  //   ? Math.ceil(getTours.data.count / 10)
+  //   : 0;
 
   const deleteMessage = "آیا از حذف آیتم اطمینان دارید؟";
 
@@ -45,7 +45,7 @@ const TourTemplateList = () => {
     <>
       <div className="px-2 sm:px-0">
         <div className="overflow-x-auto rounded-md mt-4">
-          <CustomDataTable
+          <CustomDataTable<TtourTemplateItems>
             searchValue={search}
             onSearchChange={setSearch}
             onSearch={(value) => {
@@ -83,17 +83,17 @@ const TourTemplateList = () => {
             )}
             showAction
             columns={tourTemplateListColumns}
-            data={getTours.data?.results ?? []}
+            data={getTours?.data ?? initialValue}
           />
         </div>
 
-        <div className="mt-7 flex justify-center">
+        {/* <div className="mt-7 flex justify-center">
           <ListPagination
             pageCount={pageCount}
             currentPage={currentTourPage}
             onPageChange={setCurrentTourPage}
           />
-        </div>
+        </div> */}
       </div>
 
       <CustomDialog

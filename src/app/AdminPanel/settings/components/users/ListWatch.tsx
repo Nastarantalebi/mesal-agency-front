@@ -1,35 +1,43 @@
 import CustomButton from "@/components/form/CustomButton";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Eye } from "lucide-react";
 
 interface Props {
   onClick?: () => void;
+  showTool?: boolean;
 }
 
-const ListWatch = ({ onClick }: Props) => {
+const ListWatch = ({ onClick, showTool }: Props) => {
   const stopRowClick = (e: React.MouseEvent) => e.stopPropagation();
 
-  return (
+  const button = (
     <div onClick={stopRowClick}>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div onClick={stopRowClick}>
-              <CustomButton
-                className="bg-primary/20 hover:bg-primary/40"
-                type="button"
-                onClick={onClick}
-              >
-                <Eye className="h-5 w-5 cursor-pointer" strokeWidth={1.5} />
-              </CustomButton>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>مشاهده</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <CustomButton
+        className="bg-primary/20 hover:bg-primary/40"
+        type="button"
+        onClick={onClick}
+      >
+        <Eye className="h-5 w-5 cursor-pointer" strokeWidth={1.5} />
+      </CustomButton>
     </div>
+  );
+
+  if (!showTool) return button;
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>{button}</TooltipTrigger>
+        <TooltipContent>
+          <p>مشاهده</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

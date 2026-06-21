@@ -19,15 +19,15 @@ export type TtourTemplateResponse = {
   id: number;
   title: string;
   slug: string;
-  category: string;
+  category: TOption;
   description: string;
   short_description: string;
-  vehicle_type: string;
+  vehicle_type: TOption;
   vehicle_details: string;
   transportation_included: boolean;
   destination: string;
   country: string;
-  difficulty: string;
+  difficulty: TOption;
   age_requirement: number;
   highlights: string;
   is_featured: boolean;
@@ -48,7 +48,6 @@ export type TCreateDeparturePlan = {
   lunch: boolean;
   description: string;
 };
-
 
 //------------------------------------------
 

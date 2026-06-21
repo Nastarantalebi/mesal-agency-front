@@ -11,7 +11,6 @@ import usePutData from "@/services/usePutData";
 import useGetById from "@/services/useGetById";
 
 interface Props {
-  currentTourPage?: number;
   tourTemplateId?: number | null;
   departureId?: number;
 }

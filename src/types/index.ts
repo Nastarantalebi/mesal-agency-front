@@ -3,22 +3,29 @@ import type { FieldValues, Path } from "react-hook-form";
 import type { DateObject } from "react-multi-date-picker";
 
 export type TPaginatedResponse<T> = {
-    count: number,
-    next: null,
-    previous: null,
-    results : T[]
-}
+  count: number;
+  next: null;
+  previous: null;
+  results: T[];
+};
+
+export const initialValue = {
+  count: 0,
+  next: null,
+  previous: null,
+  results: [],
+};
 
 export type TOption = {
-    label: string,
-    value: string | boolean,
-    children?: TOption[],
-}
-export type TOption2 ={
-  id: number,
-  name: string,
-  children?: TOption2[],
-}
+  label: string;
+  value: string | boolean;
+  children?: TOption[];
+};
+export type TOption2 = {
+  id: number;
+  name: string;
+  children?: TOption2[];
+};
 
 export type TFormData<T extends FieldValues> = {
   name: Path<T> | "separator" | "empty";
@@ -41,7 +48,7 @@ export type TFormData<T extends FieldValues> = {
     | "map"
     | null;
   // You can add any other prop that your custom components might need
-  option?: TOption[] | TOption2[] ;
+  option?: TOption[] | TOption2[];
   mode?: "single" | "multiple";
   money?: boolean;
   required?: boolean;

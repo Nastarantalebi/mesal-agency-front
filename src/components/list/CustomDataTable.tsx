@@ -15,14 +15,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { type ReactNode } from "react";
+import React, { useState, type ReactNode } from "react";
 import ListEdit from "./ListEdit";
 import { Button } from "../ui/button";
 import CustomTableHeader from "./CustomTableHeader";
+import type { TPaginatedResponse } from "@/types";
+import ListPagination from "./ListPagination";
 
-interface Props<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface Props<TData> {
+  columns: ColumnDef<TData>[];
+  data: TPaginatedResponse<TData>;
   onEdit?: (rowData: TData) => void;
   onImg?: (id: string) => void;
   onFeature?: (id: string) => void;
@@ -41,7 +43,7 @@ interface Props<TData, TValue> {
 
 type RowWithId = { id: string | number };
 
-export function CustomDataTable<TData extends RowWithId, TValue>({
+export function CustomDataTable<TData extends RowWithId>({
   columns,
   data,
   onEdit,
@@ -55,20 +57,22 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
   onSearchChange,
   searchValue,
   showAddButton = true,
-}: Props<TData, TValue>) {
+}: Props<TData>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
+  const [currentPage, setCurrentPage] = useState(1);
 
   const table = useReactTable({
-    data,
+    data: data.results,
     columns,
     state: { columnFilters },
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-
   });
+
+  const pageCount = data?.count ? Math.ceil(data.count / 10) : 0;
 
   return (
     <div>
@@ -152,15 +156,29 @@ export function CustomDataTable<TData extends RowWithId, TValue>({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length + 1}
-                  className="h-24 text-center"
+                  colSpan={columns.length + (showAction ? 1 : 0)}
+                  className="h-96 text-center"
                 >
-                  داده ای برای نمایش وجود ندارد!
+                  <div className="flex flex-col justify-center items-center">
+                    <img
+                      src="/No data-amico.svg"
+                      alt="no data"
+                      className="w-70"
+                    />
+                    <span className="text-gray-500">داده ای وجود ندارد!</span>
+                  </div>
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
+        <div className="mt-7 flex justify-center">
+          <ListPagination
+            currentPage={currentPage}
+            pageCount={pageCount}
+            onPageChange={setCurrentPage}
+          ></ListPagination>
+        </div>
       </div>
     </div>
   );
