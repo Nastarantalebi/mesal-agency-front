@@ -1,7 +1,7 @@
 import UserHeader from "@/app/usersPanel/components/header/UserHeader";
-import Card from "@/app/usersPanel/Landing/news/Card";
 import NewsDetailCard from "@/app/usersPanel/Landing/news/NewsDetailCard";
 import useNews from "@/app/usersPanel/Landing/news/services/useNews";
+import CustomCard from "@/components/card/CustomCard";
 import CustomLoader from "@/components/loading/CustomLoader";
 import { Toaster } from "@/components/ui/sonner";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
@@ -36,7 +36,7 @@ function RouteComponent() {
         {getNews.isFetching ? (
           <CustomLoader />
         ) : (
-          getNews.data?.results.map((item) => <Card news={item} />)
+          <CustomCard data={getNews.data} />
         )}
       </div>
       <Outlet />

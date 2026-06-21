@@ -16,7 +16,6 @@ import useDeparture from "../services/useDeparture";
 import { initialValue } from "@/types";
 
 const DeparturesList = () => {
-  const [currentDeparturePage, setCurrentDeparturePage] = useState(1);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const [selected, setSelected] = useState<TdepartureResponse | null>(null);
@@ -36,10 +35,6 @@ const DeparturesList = () => {
       </div>
     );
 
-  const pageCount = getDepartures.data?.count
-    ? Math.ceil(getDepartures.data.count / 10)
-    : 0;
-
   return (
     <>
       <div className="px-2 sm:px-0">
@@ -48,7 +43,6 @@ const DeparturesList = () => {
             searchValue={search}
             onSearchChange={setSearch}
             onSearch={(value) => {
-              setCurrentDeparturePage(1);
               setSearch(value);
             }}
             onAdd={() => navigate({ to: "/admin/tour/create" })}

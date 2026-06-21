@@ -18,7 +18,6 @@ const TourPlansList = ({
   tourTemplateId: number;
   departureId: number;
 }) => {
-  const [currentPlanPage, setCurrentPlanPage] = useState(1);
   const [selected, setSelected] = useState<TtourPlanResponse | null>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -36,9 +35,6 @@ const TourPlansList = ({
       </div>
     );
 
-  const pageCount = getDeparturePlans.data?.count
-    ? Math.ceil(getDeparturePlans.data.count / 10)
-    : 0;
 
   return (
     <>
@@ -48,7 +44,6 @@ const TourPlansList = ({
             searchValue={search}
             onSearchChange={setSearch}
             onSearch={(value) => {
-              setCurrentPlanPage(1);
               setSearch(value);
             }}
             onAdd={() => setOpenModal(true)}

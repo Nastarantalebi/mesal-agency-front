@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Card from "./Card";
 import useNews from "./services/useNews";
+import CustomCard from "@/components/card/CustomCard";
 
 const News = () => {
   const { getNews } = useNews({});
@@ -57,9 +57,7 @@ const News = () => {
           transition={{ duration: 0.7, ease: "easeInOut" }}
           className="grid grid-cols-1 md:grid-cols-2 gap-5"
         >
-          {groupedNews[currentSlide]?.map((item) => (
-            <Card key={item.id} news={item} />
-          ))}
+          {getNews.data && <CustomCard data={getNews.data} />}
         </motion.div>
       </AnimatePresence>
     </div>

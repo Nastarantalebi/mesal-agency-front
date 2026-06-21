@@ -12,9 +12,9 @@ export type Tdata = {
   short_description?: string;
 };
 interface Props {
-  data: TPaginatedResponse<Tdata>;
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
+  data?: TPaginatedResponse<Tdata>;
+  onEdit?: (id: number) => void;
+  onDelete?: (id: number) => void;
 }
 
 const CustomCard = ({ data, onEdit, onDelete }: Props) => {
@@ -59,8 +59,8 @@ const CustomCard = ({ data, onEdit, onDelete }: Props) => {
               {item.short_description}
             </h3>
             <div className="flex gap-1">
-              <ListEdit onClick={() => onEdit(item.id)} />
-              <ListDelete onClick={() => onDelete(item.id)} />
+              <ListEdit onClick={() => onEdit?.(item.id)} />
+              <ListDelete onClick={() => onDelete?.(item.id)} />
             </div>
           </div>
         </div>
