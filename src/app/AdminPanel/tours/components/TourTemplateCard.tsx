@@ -27,12 +27,6 @@ const TourTemplateCard = ({
     setSelectedId((prev) => (prev === id ? null : id));
   };
 
-  const handleWatchClick = (e: React.MouseEvent) => {
-    // Prevent card selection toggle when clicking the watch button
-    e.stopPropagation();
-    setOpenModal(true);
-  };
-
   return (
     <>
       <Card
@@ -69,7 +63,7 @@ const TourTemplateCard = ({
             {/* Watch button — left side */}
             <ListWatch
               key={tour.id}
-              onClick={() => handleWatchClick}
+              onClick={() => setOpenModal(true)}
               showTool={false}
             />
           </div>
