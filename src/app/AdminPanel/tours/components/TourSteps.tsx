@@ -23,12 +23,13 @@ const TourSteps = () => {
   const formRef1 = useRef<{ submitForm: () => void }>(null);
   const formref2 = useRef<{ submitForm: () => void }>(null);
 
-  console.log(selectedId)
+  console.log(selectedId);
 
   const handleNext = () => {
     if (currentStep === 0) {
       if (selectedId !== null) {
         setCurrentStep(currentStep + 1);
+        // setErrorForm1(false);
       } else {
         setErrorForm1(true);
       }
@@ -70,7 +71,11 @@ const TourSteps = () => {
               یک تمپلیت فرم را انتخاب کنید!
             </div>
           )}
-          <TourTemplatesList setSelectedId={setSelectedId} selectedId={selectedId}/>
+          <TourTemplatesList
+            setSelectedId={setSelectedId}
+            selectedId={selectedId}
+            onChange={() => setErrorForm1(false)}
+          />
         </>
       ) : currentStep === 1 ? (
         <TourDepartureForm

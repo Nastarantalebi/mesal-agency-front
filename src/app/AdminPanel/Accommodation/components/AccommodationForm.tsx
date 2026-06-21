@@ -17,10 +17,15 @@ const AccommodationForm = ({
   setOpenModal,
 }: {
   AccommodationId?: number;
- setOpenModal?: Dispatch<SetStateAction<boolean>>;
+  setOpenModal?: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { getAccommodation, postAccommodation, ispendingPost, putAccommodation, ispendingPut } =
-    useAccommodation(AccommodationId!);
+  const {
+    getAccommodation,
+    postAccommodation,
+    ispendingPost,
+    putAccommodation,
+    ispendingPut,
+  } = useAccommodation(AccommodationId!);
   const { accommodationValidation, accommodationInitialValues } =
     useValidation();
 
@@ -29,7 +34,7 @@ const AccommodationForm = ({
     defaultValues: accommodationInitialValues,
   });
 
-  console.log(form.watch())
+  console.log(form.watch());
 
   useEffect(() => {
     if (!getAccommodation.data) return;
@@ -56,10 +61,8 @@ const AccommodationForm = ({
   }, [getAccommodation.data]);
 
   const province_id = form.watch("provience");
-  
 
   const { accommodationFields } = useAccomodationFields(Number(province_id));
-
 
   const handleSubmit = (value: TCreateAccomodation) => {
     const isEdit = !!AccommodationId;
@@ -78,20 +81,26 @@ const AccommodationForm = ({
     if (isEdit) {
       putAccommodation(
         { data: transformedData, id: AccommodationId },
-        {onSuccess: () => setOpenModal?.(false)}
+        { onSuccess: () => setOpenModal?.(false) },
       );
     } else {
       postAccommodation(transformedData, {
         onSuccess: () => {
-          {form.reset(accommodationInitialValues);
-            setOpenModal?.(false)
+          {
+            form.reset(accommodationInitialValues);
+            setOpenModal?.(false);
           }
         },
       });
     }
   };
 
-  if (getAccommodation.isFetching) return <div className="p-4"><CustomLoader/></div>;
+  if (getAccommodation.isFetching)
+    return (
+      <div className="p-4 justify-center items-center">
+        <CustomLoader />
+      </div>
+    );
 
   return (
     <FormComponent<TCreateAccomodation>
@@ -100,31 +109,6 @@ const AccommodationForm = ({
       isSubmitting={ispendingPut || ispendingPost}
       formFields={accommodationFields}
     />
-    // <Form {...form}>
-    //   <form
-    //     onSubmit={form.handleSubmit(handleSubmit)}
-    //     className="grid w-full min-w-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start"
-    //   >
-    //     {accommodationFields.map((item) => (
-    //       <div
-    //         key={String(item.name)}
-    //         className={item.className || "col-span-1"}
-    //       >
-    //         {formTypes<TCreateAccomodation>(item, form.control)}
-    //       </div>
-    //     ))}
-
-    //     <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-end gap-3">
-    //       <CustomButton type="submit">{buttonText}</CustomButton>
-    //     </div>
-    //   </form>
-    //   <FormErrorModal
-    //     open={errorOpen}
-    //     message={errmessage}
-    //     onOpenChange={setErrorOpen}
-    //     onAcknowledge={() => setErrorOpen(false)}
-    //   />
-    // </Form>
   );
 };
 

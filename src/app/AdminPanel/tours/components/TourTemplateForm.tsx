@@ -78,7 +78,7 @@ const TourTemplateForm = ({
 
   if (getTourById.isFetching)
     return (
-      <div className="p-4">
+      <div className="p-4 justify-center items-center">
         <CustomLoader />
       </div>
     );

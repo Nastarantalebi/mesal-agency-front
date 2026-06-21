@@ -7,12 +7,9 @@ type StepIndicatorProps = {
   currentStep: number;
 };
 
-const StepIndicator = ({
-  steps,
-  currentStep,
-}: StepIndicatorProps) => {
+const StepIndicator = ({ steps, currentStep }: StepIndicatorProps) => {
   return (
-    <div className="flex items-center justify-center gap-2 mb-6" dir="rtl">
+    <div className="flex items-center justify-center gap-2 mb-6 mt-3" dir="rtl">
       {steps.map((step, i) => {
         const isCompleted = i < currentStep;
         const isActive = i === currentStep;

@@ -108,7 +108,7 @@ const useTourFields = (form?: UseFormReturn<TCreateTourTemplate>) => {
           label: "جزئیات وسیله نقلیه",
           required: true,
           inputType: "text",
-          className: "col-span-4",
+          className: "lg:col-span-4",
         }
       : undefined,
     {
@@ -121,7 +121,7 @@ const useTourFields = (form?: UseFormReturn<TCreateTourTemplate>) => {
       name: "meta_description",
       label: "توضیحات متا",
       type: "textArea",
-      className: "col-span-3",
+      className: "lg:col-span-3",
     },
   ];
 
@@ -137,7 +137,7 @@ const useTourFields = (form?: UseFormReturn<TCreateTourTemplate>) => {
       required: false,
       type: "select",
       option: YES_NO_OPTIONS,
-      className: "col-start-1 col-span-full",
+      className: " col-span-full",
     },
   ];
 

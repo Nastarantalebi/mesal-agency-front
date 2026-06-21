@@ -12,9 +12,15 @@ interface Props {
   tour: TtourTemplateItems;
   selectedId: number | null;
   setSelectedId: Dispatch<SetStateAction<number | null>>;
+  onChange: () => void;
 }
 
-const TourTemplateCard = ({ tour, setSelectedId, selectedId }: Props) => {
+const TourTemplateCard = ({
+  tour,
+  setSelectedId,
+  selectedId,
+  onChange,
+}: Props) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const toggleId = (id: number) => {
@@ -33,7 +39,10 @@ const TourTemplateCard = ({ tour, setSelectedId, selectedId }: Props) => {
         className={`overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer ${
           selectedId === tour.id ? "border-2 border-red-300" : "border"
         }`}
-        onClick={() => toggleId(tour.id)}
+        onClick={() => {
+          toggleId(tour.id);
+          onChange();
+        }}
       >
         {/* Image Section */}
         {/* 

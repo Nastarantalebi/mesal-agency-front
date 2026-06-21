@@ -7,9 +7,11 @@ import ListPagination from "@/components/list/ListPagination";
 const TourTemplatesList = ({
   setSelectedId,
   selectedId,
+  onChange,
 }: {
   setSelectedId: Dispatch<SetStateAction<number | null>>;
   selectedId: number | null;
+  onChange: () => void;
 }) => {
   const { getTours } = useTour();
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,6 +27,7 @@ const TourTemplatesList = ({
             tour={tour}
             setSelectedId={setSelectedId}
             selectedId={selectedId}
+            onChange={onChange}
           />
         ))}
       </div>
