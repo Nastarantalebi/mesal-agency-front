@@ -62,7 +62,10 @@ const TourTemplateForm = ({
 
   const handleSubmit = (values: TCreateTourTemplate) => {
     if (isEdit) {
-      putTour.mutateAsync({ data: values, id: tourId });
+      putTour.mutateAsync(
+        { data: values, id: tourId },
+        { onSuccess: () => setOpenModal?.(false) },
+      );
     } else {
       postTours.mutateAsync(values, {
         onSuccess: () => {

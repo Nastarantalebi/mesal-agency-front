@@ -425,7 +425,7 @@ const FormsRow = React.memo(function FormsRow<
                     "flex-1 *:rounded-none w-full h-full",
                     fieldConfig.className,
                     fieldState.error &&
-                      "border-danger focus-visible:ring-danger",
+                      "border-destructive focus-visible:ring-destructive",
                   )}
                   role="gridcell"
                 >
@@ -444,7 +444,7 @@ const FormsRow = React.memo(function FormsRow<
                         {
                           // "bg-transparent! disabled:opacity-90 *:disabled:opacity-90":
                           //   !isEditable,
-                          "border border-danger ": fieldState.error,
+                          "border border-destructive ": fieldState.error,
                         },
                       ),
                       ref: (el: HTMLElement | null) => {

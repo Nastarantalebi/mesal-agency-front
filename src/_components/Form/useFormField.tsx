@@ -100,7 +100,7 @@ function useFormField<TFormValues extends FieldValues>() {
             // onChange={onChange}
             // ref={ref}
             {...rest}
-          // onKeyDown={}
+            // onKeyDown={}
           />
         );
       }
@@ -144,7 +144,6 @@ function useFormField<TFormValues extends FieldValues>() {
       //     />
       //   );
 
-
       case "radio":
         return (
           <RadioInput<TFormValues>
@@ -184,7 +183,7 @@ function useFormField<TFormValues extends FieldValues>() {
       //       type="date"
       //       name={name}
       //       className={clsx({
-      //         "border-danger": errors[name],
+      //         "border-destructive": errors[name],
       //       })}
       //       {...rest}
       //     />
@@ -204,11 +203,11 @@ function useFormField<TFormValues extends FieldValues>() {
       //   type="date"
       //   name="hire_date"
       //   className={clsx({
-      //     "border-danger": errors.hire_date,
+      //     "border-destructive": errors.hire_date,
       //   })}
       // />
       // {errors.hire_date && (
-      //   <div className="mt-2 text-danger">
+      //   <div className="mt-2 text-destructive">
       //     {typeof errors.hire_date.message === "string" &&
       //       errors.hire_date.message}
       //   </div>
@@ -248,9 +247,7 @@ function useFormField<TFormValues extends FieldValues>() {
         );
 
       case "textArea":
-        return (
-          <CustomTextArea field={field} {...rest} />
-        );
+        return <CustomTextArea field={field} {...rest} />;
 
       // case "textWithAlignment":
       //   return <TextWithAlignment field={field} error={error} {...rest} />;

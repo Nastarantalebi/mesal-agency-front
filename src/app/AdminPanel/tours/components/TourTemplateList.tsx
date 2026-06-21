@@ -97,7 +97,9 @@ const TourTemplateList = () => {
       </div>
 
       <CustomDialog
-        dialogContent={<TourTemplateForm tourId={selected?.id} />}
+        dialogContent={
+          <TourTemplateForm tourId={selected?.id} setOpenModal={setOpenModal} />
+        }
         dialogTitle={
           selected?.id
             ? `ویرایش تمپلیت تور (${selected.title})`

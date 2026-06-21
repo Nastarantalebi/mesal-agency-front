@@ -6,12 +6,15 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { AlertDialogTitle,   AlertDialog,
+import {
+  AlertDialogTitle,
+  AlertDialog,
   AlertDialogAction,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogHeader,} from "@/components/ui/alert-dialog";
+  AlertDialogHeader,
+} from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
 
 interface DeleteDialogProps {
@@ -173,11 +176,13 @@ function DeleteDialog({
       <AlertDialogContent className="bg-red-50 w-96">
         <AlertDialogHeader>
           <div className="w-full flex justify-center ">
-            <div className="size-16 bg-danger rounded-full shadow-[inset_0_4px_8px_rgba(0,0,0,0.35),inset_0_-4px_6px_rgba(255,255,255,0.5)] flex items-center justify-center">
+            <div className="size-16 bg-destructive rounded-full shadow-[inset_0_4px_8px_rgba(0,0,0,0.35),inset_0_-4px_6px_rgba(255,255,255,0.5)] flex items-center justify-center">
               <Trash2 className="text-white size-10" />
             </div>
           </div>
-          <AlertDialogTitle className="text-danger">{title}</AlertDialogTitle>
+          <AlertDialogTitle className="text-destructive">
+            {title}
+          </AlertDialogTitle>
           <AlertDialogDescription className="text-foreground">
             {description}
           </AlertDialogDescription>
@@ -190,10 +195,10 @@ function DeleteDialog({
             onMouseEnter={() => setFocusedButton("confirm")}
             disabled={isLoading}
             className={cn(
-              "bg-danger! text-white rounded-lg hover:bg-danger/10 focus-visible:bg-danger/10",
+              "bg-destructive! text-white rounded-lg hover:bg-destructive/10 focus-visible:bg-destructive/10",
               "disabled:opacity-50 disabled:cursor-not-allowed transition-all",
               focusedButton === "confirm" &&
-                "ring-2 ring-danger ring-offset-2 scale-105",
+                "ring-2 ring-destructive ring-offset-2 scale-105",
             )}
             aria-label={confirmText}
             aria-busy={isLoading}
@@ -219,7 +224,7 @@ function DeleteDialog({
             onMouseEnter={() => setFocusedButton("cancel")}
             disabled={isLoading}
             className={cn(
-              "border border-border! text-default! bg-white rounded-lg hover:bg-danger/10 focus-visible:bg-danger/10",
+              "border border-border! text-default! bg-white rounded-lg hover:bg-destructive/10 focus-visible:bg-destructive/10",
               "disabled:opacity-50 disabled:cursor-not-allowed transition-all",
               focusedButton === "cancel" &&
                 "ring-2 ring-primary ring-offset-2 scale-105",

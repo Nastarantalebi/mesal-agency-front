@@ -164,7 +164,7 @@ export default function ReactSelect({
         data-rowindex={rowIndex}
         value={selectedOption}
         className={cn("rounded-md", inputClassName, {
-          "border! border-danger!": hasError,
+          "border! border-destructive!": hasError,
         })}
       />
     );
@@ -176,7 +176,7 @@ export default function ReactSelect({
       {...sharedProps}
       value={props.value}
       className={clsx("rounded-md", inputClassName, {
-        "border! border-danger!": hasError,
+        "border! border-destructive!": hasError,
       })}
     />
   );

@@ -151,7 +151,7 @@ const FormInput = forwardRef((props: FormInputProps, ref: FormInputRef) => {
             "rounded-none not-first:border-s-transparent first:rounded-s last:rounded-e z-10",
           className,
           {
-            "border! border-danger!": hasError,
+            "border! border-destructive!": hasError,
           },
         )}
       />

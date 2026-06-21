@@ -64,7 +64,7 @@ function FormBody<TFormValues extends FieldValues>({
   };
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLElement>, fieldIndex: number) => {
-      // ─── Enter: رفتن به فیلد بعدی ─────────────────────────────
+      // ─── tab: رفتن به فیلد بعدی ─────────────────────────────
       if (e.key === "tab") {
         const target = e.target as HTMLElement;
 
@@ -258,7 +258,9 @@ function FormBody<TFormValues extends FieldValues>({
                 className="flex w-full flex-row"
               >
                 {fieldConfig.label}
-                {fieldConfig.required && <span className="text-danger">*</span>}
+                {fieldConfig.required && (
+                  <span className="text-destructive">*</span>
+                )}
               </FormLabel>
             )}
             <FormField
@@ -290,7 +292,7 @@ function FormBody<TFormValues extends FieldValues>({
                   })}
                   {"message" in (errors?.[fieldConfig.name] ?? {}) &&
                     typeof errors?.[fieldConfig.name]?.message === "string" && (
-                      <div className="mt-2 text-danger text-right">
+                      <div className="mt-2 text-destructive text-right">
                         {errors[fieldConfig.name]!.message as string}
                       </div>
                     )}

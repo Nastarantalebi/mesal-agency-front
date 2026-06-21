@@ -75,7 +75,7 @@ function TimePickerField<TFormValues extends FieldValues>({
           "disabled:cursor-not-allowed disabled:opacity-50",
           inputClassName,
           {
-            "!border !border-danger": hasError,
+            "!border !border-destructive": hasError,
           },
         )}
       />

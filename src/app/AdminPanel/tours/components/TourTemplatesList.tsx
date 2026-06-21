@@ -18,7 +18,7 @@ const TourTemplatesList = ({
     : 0;
 
   return (
-    <Card className="bg-primary-20/3 p-3 md:p-5">
+    <Card className="bg-primary-20 p-3 md:p-5">
       <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 px-7 gap-2">
         {getTours.data?.results.map((tour) => (
           <TourTemplateCard

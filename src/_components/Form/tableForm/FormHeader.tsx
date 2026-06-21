@@ -255,7 +255,7 @@ function FormHeader<
           tabIndex={-1}
           onClick={handleDeleteClick}
           disabled={selectedRows.size === 0 || hasNonEditableSelected}
-          className="flex items-center gap-1 border-danger text-danger"
+          className="flex items-center gap-1 border-destructive text-destructive"
           title={`حذف ${selectedRows.size} ردیف انتخاب‌شده (Delete)`}
           aria-label={`حذف ${selectedRows.size} ردیف انتخاب‌شده`}
         >

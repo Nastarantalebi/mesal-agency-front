@@ -22,11 +22,11 @@ const CustomDeleteDialog = ({ isOpen, onClose, onConfirm }: props) => {
         cancelText="انصراف"
         submitText="حذف"
         variant_cancel="outline-dark"
-        variant_submit="outline-danger"
+        variant_submit="outline-destructive"
         onSubmit={onConfirm}
       >
         <div className="flex flex-row items-center gap-2 text-center py-2">
-          <div className="text-red-600">
+          <div className="text-destructive">
             <BadgeAlert className="w-5 h-5" />
           </div>
           <p className="text-sm text-gray-700 dark:text-gray-300">

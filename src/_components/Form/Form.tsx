@@ -153,7 +153,7 @@ TProps<TFormValues>) {
                 className="absolute top-0 end-0 m-2 p-0"
                 onClick={onClose}
               >
-                <XCircle className="text-danger size-5" />
+                <XCircle className="text-destructive size-5" />
               </Button>
             )}
             <div

@@ -67,14 +67,15 @@ export default function TagsInput<TFormValues extends FieldValues>({
             "flex-1 border-none outline-none bg-transparent text-sm h-10 px-1", // ارتفاع ثابت h-10
             inputClassName,
             {
-              "border! border-danger!": hasError,
+              "border! border-destructive!": hasError,
             },
           )}
         />
         <Button
           type="button"
           variant="destructive"
-          onClick={() => addTag(input)}>
+          onClick={() => addTag(input)}
+        >
           <PlusIcon className=" w-4 h-4" />
         </Button>
       </div>
@@ -85,12 +86,14 @@ export default function TagsInput<TFormValues extends FieldValues>({
           {tags.map((tag, index) => (
             <div
               key={index}
-              className="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-md text-sm">
+              className="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-md text-sm"
+            >
               {tag}
               <button
                 type="button"
                 onClick={() => removeTag(index)}
-                className="ml-1 text-white font-bold hover:text-gray-200">
+                className="ml-1 text-white font-bold hover:text-gray-200"
+              >
                 ×
               </button>
             </div>

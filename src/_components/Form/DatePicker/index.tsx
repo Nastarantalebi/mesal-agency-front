@@ -126,7 +126,7 @@ function DatePickerField<TFormValues extends FieldValues>({
           "dark:bg-neutral-800 dark:text-gray-100 dark:border-neutral-600 dark:placeholder-gray-400 dark:focus-visible:ring-blue-400",
           inputClassName,
           {
-            "!border !border-danger": hasError,
+            "!border !border-destructive": hasError,
           },
         )}
         containerStyle={{ width: "100%", direction: "ltr" }}
@@ -156,7 +156,8 @@ function DatePickerField<TFormValues extends FieldValues>({
       {weekDay && showWeekDayName && (
         <span
           className="absolute right-2 top-1/2 -translate-y-1/2 rounded bg-blue-100
-         px-2 py-0.5 text-xs text-blue-700 dark:bg-blue-900 dark:text-blue-200">
+         px-2 py-0.5 text-xs text-blue-700 dark:bg-blue-900 dark:text-blue-200"
+        >
           {weekDay}
         </span>
       )}

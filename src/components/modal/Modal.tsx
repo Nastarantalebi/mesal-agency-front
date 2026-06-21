@@ -1,7 +1,12 @@
 import { XIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "../ui/button";
-import { Dialog, DialogDescription, DialogFooter, DialogTitle } from "../ui/dialog";
+import {
+  Dialog,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+} from "../ui/dialog";
 import { DialogContent } from "@radix-ui/react-dialog";
 type TProps = {
   open: boolean;
@@ -22,26 +27,27 @@ export default function Modal({
   title,
   cancelText,
   children,
-//   size = "md",
+  //   size = "md",
   cancelBtn = true,
   onSubmit,
   submitText = "تایید",
   variant_submit = "outline-success",
-  variant_cancel = "outline-danger",
+  variant_cancel = "outline-destructive",
 }: TProps) {
   return (
     <>
-      <Dialog open={open}  onOpenChange={close} >
+      <Dialog open={open} onOpenChange={close}>
         <DialogContent>
-                      <div className="flex flex-row items-center justify-between px-1">
-                        <DialogTitle>{title}</DialogTitle>
+          <div className="flex flex-row items-center justify-between px-1">
+            <DialogTitle>{title}</DialogTitle>
             <span onClick={close} className="p-2 cursor-pointer">
               <XIcon size={16} />
             </span>
           </div>
           <DialogDescription>{children}</DialogDescription>
 
-<DialogFooter>{!!cancelBtn && (
+          <DialogFooter>
+            {!!cancelBtn && (
               <Button variant={variant_cancel} onClick={close}>
                 {cancelText ?? "بستن"}
               </Button>
@@ -50,8 +56,8 @@ export default function Modal({
               <Button variant={variant_submit} onClick={onSubmit}>
                 {submitText ?? "تایید"}
               </Button>
-            )}</DialogFooter>
-
+            )}
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
